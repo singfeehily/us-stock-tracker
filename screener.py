@@ -9,7 +9,6 @@ def load_tickers():
             tickers = [line.strip().upper() for line in f if line.strip()]
         return tickers
     except FileNotFoundError:
-        # 預設清單以防檔案不存在
         return ['AAPL', 'NVDA', 'TSLA', 'PLTR', 'SMCI']
 
 def calculate_metrics():
@@ -20,11 +19,10 @@ def calculate_metrics():
         "screener_data": []
     }
     
-    print(l(f"開始下載並分析 {len(tickers)} 隻股票數據..."))
+    print(f"開始下載並分析 {len(tickers)} 隻股票數據...")
     
     for symbol in tickers:
         try:
-            # 下載過去 100 天的日線數據
             stock = yf.Ticker(symbol)
             df = stock.history(period="100d")
             
@@ -41,13 +39,12 @@ def calculate_metrics():
             ma20 = float(df['MA20'].iloc[-1])
             dist_20ma = ((current_price - ma20) / ma20) * 100
             
-            # 計算相對成交量 (RVOL)：今日成交量 / 過去 5 日平均成交量
+            # 計算相對成交量 (RVOL)
             df['Vol5_Avg'] = df['Volume'].rolling(window=5).mean()
-            avg_vol = float(df['Vol5_Avg'].iloc[-2]) # 前5日均量
+            avg_vol = float(df['Vol5_Avg'].iloc[-2])
             today_vol = float(df['Volume'].iloc[-1])
             rvol = round(today_vol / avg_vol, 1) if avg_vol > 0 else 1.0
             
-            # 簡單判定標籤與 SMC 形態 (示範邏輯)
             if rvol >= 2.0 and dist_20ma < 3.0:
                 label = "[強烈買入]"
                 label_class = "bg-green-500/20 text-green-400 border border-green-500/50"
@@ -84,7 +81,6 @@ def calculate_metrics():
         except Exception as e:
             print(f"處理 {symbol} 時發生錯誤: {e}")
             
-    # 寫入 data.json 供前端讀取
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump(output_data, f, ensure_ascii=False, indent=4)
         
