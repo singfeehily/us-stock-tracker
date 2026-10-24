@@ -2,11 +2,16 @@ name: Update Stock Data
 
 on:
   schedule:
+    # 1. 香港時間每日早上 6:00 (美股收盤後)
     - cron: '0 22 * * 1-5'
+    # 2. 香港時間每日晚上 8:30 (美股開盤前)
+    - cron: '30 12 * * 1-5'
+    # 3. 每 6 小時自動更新一次
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 permissions:
-  contents: write  # 明確授權寫入
+  contents: write
 
 jobs:
   update-data:
