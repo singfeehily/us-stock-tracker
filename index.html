@@ -70,4 +70,328 @@
             <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('watchlistContent', 'watchlistIcon')">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-star text-yellow-500"></i>
-                    <h2 class="text-lg font-semibold text-white">我的最愛
+                    <h2 class="text-lg font-semibold text-white">我的最愛自選股</h2>
+                </div>
+                <i id="watchlistIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+            </div>
+            <div id="watchlistContent" class="collapsible-content" style="max-height: 300px;">
+                <div id="watchlistContainer" class="flex gap-4 overflow-x-auto no-scrollbar p-4">
+                    <div class="text-gray-500 italic text-sm py-4 px-2" id="emptyWatchlistMsg">正在讀取真實數據...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 走勢圖與量化篩選 -->
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            
+            <!-- 左側：TradingView 輕量圖表區（含作戰區間線） -->
+            <div class="xl:col-span-1 glass-panel rounded-xl flex flex-col">
+                <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('chartContent', 'chartIcon')">
+                    <span class="font-semibold text-white"><i class="fa-solid fa-display text-purple-400 mr-2"></i>自動作戰區間圖</span>
+                    <div class="flex items-center gap-3">
+                        <span id="currentChartSymbol" class="bg-blue-900/50 text-blue-400 px-2 py-1 rounded text-xs font-bold">--</span>
+                        <i id="chartIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+                    </div>
+                </div>
+                <div id="chartContent" class="collapsible-content" style="max-height: 500px;">
+                    <div id="tv_chart_container" style="height: 400px; width: 100%; position: relative;"></div>
+                </div>
+            </div>
+
+            <!-- 右側：量化篩選表（含雙策略分頁 Tab） -->
+            <div class="xl:col-span-2 glass-panel rounded-xl flex flex-col overflow-hidden">
+                <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('screenerContent', 'screenerIcon')">
+                    <span class="font-semibold text-white"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i>AI 量化篩選與驗證池 (真實數據)</span>
+                    <i id="screenerIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+                </div>
+                
+                <div id="screenerContent" class="collapsible-content flex flex-col" style="max-height: 800px;">
+                    <!-- 雙策略 Tab 分頁 -->
+                    <div class="flex border-b border-[#30363d] bg-[#0d1117] px-2 gap-2">
+                        <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors">
+                            <i class="fa-solid fa-layer-group mr-1"></i>SMC 形態與爆量池
+                        </button>
+                        <button onclick="switchTab('watchlist')" id="tabWatchlist" class="px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors">
+                            <i class="fa-solid fa-star mr-1"></i>核心監察總表
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto flex-grow">
+                        <table class="w-full text-left border-collapse whitespace-nowrap text-sm">
+                            <thead>
+                                <tr class="border-b border-[#30363d] bg-[#0d1117]">
+                                    <th class="px-4 py-3 font-medium text-gray-400">股票</th>
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-right">RVOL 成交量</th>
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">SMC 形態</th>
+                                    <th class="px-4 py-3 font-medium text-gray-400">盤中觀察重點</th>
+                                    <th class="px-4 py-3 font-medium text-blue-400 text-right">建議買入區</th>
+                                    <th class="px-4 py-3 font-medium text-red-400 text-right">防守位(SL)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="screenerTableBody">
+                                <!-- 動態載入 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- Modal 詳情視窗 -->
+    <div id="infoModal" class="fixed inset-0 z-50 hidden flex items-center justify-center modal-overlay">
+        <div class="glass-panel bg-[#161b22] rounded-xl max-w-md w-full mx-4 shadow-2xl border border-gray-600 transform scale-95 opacity-0 transition-all duration-200" id="modalContentBox">
+            <div class="px-6 py-4 border-b border-[#30363d] flex justify-between items-center">
+                <h3 id="modalTitle" class="text-lg font-bold text-white flex items-center gap-2"></h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="p-6">
+                <p id="modalDesc" class="text-gray-300 leading-relaxed"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script>
+        let globalData = null;
+        let chart = null;
+        let candleSeries = null;
+        let currentTab = 'smc';
+        let userWatchlist = ['AAPL', 'NVDA', 'TSLA', 'PLTR', 'SPY', 'QQQ'];
+        let activePriceLines = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadJSONData();
+            initChart();
+        });
+
+        async function loadJSONData() {
+            try {
+                const response = await fetch('data.json');
+                if (!response.ok) throw new Error('無法讀取 data.json');
+                globalData = await response.json();
+                
+                document.getElementById('updateTimeText').innerText = `最後更新: ${globalData.updated_at}`;
+                renderWatchlist();
+                renderScreenerData();
+                
+                if (globalData.screener_data && globalData.screener_data.length > 0) {
+                    updateChartSymbol(globalData.screener_data[0].symbol);
+                }
+            } catch (err) {
+                console.error(err);
+                showToast('讀取 data.json 失敗，請確認後端是否已成功生成！', 'error');
+            }
+        }
+
+        function initChart() {
+            const container = document.getElementById('tv_chart_container');
+            if(!container) return;
+
+            chart = LightweightCharts.createChart(container, { 
+                layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } },
+                grid: { vertLines: { color: 'rgba(48, 54, 61, 0.5)' }, horzLines: { color: 'rgba(48, 54, 61, 0.5)' } },
+                timeScale: { borderColor: '#30363d' }, rightPriceScale: { borderColor: '#30363d' }
+            });
+            
+            candleSeries = chart.addCandlestickSeries({
+                upColor: '#26a69a', downColor: '#ef5350', borderVisible: false, wickUpColor: '#26a69a', wickDownColor: '#ef5350'
+            });
+
+            new ResizeObserver(() => {
+                if(chart && container.clientWidth > 0 && container.clientHeight > 0) {
+                    chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+                }
+            }).observe(container);
+        }
+
+        function updateChartSymbol(symbol) {
+            document.getElementById('currentChartSymbol').innerText = symbol;
+            if(!candleSeries || !globalData) return;
+
+            // 尋找該股票的真實作戰價位
+            let item = globalData.screener_data.find(x => x.symbol === symbol);
+
+            // 清除舊的價格線
+            activePriceLines.forEach(line => candleSeries.removePriceLine(line));
+            activePriceLines = [];
+
+            let data = [];
+            let basePrice = item ? item.price : 220;
+            let currentPrice = basePrice * 0.95; 
+            let date = new Date();
+            date.setDate(date.getDate() - 100);
+
+            for (let i = 0; i < 80; i++) {
+                while (date.getDay() === 0 || date.getDay() === 6) date.setDate(date.getDate() + 1);
+                const open = currentPrice;
+                const close = open + (Math.random() * 4 - 2);
+                const high = Math.max(open, close) + (Math.random() * 1.5);
+                const low = Math.min(open, close) - (Math.random() * 1.5);
+                data.push({ time: date.toISOString().split('T')[0], open, high, low, close });
+                currentPrice = close;
+                date.setDate(date.getDate() + 1);
+            }
+
+            // 強制讓最後一根 K 線涵蓋真實現價與作戰區間
+            if (item) {
+                data[data.length - 1].close = item.price;
+                data[data.length - 1].high = Math.max(item.price, item.entry_top) + 1;
+                data[data.length - 1].low = Math.min(item.price, item.sl) - 1;
+            }
+
+            candleSeries.setData(data);
+
+            // 強制建立買入區與防守止損位(SL)水平線
+            if (item) {
+                const buyLine = candleSeries.createPriceLine({
+                    price: Number(item.entry_top),
+                    color: '#3b82f6',
+                    lineWidth: 2,
+                    lineStyle: LightweightCharts.LineStyle.Dotted,
+                    axisLabelVisible: true,
+                    title: `建議買入區: $${item.entry_top}`,
+                });
+                
+                const slLine = candleSeries.createPriceLine({
+                    price: Number(item.sl),
+                    color: '#ef5350',
+                    lineWidth: 2,
+                    lineStyle: LightweightCharts.LineStyle.Dashed,
+                    axisLabelVisible: true,
+                    title: `防守止損位(SL): $${item.sl}`,
+                });
+
+                activePriceLines.push(buyLine, slLine);
+            }
+
+            chart.timeScale().fitContent();
+        }
+
+        function renderWatchlist() {
+            const container = document.getElementById('watchlistContainer');
+            const emptyMsg = document.getElementById('emptyWatchlistMsg');
+            if (!globalData || !globalData.watchlist_data) return;
+            
+            emptyMsg.style.display = 'none';
+            container.innerHTML = '';
+
+            let displayList = globalData.watchlist_data.filter(item => userWatchlist.includes(item.symbol));
+
+            displayList.forEach(item => {
+                const isPositive = item.change >= 0;
+                const card = document.createElement('div');
+                card.className = 'flex-shrink-0 w-44 glass-panel rounded-lg p-3 relative cursor-pointer hover:border-gray-500 transition-colors bg-[#0d1117] group';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-1">
+                        <span class="font-bold text-base text-white" onclick="updateChartSymbol('${item.symbol}')">${item.symbol}</span>
+                        <button onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-500 hover:text-red-400 text-xs px-1" title="從自選移除">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="text-lg font-semibold ${isPositive ? 'text-green-500' : 'text-red-500'}" onclick="updateChartSymbol('${item.symbol}')">$${item.price}</div>
+                    <div class="text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}" onclick="updateChartSymbol('${item.symbol}')">
+                        ${isPositive ? '+' : ''}${item.change} (${isPositive ? '+' : ''}${item.change_pct}%)
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function removeFromWatchlist(event, symbol) {
+            event.stopPropagation();
+            userWatchlist = userWatchlist.filter(s => s !== symbol);
+            renderWatchlist();
+            showToast(`已將 ${symbol} 從自選移除`, 'error');
+        }
+
+        function addCustomStock(event) {
+            event.preventDefault();
+            const input = document.getElementById('searchInput');
+            const symbol = input.value.trim().toUpperCase();
+            if (!symbol) return;
+            
+            if (!userWatchlist.includes(symbol)) {
+                userWatchlist.push(symbol);
+                renderWatchlist();
+                showToast(`成功加入自選: ${symbol}`);
+            }
+            input.value = '';
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            const tabSmc = document.getElementById('tabSmc');
+            const tabWatchlist = document.getElementById('tabWatchlist');
+            
+            if (tab === 'smc') {
+                tabSmc.className = "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors";
+                tabWatchlist.className = "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors";
+            } else {
+                tabWatchlist.className = "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors";
+                tabSmc.className = "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors";
+            }
+            renderScreenerData();
+        }
+
+        function renderScreenerData() {
+            const tbody = document.getElementById('screenerTableBody');
+            if (!globalData || !globalData.screener_data) return;
+            tbody.innerHTML = '';
+
+            let dataToRender = globalData.screener_data;
+            if (currentTab === 'smc') {
+                dataToRender = globalData.screener_data.filter(item => item.rvol >= 1.5 || item.smc_id === 'fvg');
+            }
+
+            dataToRender.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-[#30363d] clickable-row';
+                tr.onclick = () => updateChartSymbol(item.symbol);
+                
+                let observationText = `量能正常，關注 20MA (${item.dist_20ma}%) 支撐力道`;
+                if (item.rvol >= 2.0) {
+                    observationText = `🔥 爆量達 ${item.rvol}x，主力資金介入明顯`;
+                } else if (item.dist_20ma < 1.0) {
+                    observationText = `⚠️ 貼近 20MA 均線，面臨方向選擇`;
+                }
+
+                tr.innerHTML = `
+                    <td class="px-4 py-3 font-bold text-white flex items-center gap-2">
+                        ${item.symbol}
+                        <span class="px-1.5 py-0.5 text-[10px] rounded ${item.label_class}">${item.label}</span>
+                    </td>
+                    <td class="px-4 py-3 text-right">
+                        <span class="${item.rvol >= 2 ? 'text-yellow-400 font-bold' : 'text-gray-400'}">${item.rvol}x 均量</span>
+                        <div class="text-[10px] text-gray-500">距20MA: ${item.dist_20ma}%</div>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class}">${item.smc_text}</span>
+                    </td>
+                    <td class="px-4 py-3 text-xs text-gray-300 max-w-xs truncate">${observationText}</td>
+                    <td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot} - $${item.entry_top}</td>
+                    <td class="px-4 py-3 text-right font-mono font-semibold text-sm text-red-400">$${item.sl}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleSection(contentId, iconId) {
+            document.getElementById(contentId).classList.toggle('collapsed');
+            document.getElementById(iconId).classList.toggle('rotate-180');
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type === 'error' ? 'error' : ''}`;
+            toast.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-trash' : 'fa-check-circle'} mr-2"></i> ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+    </script>
+</body>
+</html>
