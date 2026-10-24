@@ -2,13 +2,11 @@ name: Update Stock Data
 
 on:
   schedule:
-    # 1. 香港時間每日早上 6:00 (美股收盤後)
-    - cron: '0 22 * * 1-5'
-    # 2. 香港時間每日晚上 8:30 (美股開盤前)
+    # 1. 每日開盤前更新 (香港時間晚上 8:30 / UTC 12:30)
     - cron: '30 12 * * 1-5'
-    # 3. 每 6 小時自動更新一次
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+    # 2. 美股收盤後結算 (香港時間早上 6:00 / UTC 22:00)
+    - cron: '0 22 * * 1-5'
+  workflow_dispatch: # 保留手動觸發功能
 
 permissions:
   contents: write
@@ -18,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 檢出程式碼庫
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 設定 Python 環境
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
