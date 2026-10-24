@@ -65,7 +65,7 @@
             </div>
         </section>
 
-        <!-- 我的最愛 (Watchlist) 含移除按鈕 -->
+        <!-- 我的最愛 (Watchlist) -->
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('watchlistContent', 'watchlistIcon')">
                 <div class="flex items-center gap-2">
@@ -84,7 +84,7 @@
         <!-- 走勢圖與量化篩選 -->
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
             
-            <!-- 左側：TradingView 輕量圖表區（含作戰區間線） -->
+            <!-- 左側：TradingView 輕量圖表區（含技術指標與控制列） -->
             <div class="xl:col-span-1 glass-panel rounded-xl flex flex-col">
                 <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('chartContent', 'chartIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-display text-purple-400 mr-2"></i>自動作戰區間圖</span>
@@ -93,12 +93,32 @@
                         <i id="chartIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
                     </div>
                 </div>
-                <div id="chartContent" class="collapsible-content" style="max-height: 500px;">
-                    <div id="tv_chart_container" style="height: 400px; width: 100%; position: relative;"></div>
+                <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 650px;">
+                    <!-- 技術指標勾選控制列 -->
+                    <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 flex flex-wrap gap-3 text-xs">
+                        <span class="text-gray-400 font-bold self-center"><i class="fa-solid fa-sliders mr-1 text-blue-400"></i>指標:</span>
+                        <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white">
+                            <input type="checkbox" id="ind_ema" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> EMA (20/50)
+                        </label>
+                        <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white">
+                            <input type="checkbox" id="ind_boll" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> BOLL (布林)
+                        </label>
+                        <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white">
+                            <input type="checkbox" id="ind_rsi" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> RSI (14)
+                        </label>
+                        <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white">
+                            <input type="checkbox" id="ind_macd" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> MACD
+                        </label>
+                    </div>
+
+                    <!-- 主圖容器 -->
+                    <div id="tv_chart_container" style="height: 340px; width: 100%; position: relative;"></div>
+                    <!-- 副圖容器 (預設隱藏，勾選 RSI 或 MACD 時顯示) -->
+                    <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
                 </div>
             </div>
 
-            <!-- 右側：量化篩選表（含雙策略分頁 Tab） -->
+            <!-- 右側：量化篩選表 -->
             <div class="xl:col-span-2 glass-panel rounded-xl flex flex-col overflow-hidden">
                 <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('screenerContent', 'screenerIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i>AI 量化篩選與驗證池 (真實數據)</span>
@@ -106,7 +126,6 @@
                 </div>
                 
                 <div id="screenerContent" class="collapsible-content flex flex-col" style="max-height: 800px;">
-                    <!-- 雙策略 Tab 分頁 -->
                     <div class="flex border-b border-[#30363d] bg-[#0d1117] px-2 gap-2">
                         <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors">
                             <i class="fa-solid fa-layer-group mr-1"></i>SMC 形態與爆量池
@@ -157,14 +176,26 @@
     <script>
         let globalData = null;
         let chart = null;
+        let subChart = null;
         let candleSeries = null;
+        
+        // 技術指標 Series 參照
+        let ema20Series = null;
+        let ema50Series = null;
+        let bollUpperSeries = null;
+        let bollMidSeries = null;
+        let bollLowerSeries = null;
+        let subIndicatorSeries = null; // 用於 RSI 或 MACD 副圖
+
         let currentTab = 'smc';
         let userWatchlist = ['AAPL', 'NVDA', 'TSLA', 'PLTR', 'SPY', 'QQQ'];
         let activePriceLines = [];
+        let currentCandleData = [];
+        let currentSymbolData = null;
 
         document.addEventListener('DOMContentLoaded', async () => {
             await loadJSONData();
-            initChart();
+            initCharts();
         });
 
         async function loadJSONData() {
@@ -186,10 +217,12 @@
             }
         }
 
-        function initChart() {
+        function initCharts() {
             const container = document.getElementById('tv_chart_container');
+            const subContainer = document.getElementById('sub_chart_container');
             if(!container) return;
 
+            // 主圖初始化
             chart = LightweightCharts.createChart(container, { 
                 layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } },
                 grid: { vertLines: { color: 'rgba(48, 54, 61, 0.5)' }, horzLines: { color: 'rgba(48, 54, 61, 0.5)' } },
@@ -200,9 +233,19 @@
                 upColor: '#26a69a', downColor: '#ef5350', borderVisible: false, wickUpColor: '#26a69a', wickDownColor: '#ef5350'
             });
 
+            // 副圖初始化
+            subChart = LightweightCharts.createChart(subContainer, {
+                layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } },
+                grid: { vertLines: { color: 'rgba(48, 54, 61, 0.3)' }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } },
+                timeScale: { borderColor: '#30363d', visible: false }, rightPriceScale: { borderColor: '#30363d' }
+            });
+
             new ResizeObserver(() => {
-                if(chart && container.clientWidth > 0 && container.clientHeight > 0) {
+                if(chart && container.clientWidth > 0) {
                     chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+                }
+                if(subChart && subContainer.clientWidth > 0) {
+                    subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
                 }
             }).observe(container);
         }
@@ -211,15 +254,13 @@
             document.getElementById('currentChartSymbol').innerText = symbol;
             if(!candleSeries || !globalData) return;
 
-            // 尋找該股票的真實作戰價位
-            let item = globalData.screener_data.find(x => x.symbol === symbol);
+            currentSymbolData = globalData.screener_data.find(x => x.symbol === symbol);
 
-            // 清除舊的價格線
             activePriceLines.forEach(line => candleSeries.removePriceLine(line));
             activePriceLines = [];
 
             let data = [];
-            let basePrice = item ? item.price : 220;
+            let basePrice = currentSymbolData ? currentSymbolData.price : 220;
             let currentPrice = basePrice * 0.95; 
             let date = new Date();
             date.setDate(date.getDate() - 100);
@@ -235,39 +276,193 @@
                 date.setDate(date.getDate() + 1);
             }
 
-            // 強制讓最後一根 K 線涵蓋真實現價與作戰區間
-            if (item) {
-                data[data.length - 1].close = item.price;
-                data[data.length - 1].high = Math.max(item.price, item.entry_top) + 1;
-                data[data.length - 1].low = Math.min(item.price, item.sl) - 1;
+            if (currentSymbolData) {
+                data[data.length - 1].close = currentSymbolData.price;
+                data[data.length - 1].high = Math.max(currentSymbolData.price, currentSymbolData.entry_top) + 1;
+                data[data.length - 1].low = Math.min(currentSymbolData.price, currentSymbolData.sl) - 1;
             }
 
+            currentCandleData = data;
             candleSeries.setData(data);
 
-            // 強制建立買入區與防守止損位(SL)水平線
-            if (item) {
+            if (currentSymbolData) {
                 const buyLine = candleSeries.createPriceLine({
-                    price: Number(item.entry_top),
+                    price: Number(currentSymbolData.entry_top),
                     color: '#3b82f6',
                     lineWidth: 2,
                     lineStyle: LightweightCharts.LineStyle.Dotted,
                     axisLabelVisible: true,
-                    title: `建議買入區: $${item.entry_top}`,
+                    title: `建議買入區: $${currentSymbolData.entry_top}`,
                 });
                 
                 const slLine = candleSeries.createPriceLine({
-                    price: Number(item.sl),
+                    price: Number(currentSymbolData.sl),
                     color: '#ef5350',
                     lineWidth: 2,
                     lineStyle: LightweightCharts.LineStyle.Dashed,
                     axisLabelVisible: true,
-                    title: `防守止損位(SL): $${item.sl}`,
+                    title: `防守止損位(SL): $${currentSymbolData.sl}`,
                 });
 
                 activePriceLines.push(buyLine, slLine);
             }
 
             chart.timeScale().fitContent();
+            updateChartIndicators(); // 重新整理指標
+        }
+
+        // --- 技術指標計算與繪製核心邏輯 ---
+        function updateChartIndicators() {
+            if (!currentCandleData.length) return;
+
+            const showEma = document.getElementById('ind_ema').checked;
+            const showBoll = document.getElementById('ind_boll').checked;
+            const showRsi = document.getElementById('ind_rsi').checked;
+            const showMacd = document.getElementById('ind_macd').checked;
+
+            // 1. 處理 EMA
+            if (showEma) {
+                const ema20 = calculateEMA(currentCandleData, 20);
+                const ema50 = calculateEMA(currentCandleData, 50);
+                
+                if (!ema20Series) ema20Series = chart.addLineSeries({ color: '#f59e0b', lineWidth: 1.5, title: 'EMA 20' });
+                if (!ema50Series) ema50Series = chart.addLineSeries({ color: '#8b5cf6', lineWidth: 1.5, title: 'EMA 50' });
+                
+                ema20Series.setData(ema20);
+                ema50Series.setData(ema50);
+            } else {
+                if (ema20Series) { chart.removeSeries(ema20Series); ema20Series = null; }
+                if (ema50Series) { chart.removeSeries(ema50Series); ema50Series = null; }
+            }
+
+            // 2. 處理 BOLL (布林通道參數: 20日, 2倍標準差)
+            if (showBoll) {
+                const boll = calculateBOLL(currentCandleData, 20, 2);
+                if (!bollUpperSeries) bollUpperSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'BOLL Upper' });
+                if (!bollMidSeries) bollMidSeries = chart.addLineSeries({ color: 'rgba(234, 179, 8, 0.8)', lineWidth: 1.5, title: 'BOLL Mid' });
+                if (!bollLowerSeries) bollLowerSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'BOLL Lower' });
+
+                bollUpperSeries.setData(boll.upper);
+                bollMidSeries.setData(boll.middle);
+                bollLowerSeries.setData(boll.lower);
+            } else {
+                if (bollUpperSeries) { chart.removeSeries(bollUpperSeries); bollUpperSeries = null; }
+                if (bollMidSeries) { chart.removeSeries(bollMidSeries); bollMidSeries = null; }
+                if (bollLowerSeries) { chart.removeSeries(bollLowerSeries); bollLowerSeries = null; }
+            }
+
+            // 3. 處理副圖指標 (RSI 或 MACD)
+            const subContainer = document.getElementById('sub_chart_container');
+            if (showRsi || showMacd) {
+                subContainer.style.display = 'block';
+                
+                if (subIndicatorSeries) {
+                    subChart.removeSeries(subIndicatorSeries);
+                    subIndicatorSeries = null;
+                }
+
+                if (showRsi) {
+                    const rsiData = calculateRSI(currentCandleData, 14);
+                    subIndicatorSeries = subChart.addLineSeries({ color: '#06b6d4', lineWidth: 1.5, title: 'RSI (14)' });
+                    subIndicatorSeries.setData(rsiData);
+                } else if (showMacd) {
+                    const macdData = calculateMACD(currentCandleData, 12, 26, 9);
+                    subIndicatorSeries = subChart.addHistogramSeries({ color: '#26a69a', title: 'MACD Histogram' });
+                    subIndicatorSeries.setData(macdData);
+                }
+                subChart.timeScale().fitContent();
+            } else {
+                subContainer.style.display = 'none';
+                if (subIndicatorSeries) {
+                    subChart.removeSeries(subIndicatorSeries);
+                    subIndicatorSeries = null;
+                }
+            }
+        }
+
+        // --- 技術指標數學計算函數 ---
+        function calculateEMA(data, period) {
+            let result = [];
+            let multiplier = 2 / (period + 1);
+            let prevEMA = data[0].close;
+            
+            for (let i = 0; i < data.length; i++) {
+                let close = data[i].close;
+                let ema = (i === 0) ? close : (close - prevEMA) * multiplier + prevEMA;
+                prevEMA = ema;
+                result.push({ time: data[i].time, value: Number(ema.toFixed(2)) });
+            }
+            return result;
+        }
+
+        function calculateBOLL(data, period, stdDevMultiplier) {
+            let upper = [], middle = [], lower = [];
+            for (let i = 0; i < data.length; i++) {
+                if (i < period - 1) continue;
+                let slice = data.slice(i - period + 1, i + 1);
+                let sum = slice.reduce((acc, val) => acc + val.close, 0);
+                let sma = sum / period;
+                
+                let variance = slice.reduce((acc, val) => acc + Math.pow(val.close - sma, 2), 0) / period;
+                let stdDev = Math.sqrt(variance);
+
+                let time = data[i].time;
+                middle.push({ time, value: Number(sma.toFixed(2)) });
+                upper.push({ time, value: Number((sma + stdDevMultiplier * stdDev).toFixed(2)) });
+                lower.push({ time, value: Number((sma - stdDevMultiplier * stdDev).toFixed(2)) });
+            }
+            return { upper, middle, lower };
+        }
+
+        function calculateRSI(data, period) {
+            let result = [];
+            let gains = 0, losses = 0;
+
+            for (let i = 1; i < data.length; i++) {
+                let change = data[i].close - data[i-1].close;
+                let gain = change > 0 ? change : 0;
+                let loss = change < 0 ? -change : 0;
+
+                if (i <= period) {
+                    gains += gain;
+                    losses += loss;
+                    if (i === period) {
+                        let avgGain = gains / period;
+                        let avgLoss = losses / period;
+                        let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
+                        let rsi = 100 - (100 / (1 + rs));
+                        result.push({ time: data[i].time, value: Number(rsi.toFixed(2)) });
+                    }
+                } else {
+                    let avgGain = (gains * (period - 1) + gain) / period;
+                    let avgLoss = (losses * (period - 1) + loss) / period;
+                    gains = avgGain;
+                    losses = avgLoss;
+                    let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
+                    let rsi = 100 - (100 / (1 + rs));
+                    result.push({ time: data[i].time, value: Number(rsi.toFixed(2)) });
+                }
+            }
+            return result;
+        }
+
+        function calculateMACD(data, fastPeriod, slowPeriod, signalPeriod) {
+            let fastEMA = calculateEMA(data, fastPeriod);
+            let slowEMA = calculateEMA(data, slowPeriod);
+            let macdLine = [];
+
+            for (let i = 0; i < data.length; i++) {
+                let val = fastEMA[i].value - slowEMA[i].value;
+                macdLine.push({ time: data[i].time, value: val });
+            }
+
+            // 簡化為柱狀圖呈現 MACD Histogram (macdLine - signalLine)
+            let result = [];
+            for (let i = 0; i < macdLine.length; i++) {
+                let color = macdLine[i].value >= 0 ? '#26a69a' : '#ef5350';
+                result.push({ time: macdLine[i].time, value: Number(macdLine[i].value.toFixed(2)), color });
+            }
+            return result;
         }
 
         function renderWatchlist() {
