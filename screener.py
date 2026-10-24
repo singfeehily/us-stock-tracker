@@ -5,7 +5,8 @@ import json
 from datetime import datetime, timezone, timedelta
 
 # 核心監察與篩選清單 (可隨時自行新增)
-WATCHLIST = ['AAPL', 'NVDA', 'TSLA', 'PLTR', 'SPY', 'QQQ', 'MSFT', 'META', 'AMZN', 'GOOGL', 'AMD']
+# 把 screener.py 第8行改成這樣：
+WATCHLIST = ['AAPL', 'NVDA', 'TSLA', 'PLTR', 'SPY', 'QQQ', 'DIA', 'IWM', 'SMH', 'XLK', 'MSFT', 'META', 'AMZN', 'GOOGL', 'AMD']
 
 def calculate_indicators(df):
     """計算均線與成交量指標"""
