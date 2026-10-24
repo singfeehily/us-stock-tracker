@@ -26,12 +26,13 @@
 <body class="min-h-screen flex flex-col">
 
     <!-- 頂部導航與搜尋 -->
-    <header class="glass-panel sticky top-0 z-40 px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div class="flex items-center gap-3 flex-wrap">
-            <i class="fa-solid fa-chart-line text-blue-500 text-2xl"></i>
-            <h1 class="text-xl font-bold text-white tracking-wider">美股監察器</h1>
+    <header class="glass-panel sticky top-0 z-40 px-4 md:px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-3 flex-wrap w-full md:w-auto justify-between md:justify-start">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-chart-line text-blue-500 text-xl md:text-2xl"></i>
+                <h1 class="text-lg md:text-xl font-bold text-white tracking-wider">美股監察器</h1>
+            </div>
             <span id="updateTimeText" class="text-xs text-gray-400">數據更新中...</span>
-            <!-- 修正後的正確 Actions 總覽網址，不再出現 404 -->
             <a href="https://github.com/singfehily/us-stock-tracker/actions" target="_blank" 
                class="bg-[#21262d] hover:bg-[#30363d] text-gray-300 border border-[#30363d] px-3 py-1 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5">
                 <i class="fa-solid fa-rotate text-blue-400"></i> 手動更新數據
@@ -49,7 +50,7 @@
         </form>
     </header>
 
-    <main class="flex-grow p-4 lg:p-6 flex flex-col gap-6">
+    <main class="flex-grow p-3 md:p-6 flex flex-col gap-6">
         
         <!-- 大盤與板塊資金流向 -->
         <section class="glass-panel rounded-xl overflow-hidden">
@@ -125,11 +126,11 @@
                 </div>
                 
                 <div id="screenerContent" class="collapsible-content flex flex-col" style="max-height: 800px;">
-                    <div class="flex border-b border-[#30363d] bg-[#0d1117] px-2 gap-2">
-                        <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors">
+                    <div class="flex border-b border-[#30363d] bg-[#0d1117] px-2 gap-2 overflow-x-auto no-scrollbar">
+                        <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap">
                             <i class="fa-solid fa-layer-group mr-1"></i>SMC 形態與爆量池
                         </button>
-                        <button onclick="switchTab('watchlist')" id="tabWatchlist" class="px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors">
+                        <button onclick="switchTab('watchlist')" id="tabWatchlist" class="px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors whitespace-nowrap">
                             <i class="fa-solid fa-star mr-1"></i>核心監察總表
                         </button>
                     </div>
@@ -499,11 +500,11 @@
             const tabWatchlist = document.getElementById('tabWatchlist');
             
             if (tab === 'smc') {
-                tabSmc.className = "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors";
-                tabWatchlist.className = "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors";
+                tabSmc.className = "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap";
+                tabWatchlist.className = "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors whitespace-nowrap";
             } else {
-                tabWatchlist.className = "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors";
-                tabSmc.className = "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors";
+                tabWatchlist.className = "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap";
+                tabSmc.className = "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors whitespace-nowrap";
             }
             renderScreenerData();
         }
