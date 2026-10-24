@@ -31,7 +31,8 @@
             <i class="fa-solid fa-chart-line text-blue-500 text-2xl"></i>
             <h1 class="text-xl font-bold text-white tracking-wider">美股監察器</h1>
             <span id="updateTimeText" class="text-xs text-gray-400">數據更新中...</span>
-            <a href="https://github.com/singfehily/us-stock-tracker/actions/workflows/update_data.yml" target="_blank" 
+            <!-- 修正後的正確 Actions 總覽網址，不再出現 404 -->
+            <a href="https://github.com/singfehily/us-stock-tracker/actions" target="_blank" 
                class="bg-[#21262d] hover:bg-[#30363d] text-gray-300 border border-[#30363d] px-3 py-1 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5">
                 <i class="fa-solid fa-rotate text-blue-400"></i> 手動更新數據
             </a>
@@ -84,7 +85,7 @@
         <!-- 走勢圖與量化篩選 -->
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
             
-            <!-- 左側：TradingView 輕量圖表區（含技術指標與控制列） -->
+            <!-- 左側：TradingView 輕量圖表區 -->
             <div class="xl:col-span-1 glass-panel rounded-xl flex flex-col">
                 <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('chartContent', 'chartIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-display text-purple-400 mr-2"></i>自動作戰區間圖</span>
@@ -94,7 +95,7 @@
                     </div>
                 </div>
                 <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 650px;">
-                    <!-- 技術指標勾選控制列 -->
+                    <!-- 指標控制列 -->
                     <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 flex flex-wrap gap-3 text-xs">
                         <span class="text-gray-400 font-bold self-center"><i class="fa-solid fa-sliders mr-1 text-blue-400"></i>指標:</span>
                         <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white">
@@ -111,9 +112,7 @@
                         </label>
                     </div>
 
-                    <!-- 主圖容器 -->
                     <div id="tv_chart_container" style="height: 340px; width: 100%; position: relative;"></div>
-                    <!-- 副圖容器 (預設隱藏，勾選 RSI 或 MACD 時顯示) -->
                     <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
                 </div>
             </div>
@@ -158,19 +157,6 @@
         </div>
     </main>
 
-    <!-- Modal 詳情視窗 -->
-    <div id="infoModal" class="fixed inset-0 z-50 hidden flex items-center justify-center modal-overlay">
-        <div class="glass-panel bg-[#161b22] rounded-xl max-w-md w-full mx-4 shadow-2xl border border-gray-600 transform scale-95 opacity-0 transition-all duration-200" id="modalContentBox">
-            <div class="px-6 py-4 border-b border-[#30363d] flex justify-between items-center">
-                <h3 id="modalTitle" class="text-lg font-bold text-white flex items-center gap-2"></h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <div class="p-6">
-                <p id="modalDesc" class="text-gray-300 leading-relaxed"></p>
-            </div>
-        </div>
-    </div>
-
     <div id="toast-container"></div>
 
     <script>
@@ -179,13 +165,12 @@
         let subChart = null;
         let candleSeries = null;
         
-        // 技術指標 Series 參照
         let ema20Series = null;
         let ema50Series = null;
         let bollUpperSeries = null;
         let bollMidSeries = null;
         let bollLowerSeries = null;
-        let subIndicatorSeries = null; // 用於 RSI 或 MACD 副圖
+        let subIndicatorSeries = null;
 
         let currentTab = 'smc';
         let userWatchlist = ['AAPL', 'NVDA', 'TSLA', 'PLTR', 'SPY', 'QQQ'];
@@ -204,7 +189,7 @@
                 if (!response.ok) throw new Error('無法讀取 data.json');
                 globalData = await response.json();
                 
-                document.getElementById('updateTimeText').innerText = `最後更新: ${globalData.updated_at}`;
+                document.getElementById('updateTimeText').innerText = `最後更新: ${globalData.updated_at} (HKT)`;
                 renderWatchlist();
                 renderScreenerData();
                 
@@ -222,7 +207,6 @@
             const subContainer = document.getElementById('sub_chart_container');
             if(!container) return;
 
-            // 主圖初始化
             chart = LightweightCharts.createChart(container, { 
                 layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } },
                 grid: { vertLines: { color: 'rgba(48, 54, 61, 0.5)' }, horzLines: { color: 'rgba(48, 54, 61, 0.5)' } },
@@ -233,7 +217,6 @@
                 upColor: '#26a69a', downColor: '#ef5350', borderVisible: false, wickUpColor: '#26a69a', wickDownColor: '#ef5350'
             });
 
-            // 副圖初始化
             subChart = LightweightCharts.createChart(subContainer, {
                 layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } },
                 grid: { vertLines: { color: 'rgba(48, 54, 61, 0.3)' }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } },
@@ -308,10 +291,9 @@
             }
 
             chart.timeScale().fitContent();
-            updateChartIndicators(); // 重新整理指標
+            updateChartIndicators();
         }
 
-        // --- 技術指標計算與繪製核心邏輯 ---
         function updateChartIndicators() {
             if (!currentCandleData.length) return;
 
@@ -320,7 +302,6 @@
             const showRsi = document.getElementById('ind_rsi').checked;
             const showMacd = document.getElementById('ind_macd').checked;
 
-            // 1. 處理 EMA
             if (showEma) {
                 const ema20 = calculateEMA(currentCandleData, 20);
                 const ema50 = calculateEMA(currentCandleData, 50);
@@ -335,7 +316,6 @@
                 if (ema50Series) { chart.removeSeries(ema50Series); ema50Series = null; }
             }
 
-            // 2. 處理 BOLL (布林通道參數: 20日, 2倍標準差)
             if (showBoll) {
                 const boll = calculateBOLL(currentCandleData, 20, 2);
                 if (!bollUpperSeries) bollUpperSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'BOLL Upper' });
@@ -351,7 +331,6 @@
                 if (bollLowerSeries) { chart.removeSeries(bollLowerSeries); bollLowerSeries = null; }
             }
 
-            // 3. 處理副圖指標 (RSI 或 MACD)
             const subContainer = document.getElementById('sub_chart_container');
             if (showRsi || showMacd) {
                 subContainer.style.display = 'block';
@@ -380,7 +359,6 @@
             }
         }
 
-        // --- 技術指標數學計算函數 ---
         function calculateEMA(data, period) {
             let result = [];
             let multiplier = 2 / (period + 1);
@@ -456,7 +434,6 @@
                 macdLine.push({ time: data[i].time, value: val });
             }
 
-            // 簡化為柱狀圖呈現 MACD Histogram (macdLine - signalLine)
             let result = [];
             for (let i = 0; i < macdLine.length; i++) {
                 let color = macdLine[i].value >= 0 ? '#26a69a' : '#ef5350';
