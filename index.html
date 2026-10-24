@@ -20,6 +20,14 @@
         .clickable-row:hover { background-color: #1f242c; }
         .collapsible-content { transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out; overflow: hidden; }
         .collapsed { max-height: 0 !important; opacity: 0; padding-top: 0 !important; padding-bottom: 0 !important; border: none !important; }
+        
+        /* 浮動 K 線數據面板樣式 */
+        #chartTooltip {
+            position: absolute; left: 12px; top: 12px; z-index: 10;
+            background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(4px);
+            border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px;
+            font-family: monospace; font-size: 12px; pointer-events: none; display: none;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -31,11 +39,9 @@
                 <i class="fa-solid fa-chart-line text-blue-500 text-xl md:text-2xl"></i>
                 <h1 class="text-lg md:text-xl font-bold text-white tracking-wider">美股監察器</h1>
             </div>
-            
             <div class="flex flex-col">
                 <div class="flex items-center gap-3">
                     <span id="updateTimeText" class="text-xs text-gray-400">數據讀取中...</span>
-                    <!-- 手動更新按鈕 (修復 404 問題) -->
                     <a href="https://github.com/singfeehily/us-stock-tracker/actions" target="_blank" 
                        class="bg-[#21262d] hover:bg-[#30363d] text-gray-300 border border-[#30363d] px-3 py-1 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5">
                         <i class="fa-solid fa-rotate text-blue-400"></i> 手動更新
@@ -58,18 +64,15 @@
 
     <main class="flex-grow p-3 md:p-6 flex flex-col gap-6">
         
-        <!-- 大盤與板塊資金流向 -->
+        <!-- 動態：大盤與板塊資金流向 -->
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-2 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('marketFlowContent', 'marketFlowIcon')">
-                <span class="font-semibold text-white text-sm"><i class="fa-solid fa-globe text-blue-400 mr-2"></i>大盤與板塊資金流向</span>
+                <span class="font-semibold text-white text-sm"><i class="fa-solid fa-globe text-blue-400 mr-2"></i>大盤與板塊即時資金流向</span>
                 <i id="marketFlowIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
             </div>
+            <!-- 內容由 JS 動態載入 -->
             <div id="marketFlowContent" class="collapsible-content flex gap-6 overflow-x-auto no-scrollbar py-3 px-4" style="max-height: 100px;">
-                <div class="flex items-center gap-2 whitespace-nowrap"><span class="font-bold text-gray-300">SPY (標普)</span><span class="text-green-500 text-sm"><i class="fa-solid fa-arrow-up mr-1"></i>+0.8%</span></div>
-                <div class="w-px h-6 bg-[#30363d]"></div>
-                <div class="flex items-center gap-2 whitespace-nowrap"><span class="font-bold text-gray-300">QQQ (納指)</span><span class="text-green-500 text-sm"><i class="fa-solid fa-arrow-up mr-1"></i>+1.2%</span></div>
-                <div class="w-px h-6 bg-[#30363d]"></div>
-                <div class="flex items-center gap-2 whitespace-nowrap"><span class="font-bold text-blue-300">XLK (科技)</span><span class="bg-green-900/50 text-green-400 px-2 py-0.5 rounded text-xs">資金大幅流入</span></div>
+                <span class="text-gray-500 text-sm">讀取即時指數中...</span>
             </div>
         </section>
 
@@ -93,7 +96,7 @@
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
             
             <!-- 左側：TradingView 圖表區 -->
-            <div class="xl:col-span-1 glass-panel rounded-xl flex flex-col">
+            <div class="xl:col-span-1 glass-panel rounded-xl flex flex-col relative">
                 <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('chartContent', 'chartIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-display text-purple-400 mr-2"></i>自動作戰區間圖</span>
                     <div class="flex items-center gap-3">
@@ -103,32 +106,24 @@
                 </div>
                 <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 650px;">
                     <div class="flex flex-col xl:flex-row gap-3">
-                        <!-- Time Frame 切換列 -->
                         <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-1.5 flex gap-1 text-xs items-center justify-center">
                             <button onclick="changeTimeFrame('15m')" id="tf_15m" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">15m</button>
                             <button onclick="changeTimeFrame('4H')" id="tf_4H" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">4H</button>
                             <button onclick="changeTimeFrame('1D')" id="tf_1D" class="px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors">1D</button>
                         </div>
-                        
-                        <!-- 指標切換列 -->
                         <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2 flex flex-wrap gap-3 text-xs flex-grow items-center justify-center">
                             <span class="text-gray-400 font-bold"><i class="fa-solid fa-sliders mr-1 text-blue-400"></i>指標:</span>
-                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white">
-                                <input type="checkbox" id="ind_ema" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> EMA
-                            </label>
-                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white">
-                                <input type="checkbox" id="ind_boll" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> BOLL
-                            </label>
-                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white">
-                                <input type="checkbox" id="ind_rsi" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> RSI
-                            </label>
-                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white">
-                                <input type="checkbox" id="ind_macd" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> MACD
-                            </label>
+                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> EMA</label>
+                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> BOLL</label>
+                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> RSI</label>
+                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_macd" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> MACD</label>
                         </div>
                     </div>
 
-                    <div id="tv_chart_container" style="height: 320px; width: 100%; position: relative;"></div>
+                    <!-- 圖表容器，加入浮動的 K 線數據 Tooltip -->
+                    <div id="tv_chart_container" style="height: 320px; width: 100%; position: relative;">
+                        <div id="chartTooltip"></div>
+                    </div>
                     <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
                 </div>
             </div>
@@ -163,7 +158,6 @@
                                 </tr>
                             </thead>
                             <tbody id="screenerTableBody">
-                                <!-- 動態載入 -->
                             </tbody>
                         </table>
                     </div>
@@ -202,12 +196,13 @@
 
         async function loadJSONData() {
             try {
-                // 強制加上時間戳，確保破解瀏覽器快取
                 const response = await fetch('data.json?t=' + new Date().getTime());
                 if (!response.ok) throw new Error('無法讀取 data.json');
                 globalData = await response.json();
                 
                 document.getElementById('updateTimeText').innerHTML = `最後更新: ${globalData.updated_at || '最新'} (HKT)`;
+                
+                renderMarketFlow(); // 動態渲染大盤板塊
                 renderWatchlist();
                 renderScreenerData();
                 
@@ -221,16 +216,58 @@
             }
         }
 
+        // 動態渲染大盤與板塊 (從 JSON 自動抓取指標)
+        function renderMarketFlow() {
+            const container = document.getElementById('marketFlowContent');
+            // 定義常見的大盤與板塊代號，只要 screener.py 裡有，就會自動出現在這！
+            const targetIndices = ['SPY', 'QQQ', 'DIA', 'IWM', 'SMH', 'XLK', 'XLF', 'XLE'];
+            
+            let html = '';
+            let foundIndices = [];
+            
+            const sourceData = (globalData && globalData.watchlist_data) ? globalData.watchlist_data : [];
+            
+            sourceData.forEach(item => {
+                if (targetIndices.includes(item.symbol)) {
+                    foundIndices.push(item);
+                }
+            });
+
+            if (foundIndices.length > 0) {
+                foundIndices.forEach((item, index) => {
+                    const isUp = item.change >= 0;
+                    const color = isUp ? 'text-green-500' : 'text-red-500';
+                    const icon = isUp ? 'fa-arrow-up' : 'fa-arrow-down';
+                    
+                    html += `
+                        <div class="flex items-center gap-2 whitespace-nowrap cursor-pointer hover:bg-[#1f242c] px-2 py-1 rounded transition-colors" onclick="updateChartSymbol('${item.symbol}')">
+                            <span class="font-bold text-gray-300">${item.symbol}</span>
+                            <span class="${color} text-sm font-semibold"><i class="fa-solid ${icon} mr-1"></i>${isUp?'+':''}${item.change_pct}%</span>
+                        </div>
+                    `;
+                    // 加上分隔線，最後一個不加
+                    if (index < foundIndices.length - 1) {
+                        html += `<div class="w-px h-6 bg-[#30363d]"></div>`;
+                    }
+                });
+            } else {
+                html = `<span class="text-gray-500 text-sm italic">尚未追蹤指數。提示：在 Python 後端加入 SPY, QQQ, DIA 等代碼，即可在此動態顯示即時板塊資金！</span>`;
+            }
+            container.innerHTML = html;
+        }
+
         function initCharts() {
             const container = document.getElementById('tv_chart_container');
             const subContainer = document.getElementById('sub_chart_container');
+            const tooltip = document.getElementById('chartTooltip');
             if(!container) return;
 
             chart = LightweightCharts.createChart(container, { 
                 layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } },
                 grid: { vertLines: { color: 'rgba(48, 54, 61, 0.5)' }, horzLines: { color: 'rgba(48, 54, 61, 0.5)' } },
                 timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false }, 
-                rightPriceScale: { borderColor: '#30363d' }
+                rightPriceScale: { borderColor: '#30363d' },
+                crosshair: { mode: LightweightCharts.CrosshairMode.Normal }
             });
             
             candleSeries = chart.addCandlestickSeries({
@@ -241,6 +278,36 @@
                 layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } },
                 grid: { vertLines: { color: 'rgba(48, 54, 61, 0.3)' }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } },
                 timeScale: { borderColor: '#30363d', visible: false }, rightPriceScale: { borderColor: '#30363d' }
+            });
+
+            // 訂閱滑鼠移動事件 (顯示 K 線詳細數據 Tooltip)
+            chart.subscribeCrosshairMove((param) => {
+                if (
+                    param.point === undefined || !param.time || 
+                    param.point.x < 0 || param.point.x > container.clientWidth || 
+                    param.point.y < 0 || param.point.y > container.clientHeight
+                ) {
+                    tooltip.style.display = 'none'; // 滑鼠移開圖表時隱藏
+                } else {
+                    const data = param.seriesData.get(candleSeries);
+                    if (data) {
+                        tooltip.style.display = 'block';
+                        const isUp = data.close >= data.open;
+                        const color = isUp ? '#26a69a' : '#ef5350';
+                        
+                        tooltip.innerHTML = `
+                            <div style="color: #c9d1d9; margin-bottom: 4px; font-weight: bold;">
+                                <i class="fa-solid fa-crosshairs text-blue-400 mr-1"></i> 指標數據
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px;">
+                                <div>O: <span style="color:${color}">${data.open.toFixed(2)}</span></div>
+                                <div>H: <span style="color:${color}">${data.high.toFixed(2)}</span></div>
+                                <div>L: <span style="color:${color}">${data.low.toFixed(2)}</span></div>
+                                <div>C: <span style="color:${color}">${data.close.toFixed(2)}</span></div>
+                            </div>
+                        `;
+                    }
+                }
             });
 
             new ResizeObserver(() => {
@@ -273,7 +340,6 @@
 
             currentSymbolData = (globalData.screener_data || []).find(x => x.symbol === symbol);
 
-            // 清理舊有的價格線與 SMC 標籤
             activePriceLines.forEach(line => candleSeries.removePriceLine(line));
             activePriceLines = [];
             candleSeries.setMarkers([]);
@@ -289,7 +355,6 @@
 
             let currentTime = Math.floor(Date.now() / 1000) - (candleCount * timeStep);
 
-            // 產生模擬 K 線數據
             for (let i = 0; i < candleCount; i++) {
                 const open = currentPrice;
                 const close = open + (Math.random() * 4 - 2);
@@ -301,7 +366,6 @@
                 currentTime += timeStep;
             }
 
-            // 強制讓最後一根 K 線涵蓋真實作戰區間，避免畫面跑版
             if (currentSymbolData) {
                 data[data.length - 1].close = currentSymbolData.price;
                 data[data.length - 1].high = Math.max(currentSymbolData.price, currentSymbolData.entry_top) + 1;
@@ -312,44 +376,54 @@
             candleSeries.setData(data);
 
             if (currentSymbolData) {
-                // 1. 建立 SMC 區間頂部 (藍色實線)
+                
+                // 1. 強制加入：現價追蹤線 (白色)
+                const priceLine = candleSeries.createPriceLine({
+                    price: Number(currentSymbolData.price),
+                    color: '#ffffff',
+                    lineWidth: 1,
+                    lineStyle: LightweightCharts.LineStyle.Solid,
+                    axisLabelVisible: true,
+                    title: `市價: $${currentSymbolData.price}`,
+                });
+
+                // 2. SMC 區間頂部 (藍色實線)
                 const topLine = candleSeries.createPriceLine({
                     price: Number(currentSymbolData.entry_top),
                     color: '#3b82f6',
                     lineWidth: 2,
                     lineStyle: LightweightCharts.LineStyle.Solid,
                     axisLabelVisible: true,
-                    title: `SMC 區間(上): $${currentSymbolData.entry_top}`,
+                    title: `SMC(上): $${currentSymbolData.entry_top}`,
                 });
                 
-                // 2. 建立 SMC 區間底部 (藍色虛線)
+                // 3. SMC 區間底部 (藍色虛線)
                 const botLine = candleSeries.createPriceLine({
                     price: Number(currentSymbolData.entry_bot),
                     color: '#3b82f6',
                     lineWidth: 1,
                     lineStyle: LightweightCharts.LineStyle.Dashed,
                     axisLabelVisible: true,
-                    title: `SMC 區間(下): $${currentSymbolData.entry_bot}`,
+                    title: `SMC(下): $${currentSymbolData.entry_bot}`,
                 });
 
-                // 3. 建立 SL 防守線 (紅色虛線)
+                // 4. SL 防守線 (紅色虛線)
                 const slLine = candleSeries.createPriceLine({
                     price: Number(currentSymbolData.sl),
                     color: '#ef5350',
                     lineWidth: 2,
                     lineStyle: LightweightCharts.LineStyle.Dashed,
                     axisLabelVisible: true,
-                    title: `防守止損(SL): $${currentSymbolData.sl}`,
+                    title: `止損(SL): $${currentSymbolData.sl}`,
                 });
 
-                activePriceLines.push(topLine, botLine, slLine);
+                activePriceLines.push(priceLine, topLine, botLine, slLine);
 
-                // 4. 動態加入 FVG / OB 視覺標記箭頭於K線上方
                 if (currentSymbolData.smc_text) {
                     let markerColor = currentSymbolData.smc_id === 'fvg' ? '#f59e0b' : '#a855f7'; 
                     candleSeries.setMarkers([
                         {
-                            time: currentCandleData[currentCandleData.length - 2].time, // 放在倒數第二根K線上避免重疊
+                            time: currentCandleData[currentCandleData.length - 2].time, 
                             position: 'aboveBar',
                             color: markerColor,
                             shape: 'arrowDown',
@@ -497,7 +571,6 @@
             const container = document.getElementById('watchlistContainer');
             const emptyMsg = document.getElementById('emptyWatchlistMsg');
             
-            // 容錯處理：如果有 watchlist_data 就用，沒有就從 screener_data 拿
             const sourceData = (globalData && globalData.watchlist_data) ? globalData.watchlist_data : (globalData && globalData.screener_data) ? globalData.screener_data : [];
             
             if (sourceData.length === 0) return;
@@ -507,7 +580,6 @@
             let displayList = sourceData.filter(item => userWatchlist.includes(item.symbol));
 
             displayList.forEach(item => {
-                // 為了防呆，如果資料庫沒傳 change，預設顯示些微變動
                 let change = item.change !== undefined ? item.change : 0;
                 let change_pct = item.change_pct !== undefined ? item.change_pct : 0;
                 const isPositive = change >= 0;
@@ -534,7 +606,7 @@
             event.stopPropagation();
             userWatchlist = userWatchlist.filter(s => s !== symbol);
             renderWatchlist();
-            renderScreenerData(); // 修復Bug: 刪除時同步更新下方表格
+            renderScreenerData(); 
             showToast(`已將 ${symbol} 從自選移除`, 'error');
         }
 
@@ -547,7 +619,7 @@
             if (!userWatchlist.includes(symbol)) {
                 userWatchlist.push(symbol);
                 renderWatchlist();
-                renderScreenerData(); // 修復Bug: 新增時同步更新下方表格
+                renderScreenerData(); 
                 showToast(`成功加入自選: ${symbol}`);
             }
             input.value = '';
@@ -576,12 +648,9 @@
 
             let dataToRender = globalData.screener_data;
             
-            // 修復Bug: 正確根據目前 Tab 進行過濾
             if (currentTab === 'smc') {
-                // 僅顯示爆量 或 具有 FVG/OB 形態的股票
                 dataToRender = dataToRender.filter(item => (item.rvol && item.rvol >= 1.5) || item.smc_id === 'fvg' || item.smc_id === 'ob');
             } else if (currentTab === 'watchlist') {
-                // 僅顯示存在於自選清單中的股票
                 dataToRender = dataToRender.filter(item => userWatchlist.includes(item.symbol));
             }
 
