@@ -36,6 +36,7 @@ QCOM
 TXN
 INTC
 MU
+SNDK
 ARM
 SMCI
 WDC
@@ -91,3 +92,6 @@ PG
 KO
 PEP
 DIS
+
+# --- 國防無人機概念股 ---
+ONDS
