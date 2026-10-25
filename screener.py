@@ -2,20 +2,18 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 import json
-from datetime import datetime, timezone, timedelta
-
-# 擴大雷達網：50 檔精選美股 (涵蓋指數、七大巨頭、熱門科技與半導體)
 import os
+from datetime import datetime, timezone, timedelta
 
 def load_tickers(filename='tickers.txt'):
     """從 tickers.txt 讀取股票代號名單"""
     if os.path.exists(filename):
         with open(filename, 'r', encoding='utf-8') as f:
-            # 讀取每一行，去除前後空白與換行，並轉大寫。自動忽略空行。
+            # 讀取每一行，去除前後空白與換行，並轉大寫。自動忽略空行與 # 註解。
             return [line.strip().upper() for line in f if line.strip() and not line.startswith('#')]
     else:
         print(f"⚠️ 找不到 {filename}，將使用預設名單。")
-        return ['SPY', 'QQQ', 'NVDA', 'TSLA', 'AAPL']
+        return ['SPY', 'QQQ', 'NVDA', 'TSLA', 'AAPL', 'PLTR']
 
 # 讓雷達網自動讀取 txt 檔案
 WATCHLIST = load_tickers()
@@ -43,7 +41,13 @@ def detect_smc(df):
         return None, "-", "border-gray-600 text-gray-400", 0, 0, 0, 0, 0
         
     current_price = df.iloc[-1]['Close']
-    is_uptrend = df.iloc[-1]['Dist_20MA'] > 0 # 趨勢過濾：只做 20MA 之上的多頭
+    
+    # 安全提取 Dist_20MA
+    dist_20ma = 0.0
+    if 'Dist_20MA' in df.columns and not pd.isna(df.iloc[-1]['Dist_20MA']):
+        dist_20ma = df.iloc[-1]['Dist_20MA']
+        
+    is_uptrend = dist_20ma > 0 # 趨勢過濾：只做 20MA 之上的多頭
     
     smc_id, smc_text, smc_class = None, "-", "border-gray-600 text-gray-400"
     entry_top, entry_bot, sl, tp, rrr = 0, 0, 0, 0, 0
@@ -92,7 +96,7 @@ def detect_smc(df):
     return smc_id, smc_text, smc_class, round(entry_top, 2), round(entry_bot, 2), round(sl, 2), round(tp, 2), rrr
 
 def main():
-    print("啟動高勝率 SMC 量化雷達...")
+    print(f"啟動高勝率 SMC 量化雷達... 共監測 {len(WATCHLIST)} 檔股票")
     screener_data, watchlist_data = [], []
     
     for symbol in WATCHLIST:
@@ -109,8 +113,15 @@ def main():
             watchlist_data.append({"symbol": symbol, "price": current_price, "change": change, "change_pct": change_pct})
             
             smc_id, smc_text, smc_class, entry_top, entry_bot, sl, tp, rrr = detect_smc(df)
-            rvol = round(latest['RVOL'], 2) if not pd.isna(latest['RVOL']) else 1.0
-            dist_20ma = round(latest['Dist_20MA'], 2) if not pd.isna(latest['Dist_20MA']) else 0.0
+            
+            # ⚡ 核心防呆修正：安全提取 RVOL 與 20MA，防止 KeyError 當機
+            rvol = 1.0
+            if 'RVOL' in df.columns and not pd.isna(latest['RVOL']):
+                rvol = round(latest['RVOL'], 2)
+                
+            dist_20ma = 0.0
+            if 'Dist_20MA' in df.columns and not pd.isna(latest['Dist_20MA']):
+                dist_20ma = round(latest['Dist_20MA'], 2)
             
             label = "多頭" if dist_20ma > 0 else "空頭"
             label_class = "bg-green-900/50 text-green-400" if dist_20ma > 0 else "bg-red-900/50 text-red-400"
@@ -124,6 +135,7 @@ def main():
             })
             print(f"✅ {symbol} 解析完成.")
         except Exception as e:
+            # 即使某檔股票出錯，系統也不會崩潰
             print(f"❌ {symbol} 錯誤: {e}")
 
     # 排序：S級掃損 > 普通FVG > 爆量，且無形態的放最後
