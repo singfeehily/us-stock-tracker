@@ -1,5 +1,5 @@
 {
-    "updated_at": "2026-10-26 00:05:37",
+    "updated_at": "2026-10-26 00:26:07",
     "watchlist_data": [
         {
             "symbol": "SPY",
@@ -174,6 +174,12 @@
             "price": 877.55,
             "change": 21.06,
             "change_pct": 2.46
+        },
+        {
+            "symbol": "SNDK",
+            "price": 1238.03,
+            "change": -22.9,
+            "change_pct": -1.82
         },
         {
             "symbol": "ARM",
@@ -1100,6 +1106,22 @@
             "price": 877.55,
             "rvol": 0.79,
             "dist_20ma": -11.05,
+            "smc_id": null,
+            "smc_text": "-",
+            "smc_class": "border-gray-600 text-gray-400",
+            "label": "空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 0,
+            "entry_top": 0,
+            "sl": 0,
+            "tp": 0,
+            "rrr": 0
+        },
+        {
+            "symbol": "SNDK",
+            "price": 1238.03,
+            "rvol": 0.98,
+            "dist_20ma": -19.13,
             "smc_id": null,
             "smc_text": "-",
             "smc_class": "border-gray-600 text-gray-400",
