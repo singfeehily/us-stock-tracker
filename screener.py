@@ -5,14 +5,20 @@ import json
 from datetime import datetime, timezone, timedelta
 
 # 擴大雷達網：50 檔精選美股 (涵蓋指數、七大巨頭、熱門科技與半導體)
-WATCHLIST = [
-    'SPY', 'QQQ', 'DIA', 'IWM', 'SMH', 'XLK', 'XLF', 'XLE',
-    'AAPL', 'NVDA', 'MSFT', 'META', 'AMZN', 'GOOGL', 'TSLA', 
-    'AMD', 'TSM', 'AVGO', 'ASML', 'QCOM', 'TXN', 'INTC', 'MU',
-    'PLTR', 'NFLX', 'CRM', 'ADBE', 'NOW', 'UBER', 'CRWD', 'PANW',
-    'COIN', 'MSTR', 'HOOD', 'MARA', 'RIOT', 'SQ', 'PYPL', 'V',
-    'JPM', 'GS', 'BAC', 'WMT', 'COST', 'PG', 'KO', 'PEP', 'DIS'
-]
+import os
+
+def load_tickers(filename='tickers.txt'):
+    """從 tickers.txt 讀取股票代號名單"""
+    if os.path.exists(filename):
+        with open(filename, 'r', encoding='utf-8') as f:
+            # 讀取每一行，去除前後空白與換行，並轉大寫。自動忽略空行。
+            return [line.strip().upper() for line in f if line.strip() and not line.startswith('#')]
+    else:
+        print(f"⚠️ 找不到 {filename}，將使用預設名單。")
+        return ['SPY', 'QQQ', 'NVDA', 'TSLA', 'AAPL']
+
+# 讓雷達網自動讀取 txt 檔案
+WATCHLIST = load_tickers()
 
 def calculate_indicators(df):
     if len(df) < 20: return df
