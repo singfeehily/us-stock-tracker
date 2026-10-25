@@ -1,40 +1,93 @@
+# ==========================================
+# 美股狙擊器 PRO - 核心監測名單 (tickers.txt)
+# ==========================================
+
+# --- 大盤指數與板塊 ETF ---
+SPY
+QQQ
+DIA
+IWM
+VOO
+QQQM
+SPYM
+SMH
+SOXL
+XLK
+XLF
+XLE
+SPCX
+
+# --- 七大科技巨頭 (Magnificent 7) ---
 AAPL
 MSFT
 NVDA
 TSLA
-PLTR
-SMCI
-COIN
-SNOW
-SPY
-QQQ
-SOXL
-ARM
-MU
-RKLB
-WDC
-ONDS
-CRBS
-TSM
-AAOI
-BE
-NOK
-XOM
-POET
-SPCX
-AMD
-INTC
-LITE
-FUTU
-APP
-VST
-MSTR
-NBIS
-VOO
 AMZN
 META
-SOFI
 GOOG
-SMH
-QQQM
-SPYM
+GOOGL
+
+# --- AI、半導體與硬體製造 ---
+AMD
+TSM
+AVGO
+ASML
+QCOM
+TXN
+INTC
+MU
+ARM
+SMCI
+WDC
+LITE
+AAOI
+POET
+
+# --- 軟體、大數據與網路安全 ---
+PLTR
+SNOW
+APP
+CRM
+ADBE
+NOW
+CRWD
+PANW
+NFLX
+UBER
+
+# --- 加密貨幣概念與金融科技 (FinTech) ---
+COIN
+MSTR
+MARA
+RIOT
+HOOD
+SQ
+PYPL
+SOFI
+FUTU
+
+# --- 傳統銀行與支付 ---
+V
+JPM
+GS
+BAC
+
+# --- 太空、能源與通訊 ---
+RKLB
+XOM
+BE
+VST
+NOK
+
+# --- 潛力生技與其他中小盤 ---
+ONDS
+CRBS
+NBIS
+
+# --- 傳統零售與防禦性板塊 ---
+WMT
+COST
+PG
+KO
+PEP
+DIS
