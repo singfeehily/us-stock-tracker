@@ -11,7 +11,6 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
         .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
         
-        /* 科技感可視捲軸 */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0d1117; }
         ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
@@ -20,6 +19,7 @@
         #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 50; display: flex; flex-direction: column; gap: 10px; }
         .toast { padding: 12px 20px; border-radius: 8px; background-color: #238636; color: white; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.5); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
         .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.error { background-color: #da3633; }
         
         .clickable-row { cursor: pointer; transition: background-color 0.2s; }
         .clickable-row:hover { background-color: #1f242c; }
@@ -38,13 +38,11 @@
         .flash-green { animation: flashGreen 0.8s ease-out; }
         .flash-red { animation: flashRed 0.8s ease-out; }
         
-        /* Modal 背景 */
         #smcModal { display: none; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- 頂部導航與搜尋 -->
     <header class="glass-panel sticky top-0 z-40 px-4 md:px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
         <div class="flex items-center gap-4 flex-wrap w-full md:w-auto justify-between md:justify-start">
             <div class="flex items-center gap-2">
@@ -69,13 +67,7 @@
             <div class="relative w-full flex">
                 <input type="text" id="searchInput" list="stock-suggestions" placeholder="搜尋代號 (例: PLTR)" 
                     class="w-full bg-[#0d1117] border border-[#30363d] rounded-l-lg py-2 px-3 text-white text-sm focus:outline-none focus:border-blue-500 uppercase" autocomplete="off">
-                <datalist id="stock-suggestions">
-                    <option value="NVDA">NVIDIA</option>
-                    <option value="TSLA">Tesla</option>
-                    <option value="PLTR">Palantir</option>
-                    <option value="QQQ">Nasdaq 100</option>
-                    <option value="SPY">S&P 500</option>
-                </datalist>
+                <datalist id="stock-suggestions"></datalist>
             </div>
             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-r-lg text-xs font-medium whitespace-nowrap transition-colors border border-blue-600 border-l-0 flex items-center">
                 <i class="fa-solid fa-plus mr-1"></i> 加入
@@ -84,8 +76,6 @@
     </header>
 
     <main class="flex-grow p-3 md:p-6 flex flex-col gap-6">
-        
-        <!-- 大盤與板塊資金流向 -->
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-2 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('marketFlowContent', 'marketFlowIcon')">
                 <span class="font-semibold text-white text-sm"><i class="fa-solid fa-globe text-blue-400 mr-2"></i>大盤與板塊資金流向 (LIVE)</span>
@@ -96,7 +86,6 @@
             </div>
         </section>
 
-        <!-- 我的最愛自選股 -->
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('watchlistContent', 'watchlistIcon')">
                 <div class="flex items-center gap-2">
@@ -114,7 +103,6 @@
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
             
-            <!-- 圖表區 -->
             <div class="xl:col-span-1 glass-panel rounded-xl flex flex-col relative">
                 <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('chartContent', 'chartIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-display text-purple-400 mr-2"></i>SMC 作戰區間圖</span>
@@ -145,7 +133,6 @@
                 </div>
             </div>
 
-            <!-- 篩選表格區 -->
             <div class="xl:col-span-2 glass-panel rounded-xl flex flex-col overflow-hidden">
                 <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('screenerContent', 'screenerIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i>高勝率 SMC 量化過濾池</span>
@@ -187,7 +174,6 @@
 
     <div id="toast-container"></div>
     
-    <!-- SMC 知識庫 Modal -->
     <div id="smcModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="glass-panel p-6 rounded-xl max-w-md w-full relative">
             <button onclick="closeSMCModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
@@ -197,7 +183,7 @@
             <ul class="space-y-4 text-sm text-gray-300">
                 <li><span class="text-yellow-400 font-bold border border-yellow-500 px-1 rounded mr-2">🔥 S級 掃損</span>主力跌破前低觸發散戶停損後迅速拉升，機構介入最強信號。</li>
                 <li><span class="text-blue-400 font-bold border border-blue-500 px-1 rounded mr-2">⚡ 1D FVG</span>價格極速噴出留下的真空缺口，極易回踩此區接單，為黃金買入區。</li>
-                <li><span class="text-purple-400 font-bold border border-purple-500 px-1 rounded mr-2">💎 Order Block</span>機構爆發拉升前的最後一根反向K線，隱藏大量未成交底倉，為防守鐵底。</li>
+                <li><span class="text-gray-400 font-bold border border-gray-500 px-1 rounded mr-2">⚖️ EQ 50%</span>無信號時顯示的結構中軸。價格在 EQ 上方為溢價區，下方為折價區。</li>
                 <li><span class="text-red-400 font-bold mr-2"><i class="fa-solid fa-ban"></i> 已填補 (Mitigated)</span>若缺口已被回踩超過 50%，系統會自動將其剔除隱藏，避免接刀。</li>
                 <li><span class="text-green-400 font-bold mr-2"><i class="fa-solid fa-scale-balanced"></i> 盈虧比 (RRR)</span>系統自動計算至前高目標的利潤與止損風險比。若低於 1:1.5 將被自動過濾。</li>
             </ul>
@@ -213,7 +199,7 @@
         let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null, subIndicatorSeries = null;
         let currentTab = 'smc';
         let currentTimeFrame = '1D'; 
-        let userWatchlist = ['PLTR', 'NVDA', 'TSLA', 'SPY', 'QQQ'];
+        let userWatchlist = ['FUTU', 'PLTR', 'NVDA', 'TSLA', 'SPY'];
         let activePriceLines = [], currentPriceLine = null;
         let currentCandleData = [], currentSymbolData = null;
 
@@ -230,6 +216,17 @@
                 if (!response.ok) throw new Error('無法讀取 data.json');
                 globalData = await response.json();
                 document.getElementById('updateTimeText').innerText = `SMC 計算時間: ${globalData.updated_at || '最新'} (HKT)`;
+                
+                if (globalData.watchlist_data) {
+                    const dataList = document.getElementById('stock-suggestions');
+                    dataList.innerHTML = '';
+                    globalData.watchlist_data.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.symbol;
+                        dataList.appendChild(option);
+                    });
+                }
+
                 renderMarketFlow(); renderWatchlist(); renderScreenerData();
                 if (globalData.screener_data && globalData.screener_data.length > 0) updateChartSymbol(globalData.screener_data[0].symbol);
             } catch (err) {
@@ -381,26 +378,27 @@
             if(currentPriceLine) { candleSeries.removePriceLine(currentPriceLine); currentPriceLine = null; }
             candleSeries.setMarkers([]);
 
-            let data = [], basePrice = currentSymbolData ? currentSymbolData.price : 220, currentPrice = basePrice * 0.90, candleCount = 80, timeStep = 86400; 
+            // ⚡ 修復截圖問題：平滑錨定最新價格，由右向左推算亂數歷史 K 線
+            let data = [], basePrice = currentSymbolData ? currentSymbolData.price : 220, candleCount = 80, timeStep = 86400; 
             if (currentTimeFrame === '15m') { candleCount = 150; timeStep = 900; } if (currentTimeFrame === '4H') { candleCount = 120; timeStep = 14400; }
             let currentTime = Math.floor(Date.now() / 1000) - (candleCount * timeStep);
+            
+            let prices = [basePrice];
+            for(let i=1; i<candleCount; i++){ prices.unshift(prices[0] + (Math.random() - 0.5) * (basePrice * 0.006)); }
 
             for (let i = 0; i < candleCount; i++) {
-                const open = currentPrice, close = open + (Math.random() - 0.5)*1.5, high = Math.max(open, close) + Math.random(), low = Math.min(open, close) - Math.random();
-                data.push({ time: currentTime, open, high, low, close }); currentPrice = close; currentTime += timeStep;
+                const open = prices[i], close = (i === candleCount - 1) ? basePrice : prices[i] + (Math.random() - 0.5) * (basePrice * 0.004);
+                const high = Math.max(open, close) + Math.random() * (basePrice * 0.002), low = Math.min(open, close) - Math.random() * (basePrice * 0.002);
+                data.push({ time: currentTime, open, high, low, close }); currentTime += timeStep;
             }
 
-            if (currentSymbolData) {
-                const last = data[data.length - 1]; last.close = currentSymbolData.price;
-                if(currentSymbolData.entry_top) last.high = Math.max(currentSymbolData.price, currentSymbolData.tp || currentSymbolData.entry_top) + 1;
-                if(currentSymbolData.sl) last.low = Math.min(currentSymbolData.price, currentSymbolData.sl) - 1;
-            }
             currentCandleData = data; candleSeries.setData(data);
 
             if (currentSymbolData) {
                 currentPriceLine = candleSeries.createPriceLine({ price: currentSymbolData.price, color: '#ffffff', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: `市價: $${currentSymbolData.price}` });
                 
                 if (currentSymbolData.smc_id) {
+                    // 有形態：畫出買入區、SL 與 TP
                     const topLine = candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: '#3b82f6', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: `買入(上): $${currentSymbolData.entry_top}` });
                     const botLine = candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: '#3b82f6', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `買入(下): $${currentSymbolData.entry_bot}` });
                     const slLine = candleSeries.createPriceLine({ price: currentSymbolData.sl, color: '#ef5350', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `止損(SL): $${currentSymbolData.sl}` });
@@ -413,17 +411,25 @@
                         position: 'aboveBar', color: markerColor, shape: 'arrowDown', 
                         text: `▼ ${currentSymbolData.smc_text} (RRR 1:${currentSymbolData.rrr})`
                     }]);
+                } else {
+                    // ⚡ 無 SMC 形態：自動畫出流動性邊界與 EQ 溢折價中軸
+                    let highest = Math.max(...data.map(d => d.high));
+                    let lowest = Math.min(...data.map(d => d.low));
+                    let eq = (highest + lowest) / 2;
+                    
+                    const highLine = candleSeries.createPriceLine({ price: highest, color: '#9ca3af', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `近期高點(BSL)` });
+                    const eqLine = candleSeries.createPriceLine({ price: eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: `EQ 50% (中軸)` });
+                    const lowLine = candleSeries.createPriceLine({ price: lowest, color: '#9ca3af', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `近期低點(SSL)` });
+                    activePriceLines.push(highLine, eqLine, lowLine);
                 }
             }
             
-            // ⚡ 核心修復：強制 Y 軸與 X 軸完美適應
             chart.timeScale().fitContent(); 
             chart.priceScale('right').applyOptions({ autoScale: true });
             
             updateChartIndicators(); fetchLiveQuotes();
         }
 
-        // ================= 以下為技術指標演算法 =================
         function updateChartIndicators(clickedType = null) {
             if (!currentCandleData.length) return;
             const rsiCheck = document.getElementById('ind_rsi'), macdCheck = document.getElementById('ind_macd');
@@ -517,7 +523,6 @@
             return macdLine.map(item => ({ time: item.time, value: Number(item.value.toFixed(2)), color: item.value >= 0 ? '#26a69a' : '#ef5350' }));
         }
 
-        // ================= 以下為 UI 互動邏輯 =================
         function switchTab(tab) {
             currentTab = tab;
             document.getElementById('tabSmc').className = (tab==='smc') ? "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap" : "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
@@ -532,7 +537,6 @@
             
             let dataToRender = globalData.screener_data;
             if (currentTab === 'smc') {
-                // 嚴格過濾：只顯示高勝率 SMC 且 RRR >= 1.5 的優質訊號
                 dataToRender = dataToRender.filter(item => item.smc_id && item.rrr >= 1.5);
             } else if (currentTab === 'watchlist') {
                 dataToRender = dataToRender.filter(item => userWatchlist.includes(item.symbol));
@@ -556,7 +560,27 @@
             });
         }
 
-        function addCustomStock(e) { e.preventDefault(); const val = document.getElementById('searchInput').value.trim().toUpperCase(); if(val && !userWatchlist.includes(val)){ userWatchlist.push(val); renderWatchlist(); renderScreenerData(); fetchLiveQuotes(); showToast(`已加入: ${val}`); } document.getElementById('searchInput').value=''; }
+        function addCustomStock(e) { 
+            e.preventDefault(); 
+            const val = document.getElementById('searchInput').value.trim().toUpperCase(); 
+            if(!val) return;
+
+            const existsInData = globalData && globalData.watchlist_data && globalData.watchlist_data.some(item => item.symbol === val);
+            if (!existsInData) {
+                showToast(`找不到 ${val} 數據！請先確認已加入 tickers.txt 並執行 Workflow。`, 'error');
+                return;
+            }
+
+            if(!userWatchlist.includes(val)){ 
+                userWatchlist.push(val); 
+                renderWatchlist(); 
+                renderScreenerData(); 
+                fetchLiveQuotes(); 
+                showToast(`已加入: ${val}`); 
+            } 
+            document.getElementById('searchInput').value=''; 
+        }
+
         function removeFromWatchlist(e, sym) { e.stopPropagation(); userWatchlist = userWatchlist.filter(s=>s!==sym); renderWatchlist(); renderScreenerData(); showToast(`已移除: ${sym}`,'error'); }
         function toggleSection(cId, iId) { document.getElementById(cId).classList.toggle('collapsed'); document.getElementById(iId).classList.toggle('rotate-180'); }
         function showToast(msg, type='success') { const c = document.getElementById('toast-container'), t = document.createElement('div'); t.className=`toast ${type==='error'?'error':''}`; t.innerHTML=`<i class="fa-solid ${type==='error'?'fa-trash':'fa-check-circle'} mr-2"></i> ${msg}`; c.appendChild(t); setTimeout(()=>t.classList.add('show'),10); setTimeout(()=>{t.classList.remove('show'); setTimeout(()=>t.remove(),300);}, 3000); }
