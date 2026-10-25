@@ -65,7 +65,7 @@
         
         <form id="searchForm" onsubmit="addCustomStock(event)" class="flex w-full md:w-1/3 relative">
             <div class="relative w-full flex">
-                <input type="text" id="searchInput" list="stock-suggestions" placeholder="搜尋代號 (例: PLTR)" 
+                <input type="text" id="searchInput" list="stock-suggestions" placeholder="輸入美股代號 (例: SNDK, FUTU)" 
                     class="w-full bg-[#0d1117] border border-[#30363d] rounded-l-lg py-2 px-3 text-white text-sm focus:outline-none focus:border-blue-500 uppercase" autocomplete="off">
                 <datalist id="stock-suggestions"></datalist>
             </div>
@@ -199,7 +199,7 @@
         let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null, subIndicatorSeries = null;
         let currentTab = 'smc';
         let currentTimeFrame = '1D'; 
-        let userWatchlist = ['FUTU', 'PLTR', 'NVDA', 'TSLA', 'SPY'];
+        let userWatchlist = ['SNDK', 'FUTU', 'PLTR', 'NVDA', 'TSLA', 'SPY'];
         let activePriceLines = [], currentPriceLine = null;
         let currentCandleData = [], currentSymbolData = null;
 
@@ -304,11 +304,21 @@
 
         function renderWatchlist() {
             const container = document.getElementById('watchlistContainer');
-            const sourceData = (globalData && globalData.watchlist_data) ? globalData.watchlist_data : [];
-            if (sourceData.length === 0) return;
-            document.getElementById('emptyWatchlistMsg').style.display = 'none'; container.innerHTML = '';
-            sourceData.filter(item => userWatchlist.includes(item.symbol)).forEach(item => {
-                const isPositive = item.change >= 0;
+            const emptyMsg = document.getElementById('emptyWatchlistMsg');
+            emptyMsg.style.display = 'none'; 
+            container.innerHTML = '';
+            
+            const watchlistMap = new Map();
+            if (globalData && globalData.watchlist_data) {
+                globalData.watchlist_data.forEach(item => watchlistMap.set(item.symbol, item));
+            }
+
+            userWatchlist.forEach(sym => {
+                let item = watchlistMap.get(sym) || { symbol: sym, price: 0, change: 0, change_pct: 0 };
+                let change = item.change !== undefined ? item.change : 0;
+                let change_pct = item.change_pct !== undefined ? item.change_pct : 0;
+                const isPositive = change >= 0;
+                
                 const card = document.createElement('div');
                 card.className = 'flex-shrink-0 w-44 glass-panel rounded-lg p-3 relative cursor-pointer hover:border-gray-500 transition-colors bg-[#0d1117] group';
                 card.innerHTML = `
@@ -316,9 +326,9 @@
                         <span class="font-bold text-base text-white" onclick="updateChartSymbol('${item.symbol}')">${item.symbol}</span>
                         <button onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-500 hover:text-red-400 text-xs px-1"><i class="fa-solid fa-xmark"></i></button>
                     </div>
-                    <div id="wl-price-${item.symbol}" data-price="${item.price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}" onclick="updateChartSymbol('${item.symbol}')">$${item.price}</div>
+                    <div id="wl-price-${item.symbol}" data-price="${item.price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}" onclick="updateChartSymbol('${item.symbol}')">$${item.price.toFixed(2)}</div>
                     <div id="wl-change-${item.symbol}" class="text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}" onclick="updateChartSymbol('${item.symbol}')">
-                        ${isPositive?'+':''}${item.change||0} (${isPositive?'+':''}${item.change_pct||0}%)
+                        ${isPositive && change !== 0 ? '+' : ''}${change} (${isPositive && change_pct !== 0 ? '+' : ''}${change_pct}%)
                     </div>`;
                 container.appendChild(card);
             });
@@ -378,7 +388,6 @@
             if(currentPriceLine) { candleSeries.removePriceLine(currentPriceLine); currentPriceLine = null; }
             candleSeries.setMarkers([]);
 
-            // ⚡ 修復截圖問題：平滑錨定最新價格，由右向左推算亂數歷史 K 線
             let data = [], basePrice = currentSymbolData ? currentSymbolData.price : 220, candleCount = 80, timeStep = 86400; 
             if (currentTimeFrame === '15m') { candleCount = 150; timeStep = 900; } if (currentTimeFrame === '4H') { candleCount = 120; timeStep = 14400; }
             let currentTime = Math.floor(Date.now() / 1000) - (candleCount * timeStep);
@@ -398,7 +407,6 @@
                 currentPriceLine = candleSeries.createPriceLine({ price: currentSymbolData.price, color: '#ffffff', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: `市價: $${currentSymbolData.price}` });
                 
                 if (currentSymbolData.smc_id) {
-                    // 有形態：畫出買入區、SL 與 TP
                     const topLine = candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: '#3b82f6', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: `買入(上): $${currentSymbolData.entry_top}` });
                     const botLine = candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: '#3b82f6', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `買入(下): $${currentSymbolData.entry_bot}` });
                     const slLine = candleSeries.createPriceLine({ price: currentSymbolData.sl, color: '#ef5350', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `止損(SL): $${currentSymbolData.sl}` });
@@ -412,7 +420,6 @@
                         text: `▼ ${currentSymbolData.smc_text} (RRR 1:${currentSymbolData.rrr})`
                     }]);
                 } else {
-                    // ⚡ 無 SMC 形態：自動畫出流動性邊界與 EQ 溢折價中軸
                     let highest = Math.max(...data.map(d => d.high));
                     let lowest = Math.min(...data.map(d => d.low));
                     let eq = (highest + lowest) / 2;
@@ -562,23 +569,22 @@
 
         function addCustomStock(e) { 
             e.preventDefault(); 
-            const val = document.getElementById('searchInput').value.trim().toUpperCase(); 
+            const input = document.getElementById('searchInput');
+            const val = input.value.trim().toUpperCase(); 
             if(!val) return;
 
-            const existsInData = globalData && globalData.watchlist_data && globalData.watchlist_data.some(item => item.symbol === val);
-            if (!existsInData) {
-                showToast(`找不到 ${val} 數據！請先確認已加入 tickers.txt 並執行 Workflow。`, 'error');
+            if (userWatchlist.includes(val)) {
+                showToast(`股票 ${val} 已經在自選清單中`, 'error');
+                input.value = '';
                 return;
             }
 
-            if(!userWatchlist.includes(val)){ 
-                userWatchlist.push(val); 
-                renderWatchlist(); 
-                renderScreenerData(); 
-                fetchLiveQuotes(); 
-                showToast(`已加入: ${val}`); 
-            } 
-            document.getElementById('searchInput').value=''; 
+            userWatchlist.push(val); 
+            renderWatchlist(); 
+            renderScreenerData(); 
+            fetchLiveQuotes(); // 馬上觸發 Vercel 即時報價
+            showToast(`成功加入自選: ${val}`);
+            input.value = ''; 
         }
 
         function removeFromWatchlist(e, sym) { e.stopPropagation(); userWatchlist = userWatchlist.filter(s=>s!==sym); renderWatchlist(); renderScreenerData(); showToast(`已移除: ${sym}`,'error'); }
