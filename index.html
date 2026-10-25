@@ -199,7 +199,7 @@
         let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null, subIndicatorSeries = null;
         let currentTab = 'smc';
         let currentTimeFrame = '1D'; 
-        let userWatchlist = ['SNDK', 'FUTU', 'PLTR', 'NVDA', 'TSLA', 'SPY'];
+        let userWatchlist = ['FUTU', 'PLTR', 'NVDA', 'TSLA', 'SPY'];
         let activePriceLines = [], currentPriceLine = null;
         let currentCandleData = [], currentSymbolData = null;
 
@@ -324,7 +324,7 @@
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-1">
                         <span class="font-bold text-base text-white" onclick="updateChartSymbol('${item.symbol}')">${item.symbol}</span>
-                        <button onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-500 hover:text-red-400 text-xs px-1"><i class="fa-solid fa-xmark"></i></button>
+                        <button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-500 hover:text-red-400 text-xs px-1.5 py-0.5 rounded transition-colors"><i class="fa-solid fa-xmark pointer-events-none"></i></button>
                     </div>
                     <div id="wl-price-${item.symbol}" data-price="${item.price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}" onclick="updateChartSymbol('${item.symbol}')">$${item.price.toFixed(2)}</div>
                     <div id="wl-change-${item.symbol}" class="text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}" onclick="updateChartSymbol('${item.symbol}')">
@@ -582,12 +582,19 @@
             userWatchlist.push(val); 
             renderWatchlist(); 
             renderScreenerData(); 
-            fetchLiveQuotes(); // 馬上觸發 Vercel 即時報價
+            fetchLiveQuotes(); 
             showToast(`成功加入自選: ${val}`);
             input.value = ''; 
         }
 
-        function removeFromWatchlist(e, sym) { e.stopPropagation(); userWatchlist = userWatchlist.filter(s=>s!==sym); renderWatchlist(); renderScreenerData(); showToast(`已移除: ${sym}`,'error'); }
+        function removeFromWatchlist(event, sym) {
+            event.stopPropagation(); // ⚡ 絕對攔截：防止點擊刪除時觸發卡片的切換圖表事件
+            userWatchlist = userWatchlist.filter(s => s !== sym);
+            renderWatchlist();
+            renderScreenerData();
+            showToast(`已從自選移除: ${sym}`, 'error');
+        }
+
         function toggleSection(cId, iId) { document.getElementById(cId).classList.toggle('collapsed'); document.getElementById(iId).classList.toggle('rotate-180'); }
         function showToast(msg, type='success') { const c = document.getElementById('toast-container'), t = document.createElement('div'); t.className=`toast ${type==='error'?'error':''}`; t.innerHTML=`<i class="fa-solid ${type==='error'?'fa-trash':'fa-check-circle'} mr-2"></i> ${msg}`; c.appendChild(t); setTimeout(()=>t.classList.add('show'),10); setTimeout(()=>{t.classList.remove('show'); setTimeout(()=>t.remove(),300);}, 3000); }
         function changeTimeFrame(tf) { currentTimeFrame = tf; ['15m','4H','1D'].forEach(t => { document.getElementById('tf_'+t).className = (t===tf) ? "px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors" : "px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors"; }); updateChartSymbol(document.getElementById('currentChartSymbol').innerText); }
