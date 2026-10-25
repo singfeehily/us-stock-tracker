@@ -67,7 +67,6 @@
         
         <form id="searchForm" onsubmit="addCustomStock(event)" class="flex w-full md:w-1/3 relative">
             <div class="relative w-full flex">
-                <!-- 加入建議搜尋 DataList -->
                 <input type="text" id="searchInput" list="stock-suggestions" placeholder="搜尋代號 (例: PLTR)" 
                     class="w-full bg-[#0d1117] border border-[#30363d] rounded-l-lg py-2 px-3 text-white text-sm focus:outline-none focus:border-blue-500 uppercase" autocomplete="off">
                 <datalist id="stock-suggestions">
@@ -86,6 +85,7 @@
 
     <main class="flex-grow p-3 md:p-6 flex flex-col gap-6">
         
+        <!-- 大盤與板塊資金流向 -->
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-2 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('marketFlowContent', 'marketFlowIcon')">
                 <span class="font-semibold text-white text-sm"><i class="fa-solid fa-globe text-blue-400 mr-2"></i>大盤與板塊資金流向 (LIVE)</span>
@@ -96,6 +96,7 @@
             </div>
         </section>
 
+        <!-- 我的最愛自選股 -->
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('watchlistContent', 'watchlistIcon')">
                 <div class="flex items-center gap-2">
@@ -113,6 +114,7 @@
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
             
+            <!-- 圖表區 -->
             <div class="xl:col-span-1 glass-panel rounded-xl flex flex-col relative">
                 <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('chartContent', 'chartIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-display text-purple-400 mr-2"></i>SMC 作戰區間圖</span>
@@ -143,6 +145,7 @@
                 </div>
             </div>
 
+            <!-- 篩選表格區 -->
             <div class="xl:col-span-2 glass-panel rounded-xl flex flex-col overflow-hidden">
                 <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('screenerContent', 'screenerIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i>高勝率 SMC 量化過濾池</span>
@@ -165,7 +168,7 @@
                                 <tr class="border-b border-[#30363d] bg-[#0d1117]">
                                     <th class="px-4 py-3 font-medium text-gray-400">股票</th>
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center">SMC 形態 
-                                        <i class="fa-solid fa-circle-info text-blue-500 cursor-pointer hover:text-blue-400" onclick="openSMCModal()"></i>
+                                        <i class="fa-solid fa-circle-info text-blue-500 cursor-pointer hover:text-blue-400 ml-1" onclick="openSMCModal()"></i>
                                     </th>
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center">盈虧比</th>
                                     <th class="px-4 py-3 font-medium text-blue-400 text-right">建議買入區</th>
@@ -230,7 +233,7 @@
                 renderMarketFlow(); renderWatchlist(); renderScreenerData();
                 if (globalData.screener_data && globalData.screener_data.length > 0) updateChartSymbol(globalData.screener_data[0].symbol);
             } catch (err) {
-                console.error(err); showToast('讀取 data.json 失敗', 'error');
+                console.error(err); showToast('讀取 data.json 失敗，請確認已執行 Workflow', 'error');
             }
         }
 
@@ -412,11 +415,15 @@
                     }]);
                 }
             }
-            chart.timeScale().fitContent(); updateChartIndicators(); fetchLiveQuotes();
+            
+            // ⚡ 核心修復：強制 Y 軸與 X 軸完美適應
+            chart.timeScale().fitContent(); 
+            chart.priceScale('right').applyOptions({ autoScale: true });
+            
+            updateChartIndicators(); fetchLiveQuotes();
         }
 
-        // Indicator & Math funcs omitted for brevity but remain intact from previous code...
-        // ... (Keep existing updateChartIndicators, EMA, BOLL, RSI, MACD calculation logic unchanged) ...
+        // ================= 以下為技術指標演算法 =================
         function updateChartIndicators(clickedType = null) {
             if (!currentCandleData.length) return;
             const rsiCheck = document.getElementById('ind_rsi'), macdCheck = document.getElementById('ind_macd');
@@ -424,14 +431,93 @@
             if (clickedType === 'macd' && macdCheck.checked) rsiCheck.checked = false;
 
             const showEma = document.getElementById('ind_ema').checked, showBoll = document.getElementById('ind_boll').checked, showRsi = rsiCheck.checked, showMacd = macdCheck.checked;
-            // ... same as before
+            
+            if (showEma) {
+                const ema20 = calculateEMA(currentCandleData, 20), ema50 = calculateEMA(currentCandleData, 50);
+                if (!ema20Series) ema20Series = chart.addLineSeries({ color: '#f59e0b', lineWidth: 1.5, title: 'EMA 20' });
+                if (!ema50Series) ema50Series = chart.addLineSeries({ color: '#8b5cf6', lineWidth: 1.5, title: 'EMA 50' });
+                ema20Series.setData(ema20); ema50Series.setData(ema50);
+            } else {
+                if (ema20Series) { chart.removeSeries(ema20Series); ema20Series = null; }
+                if (ema50Series) { chart.removeSeries(ema50Series); ema50Series = null; }
+            }
+
+            if (showBoll) {
+                const boll = calculateBOLL(currentCandleData, 20, 2);
+                if (!bollUpperSeries) bollUpperSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Upper' });
+                if (!bollMidSeries) bollMidSeries = chart.addLineSeries({ color: 'rgba(234, 179, 8, 0.8)', lineWidth: 1.5, title: 'Mid' });
+                if (!bollLowerSeries) bollLowerSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Lower' });
+                bollUpperSeries.setData(boll.upper); bollMidSeries.setData(boll.middle); bollLowerSeries.setData(boll.lower);
+            } else {
+                if (bollUpperSeries) { chart.removeSeries(bollUpperSeries); bollUpperSeries = null; }
+                if (bollMidSeries) { chart.removeSeries(bollMidSeries); bollMidSeries = null; }
+                if (bollLowerSeries) { chart.removeSeries(bollLowerSeries); bollLowerSeries = null; }
+            }
+
             const subContainer = document.getElementById('sub_chart_container');
             if (showRsi || showMacd) {
                 subContainer.style.display = 'block';
                 if (subChart) subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
-            } else { subContainer.style.display = 'none'; }
+                if (subIndicatorSeries) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; }
+                
+                if (showRsi) {
+                    subIndicatorSeries = subChart.addLineSeries({ color: '#06b6d4', lineWidth: 1.5, title: 'RSI (14)' });
+                    subIndicatorSeries.setData(calculateRSI(currentCandleData, 14));
+                } else if (showMacd) {
+                    subIndicatorSeries = subChart.addHistogramSeries({ color: '#26a69a', title: 'MACD' });
+                    subIndicatorSeries.setData(calculateMACD(currentCandleData, 12, 26, 9));
+                }
+                subChart.timeScale().fitContent();
+            } else { 
+                subContainer.style.display = 'none'; 
+                if (subIndicatorSeries) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; }
+            }
         }
 
+        function calculateEMA(data, period) {
+            let result = [], multiplier = 2 / (period + 1), prevEMA = data[0].close;
+            for (let i = 0; i < data.length; i++) {
+                let ema = (i === 0) ? data[i].close : (data[i].close - prevEMA) * multiplier + prevEMA;
+                prevEMA = ema; result.push({ time: data[i].time, value: Number(ema.toFixed(2)) });
+            } return result;
+        }
+
+        function calculateBOLL(data, period, stdDevMultiplier) {
+            let upper = [], middle = [], lower = [];
+            for (let i = period - 1; i < data.length; i++) {
+                let slice = data.slice(i - period + 1, i + 1), sma = slice.reduce((acc, val) => acc + val.close, 0) / period;
+                let stdDev = Math.sqrt(slice.reduce((acc, val) => acc + Math.pow(val.close - sma, 2), 0) / period);
+                middle.push({ time: data[i].time, value: Number(sma.toFixed(2)) });
+                upper.push({ time: data[i].time, value: Number((sma + stdDevMultiplier * stdDev).toFixed(2)) });
+                lower.push({ time: data[i].time, value: Number((sma - stdDevMultiplier * stdDev).toFixed(2)) });
+            } return { upper, middle, lower };
+        }
+
+        function calculateRSI(data, period) {
+            let result = [], gains = 0, losses = 0;
+            for (let i = 1; i < data.length; i++) {
+                let change = data[i].close - data[i-1].close, gain = change > 0 ? change : 0, loss = change < 0 ? -change : 0;
+                if (i <= period) {
+                    gains += gain; losses += loss;
+                    if (i === period) {
+                        let rs = (losses/period) === 0 ? 100 : (gains/period) / (losses/period);
+                        result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) });
+                    }
+                } else {
+                    gains = (gains * (period - 1) + gain) / period; losses = (losses * (period - 1) + loss) / period;
+                    let rs = losses === 0 ? 100 : gains / losses;
+                    result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) });
+                }
+            } return result;
+        }
+
+        function calculateMACD(data, fast, slow, sig) {
+            let fEma = calculateEMA(data, fast), sEma = calculateEMA(data, slow), macdLine = [];
+            for (let i = 0; i < data.length; i++) macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value });
+            return macdLine.map(item => ({ time: item.time, value: Number(item.value.toFixed(2)), color: item.value >= 0 ? '#26a69a' : '#ef5350' }));
+        }
+
+        // ================= 以下為 UI 互動邏輯 =================
         function switchTab(tab) {
             currentTab = tab;
             document.getElementById('tabSmc').className = (tab==='smc') ? "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap" : "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
@@ -470,14 +556,11 @@
             });
         }
 
-        // Search, Watchlist Actions, UI helpers
         function addCustomStock(e) { e.preventDefault(); const val = document.getElementById('searchInput').value.trim().toUpperCase(); if(val && !userWatchlist.includes(val)){ userWatchlist.push(val); renderWatchlist(); renderScreenerData(); fetchLiveQuotes(); showToast(`已加入: ${val}`); } document.getElementById('searchInput').value=''; }
         function removeFromWatchlist(e, sym) { e.stopPropagation(); userWatchlist = userWatchlist.filter(s=>s!==sym); renderWatchlist(); renderScreenerData(); showToast(`已移除: ${sym}`,'error'); }
         function toggleSection(cId, iId) { document.getElementById(cId).classList.toggle('collapsed'); document.getElementById(iId).classList.toggle('rotate-180'); }
         function showToast(msg, type='success') { const c = document.getElementById('toast-container'), t = document.createElement('div'); t.className=`toast ${type==='error'?'error':''}`; t.innerHTML=`<i class="fa-solid ${type==='error'?'fa-trash':'fa-check-circle'} mr-2"></i> ${msg}`; c.appendChild(t); setTimeout(()=>t.classList.add('show'),10); setTimeout(()=>{t.classList.remove('show'); setTimeout(()=>t.remove(),300);}, 3000); }
         function changeTimeFrame(tf) { currentTimeFrame = tf; ['15m','4H','1D'].forEach(t => { document.getElementById('tf_'+t).className = (t===tf) ? "px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors" : "px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors"; }); updateChartSymbol(document.getElementById('currentChartSymbol').innerText); }
-        
-        // SMC 知識卡 Modal 控制
         function openSMCModal() { document.getElementById('smcModal').style.display = 'flex'; }
         function closeSMCModal() { document.getElementById('smcModal').style.display = 'none'; }
     </script>
