@@ -104,36 +104,84 @@
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
             
-            <div class="xl:col-span-1 glass-panel rounded-xl flex flex-col relative">
-                <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('chartContent', 'chartIcon')">
-                    <span class="font-semibold text-white"><i class="fa-solid fa-display text-purple-400 mr-2"></i>SMC 作戰區間圖</span>
-                    <div class="flex items-center gap-3">
-                        <span id="currentChartSymbol" class="bg-blue-900/50 text-blue-400 px-2 py-1 rounded text-xs font-bold">--</span>
-                        <i id="chartIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+            <!-- 左側欄位：圖表 + AI 智能解析面板 -->
+            <div class="xl:col-span-1 flex flex-col gap-6">
+                <!-- 圖表區 -->
+                <div class="glass-panel rounded-xl flex flex-col relative">
+                    <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('chartContent', 'chartIcon')">
+                        <span class="font-semibold text-white"><i class="fa-solid fa-display text-purple-400 mr-2"></i>SMC 作戰區間圖</span>
+                        <div class="flex items-center gap-3">
+                            <span id="currentChartSymbol" class="bg-blue-900/50 text-blue-400 px-2 py-1 rounded text-xs font-bold">--</span>
+                            <i id="chartIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+                        </div>
+                    </div>
+                    <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 650px;">
+                        <div class="flex flex-col xl:flex-row gap-3">
+                            <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-1.5 flex gap-1 text-xs items-center justify-center">
+                                <button onclick="changeTimeFrame('15m')" id="tf_15m" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">15m</button>
+                                <button onclick="changeTimeFrame('4H')" id="tf_4H" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">4H</button>
+                                <button onclick="changeTimeFrame('1D')" id="tf_1D" class="px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors">1D</button>
+                            </div>
+                            <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2 flex flex-wrap gap-3 text-xs flex-grow items-center justify-center">
+                                <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> EMA</label>
+                                <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> BOLL</label>
+                                <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> RSI</label>
+                                <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_macd" onchange="updateChartIndicators('macd')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> MACD</label>
+                            </div>
+                        </div>
+
+                        <div id="tv_chart_container" style="height: 320px; width: 100%; position: relative;">
+                            <div id="chartTooltip"></div>
+                        </div>
+                        <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
                     </div>
                 </div>
-                <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 650px;">
-                    <div class="flex flex-col xl:flex-row gap-3">
-                        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-1.5 flex gap-1 text-xs items-center justify-center">
-                            <button onclick="changeTimeFrame('15m')" id="tf_15m" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">15m</button>
-                            <button onclick="changeTimeFrame('4H')" id="tf_4H" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">4H</button>
-                            <button onclick="changeTimeFrame('1D')" id="tf_1D" class="px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors">1D</button>
-                        </div>
-                        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2 flex flex-wrap gap-3 text-xs flex-grow items-center justify-center">
-                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> EMA</label>
-                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> BOLL</label>
-                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> RSI</label>
-                            <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_macd" onchange="updateChartIndicators('macd')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> MACD</label>
-                        </div>
-                    </div>
 
-                    <div id="tv_chart_container" style="height: 320px; width: 100%; position: relative;">
-                        <div id="chartTooltip"></div>
+                <!-- 🤖 AI 智能股票深度解析面板 (階段一新增) -->
+                <div class="glass-panel rounded-xl flex flex-col p-4 gap-3">
+                    <div class="flex justify-between items-center border-b border-[#30363d] pb-2">
+                        <span class="font-semibold text-white text-sm"><i class="fa-solid fa-robot text-blue-400 mr-2"></i>AI 智能操盤手深度解析</span>
+                        <span id="panelSymbolBadge" class="bg-blue-900/50 text-blue-400 px-2 py-0.5 rounded text-xs font-bold">--</span>
                     </div>
-                    <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5">
+                            <span class="text-gray-400 block mb-1">市場階段 (Market Phase)</span>
+                            <span id="panelPhase" class="font-bold text-gray-200">請選擇股票</span>
+                        </div>
+                        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5">
+                            <span class="text-gray-400 block mb-1">趨勢與技術結構 (Trend)</span>
+                            <span id="panelTrend" class="font-bold text-gray-200">--</span>
+                        </div>
+                    </div>
+                    <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-xs">
+                        <span class="text-gray-400 block mb-1">SMC 結構與戰術訊號 (SMC Context)</span>
+                        <span id="panelSMC" class="font-bold text-yellow-400">--</span>
+                    </div>
+                    <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-xs">
+                        <span class="text-gray-400 block mb-1">操盤手深度總結 (Actionable Insight)</span>
+                        <p id="panelInsight" class="text-gray-300 leading-relaxed">點擊上方任一股票，AI 操盤手將即時為您拆解當前價格結構與勝率評估...</p>
+                    </div>
+                    <!-- 智慧倉位風險計算機 -->
+                    <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-xs flex flex-col gap-2">
+                        <span class="text-gray-400 font-semibold"><i class="fa-solid fa-calculator text-green-400 mr-1"></i>智慧倉位風險計算機 (Position Sizing)</span>
+                        <div class="flex flex-wrap gap-2 items-center justify-between">
+                            <div class="flex items-center gap-1">
+                                <span>總資金($):</span>
+                                <input type="number" id="calcCapital" value="50000" class="w-20 bg-[#161b22] border border-[#30363d] rounded px-1.5 py-1 text-white text-right" oninput="calculatePosition()">
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span>風險(%):</span>
+                                <input type="number" id="calcRiskPct" value="1" step="0.5" class="w-14 bg-[#161b22] border border-[#30363d] rounded px-1.5 py-1 text-white text-right" oninput="calculatePosition()">
+                            </div>
+                            <div class="text-green-400 font-bold" id="calcResult">
+                                建議買入: -- 股
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            <!-- 右側欄位：篩選表格區 -->
             <div class="xl:col-span-2 glass-panel rounded-xl flex flex-col overflow-hidden">
                 <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('screenerContent', 'screenerIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i>高勝率 SMC 量化過濾池</span>
@@ -411,6 +459,9 @@
             let screenerList = (globalData && globalData.screener_data) ? globalData.screener_data : [];
             currentSymbolData = screenerList.find(x => x.symbol === symbol);
 
+            // ⚡ 聯動更新 AI 智能操盤手深度解析面板
+            updateIntelligencePanel(symbol, currentSymbolData);
+
             activePriceLines.forEach(line => candleSeries.removePriceLine(line)); activePriceLines = [];
             if(currentPriceLine) { candleSeries.removePriceLine(currentPriceLine); currentPriceLine = null; }
             candleSeries.setMarkers([]);
@@ -463,6 +514,73 @@
             
             updateChartIndicators(); 
             fetchLiveQuotes();
+        }
+
+        // 🤖 更新 AI 智能操盤手解析面板數據
+        function updateIntelligencePanel(symbol, symbolData) {
+            document.getElementById('panelSymbolBadge').innerText = symbol;
+            
+            const phaseEl = document.getElementById('panelPhase');
+            const trendEl = document.getElementById('panelTrend');
+            const smcEl = document.getElementById('panelSMC');
+            const insightEl = document.getElementById('panelInsight');
+
+            if (symbolData) {
+                const isUptrend = symbolData.dist_20ma > 0;
+                trendEl.innerText = isUptrend ? `20MA 多頭排列 (距均線 +${symbolData.dist_20ma}%)` : `20MA 空頭排列 (距均線 ${symbolData.dist_20ma}%)`;
+                trendEl.className = isUptrend ? "font-bold text-green-400" : "font-bold text-red-400";
+
+                if (symbolData.smc_id) {
+                    phaseEl.innerText = symbolData.smc_id === 'fvg_sweep' ? "S級主動回踩 / 流動性掃損區" : "1D FVG 結構支撐區";
+                    phaseEl.className = "font-bold text-yellow-400";
+                    smcEl.innerText = `${symbolData.smc_text} | 盈虧比 RRR: 1 : ${symbolData.rrr} | 買入區: $${symbolData.entry_bot} - $${symbolData.entry_top}`;
+                    insightEl.innerText = `該股目前觸發 ${symbolData.smc_text}，防守止損設於 $${symbolData.sl}，目標價上看 $${symbolData.tp}。處於高勝率機構接單區間，建議按風險比例試多。`;
+                } else {
+                    phaseEl.innerText = "區間震盪 / 尋找結構中";
+                    phaseEl.className = "font-bold text-gray-300";
+                    smcEl.innerText = "目前未形成高勝率 RRR >= 1.5 之 FVG 或 掃損形態 (暫列觀察)";
+                    insightEl.innerText = `該股目前暫無合格的 SMC 進場信號。圖表已自動標註 BSL (近期高點) 與 SSL (近期低點) 結構邊界，建議等待價格觸及邊界或 EQ 50% 中軸再作定奪。`;
+                }
+            } else {
+                trendEl.innerText = "即時監察模式";
+                trendEl.className = "font-bold text-blue-400";
+                phaseEl.innerText = "大盤指數 / 自選追蹤";
+                phaseEl.className = "font-bold text-purple-400";
+                smcEl.innerText = "無後端量化形態數據 (僅提供即時價格與技術指標)";
+                insightEl.innerText = `此代號主要作為大盤資金流向參考或自選監察。您可以透過上方圖表勾選 EMA、BOLL、RSI 或 MACD 進行技術面綜合研判。`;
+            }
+            
+            calculatePosition();
+        }
+
+        // 🧮 智慧倉位風險計算機動態運算
+        function calculatePosition() {
+            const capital = parseFloat(document.getElementById('calcCapital').value) || 0;
+            const riskPct = parseFloat(document.getElementById('calcRiskPct').value) || 0;
+            const riskMoney = capital * (riskPct / 100);
+
+            let entryPrice = 0;
+            let slPrice = 0;
+
+            if (currentSymbolData && currentSymbolData.entry_top && currentSymbolData.sl) {
+                entryPrice = (currentSymbolData.entry_bot + currentSymbolData.entry_top) / 2;
+                slPrice = currentSymbolData.sl;
+            } else if (currentSymbolData && currentSymbolData.price) {
+                entryPrice = currentSymbolData.price;
+                slPrice = entryPrice * 0.95; 
+            } else {
+                document.getElementById('calcResult').innerText = `建議買入: -- 股`;
+                return;
+            }
+
+            const riskPerShare = Math.abs(entryPrice - slPrice);
+            if (riskPerShare <= 0) {
+                document.getElementById('calcResult').innerText = `建議買入: 0 股 (止損無效)`;
+                return;
+            }
+
+            const shares = Math.floor(riskMoney / riskPerShare);
+            document.getElementById('calcResult').innerText = `建議買入: ${shares} 股 (風險額: $${riskMoney.toFixed(0)})`;
         }
 
         function updateChartIndicators(clickedType = null) {
