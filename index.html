@@ -78,12 +78,13 @@
     </header>
 
     <main class="flex-grow p-3 md:p-6 flex flex-col gap-6">
+        <!-- 🚀 升級板塊資金熱力圖 -->
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-2 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('marketFlowContent', 'marketFlowIcon')">
-                <span class="font-semibold text-white text-sm"><i class="fa-solid fa-globe text-blue-400 mr-2"></i>大盤與板塊資金流向 (LIVE)</span>
+                <span class="font-semibold text-white text-sm"><i class="fa-solid fa-fire text-orange-500 mr-2"></i>大盤與板塊資金熱力圖 (Heatmap)</span>
                 <i id="marketFlowIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
             </div>
-            <div id="marketFlowContent" class="collapsible-content flex gap-6 overflow-x-auto py-3 px-4" style="max-height: 100px;">
+            <div id="marketFlowContent" class="collapsible-content flex gap-3 overflow-x-auto py-3 px-4" style="max-height: 100px;">
                 <span class="text-gray-500 text-sm" id="emptyMarketFlowMsg">等待報價系統啟動...</span>
             </div>
         </section>
@@ -104,7 +105,6 @@
         </section>
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            
             <div class="xl:col-span-1 flex flex-col gap-6">
                 <!-- 圖表區 -->
                 <div class="glass-panel rounded-xl flex flex-col relative">
@@ -129,7 +129,6 @@
                                 <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_macd" onchange="updateChartIndicators('macd')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> MACD</label>
                             </div>
                         </div>
-
                         <div id="tv_chart_container" style="height: 320px; width: 100%; position: relative;">
                             <div id="chartTooltip"></div>
                         </div>
@@ -164,7 +163,7 @@
                 </div>
             </div>
 
-            <!-- 右側欄位：篩選表格區 (具備進階排序) -->
+            <!-- 右側欄位：篩選表格區 -->
             <div class="xl:col-span-2 glass-panel rounded-xl flex flex-col overflow-hidden">
                 <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('screenerContent', 'screenerIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i>高勝率 SMC 量化過濾池</span>
@@ -220,11 +219,11 @@
             </button>
             <h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-book text-blue-400 mr-2"></i>SMC 形態與戰術百科</h3>
             <ul class="space-y-4 text-sm text-gray-300">
+                <li><span class="text-yellow-400 font-bold border border-yellow-500 px-1 rounded mr-2">👑 SS級 共振</span>(即將推出) 日線與4小時級別同時給出看漲結構，勝率極高。</li>
+                <li><span class="text-red-400 font-bold border border-red-500 px-1 rounded mr-2">⚠️ 財報警告</span>(即將推出) 偵測到3日內即將發布財報，請嚴格控管風險。</li>
                 <li><span class="text-yellow-400 font-bold border border-yellow-500 px-1 rounded mr-2">🔥 S級 掃損</span>主力跌破前低觸發散戶停損後迅速拉升，機構介入最強信號。</li>
                 <li><span class="text-blue-400 font-bold border border-blue-500 px-1 rounded mr-2">⚡ 1D FVG</span>價格極速噴出留下的真空缺口，極易回踩此區接單，為黃金買入區。</li>
                 <li><span class="text-gray-400 font-bold border border-gray-500 px-1 rounded mr-2">⚖️ EQ 50%</span>無信號時顯示的結構中軸。價格在 EQ 上方為溢價區，下方為折價區。</li>
-                <li><span class="text-red-400 font-bold mr-2"><i class="fa-solid fa-ban"></i> 已填補 (Mitigated)</span>若缺口已被回踩超過 50%，系統會自動將其剔除隱藏，避免接刀。</li>
-                <li><span class="text-green-400 font-bold mr-2"><i class="fa-solid fa-scale-balanced"></i> 盈虧比 (RRR)</span>系統自動計算至前高目標的利潤與止損風險比。若低於 1:1.5 將被自動過濾。</li>
             </ul>
         </div>
     </div>
@@ -255,7 +254,7 @@
         let currentCandleData = [], currentSymbolData = null;
 
         // -------------------------------------------------------------
-        // 啟動點 (Entry Point) - 嚴格沙盒包覆
+        // 啟動點 (Entry Point)
         // -------------------------------------------------------------
         document.addEventListener('DOMContentLoaded', async () => {
             try { initCharts(); } catch (e) { console.error("圖表引擎初始化失敗:", e); }
@@ -278,7 +277,7 @@
                 const timeEl = document.getElementById('updateTimeText');
                 if (timeEl) timeEl.innerText = `SMC 計算時間: ${globalData.updated_at || '最新'} (HKT)`;
             } catch (err) {
-                console.warn("系統自動降級為離線模式 (僅提供即時報價):", err);
+                console.warn("系統自動降級為離線模式:", err);
                 const timeEl = document.getElementById('updateTimeText');
                 if (timeEl) timeEl.innerText = `SMC 計算時間: 離線安全模式 (僅支援即時報價)`;
                 globalData = { updated_at: '離線模式', watchlist_data: [], screener_data: [] };
@@ -298,12 +297,11 @@
                         });
                     }
                 }
-            } catch(e) { console.error("搜尋列表渲染失敗", e); }
+            } catch(e) {}
 
-            // 保證三大UI模組獨立渲染，絕不互相影響
-            try { renderMarketFlow(); } catch(e) { console.error("渲染大盤資金流向失敗:", e); }
-            try { renderWatchlist(); } catch(e) { console.error("渲染自選股失敗:", e); }
-            try { renderScreenerData(); } catch(e) { console.error("渲染過濾池失敗:", e); }
+            try { renderMarketFlow(); } catch(e) { console.error(e); }
+            try { renderWatchlist(); } catch(e) { console.error(e); }
+            try { renderScreenerData(); } catch(e) { console.error(e); }
             
             try {
                 if (globalData && Array.isArray(globalData.screener_data) && globalData.screener_data.length > 0) {
@@ -311,11 +309,11 @@
                 } else {
                     updateChartSymbol('SPY');
                 }
-            } catch(e) { console.error("預設圖表渲染失敗:", e); }
+            } catch(e) {}
         }
 
         // -------------------------------------------------------------
-        // Vercel Live API 與 UI 即時刷新
+        // Vercel Live API 與 Heatmap UI 即時刷新
         // -------------------------------------------------------------
         async function fetchLiveQuotes() {
             try {
@@ -367,13 +365,24 @@
                     }
                 });
 
+                // ⚡ 更新板塊熱力圖 (Heatmap)
                 TARGET_INDICES.forEach(sym => {
                     if(liveData[sym]) {
                         const flowEl = document.getElementById(`flow-change-${sym}`);
-                        if (flowEl) {
-                            const isUp = (liveData[sym].change || 0) >= 0;
-                            flowEl.className = `${isUp ? 'text-green-500' : 'text-red-500'} text-sm font-semibold transition-colors`;
-                            flowEl.innerHTML = `<i class="fa-solid ${isUp?'fa-arrow-up':'fa-arrow-down'} mr-1"></i>${isUp?'+':''}${(liveData[sym].change_pct||0)}%`;
+                        const cardEl = document.getElementById(`flow-card-${sym}`);
+                        if (flowEl && cardEl) {
+                            const changePct = parseFloat(liveData[sym].change_pct || 0);
+                            const isUp = changePct >= 0;
+
+                            cardEl.className = "flex items-center gap-2 whitespace-nowrap cursor-pointer px-3 py-1.5 rounded transition-all ";
+                            if (changePct >= 1.5) cardEl.className += "bg-green-900/60 border border-green-500/50 hover:bg-green-800/80";
+                            else if (changePct > 0) cardEl.className += "bg-green-900/30 border border-green-500/30 hover:bg-green-800/50";
+                            else if (changePct <= -1.5) cardEl.className += "bg-red-900/60 border border-red-500/50 hover:bg-red-800/80";
+                            else if (changePct < 0) cardEl.className += "bg-red-900/30 border border-red-500/30 hover:bg-red-800/50";
+                            else cardEl.className += "bg-[#1f242c] border border-transparent hover:bg-[#30363d]";
+
+                            flowEl.className = `${isUp ? 'text-green-400' : 'text-red-400'} text-sm font-bold transition-colors drop-shadow-md`;
+                            flowEl.innerHTML = `<i class="fa-solid ${isUp?'fa-arrow-up':'fa-arrow-down'} mr-1"></i>${isUp?'+':''}${changePct.toFixed(2)}%`;
                         }
                     }
                 });
@@ -382,7 +391,7 @@
                     try { updateIntelligencePanel(currentSymbol, currentSymbolData); } catch(e){}
                 }
 
-                // 刷新表格的「距買點%」
+                // 刷新表格距買點
                 const screenerArr = (globalData && Array.isArray(globalData.screener_data)) ? globalData.screener_data : [];
                 for (let sym in liveData) {
                     const distEl = document.getElementById(`dist-val-${sym}`);
@@ -409,13 +418,11 @@
                     if (newPrice < lastCandle.low) lastCandle.low = newPrice;
                     candleSeries.update(lastCandle);
                 }
-            } catch (err) {
-                console.error("更新 Live UI 過程發生錯誤:", err);
-            }
+            } catch (err) { console.error(err); }
         }
 
         // -------------------------------------------------------------
-        // 原生 Canvas 繪製微型趨勢線 (極致效能，無套件依賴)
+        // 原生 Canvas 繪製微型趨勢線
         // -------------------------------------------------------------
         function drawSparkline(canvasId, basePrice, isPositive) {
             try {
@@ -444,12 +451,9 @@
                     if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
                 });
                 ctx.stroke();
-            } catch(e) { console.error("Sparkline 繪製失敗:", e); }
+            } catch(e) {}
         }
 
-        // -------------------------------------------------------------
-        // 各區塊 UI 獨立渲染函數
-        // -------------------------------------------------------------
         function renderMarketFlow() {
             try {
                 const container = document.getElementById('marketFlowContent');
@@ -457,12 +461,12 @@
                 let html = '';
                 TARGET_INDICES.forEach((sym, idx) => {
                     const name = TARGET_INDICES_MAP[sym];
+                    // 初始化為預設暗色
                     html += `
-                        <div class="flex items-center gap-2 whitespace-nowrap cursor-pointer hover:bg-[#1f242c] px-2 py-1 rounded transition-colors" onclick="updateChartSymbol('${sym}')">
-                            <span class="font-bold text-gray-300">${name} <span class="text-xs text-blue-400 font-mono">(${sym})</span></span>
+                        <div id="flow-card-${sym}" class="flex items-center gap-2 whitespace-nowrap cursor-pointer px-3 py-1.5 rounded transition-all bg-[#1f242c] hover:bg-[#30363d]" onclick="updateChartSymbol('${sym}')">
+                            <span class="font-bold text-gray-300">${name} <span class="text-xs font-mono opacity-70">(${sym})</span></span>
                             <span id="flow-change-${sym}" class="text-gray-500 text-sm font-semibold"><i class="fa-solid fa-spinner fa-spin mr-1"></i>--</span>
                         </div>`;
-                    if (idx < TARGET_INDICES.length - 1) html += `<div class="w-px h-6 bg-[#30363d]"></div>`;
                 });
                 container.innerHTML = html;
             } catch(e) { console.error(e); }
@@ -513,7 +517,7 @@
         }
 
         // -------------------------------------------------------------
-        // AI 智能分析與表格動態排序
+        // AI 智能分析與表格動態排序 (已預留共振與財報 UI 接口)
         // -------------------------------------------------------------
         function updateIntelligencePanel(symbol, symbolData) {
             try {
@@ -536,8 +540,15 @@
                     trendEl.className = isUptrend ? "font-bold text-green-400" : "font-bold text-red-400";
 
                     if (symbolData.smc_id) {
-                        phaseEl.innerText = symbolData.smc_id === 'fvg_sweep' ? "S級掃損 / 反轉籌碼區" : "1D FVG 結構支撐區";
-                        phaseEl.className = "font-bold text-yellow-400";
+                        // ⚡ 預留 4H+1D 共振接口
+                        if (symbolData.confluence) {
+                            phaseEl.innerHTML = `<i class="fa-solid fa-crown mr-1"></i>SS級 1D+4H 雙週期共振`;
+                            phaseEl.className = "font-bold text-yellow-300 drop-shadow-md";
+                        } else {
+                            phaseEl.innerText = symbolData.smc_id === 'fvg_sweep' ? "S級掃損 / 反轉籌碼區" : "1D FVG 結構支撐區";
+                            phaseEl.className = "font-bold text-yellow-400";
+                        }
+
                         smcEl.innerText = `${symbolData.smc_text || '-'} | 盈虧比 RRR: 1 : ${symbolData.rrr || '-'}`;
                         
                         let distStatusText = "";
@@ -546,28 +557,33 @@
                             if (livePrice <= symbolData.entry_top && livePrice >= (symbolData.entry_bot || 0)) {
                                 distStatusText = `<span class="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded ml-2 border border-yellow-500/50">🔥🔥 現價已進入黃金買入區！</span>`;
                             } else if (livePrice > symbolData.entry_top) {
-                                distStatusText = `<span class="text-blue-300 ml-2">現價距離買點約 <b class="text-white">${distToEntry}%</b>，耐心等待回踩。</span>`;
+                                distStatusText = `<span class="text-blue-300 ml-2">現價距買點約 <b class="text-white">${distToEntry}%</b>，等待回踩。</span>`;
                             } else {
-                                distStatusText = `<span class="text-red-400 ml-2">⚠️ 現價已跌破買入區，請注意結構破壞風險。</span>`;
+                                distStatusText = `<span class="text-red-400 ml-2">⚠️ 現價已跌破買入區，注意結構破壞。</span>`;
                             }
                         }
 
                         insightEl.innerHTML = `
                             <div class="mb-1">該股目前觸發 <b>${symbolData.smc_text || '-'}</b>。${distStatusText}</div>
-                            <div>建議買入區間為 <b class="text-blue-300 font-mono">$${symbolData.entry_bot || 0} - $${symbolData.entry_top || 0}</b>，防守止損設於 <b class="text-red-400 font-mono">$${symbolData.sl || 0}</b>。若能成功守住不破，目標價上看 <b class="text-green-400 font-mono">$${symbolData.tp || 0}</b> (潛在盈虧比 1:${symbolData.rrr || '-'})。</div>
+                            <div>建議買入區為 <b class="text-blue-300 font-mono">$${symbolData.entry_bot || 0} - $${symbolData.entry_top || 0}</b>，防守止損 <b class="text-red-400 font-mono">$${symbolData.sl || 0}</b>。目標價 <b class="text-green-400 font-mono">$${symbolData.tp || 0}</b>。</div>
                         `;
+
+                        // ⚡ 預留財報警告接口
+                        if (symbolData.earnings_alert) {
+                            insightEl.innerHTML += `<div class="mt-2 text-red-400 bg-red-900/20 p-2 rounded border border-red-500/30 text-xs"><i class="fa-solid fa-triangle-exclamation mr-1"></i><b>風險警告：</b>該股即將發布財報，極易發生無序跳空滑點，建議嚴格控管風險或暫時觀望。</div>`;
+                        }
                     } else {
                         phaseEl.innerText = "區間震盪 / 尋找結構中";
                         phaseEl.className = "font-bold text-gray-400";
                         smcEl.innerText = "目前未形成高勝率之 FVG 或掃損形態";
-                        insightEl.innerHTML = `該股目前暫無合格的 SMC 進場信號。圖表已為您自動標註 <b class="text-gray-300">BSL (近期高點)</b> 與 <b class="text-gray-300">SSL (近期低點)</b> 結構邊界，建議等待價格觸及邊界或 EQ 50% 中軸再作定奪。`;
+                        insightEl.innerHTML = `該股目前暫無合格的 SMC 進場信號。圖表已為您標註 <b class="text-gray-300">BSL (近期高點)</b> 與 <b class="text-gray-300">SSL (近期低點)</b> 結構邊界，建議等待價格觸及邊界或 EQ 50% 再作定奪。`;
                     }
                 } else {
                     trendEl.innerText = "即時監察模式";
                     trendEl.className = "font-bold text-blue-400";
                     phaseEl.innerText = "大盤指數 / 自選追蹤";
                     phaseEl.className = "font-bold text-purple-400";
-                    smcEl.innerText = "無後端量化形態數據 (僅提供即時價格)";
+                    smcEl.innerText = "無後端量化數據 (僅提供即時價格)";
                     insightEl.innerHTML = `此代號主要作為大盤資金流向參考或自選監察。您可以透過上方圖表勾選 <b class="text-blue-300">EMA</b>、<b class="text-blue-300">RSI</b> 或 <b class="text-blue-300">MACD</b> 進行技術面綜合研判。`;
                 }
             } catch(e) { console.error("解析面板更新失敗:", e); }
@@ -639,9 +655,21 @@
                         }
                     }
 
+                    // ⚡ 預留財報與共振 UI
+                    let nameHtml = `<div class="flex items-center gap-2">${item.symbol || '--'}`;
+                    if (item.earnings_alert) {
+                        nameHtml += `<span title="近期發布財報" class="bg-red-500/20 text-red-400 text-[10px] px-1.5 py-0.5 rounded border border-red-500/50 flex items-center"><i class="fa-solid fa-triangle-exclamation mr-1"></i>財報</span>`;
+                    }
+                    nameHtml += `</div>`;
+
+                    let smcHtml = `<span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class || 'border-gray-600 text-gray-400'}">${item.smc_text || '-'}</span>`;
+                    if (item.confluence) {
+                        smcHtml = `<span class="px-2 py-1 rounded text-xs font-semibold border border-yellow-300 text-yellow-300 bg-yellow-900/30 flex items-center justify-center"><i class="fa-solid fa-crown mr-1"></i>SS級 共振</span>`;
+                    }
+
                     tr.innerHTML = `
-                        <td class="px-4 py-3 font-bold text-white">${item.symbol || '--'}</td>
-                        <td class="px-4 py-3 text-center"><span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class || 'border-gray-600 text-gray-400'}">${item.smc_text || '-'}</span></td>
+                        <td class="px-4 py-3 font-bold text-white">${nameHtml}</td>
+                        <td class="px-4 py-3 text-center">${smcHtml}</td>
                         <td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td>
                         <td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot || 0} - $${item.entry_top || 0}</td>
                         <td class="px-4 py-3 text-right font-mono text-sm" id="dist-val-${item.symbol}">${distHtml}</td>
@@ -653,13 +681,9 @@
             } catch(e) { console.error(e); }
         }
 
-        // -------------------------------------------------------------
-        // Lightweight Charts 圖表模組
-        // -------------------------------------------------------------
+        // ================== 圖表與指標區塊保持完全一致 ==================
         function initCharts() {
-            const container = document.getElementById('tv_chart_container');
-            const subContainer = document.getElementById('sub_chart_container');
-            const tooltip = document.getElementById('chartTooltip');
+            const container = document.getElementById('tv_chart_container'), subContainer = document.getElementById('sub_chart_container'), tooltip = document.getElementById('chartTooltip');
             if(!container) return;
 
             chart = LightweightCharts.createChart(container, { 
@@ -711,10 +735,8 @@
                 let screenerList = (globalData && Array.isArray(globalData.screener_data)) ? globalData.screener_data : [];
                 currentSymbolData = screenerList.find(x => x && x.symbol === symbol);
 
-                // ⚡ 無論圖表是否載入成功，AI 面板必須優先聯動！
-                try { updateIntelligencePanel(symbol, currentSymbolData); } catch(e) { console.error(e); }
+                try { updateIntelligencePanel(symbol, currentSymbolData); } catch(e) {}
 
-                // 確保圖表引擎存在才繪製
                 if(!candleSeries) return;
 
                 activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); 
@@ -750,11 +772,13 @@
                         activePriceLines.push(topLine, botLine, slLine, tpLine);
 
                         let markerColor = currentSymbolData.smc_id === 'fvg_sweep' ? '#f59e0b' : '#3b82f6'; 
+                        if (currentSymbolData.confluence) markerColor = '#fde047'; // 黃色 SS級
+
                         if(currentCandleData.length >= 2) {
                             candleSeries.setMarkers([{
                                 time: currentCandleData[currentCandleData.length - 2].time, 
                                 position: 'aboveBar', color: markerColor, shape: 'arrowDown', 
-                                text: `▼ ${currentSymbolData.smc_text} (RRR 1:${currentSymbolData.rrr})`
+                                text: `▼ ${currentSymbolData.confluence ? 'SS級 共振' : currentSymbolData.smc_text}`
                             }]);
                         }
                     } else {
@@ -774,12 +798,9 @@
                 
                 updateChartIndicators(); 
                 try { fetchLiveQuotes(); } catch(e){}
-            } catch(e) { console.error("圖表載入失敗:", e); }
+            } catch(e) {}
         }
 
-        // -------------------------------------------------------------
-        // 指標與輔助邏輯 (保持原有設定)
-        // -------------------------------------------------------------
         function updateChartIndicators(clickedType = null) {
             try {
                 if (!currentCandleData || !currentCandleData.length || !chart) return;
