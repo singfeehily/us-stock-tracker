@@ -11,11 +11,23 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
         .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
         
+        /* 桌面版 Scrollbar */
         ::-webkit-scrollbar { width: 10px; height: 10px; }
         ::-webkit-scrollbar-track { background: #0d1117; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
         ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
         
+        /* 📱 手機版 Scrollbar 優化 */
+        @media (max-width: 768px) {
+            ::-webkit-scrollbar { height: 6px; } 
+            ::-webkit-scrollbar-thumb { background: #6b7280; border-radius: 6px; border: 1px solid #0d1117; }
+            .overflow-x-auto { -webkit-overflow-scrolling: touch; padding-bottom: 6px; }
+        }
+        
+        /* Header 自動隱藏特效 */
+        #mainHeader { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+
         #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 50; display: flex; flex-direction: column; gap: 10px; }
         .toast { padding: 12px 20px; border-radius: 8px; background-color: #238636; color: white; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.5); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
         .toast.show { opacity: 1; transform: translateY(0); }
@@ -43,9 +55,10 @@
         #chartLoader { display: none; position: absolute; inset: 0; background: rgba(13,17,23,0.7); backdrop-filter: blur(2px); z-index: 20; align-items: center; justify-content: center; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col relative">
 
-    <header class="glass-panel sticky top-0 z-40 px-4 md:px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+    <!-- ⚡ Header 加入 ID 供 JS 操控隱藏 -->
+    <header id="mainHeader" class="glass-panel sticky top-0 z-40 px-4 md:px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
         <div class="flex items-center gap-4 flex-wrap w-full md:w-auto justify-between md:justify-start">
             <div class="flex items-center gap-2">
                 <i class="fa-solid fa-crosshairs text-blue-500 text-xl md:text-2xl"></i>
@@ -61,7 +74,9 @@
                         <i class="fa-solid fa-rotate"></i> 更新 SMC
                     </a>
                 </div>
-                <span id="updateTimeText" class="text-[10px] text-gray-500 mt-1.5">數據連線中...</span>
+                <!-- ⚡ 將 SMC 運算時間與 LIVE 報價時間分開顯示 -->
+                <span id="updateTimeText" class="text-[10px] text-gray-500 mt-1.5">SMC 運算時間: 讀取中...</span>
+                <span id="liveTimeText" class="text-[10px] text-blue-400 mt-0.5">LIVE 報價: 連線中...</span>
             </div>
         </div>
         
@@ -115,16 +130,14 @@
                     </div>
                     <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 650px;">
                         <div class="flex flex-col xl:flex-row gap-3">
-                            <!-- 週期切換 -->
                             <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-1.5 flex gap-1 text-xs items-center justify-center">
                                 <button onclick="changeTimeFrame('15m')" id="tf_15m" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">15m</button>
                                 <button onclick="changeTimeFrame('4H')" id="tf_4H" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">4H</button>
                                 <button onclick="changeTimeFrame('1D')" id="tf_1D" class="px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors">1D</button>
                             </div>
-                            <!-- 指標切換 -->
                             <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2 flex flex-wrap gap-3 text-xs flex-grow items-center justify-center">
-                                <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> EMA</label>
-                                <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> BOLL</label>
+                                <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators('ema')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> EMA</label>
+                                <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators('boll')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> BOLL</label>
                                 <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> RSI</label>
                                 <label class="flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_macd" onchange="updateChartIndicators('macd')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> MACD</label>
                             </div>
@@ -176,7 +189,7 @@
             <!-- 右側欄位：篩選表格區 -->
             <div class="xl:col-span-2 glass-panel rounded-xl flex flex-col overflow-hidden">
                 <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('screenerContent', 'screenerIcon')">
-                    <span class="font-semibold text-white"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i>全方位 SMC 量化過濾池 (多空雙擊)</span>
+                    <span class="font-semibold text-white"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i>全方位 SMC 量化過濾池</span>
                     <i id="screenerIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
                 </div>
                 
@@ -195,7 +208,18 @@
                             <thead>
                                 <tr class="border-b border-[#30363d] bg-[#0d1117]">
                                     <th class="px-4 py-3 font-medium text-gray-400">股票 <i class="fa-solid fa-circle-info ml-1 cursor-pointer text-blue-500 hover:text-blue-400" onclick="openSMCModal()"></i></th>
-                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">SMC 形態與方向</th>
+                                    
+                                    <!-- ⚡ 加入過濾器 -->
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">
+                                        SMC 形態與方向
+                                        <select id="filterDirection" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none focus:border-blue-500">
+                                            <option value="ALL">全部 (All)</option>
+                                            <option value="LONG">做多 (Long)</option>
+                                            <option value="SHORT">做空 (Short)</option>
+                                            <option value="SS">SS級共振</option>
+                                        </select>
+                                    </th>
+
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center cursor-pointer hover:text-white group" onclick="changeSort('rrr')">
                                         盈虧比 <i class="fa-solid fa-sort text-gray-600 group-hover:text-blue-400 transition-colors ml-1"></i>
                                     </th>
@@ -219,7 +243,6 @@
 
     <div id="toast-container"></div>
     
-    <!-- 📚 術語百科全書 -->
     <div id="smcModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="glass-panel p-6 rounded-xl max-w-lg w-full relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeSMCModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
@@ -246,16 +269,11 @@
         </div>
     </div>
 
-    <!-- ⚡ JavaScript 區塊 (全展開版本) -->
     <script>
         const VERCEL_API_URL = "https://stock-live-api.vercel.app/api/quote";
         const TARGET_INDICES_MAP = { 
-            'SPY': '標普 500', 
-            'QQQ': '納斯達克', 
-            'DIA': '道瓊斯', 
-            'IWM': '羅素 2000', 
-            'SMH': '半導體', 
-            'XLK': '科技板塊' 
+            'SPY': '標普 500', 'QQQ': '納斯達克', 'DIA': '道瓊斯', 
+            'IWM': '羅素 2000', 'SMH': '半導體', 'XLK': '科技板塊' 
         };
         const TARGET_INDICES = Object.keys(TARGET_INDICES_MAP);
 
@@ -276,12 +294,25 @@
         let currentCandleData = [], currentSymbolData = null;
         let macroPriceLines = []; 
 
+        // ⚡ Header 滾動隱藏邏輯
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (!header) return;
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 60) {
+                header.classList.add('header-hidden');
+            } else {
+                header.classList.remove('header-hidden');
+            }
+            lastScrollTop = scrollTop;
+        });
+
         document.addEventListener('DOMContentLoaded', async () => {
             try { initCharts(); } catch (e) { console.error(e); }
             try { await loadJSONData(); } catch (e) { console.error(e); }
             try { fetchLiveQuotes(); } catch (e) { console.error(e); }
             
-            // 每 10 秒拉取一次最新價格
             setInterval(() => { 
                 try { fetchLiveQuotes(); } catch(e) { console.error(e); } 
             }, 10000); 
@@ -289,13 +320,12 @@
 
         async function loadJSONData() {
             try {
-                // 讀取靜態 json 加上 timestamp，避免 GitHub Pages 緩存
                 const response = await fetch('data.json?t=' + new Date().getTime());
                 if (!response.ok) throw new Error('連線異常');
                 globalData = await response.json();
                 document.getElementById('updateTimeText').innerText = `SMC 運算時間: ${globalData.updated_at || '最新'} (HKT)`;
             } catch (err) {
-                document.getElementById('updateTimeText').innerText = `離線安全模式 (僅支援即時報價)`;
+                document.getElementById('updateTimeText').innerText = `SMC 運算時間: 離線安全模式`;
                 globalData = { updated_at: '離線模式', watchlist_data: [], screener_data: [], chart_data: {} };
             }
 
@@ -336,13 +366,19 @@
                 
                 if (symbolsSet.size === 0) return;
 
-                // ⚡ 加上動態時間戳 (Date.now())，徹底破壞所有 API 緩存
                 const url = `${VERCEL_API_URL}?symbols=${Array.from(symbolsSet).join(',')}&t=${Date.now()}`;
                 const response = await fetch(url);
                 if (!response.ok) return;
                 
                 const liveData = await response.json();
                 if (!liveData) return;
+
+                // ⚡ 更新 LIVE 報價時鐘
+                const now = new Date();
+                const timeStr = now.getHours().toString().padStart(2, '0') + ':' + 
+                                now.getMinutes().toString().padStart(2, '0') + ':' + 
+                                now.getSeconds().toString().padStart(2, '0');
+                document.getElementById('liveTimeText').innerText = `LIVE 報價更新於: ${timeStr} (HKT)`;
 
                 for(let sym in liveData) {
                     if (liveData[sym] && liveData[sym].price) {
@@ -356,7 +392,6 @@
 
         function updateLiveUI(liveData, currentSymbol) {
             try {
-                // 更新我的最愛 (Watchlist)
                 userWatchlist.forEach(sym => {
                     if(liveData[sym]) {
                         const priceEl = document.getElementById(`wl-price-${sym}`);
@@ -368,7 +403,7 @@
                             
                             if (newPrice !== oldPrice && oldPrice !== 0) {
                                 priceEl.classList.remove('flash-green', 'flash-red'); 
-                                void priceEl.offsetWidth; // 觸發重繪
+                                void priceEl.offsetWidth; 
                                 priceEl.classList.add(newPrice > oldPrice ? 'flash-green' : 'flash-red');
                             }
                             
@@ -382,7 +417,6 @@
                     }
                 });
 
-                // 更新大盤熱力圖
                 TARGET_INDICES.forEach(sym => {
                     if(liveData[sym]) {
                         const flowEl = document.getElementById(`flow-change-${sym}`);
@@ -405,14 +439,10 @@
                     }
                 });
 
-                // 更新 AI 面板
                 if (currentSymbol && currentSymbol !== '--') {
-                    try { 
-                        updateIntelligencePanel(currentSymbol, currentSymbolData); 
-                    } catch(e){}
+                    try { updateIntelligencePanel(currentSymbol, currentSymbolData); } catch(e){}
                 }
 
-                // 更新過濾池裡的即時距離與顏色
                 const screenerArr = (globalData && Array.isArray(globalData.screener_data)) ? globalData.screener_data : [];
                 for (let sym in liveData) {
                     const distEl = document.getElementById(`dist-val-${sym}`);
@@ -445,7 +475,6 @@
                     }
                 }
 
-                // 即時更新圖表最後一根 K 線
                 if (currentSymbol && liveData[currentSymbol] && currentPriceLine && candleSeries && currentCandleData.length > 0) {
                     const newPrice = liveData[currentSymbol].price;
                     currentPriceLine.applyOptions({ price: newPrice, title: `Live: $${newPrice.toFixed(2)}` });
@@ -456,6 +485,7 @@
                     if (newPrice < lastCandle.low) lastCandle.low = newPrice;
                     
                     candleSeries.update(lastCandle);
+                    // ⚡ 此處不傳參數，保證 updateChartIndicators 不會觸發縮放重置 (fitContent)
                     updateChartIndicators(); 
                 }
             } catch (err) { console.error(err); }
@@ -472,16 +502,10 @@
                 for(let i=0; i<15; i++) {
                     pts.unshift(pts[0] + (Math.random()-0.5)*(basePrice||100)*0.015);
                 }
+                if (isPositive) pts.sort((a,b) => a-b); 
+                else pts.sort((a,b) => b-a);
                 
-                if (isPositive) {
-                    pts.sort((a,b) => a-b); 
-                } else {
-                    pts.sort((a,b) => b-a);
-                }
-                
-                const min = Math.min(...pts);
-                const max = Math.max(...pts);
-                const range = (max - min) || 1;
+                const min = Math.min(...pts), max = Math.max(...pts), range = (max - min) || 1;
                 
                 ctx.clearRect(0, 0, w, h); 
                 ctx.beginPath();
@@ -549,15 +573,11 @@
                     `;
                     container.appendChild(card);
                     
-                    // 繪製波形圖，稍微延遲確保 Canvas 已在 DOM 中
                     setTimeout(() => { drawSparkline(`sparkline-${item.symbol}`, price, isPositive); }, 50);
                 });
             } catch(e) {}
         }
 
-        // ==============================================================
-        // 🤖 雙向 AI 智能分析與宏觀解讀
-        // ==============================================================
         function updateIntelligencePanel(symbol, symbolData) {
             try {
                 const badgeEl = document.getElementById('panelSymbolBadge');
@@ -577,30 +597,20 @@
                     const mData = calculateMACD(currentCandleData, 12, 26, 9);
                     if (mData.macd.length >= 2) {
                         const idx = mData.macd.length - 1;
-                        const curM = mData.macd[idx].value;
-                        const curS = mData.signal[idx].value;
-                        const prevM = mData.macd[idx-1].value;
-                        const prevS = mData.signal[idx-1].value;
+                        const curM = mData.macd[idx].value, curS = mData.signal[idx].value;
+                        const prevM = mData.macd[idx-1].value, prevS = mData.signal[idx-1].value;
                         
-                        if (curM > curS && prevM <= prevS) {
-                            macdInsightText = "<span class='text-green-400'>【MACD】黃金交叉發動，有利多頭推進。</span>";
-                        } else if (curM < curS && prevM >= prevS) {
-                            macdInsightText = "<span class='text-red-400'>【MACD】死叉現形，需提防動能枯竭回調。</span>";
-                        } else if (curM > curS) {
-                            macdInsightText = "<span class='text-blue-300'>【MACD】維持多頭發散。</span>";
-                        } else {
-                            macdInsightText = "<span class='text-purple-400'>【MACD】維持空頭發散。</span>";
-                        }
+                        if (curM > curS && prevM <= prevS) macdInsightText = "<span class='text-green-400'>【MACD】黃金交叉發動，有利多頭推進。</span>";
+                        else if (curM < curS && prevM >= prevS) macdInsightText = "<span class='text-red-400'>【MACD】死叉現形，需提防動能枯竭回調。</span>";
+                        else if (curM > curS) macdInsightText = "<span class='text-blue-300'>【MACD】維持多頭發散。</span>";
+                        else macdInsightText = "<span class='text-purple-400'>【MACD】維持空頭發散。</span>";
                     }
                 }
 
                 if (symbolData) {
                     if (symbolData.macro_bsl) {
-                        if (livePrice > symbolData.macro_eq) {
-                            phaseEl.innerHTML = `<span class="text-red-400 font-bold">昂貴溢價區 (Premium)</span>`;
-                        } else {
-                            phaseEl.innerHTML = `<span class="text-green-400 font-bold">便宜折價區 (Discount)</span>`;
-                        }
+                        if (livePrice > symbolData.macro_eq) phaseEl.innerHTML = `<span class="text-red-400 font-bold">昂貴溢價區 (Premium)</span>`;
+                        else phaseEl.innerHTML = `<span class="text-green-400 font-bold">便宜折價區 (Discount)</span>`;
                     } else { 
                         phaseEl.innerHTML = `<span class="text-gray-400">等待更新宏觀數據...</span>`; 
                     }
@@ -673,12 +683,8 @@
         }
 
         function changeSort(col) {
-            if (sortCol === col) {
-                sortDesc = !sortDesc;
-            } else { 
-                sortCol = col; 
-                sortDesc = true; 
-            }
+            if (sortCol === col) { sortDesc = !sortDesc; } 
+            else { sortCol = col; sortDesc = true; }
             renderScreenerData();
         }
 
@@ -694,33 +700,39 @@
                 
                 let dataToRender = [...globalData.screener_data].filter(x => x !== null);
                 
+                // 1. 處理 Tab 過濾
                 if (currentTab === 'smc') {
                     dataToRender = dataToRender.filter(item => item && item.smc_id && item.rrr >= 1.5);
                 } else if (currentTab === 'watchlist') {
                     dataToRender = dataToRender.filter(item => item && userWatchlist.includes(item.symbol));
                 }
 
+                // 2. ⚡ 處理「SMC 形態與方向」的下拉選單過濾
+                const directionFilter = document.getElementById('filterDirection') ? document.getElementById('filterDirection').value : 'ALL';
+                if (directionFilter === 'LONG') {
+                    dataToRender = dataToRender.filter(item => item.direction !== 'short');
+                } else if (directionFilter === 'SHORT') {
+                    dataToRender = dataToRender.filter(item => item.direction === 'short');
+                } else if (directionFilter === 'SS') {
+                    dataToRender = dataToRender.filter(item => item.confluence === True || item.confluence === true);
+                }
+
+                // 3. 計算即時距離
                 dataToRender.forEach(item => {
                     let livePrice = currentLivePrices[item.symbol] || item.price || 0;
                     if (item.entry_top && item.entry_top > 0) {
-                        if (item.direction === 'short') {
-                            item._liveDist = ((item.entry_bot - livePrice) / livePrice) * 100;
-                        } else {
-                            item._liveDist = ((livePrice - item.entry_top) / item.entry_top) * 100;
-                        }
-                    } else { 
-                        item._liveDist = 9999; 
-                    }
+                        if (item.direction === 'short') item._liveDist = ((item.entry_bot - livePrice) / livePrice) * 100;
+                        else item._liveDist = ((livePrice - item.entry_top) / item.entry_top) * 100;
+                    } else { item._liveDist = 9999; }
                 });
 
+                // 4. 排序
                 dataToRender.sort((a, b) => {
                     let valA = 0, valB = 0;
                     if (sortCol === 'rrr') { 
-                        valA = parseFloat(a.rrr) || 0; 
-                        valB = parseFloat(b.rrr) || 0; 
+                        valA = parseFloat(a.rrr) || 0; valB = parseFloat(b.rrr) || 0; 
                     } else if (sortCol === 'dist') { 
-                        valA = a._liveDist; 
-                        valB = b._liveDist; 
+                        valA = a._liveDist; valB = b._liveDist; 
                     }
                     return sortDesc ? (valB - valA) : (valA - valB);
                 });
@@ -743,8 +755,7 @@
                     if (item.entry_top && item._liveDist !== 9999) {
                         if (item.direction === 'short') {
                             if (livePrice <= item.entry_top && livePrice >= (item.entry_bot||0)) {
-                                distHtml = `<span class="bg-purple-900/60 text-purple-400 px-2 py-0.5 rounded font-bold border border-purple-500/50">做空區內</span>`; 
-                                isRecommend = true;
+                                distHtml = `<span class="bg-purple-900/60 text-purple-400 px-2 py-0.5 rounded font-bold border border-purple-500/50">做空區內</span>`; isRecommend = true;
                             } else if (livePrice < item.entry_bot) {
                                 let d = ((item.entry_bot - livePrice) / livePrice * 100);
                                 distHtml = `<span class="text-gray-400">距 ${d.toFixed(2)}%</span>`;
@@ -754,8 +765,7 @@
                             }
                         } else {
                             if (livePrice <= item.entry_top && livePrice >= (item.entry_bot||0)) {
-                                distHtml = `<span class="bg-yellow-900/60 text-yellow-400 px-2 py-0.5 rounded font-bold border border-yellow-500/50">做多區內</span>`; 
-                                isRecommend = true;
+                                distHtml = `<span class="bg-yellow-900/60 text-yellow-400 px-2 py-0.5 rounded font-bold border border-yellow-500/50">做多區內</span>`; isRecommend = true;
                             } else if (livePrice > item.entry_top) {
                                 let d = ((livePrice - item.entry_top) / item.entry_top * 100);
                                 distHtml = `<span class="text-gray-400">距 ${d.toFixed(2)}%</span>`;
@@ -767,15 +777,9 @@
                     }
 
                     let nameHtml = `<div class="flex items-center gap-1.5">${item.symbol || '--'}`;
-                    if (item.label) {
-                        nameHtml += `<span class="${item.label_class || 'bg-gray-800 text-gray-400'} text-[10px] px-1.5 py-0.5 rounded whitespace-nowrap">${item.label}</span>`;
-                    }
-                    if (isRecommend) {
-                        nameHtml += `<span class="bg-yellow-900/50 text-yellow-400 text-[10px] px-1.5 py-0.5 rounded border border-yellow-500/50 animate-pulse whitespace-nowrap"><i class="fa-solid fa-bullseye mr-1"></i>行動區</span>`;
-                    }
-                    if (item.earnings_alert) {
-                        nameHtml += `<span title="近期發布財報" class="bg-red-500/20 text-red-400 text-[10px] px-1.5 py-0.5 rounded border border-red-500/50 whitespace-nowrap"><i class="fa-solid fa-triangle-exclamation mr-1"></i>財報</span>`;
-                    }
+                    if (item.label) nameHtml += `<span class="${item.label_class || 'bg-gray-800 text-gray-400'} text-[10px] px-1.5 py-0.5 rounded whitespace-nowrap">${item.label}</span>`;
+                    if (isRecommend) nameHtml += `<span class="bg-yellow-900/50 text-yellow-400 text-[10px] px-1.5 py-0.5 rounded border border-yellow-500/50 animate-pulse whitespace-nowrap"><i class="fa-solid fa-bullseye mr-1"></i>行動區</span>`;
+                    if (item.earnings_alert) nameHtml += `<span title="近期發布財報" class="bg-red-500/20 text-red-400 text-[10px] px-1.5 py-0.5 rounded border border-red-500/50 whitespace-nowrap"><i class="fa-solid fa-triangle-exclamation mr-1"></i>財報</span>`;
                     nameHtml += `</div>`;
 
                     let smcHtml = `<span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class || 'border-gray-600 text-gray-400'} whitespace-nowrap">${item.smc_text || '-'}</span>`;
@@ -797,7 +801,6 @@
             } catch(e) {}
         }
 
-        // ================== 圖表與指標初始化 ==================
         function initCharts() {
             const container = document.getElementById('tv_chart_container');
             const subContainer = document.getElementById('sub_chart_container');
@@ -884,30 +887,21 @@
 
                 activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); 
                 macroPriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); 
-                activePriceLines = []; 
-                macroPriceLines = [];
+                activePriceLines = []; macroPriceLines = [];
                 
-                if(currentPriceLine) { 
-                    try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} 
-                    currentPriceLine = null; 
-                }
+                if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
                 candleSeries.setMarkers([]);
 
                 let data = [];
                 const tfParam = currentTimeFrame.toLowerCase();
                 try {
-                    // ⚡ 加上動態時間戳，破壞歷史圖表的緩存鎖死
                     const res = await fetch(`${VERCEL_API_URL}?symbols=${symbol}&interval=${tfParam}&t=${Date.now()}`);
                     if (res.ok) {
                         const jsonRes = await res.json();
                         if (jsonRes[symbol] && jsonRes[symbol].chart) {
-                            let uniqueChart = []; 
-                            let lastTime = 0;
+                            let uniqueChart = []; let lastTime = 0;
                             for (let c of jsonRes[symbol].chart) {
-                                if (c.time !== lastTime) { 
-                                    uniqueChart.push(c); 
-                                    lastTime = c.time; 
-                                }
+                                if (c.time !== lastTime) { uniqueChart.push(c); lastTime = c.time; }
                             }
                             data = uniqueChart;
                         }
@@ -917,8 +911,7 @@
                 if(loader) loader.style.display = 'none';
 
                 if (data.length === 0) {
-                    currentCandleData = []; 
-                    candleSeries.setData([]);
+                    currentCandleData = []; candleSeries.setData([]);
                     showToast(`無法獲取 ${symbol} 的 ${currentTimeFrame} 數據`, 'error');
                 } else {
                     currentCandleData = data;
@@ -944,13 +937,6 @@
                         macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_bsl, color: '#ef4444', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Macro BSL` }));
                         macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#4b5563', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, title: `Macro EQ` }));
                         macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_ssl, color: '#22c55e', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Macro SSL` }));
-                    } else if (currentCandleData.length > 0) {
-                        let highest = Math.max(...currentCandleData.map(d => d.high));
-                        let lowest = Math.min(...currentCandleData.map(d => d.low));
-                        let eq = (highest + lowest) / 2;
-                        macroPriceLines.push(candleSeries.createPriceLine({ price: highest, color: '#9ca3af', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Local BSL` }));
-                        macroPriceLines.push(candleSeries.createPriceLine({ price: eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, title: `Local EQ` }));
-                        macroPriceLines.push(candleSeries.createPriceLine({ price: lowest, color: '#9ca3af', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Local SSL` }));
                     }
 
                     if (currentSymbolData.smc_id) {
@@ -981,10 +967,11 @@
                 
                 chart.timeScale().fitContent(); 
                 chart.priceScale('right').applyOptions({ autoScale: true });
-                updateChartIndicators(); 
+                updateChartIndicators('init'); // 傳遞標記避免自動刷新時觸發 fitContent
             } catch(e) {}
         }
 
+        // ⚡ 修復了自動刷新導致圖表 Zoom In 重置的 Bug
         function updateChartIndicators(clickedType = null) {
             try {
                 if (!currentCandleData || !currentCandleData.length || !chart) return;
@@ -1001,35 +988,29 @@
                 const showRsi = rsiCheck.checked;
                 const showMacd = macdCheck.checked;
                 
-                // EMA 邏輯
                 if (showEma) {
                     const ema20 = calculateEMA(currentCandleData, 20, 'close');
                     const ema50 = calculateEMA(currentCandleData, 50, 'close');
                     if (!ema20Series) ema20Series = chart.addLineSeries({ color: '#f59e0b', lineWidth: 1.5, title: 'EMA 20' });
                     if (!ema50Series) ema50Series = chart.addLineSeries({ color: '#8b5cf6', lineWidth: 1.5, title: 'EMA 50' });
-                    ema20Series.setData(ema20); 
-                    ema50Series.setData(ema50);
+                    ema20Series.setData(ema20); ema50Series.setData(ema50);
                 } else {
                     if (ema20Series) { chart.removeSeries(ema20Series); ema20Series = null; }
                     if (ema50Series) { chart.removeSeries(ema50Series); ema50Series = null; }
                 }
 
-                // BOLL 邏輯
                 if (showBoll) {
                     const boll = calculateBOLL(currentCandleData, 20, 2);
                     if (!bollUpperSeries) bollUpperSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Upper' });
                     if (!bollMidSeries) bollMidSeries = chart.addLineSeries({ color: 'rgba(234, 179, 8, 0.8)', lineWidth: 1.5, title: 'Mid' });
                     if (!bollLowerSeries) bollLowerSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Lower' });
-                    bollUpperSeries.setData(boll.upper); 
-                    bollMidSeries.setData(boll.middle); 
-                    bollLowerSeries.setData(boll.lower);
+                    bollUpperSeries.setData(boll.upper); bollMidSeries.setData(boll.middle); bollLowerSeries.setData(boll.lower);
                 } else {
                     if (bollUpperSeries) { chart.removeSeries(bollUpperSeries); bollUpperSeries = null; }
                     if (bollMidSeries) { chart.removeSeries(bollMidSeries); bollMidSeries = null; }
                     if (bollLowerSeries) { chart.removeSeries(bollLowerSeries); bollLowerSeries = null; }
                 }
 
-                // 副圖邏輯
                 const subContainer = document.getElementById('sub_chart_container');
                 try { if (subIndicatorSeries && subChart) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; } } catch(e){}
                 try { if (macdHistSeries && subChart) { subChart.removeSeries(macdHistSeries); macdHistSeries = null; } } catch(e){}
@@ -1048,31 +1029,25 @@
                         macdHistSeries = subChart.addHistogramSeries({ color: '#26a69a', title: 'Hist' });
                         macdLineSeries = subChart.addLineSeries({ color: '#2962FF', lineWidth: 1.5, title: 'MACD' });
                         macdSignalSeries = subChart.addLineSeries({ color: '#FF6D00', lineWidth: 1.5, title: 'Signal' });
-                        macdHistSeries.setData(macdData.hist); 
-                        macdLineSeries.setData(macdData.macd); 
-                        macdSignalSeries.setData(macdData.signal);
+                        macdHistSeries.setData(macdData.hist); macdLineSeries.setData(macdData.macd); macdSignalSeries.setData(macdData.signal);
                     }
-                    if(subChart) subChart.timeScale().fitContent();
+                    // ⚡ 只有在手動點擊指標或切換股票時，才執行 fitContent，避免自動刷新干擾縮放
+                    if(subChart && clickedType !== null) subChart.timeScale().fitContent();
                 } else { 
                     subContainer.style.display = 'none'; 
                 }
             } catch(e) {}
         }
 
-        // ================== 數學計算函數 ==================
+        // ================== 數學計算 ==================
         function calculateEMA(data, period, key = 'close') {
             if (!data || !data.length) return [];
-            let result = [];
-            let multiplier = 2 / (period + 1);
-            let prevEMA = data[0][key] || 0;
-            
+            let result = [], multiplier = 2 / (period + 1), prevEMA = data[0][key] || 0;
             for (let i = 0; i < data.length; i++) {
                 let val = data[i][key] || 0;
                 let ema = (i === 0) ? val : (val - prevEMA) * multiplier + prevEMA;
-                prevEMA = ema; 
-                result.push({ time: data[i].time, value: Number(ema.toFixed(2)) });
-            } 
-            return result;
+                prevEMA = ema; result.push({ time: data[i].time, value: Number(ema.toFixed(2)) });
+            } return result;
         }
 
         function calculateBOLL(data, period, stdDevMultiplier) {
@@ -1084,51 +1059,35 @@
                 middle.push({ time: data[i].time, value: Number(sma.toFixed(2)) });
                 upper.push({ time: data[i].time, value: Number((sma + stdDevMultiplier * stdDev).toFixed(2)) });
                 lower.push({ time: data[i].time, value: Number((sma - stdDevMultiplier * stdDev).toFixed(2)) });
-            } 
-            return { upper, middle, lower };
+            } return { upper, middle, lower };
         }
 
         function calculateRSI(data, period) {
             let result = [], gains = 0, losses = 0;
             for (let i = 1; i < data.length; i++) {
-                let change = data[i].close - data[i-1].close;
-                let gain = change > 0 ? change : 0;
-                let loss = change < 0 ? -change : 0;
-                
+                let change = data[i].close - data[i-1].close, gain = change > 0 ? change : 0, loss = change < 0 ? -change : 0;
                 if (i <= period) {
-                    gains += gain; 
-                    losses += loss;
+                    gains += gain; losses += loss;
                     if (i === period) {
                         let rs = (losses/period) === 0 ? 100 : (gains/period) / (losses/period);
                         result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) });
                     }
                 } else {
-                    gains = (gains * (period - 1) + gain) / period; 
-                    losses = (losses * (period - 1) + loss) / period;
+                    gains = (gains * (period - 1) + gain) / period; losses = (losses * (period - 1) + loss) / period;
                     let rs = losses === 0 ? 100 : gains / losses;
                     result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) });
                 }
-            } 
-            return result;
+            } return result;
         }
 
         function calculateMACD(data, fast, slow, sig) {
-            let fEma = calculateEMA(data, fast, 'close');
-            let sEma = calculateEMA(data, slow, 'close');
-            let macdLine = [];
-            
-            for (let i = 0; i < data.length; i++) {
-                macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value });
-            }
-            
-            let sigLine = calculateEMA(macdLine, sig, 'value');
-            let histLine = [];
-            
+            let fEma = calculateEMA(data, fast, 'close'), sEma = calculateEMA(data, slow, 'close'), macdLine = [];
+            for (let i = 0; i < data.length; i++) macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value });
+            let sigLine = calculateEMA(macdLine, sig, 'value'), histLine = [];
             for(let i=0; i<data.length; i++) {
                 let hist = macdLine[i].value - sigLine[i].value;
                 histLine.push({ time: data[i].time, value: Number(hist.toFixed(2)), color: hist >= 0 ? '#26a69a' : '#ef5350' });
             }
-            
             return {
                 macd: macdLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})),
                 signal: sigLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})),
@@ -1136,22 +1095,13 @@
             };
         }
 
-        // ================== 介面與互動函數 ==================
+        // ================== 介面互動 ==================
         function switchTab(tab) {
             currentTab = tab;
             const tSmc = document.getElementById('tabSmc');
             const tWl = document.getElementById('tabWatchlist');
-            
-            if(tSmc) {
-                tSmc.className = (tab==='smc') 
-                    ? "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap" 
-                    : "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
-            }
-            if(tWl) {
-                tWl.className = (tab==='watchlist') 
-                    ? "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap" 
-                    : "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
-            }
+            if(tSmc) tSmc.className = (tab==='smc') ? "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap" : "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
+            if(tWl) tWl.className = (tab==='watchlist') ? "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap" : "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
             renderScreenerData();
         }
 
@@ -1159,45 +1109,28 @@
             e.preventDefault(); 
             const input = document.getElementById('searchInput');
             if(!input) return;
-            
             const val = input.value.trim().toUpperCase(); 
             if(!val) return;
-            
-            if (userWatchlist.includes(val)) { 
-                showToast(`股票 ${val} 已經在自選清單中`, 'error'); 
-                input.value = ''; 
-                return; 
-            }
-            
-            userWatchlist.push(val); 
-            renderWatchlist(); 
-            renderScreenerData(); 
+            if (userWatchlist.includes(val)) { showToast(`股票 ${val} 已經在自選清單中`, 'error'); input.value = ''; return; }
+            userWatchlist.push(val); renderWatchlist(); renderScreenerData(); 
             try { fetchLiveQuotes(); } catch(err){}
-            
-            showToast(`成功加入自選: ${val}`); 
-            input.value = ''; 
+            showToast(`成功加入自選: ${val}`); input.value = ''; 
         }
 
         function removeFromWatchlist(event, sym) {
             event.stopPropagation(); 
             userWatchlist = userWatchlist.filter(s => s !== sym);
             if(currentLivePrices[sym]) delete currentLivePrices[sym];
-            renderWatchlist(); 
-            renderScreenerData(); 
-            showToast(`已從自選移除: ${sym}`, 'error');
+            renderWatchlist(); renderScreenerData(); showToast(`已從自選移除: ${sym}`, 'error');
         }
 
         function toggleSection(cId, iId) { 
             const c = document.getElementById(cId);
             const i = document.getElementById(iId);
-            
             if(c) {
                 c.classList.toggle('collapsed');
                 if (!c.classList.contains('collapsed') && cId === 'chartContent') {
-                    setTimeout(() => { 
-                        if (chart) chart.timeScale().fitContent(); 
-                        updateChartIndicators(); 
-                    }, 350);
+                    setTimeout(() => { if (chart) chart.timeScale().fitContent(); updateChartIndicators('init'); }, 350);
                 }
             }
             if(i) i.classList.toggle('rotate-180'); 
@@ -1206,48 +1139,28 @@
         function showToast(msg, type='success') { 
             const c = document.getElementById('toast-container');
             if(!c) return;
-            
             const t = document.createElement('div'); 
             t.className = `toast ${type==='error'?'error':''}`; 
             t.innerHTML = `<i class="fa-solid ${type==='error'?'fa-trash':'fa-check-circle'} mr-2"></i> ${msg}`; 
             c.appendChild(t); 
-            
             setTimeout(() => t.classList.add('show'), 10); 
-            setTimeout(() => {
-                t.classList.remove('show'); 
-                setTimeout(() => t.remove(), 300);
-            }, 3000); 
+            setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 3000); 
         }
         
         function changeTimeFrame(tf) { 
             currentTimeFrame = tf; 
             ['15m','4H','1D'].forEach(t => { 
                 const btn = document.getElementById('tf_'+t);
-                if(btn) {
-                    btn.className = (t===tf) 
-                        ? "px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors" 
-                        : "px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors";
-                }
+                if(btn) btn.className = (t===tf) ? "px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors" : "px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors";
             }); 
-            
             const badge = document.getElementById('chartTypeBadge');
             if(badge) badge.innerText = `真實 K 線 (${tf})`;
-            
             const curSym = document.getElementById('currentChartSymbol');
-            if(curSym && curSym.innerText !== '--') {
-                updateChartSymbol(curSym.innerText); 
-            }
+            if(curSym && curSym.innerText !== '--') updateChartSymbol(curSym.innerText); 
         }
         
-        function openSMCModal() { 
-            const m = document.getElementById('smcModal'); 
-            if(m) m.style.display = 'flex'; 
-        }
-        
-        function closeSMCModal() { 
-            const m = document.getElementById('smcModal'); 
-            if(m) m.style.display = 'none'; 
-        }
+        function openSMCModal() { const m = document.getElementById('smcModal'); if(m) m.style.display = 'flex'; }
+        function closeSMCModal() { const m = document.getElementById('smcModal'); if(m) m.style.display = 'none'; }
     </script>
 </body>
 </html>
