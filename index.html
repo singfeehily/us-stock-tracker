@@ -194,7 +194,6 @@
     <script>
         const VERCEL_API_URL = "https://stock-live-api.vercel.app/api/quote";
         
-        // ⚡ 定義大盤與板塊的中英文對照對象
         const TARGET_INDICES_MAP = {
             'SPY': '標普 500',
             'QQQ': '納斯達克',
@@ -205,7 +204,7 @@
         };
         const TARGET_INDICES = Object.keys(TARGET_INDICES_MAP);
 
-        let globalData = null;
+        let globalData = { updated_at: '載入中...', watchlist_data: [], screener_data: [] };
         let chart = null, subChart = null, candleSeries = null;
         let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null, subIndicatorSeries = null;
         let currentTab = 'smc';
@@ -215,8 +214,8 @@
         let currentCandleData = [], currentSymbolData = null;
 
         document.addEventListener('DOMContentLoaded', async () => {
-            await loadJSONData();
             initCharts();
+            await loadJSONData();
             fetchLiveQuotes();
             setInterval(fetchLiveQuotes, 10000); 
         });
@@ -227,8 +226,14 @@
                 if (!response.ok) throw new Error('無法讀取 data.json');
                 globalData = await response.json();
                 document.getElementById('updateTimeText').innerText = `SMC 計算時間: ${globalData.updated_at || '最新'} (HKT)`;
-                
-                if (globalData.watchlist_data) {
+            } catch (err) {
+                console.warn("data.json 讀取警告:", err);
+                document.getElementById('updateTimeText').innerText = `SMC 計算時間: 離線模式 (僅支援即時報價)`;
+                globalData = { updated_at: '離線模式', watchlist_data: [], screener_data: [] };
+            }
+
+            try {
+                if (globalData.watchlist_data && globalData.watchlist_data.length > 0) {
                     const dataList = document.getElementById('stock-suggestions');
                     dataList.innerHTML = '';
                     globalData.watchlist_data.forEach(item => {
@@ -237,20 +242,25 @@
                         dataList.appendChild(option);
                     });
                 }
+            } catch(e) { console.error(e); }
 
-                renderMarketFlow(); renderWatchlist(); renderScreenerData();
-                if (globalData.screener_data && globalData.screener_data.length > 0) updateChartSymbol(globalData.screener_data[0].symbol);
-            } catch (err) {
-                console.error(err); showToast('讀取 data.json 失敗，請確認已執行 Workflow', 'error');
+            renderMarketFlow(); 
+            renderWatchlist(); 
+            renderScreenerData();
+            
+            if (globalData.screener_data && globalData.screener_data.length > 0) {
+                updateChartSymbol(globalData.screener_data[0].symbol);
+            } else {
+                updateChartSymbol('SPY');
             }
         }
 
         async function fetchLiveQuotes() {
-            const currentSymbol = document.getElementById('currentChartSymbol').innerText;
-            const symbolsSet = new Set([...userWatchlist, ...TARGET_INDICES]);
-            if (currentSymbol !== '--') symbolsSet.add(currentSymbol);
-            
             try {
+                const symbolsSet = new Set([...userWatchlist, ...TARGET_INDICES]);
+                const currentSymbol = document.getElementById('currentChartSymbol').innerText;
+                if (currentSymbol && currentSymbol !== '--') symbolsSet.add(currentSymbol);
+                
                 const response = await fetch(`${VERCEL_API_URL}?symbols=${Array.from(symbolsSet).join(',')}`);
                 if (!response.ok) return;
                 updateLiveUI(await response.json()); 
@@ -258,6 +268,7 @@
         }
 
         function updateLiveUI(liveData) {
+            if (!liveData) return;
             userWatchlist.forEach(sym => {
                 if(liveData[sym]) {
                     const priceEl = document.getElementById(`wl-price-${sym}`);
@@ -317,7 +328,7 @@
         function renderWatchlist() {
             const container = document.getElementById('watchlistContainer');
             const emptyMsg = document.getElementById('emptyWatchlistMsg');
-            emptyMsg.style.display = 'none'; 
+            if (emptyMsg) emptyMsg.style.display = 'none'; 
             container.innerHTML = '';
             
             const watchlistMap = new Map();
@@ -329,6 +340,7 @@
                 let item = watchlistMap.get(sym) || { symbol: sym, price: 0, change: 0, change_pct: 0 };
                 let change = item.change !== undefined ? item.change : 0;
                 let change_pct = item.change_pct !== undefined ? item.change_pct : 0;
+                let price = item.price !== undefined ? item.price : 0;
                 const isPositive = change >= 0;
                 
                 const card = document.createElement('div');
@@ -339,7 +351,7 @@
                         <span class="font-bold text-base text-white">${item.symbol}</span>
                         <button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors"><i class="fa-solid fa-xmark"></i></button>
                     </div>
-                    <div id="wl-price-${item.symbol}" data-price="${item.price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}">$${item.price.toFixed(2)}</div>
+                    <div id="wl-price-${item.symbol}" data-price="${price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}">$${price.toFixed(2)}</div>
                     <div id="wl-change-${item.symbol}" class="text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}">
                         ${isPositive && change !== 0 ? '+' : ''}${change} (${isPositive && change_pct !== 0 ? '+' : ''}${change_pct}%)
                     </div>`;
@@ -394,8 +406,10 @@
 
         function updateChartSymbol(symbol) {
             document.getElementById('currentChartSymbol').innerText = symbol;
-            if(!candleSeries || !globalData) return;
-            currentSymbolData = (globalData.screener_data || []).find(x => x.symbol === symbol);
+            if(!candleSeries) return;
+            
+            let screenerList = (globalData && globalData.screener_data) ? globalData.screener_data : [];
+            currentSymbolData = screenerList.find(x => x.symbol === symbol);
 
             activePriceLines.forEach(line => candleSeries.removePriceLine(line)); activePriceLines = [];
             if(currentPriceLine) { candleSeries.removePriceLine(currentPriceLine); currentPriceLine = null; }
@@ -447,7 +461,8 @@
             chart.timeScale().fitContent(); 
             chart.priceScale('right').applyOptions({ autoScale: true });
             
-            updateChartIndicators(); fetchLiveQuotes();
+            updateChartIndicators(); 
+            fetchLiveQuotes();
         }
 
         function updateChartIndicators(clickedType = null) {
@@ -465,4 +480,154 @@
                 ema20Series.setData(ema20); ema50Series.setData(ema50);
             } else {
                 if (ema20Series) { chart.removeSeries(ema20Series); ema20Series = null; }
-                if (ema5
+                if (ema50Series) { chart.removeSeries(ema50Series); ema50Series = null; }
+            }
+
+            if (showBoll) {
+                const boll = calculateBOLL(currentCandleData, 20, 2);
+                if (!bollUpperSeries) bollUpperSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Upper' });
+                if (!bollMidSeries) bollMidSeries = chart.addLineSeries({ color: 'rgba(234, 179, 8, 0.8)', lineWidth: 1.5, title: 'Mid' });
+                if (!bollLowerSeries) bollLowerSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Lower' });
+                bollUpperSeries.setData(boll.upper); bollMidSeries.setData(boll.middle); bollLowerSeries.setData(boll.lower);
+            } else {
+                if (bollUpperSeries) { chart.removeSeries(bollUpperSeries); bollUpperSeries = null; }
+                if (bollMidSeries) { chart.removeSeries(bollMidSeries); bollMidSeries = null; }
+                if (bollLowerSeries) { chart.removeSeries(bollLowerSeries); bollLowerSeries = null; }
+            }
+
+            const subContainer = document.getElementById('sub_chart_container');
+            if (showRsi || showMacd) {
+                subContainer.style.display = 'block';
+                if (subChart) subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
+                if (subIndicatorSeries) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; }
+                
+                if (showRsi) {
+                    subIndicatorSeries = subChart.addLineSeries({ color: '#06b6d4', lineWidth: 1.5, title: 'RSI (14)' });
+                    subIndicatorSeries.setData(calculateRSI(currentCandleData, 14));
+                } else if (showMacd) {
+                    subIndicatorSeries = subChart.addHistogramSeries({ color: '#26a69a', title: 'MACD' });
+                    subIndicatorSeries.setData(calculateMACD(currentCandleData, 12, 26, 9));
+                }
+                subChart.timeScale().fitContent();
+            } else { 
+                subContainer.style.display = 'none'; 
+                if (subIndicatorSeries) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; }
+            }
+        }
+
+        function calculateEMA(data, period) {
+            let result = [], multiplier = 2 / (period + 1), prevEMA = data[0].close;
+            for (let i = 0; i < data.length; i++) {
+                let ema = (i === 0) ? data[i].close : (data[i].close - prevEMA) * multiplier + prevEMA;
+                prevEMA = ema; result.push({ time: data[i].time, value: Number(ema.toFixed(2)) });
+            } return result;
+        }
+
+        function calculateBOLL(data, period, stdDevMultiplier) {
+            let upper = [], middle = [], lower = [];
+            for (let i = period - 1; i < data.length; i++) {
+                let slice = data.slice(i - period + 1, i + 1), sma = slice.reduce((acc, val) => acc + val.close, 0) / period;
+                let stdDev = Math.sqrt(slice.reduce((acc, val) => acc + Math.pow(val.close - sma, 2), 0) / period);
+                middle.push({ time: data[i].time, value: Number(sma.toFixed(2)) });
+                upper.push({ time: data[i].time, value: Number((sma + stdDevMultiplier * stdDev).toFixed(2)) });
+                lower.push({ time: data[i].time, value: Number((sma - stdDevMultiplier * stdDev).toFixed(2)) });
+            } return { upper, middle, lower };
+        }
+
+        function calculateRSI(data, period) {
+            let result = [], gains = 0, losses = 0;
+            for (let i = 1; i < data.length; i++) {
+                let change = data[i].close - data[i-1].close, gain = change > 0 ? change : 0, loss = change < 0 ? -change : 0;
+                if (i <= period) {
+                    gains += gain; losses += loss;
+                    if (i === period) {
+                        let rs = (losses/period) === 0 ? 100 : (gains/period) / (losses/period);
+                        result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) });
+                    }
+                } else {
+                    gains = (gains * (period - 1) + gain) / period; losses = (losses * (period - 1) + loss) / period;
+                    let rs = losses === 0 ? 100 : gains / losses;
+                    result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) });
+                }
+            } return result;
+        }
+
+        function calculateMACD(data, fast, slow, sig) {
+            let fEma = calculateEMA(data, fast), sEma = calculateEMA(data, slow), macdLine = [];
+            for (let i = 0; i < data.length; i++) macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value });
+            return macdLine.map(item => ({ time: item.time, value: Number(item.value.toFixed(2)), color: item.value >= 0 ? '#26a69a' : '#ef5350' }));
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.getElementById('tabSmc').className = (tab==='smc') ? "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap" : "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
+            document.getElementById('tabWatchlist').className = (tab==='watchlist') ? "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap" : "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
+            renderScreenerData();
+        }
+
+        function renderScreenerData() {
+            const tbody = document.getElementById('screenerTableBody');
+            if (!globalData || !globalData.screener_data) return;
+            tbody.innerHTML = '';
+            
+            let dataToRender = globalData.screener_data;
+            if (currentTab === 'smc') {
+                dataToRender = dataToRender.filter(item => item.smc_id && item.rrr >= 1.5);
+            } else if (currentTab === 'watchlist') {
+                dataToRender = dataToRender.filter(item => userWatchlist.includes(item.symbol));
+            }
+
+            if (dataToRender.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">目前無符合高勝率 SMC (RRR>1.5) 之訊號</td></tr>`; return;
+            }
+
+            dataToRender.forEach(item => {
+                const tr = document.createElement('tr'); tr.className = 'border-b border-[#30363d] clickable-row'; tr.onclick = () => updateChartSymbol(item.symbol);
+                tr.innerHTML = `
+                    <td class="px-4 py-3 font-bold text-white">${item.symbol}</td>
+                    <td class="px-4 py-3 text-center"><span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class || 'border-gray-600 text-gray-400'}">${item.smc_text || '-'}</span></td>
+                    <td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td>
+                    <td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot || 0} - $${item.entry_top || 0}</td>
+                    <td class="px-4 py-3 text-right font-mono text-sm text-green-400">$${item.tp || 0}</td>
+                    <td class="px-4 py-3 text-right font-mono font-semibold text-sm text-red-400">$${item.sl || 0}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function addCustomStock(e) { 
+            e.preventDefault(); 
+            const input = document.getElementById('searchInput');
+            const val = input.value.trim().toUpperCase(); 
+            if(!val) return;
+
+            if (userWatchlist.includes(val)) {
+                showToast(`股票 ${val} 已經在自選清單中`, 'error');
+                input.value = '';
+                return;
+            }
+
+            userWatchlist.push(val); 
+            renderWatchlist(); 
+            renderScreenerData(); 
+            fetchLiveQuotes(); 
+            showToast(`成功加入自選: ${val}`);
+            input.value = ''; 
+        }
+
+        function removeFromWatchlist(event, sym) {
+            event.stopPropagation(); 
+            userWatchlist = userWatchlist.filter(s => s !== sym);
+            renderWatchlist();
+            renderScreenerData();
+            showToast(`已從自選移除: ${sym}`, 'error');
+        }
+
+        function toggleSection(cId, iId) { document.getElementById(cId).classList.toggle('collapsed'); document.getElementById(iId).classList.toggle('rotate-180'); }
+        function showToast(msg, type='success') { const c = document.getElementById('toast-container'), t = document.createElement('div'); t.className=`toast ${type==='error'?'error':''}`; t.innerHTML=`<i class="fa-solid ${type==='error'?'fa-trash':'fa-check-circle'} mr-2"></i> ${msg}`; c.appendChild(t); setTimeout(()=>t.classList.add('show'),10); setTimeout(()=>{t.classList.remove('show'); setTimeout(()=>t.remove(),300);}, 3000); }
+        function changeTimeFrame(tf) { currentTimeFrame = tf; ['15m','4H','1D'].forEach(t => { document.getElementById('tf_'+t).className = (t===tf) ? "px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors" : "px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors"; }); updateChartSymbol(document.getElementById('currentChartSymbol').innerText); }
+        function openSMCModal() { document.getElementById('smcModal').style.display = 'flex'; }
+        function closeSMCModal() { document.getElementById('smcModal').style.display = 'none'; }
+    </script>
+</body>
+</html>
