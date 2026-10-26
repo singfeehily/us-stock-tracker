@@ -1,533 +1,467 @@
 {
-    "updated_at": "2026-10-26 22:15:37",
+    "updated_at": "2026-10-27 02:46:17",
     "watchlist_data": [
         {
             "symbol": "SPY",
-            "price": 764.61,
-            "change": 4.64,
-            "change_pct": 0.61
+            "price": 765.45,
+            "change": 5.48,
+            "change_pct": 0.72
         },
         {
             "symbol": "QQQ",
-            "price": 708.73,
-            "change": 4.33,
-            "change_pct": 0.61
+            "price": 713.59,
+            "change": 9.19,
+            "change_pct": 1.3
         },
         {
             "symbol": "DIA",
-            "price": 524.89,
-            "change": 3.52,
-            "change_pct": 0.68
+            "price": 522.86,
+            "change": 1.49,
+            "change_pct": 0.29
         },
         {
             "symbol": "IWM",
-            "price": 278.13,
-            "change": 2.38,
-            "change_pct": 0.86
+            "price": 277.23,
+            "change": 1.48,
+            "change_pct": 0.54
         },
         {
             "symbol": "VOO",
-            "price": 702.86,
-            "change": 4.28,
-            "change_pct": 0.61
+            "price": 703.58,
+            "change": 5.0,
+            "change_pct": 0.72
         },
         {
             "symbol": "QQQM",
-            "price": 291.83,
-            "change": 1.77,
-            "change_pct": 0.61
+            "price": 293.85,
+            "change": 3.79,
+            "change_pct": 1.31
         },
         {
             "symbol": "SPYM",
-            "price": 90.0,
-            "change": 0.55,
-            "change_pct": 0.61
+            "price": 90.08,
+            "change": 0.63,
+            "change_pct": 0.7
         },
         {
             "symbol": "SMH",
-            "price": 533.64,
-            "change": 6.44,
-            "change_pct": 1.22
+            "price": 544.62,
+            "change": 17.42,
+            "change_pct": 3.3
         },
         {
             "symbol": "SOXL",
-            "price": 85.88,
-            "change": 2.32,
-            "change_pct": 2.78
+            "price": 92.68,
+            "change": 9.12,
+            "change_pct": 10.91
         },
         {
             "symbol": "XLK",
-            "price": 184.33,
+            "price": 186.87,
+            "change": 3.64,
+            "change_pct": 1.99
+        },
+        {
+            "symbol": "XLF",
+            "price": 56.07,
+            "change": 0.17,
+            "change_pct": 0.3
+        },
+        {
+            "symbol": "XLE",
+            "price": 69.62,
+            "change": 0.29,
+            "change_pct": 0.42
+        },
+        {
+            "symbol": "SPCX",
+            "price": 149.01,
+            "change": 1.52,
+            "change_pct": 1.03
+        },
+        {
+            "symbol": "DRAM",
+            "price": 48.78,
+            "change": 1.72,
+            "change_pct": 3.65
+        },
+        {
+            "symbol": "AAPL",
+            "price": 342.95,
+            "change": -4.78,
+            "change_pct": -1.37
+        },
+        {
+            "symbol": "MSFT",
+            "price": 532.66,
+            "change": 8.15,
+            "change_pct": 1.55
+        },
+        {
+            "symbol": "NVDA",
+            "price": 216.11,
+            "change": 5.15,
+            "change_pct": 2.44
+        },
+        {
+            "symbol": "TSLA",
+            "price": 394.9,
+            "change": 22.68,
+            "change_pct": 6.09
+        },
+        {
+            "symbol": "AMZN",
+            "price": 248.73,
+            "change": 0.73,
+            "change_pct": 0.29
+        },
+        {
+            "symbol": "META",
+            "price": 631.2,
+            "change": -11.42,
+            "change_pct": -1.78
+        },
+        {
+            "symbol": "GOOG",
+            "price": 314.33,
+            "change": -2.95,
+            "change_pct": -0.93
+        },
+        {
+            "symbol": "GOOGL",
+            "price": 317.45,
+            "change": -2.76,
+            "change_pct": -0.86
+        },
+        {
+            "symbol": "AMD",
+            "price": 533.21,
+            "change": 16.42,
+            "change_pct": 3.18
+        },
+        {
+            "symbol": "TSM",
+            "price": 427.78,
+            "change": 9.27,
+            "change_pct": 2.22
+        },
+        {
+            "symbol": "AVGO",
+            "price": 331.24,
+            "change": 9.56,
+            "change_pct": 2.97
+        },
+        {
+            "symbol": "ASML",
+            "price": 1598.29,
+            "change": 26.49,
+            "change_pct": 1.69
+        },
+        {
+            "symbol": "QCOM",
+            "price": 178.86,
+            "change": 2.95,
+            "change_pct": 1.68
+        },
+        {
+            "symbol": "TXN",
+            "price": 297.31,
+            "change": 12.62,
+            "change_pct": 4.43
+        },
+        {
+            "symbol": "INTC",
+            "price": 91.96,
+            "change": 5.0,
+            "change_pct": 5.75
+        },
+        {
+            "symbol": "MU",
+            "price": 913.36,
+            "change": 35.81,
+            "change_pct": 4.08
+        },
+        {
+            "symbol": "SNDK",
+            "price": 1271.1,
+            "change": 33.07,
+            "change_pct": 2.67
+        },
+        {
+            "symbol": "ARM",
+            "price": 223.55,
+            "change": 13.22,
+            "change_pct": 6.29
+        },
+        {
+            "symbol": "SMCI",
+            "price": 33.1,
+            "change": 0.16,
+            "change_pct": 0.49
+        },
+        {
+            "symbol": "WDC",
+            "price": 361.93,
+            "change": 18.26,
+            "change_pct": 5.31
+        },
+        {
+            "symbol": "LITE",
+            "price": 833.44,
+            "change": 77.27,
+            "change_pct": 10.22
+        },
+        {
+            "symbol": "AAOI",
+            "price": 74.12,
+            "change": 6.61,
+            "change_pct": 9.79
+        },
+        {
+            "symbol": "POET",
+            "price": 5.51,
+            "change": 0.05,
+            "change_pct": 0.92
+        },
+        {
+            "symbol": "PLTR",
+            "price": 199.74,
+            "change": 2.99,
+            "change_pct": 1.52
+        },
+        {
+            "symbol": "SNOW",
+            "price": 333.57,
+            "change": 8.14,
+            "change_pct": 2.5
+        },
+        {
+            "symbol": "APP",
+            "price": 259.44,
+            "change": -0.81,
+            "change_pct": -0.31
+        },
+        {
+            "symbol": "CRM",
+            "price": 245.2,
+            "change": -3.37,
+            "change_pct": -1.36
+        },
+        {
+            "symbol": "ADBE",
+            "price": 254.92,
+            "change": -8.9,
+            "change_pct": -3.37
+        },
+        {
+            "symbol": "NOW",
+            "price": 156.85,
+            "change": -2.11,
+            "change_pct": -1.33
+        },
+        {
+            "symbol": "CRWD",
+            "price": 263.13,
+            "change": 5.56,
+            "change_pct": 2.16
+        },
+        {
+            "symbol": "PANW",
+            "price": 393.44,
+            "change": 12.89,
+            "change_pct": 3.39
+        },
+        {
+            "symbol": "NFLX",
+            "price": 63.12,
+            "change": -2.73,
+            "change_pct": -4.15
+        },
+        {
+            "symbol": "UBER",
+            "price": 66.0,
+            "change": -0.7,
+            "change_pct": -1.05
+        },
+        {
+            "symbol": "COIN",
+            "price": 159.68,
+            "change": -4.77,
+            "change_pct": -2.9
+        },
+        {
+            "symbol": "MSTR",
+            "price": 140.76,
+            "change": -5.25,
+            "change_pct": -3.6
+        },
+        {
+            "symbol": "MARA",
+            "price": 6.95,
+            "change": -0.07,
+            "change_pct": -1.0
+        },
+        {
+            "symbol": "RIOT",
+            "price": 12.85,
+            "change": 0.32,
+            "change_pct": 2.55
+        },
+        {
+            "symbol": "HOOD",
+            "price": 93.04,
+            "change": -2.03,
+            "change_pct": -2.14
+        },
+        {
+            "symbol": "PYPL",
+            "price": 54.59,
+            "change": -2.43,
+            "change_pct": -4.26
+        },
+        {
+            "symbol": "SOFI",
+            "price": 14.48,
+            "change": -0.13,
+            "change_pct": -0.89
+        },
+        {
+            "symbol": "FUTU",
+            "price": 100.88,
+            "change": 1.69,
+            "change_pct": 1.7
+        },
+        {
+            "symbol": "V",
+            "price": 403.89,
+            "change": -4.03,
+            "change_pct": -0.99
+        },
+        {
+            "symbol": "JPM",
+            "price": 335.3,
+            "change": 3.72,
+            "change_pct": 1.12
+        },
+        {
+            "symbol": "GS",
+            "price": 897.57,
+            "change": 21.89,
+            "change_pct": 2.5
+        },
+        {
+            "symbol": "BAC",
+            "price": 50.72,
+            "change": 0.16,
+            "change_pct": 0.32
+        },
+        {
+            "symbol": "RKLB",
+            "price": 54.75,
+            "change": 2.15,
+            "change_pct": 4.09
+        },
+        {
+            "symbol": "XOM",
+            "price": 184.31,
             "change": 1.1,
             "change_pct": 0.6
         },
         {
-            "symbol": "XLF",
-            "price": 56.28,
-            "change": 0.38,
-            "change_pct": 0.68
-        },
-        {
-            "symbol": "XLE",
-            "price": 69.26,
-            "change": -0.07,
-            "change_pct": -0.1
-        },
-        {
-            "symbol": "SPCX",
-            "price": 145.98,
-            "change": -1.51,
-            "change_pct": -1.02
-        },
-        {
-            "symbol": "DRAM",
-            "price": 47.55,
-            "change": 0.49,
-            "change_pct": 1.04
-        },
-        {
-            "symbol": "AAPL",
-            "price": 344.31,
-            "change": -3.42,
-            "change_pct": -0.98
-        },
-        {
-            "symbol": "MSFT",
-            "price": 526.16,
-            "change": 1.65,
-            "change_pct": 0.31
-        },
-        {
-            "symbol": "NVDA",
-            "price": 214.57,
-            "change": 3.61,
-            "change_pct": 1.71
-        },
-        {
-            "symbol": "TSLA",
-            "price": 393.42,
-            "change": 21.2,
-            "change_pct": 5.7
-        },
-        {
-            "symbol": "AMZN",
-            "price": 249.88,
-            "change": 1.88,
-            "change_pct": 0.76
-        },
-        {
-            "symbol": "META",
-            "price": 634.71,
-            "change": -7.91,
-            "change_pct": -1.23
-        },
-        {
-            "symbol": "GOOG",
-            "price": 316.58,
-            "change": -0.7,
-            "change_pct": -0.22
-        },
-        {
-            "symbol": "GOOGL",
-            "price": 319.68,
-            "change": -0.53,
-            "change_pct": -0.17
-        },
-        {
-            "symbol": "AMD",
-            "price": 517.66,
-            "change": 0.87,
-            "change_pct": 0.17
-        },
-        {
-            "symbol": "TSM",
-            "price": 421.59,
-            "change": 3.08,
-            "change_pct": 0.74
-        },
-        {
-            "symbol": "AVGO",
-            "price": 326.19,
-            "change": 4.51,
-            "change_pct": 1.4
-        },
-        {
-            "symbol": "ASML",
-            "price": 1595.32,
-            "change": 23.52,
-            "change_pct": 1.5
-        },
-        {
-            "symbol": "QCOM",
-            "price": 176.74,
-            "change": 0.83,
-            "change_pct": 0.47
-        },
-        {
-            "symbol": "TXN",
-            "price": 286.53,
-            "change": 1.84,
-            "change_pct": 0.65
-        },
-        {
-            "symbol": "INTC",
-            "price": 87.17,
-            "change": 0.21,
-            "change_pct": 0.24
-        },
-        {
-            "symbol": "MU",
-            "price": 887.27,
-            "change": 9.72,
-            "change_pct": 1.11
-        },
-        {
-            "symbol": "SNDK",
-            "price": 1244.72,
-            "change": 6.69,
-            "change_pct": 0.54
-        },
-        {
-            "symbol": "ARM",
-            "price": 215.0,
-            "change": 4.67,
-            "change_pct": 2.22
-        },
-        {
-            "symbol": "SMCI",
-            "price": 32.9,
-            "change": -0.04,
-            "change_pct": -0.12
-        },
-        {
-            "symbol": "WDC",
-            "price": 346.48,
-            "change": 2.81,
-            "change_pct": 0.82
-        },
-        {
-            "symbol": "LITE",
-            "price": 785.9,
-            "change": 29.73,
-            "change_pct": 3.93
-        },
-        {
-            "symbol": "AAOI",
-            "price": 67.6,
-            "change": 0.09,
-            "change_pct": 0.13
-        },
-        {
-            "symbol": "POET",
-            "price": 5.34,
-            "change": -0.12,
-            "change_pct": -2.2
-        },
-        {
-            "symbol": "PLTR",
-            "price": 196.28,
-            "change": -0.47,
-            "change_pct": -0.24
-        },
-        {
-            "symbol": "SNOW",
-            "price": 328.45,
-            "change": 3.02,
-            "change_pct": 0.93
-        },
-        {
-            "symbol": "APP",
-            "price": 260.17,
-            "change": -0.08,
-            "change_pct": -0.03
-        },
-        {
-            "symbol": "CRM",
-            "price": 248.01,
-            "change": -0.56,
-            "change_pct": -0.23
-        },
-        {
-            "symbol": "ADBE",
-            "price": 261.87,
-            "change": -1.95,
-            "change_pct": -0.74
-        },
-        {
-            "symbol": "NOW",
-            "price": 157.11,
-            "change": -1.85,
-            "change_pct": -1.16
-        },
-        {
-            "symbol": "CRWD",
-            "price": 257.84,
-            "change": 0.27,
-            "change_pct": 0.1
-        },
-        {
-            "symbol": "PANW",
-            "price": 386.08,
-            "change": 5.53,
-            "change_pct": 1.45
-        },
-        {
-            "symbol": "NFLX",
-            "price": 65.31,
-            "change": -0.54,
-            "change_pct": -0.82
-        },
-        {
-            "symbol": "UBER",
-            "price": 66.63,
-            "change": -0.07,
-            "change_pct": -0.1
-        },
-        {
-            "symbol": "COIN",
-            "price": 158.5,
-            "change": -5.95,
-            "change_pct": -3.62
-        },
-        {
-            "symbol": "MSTR",
-            "price": 140.06,
-            "change": -5.95,
-            "change_pct": -4.08
-        },
-        {
-            "symbol": "MARA",
-            "price": 6.8,
-            "change": -0.22,
-            "change_pct": -3.13
-        },
-        {
-            "symbol": "RIOT",
-            "price": 12.11,
-            "change": -0.42,
-            "change_pct": -3.35
-        },
-        {
-            "symbol": "HOOD",
-            "price": 92.28,
-            "change": -2.79,
-            "change_pct": -2.93
-        },
-        {
-            "symbol": "PYPL",
-            "price": 55.64,
-            "change": -1.38,
-            "change_pct": -2.42
-        },
-        {
-            "symbol": "SOFI",
-            "price": 14.6,
-            "change": -0.01,
-            "change_pct": -0.07
-        },
-        {
-            "symbol": "FUTU",
-            "price": 101.65,
-            "change": 2.46,
-            "change_pct": 2.48
-        },
-        {
-            "symbol": "V",
-            "price": 406.4,
-            "change": -1.52,
-            "change_pct": -0.37
-        },
-        {
-            "symbol": "JPM",
-            "price": 335.96,
-            "change": 4.38,
-            "change_pct": 1.32
-        },
-        {
-            "symbol": "GS",
-            "price": 891.0,
-            "change": 15.32,
-            "change_pct": 1.75
-        },
-        {
-            "symbol": "BAC",
-            "price": 51.21,
-            "change": 0.65,
-            "change_pct": 1.29
-        },
-        {
-            "symbol": "RKLB",
-            "price": 53.18,
-            "change": 0.58,
-            "change_pct": 1.1
-        },
-        {
-            "symbol": "XOM",
-            "price": 183.12,
-            "change": -0.09,
-            "change_pct": -0.05
-        },
-        {
             "symbol": "BE",
-            "price": 199.18,
-            "change": 5.88,
-            "change_pct": 3.04
+            "price": 208.36,
+            "change": 15.06,
+            "change_pct": 7.79
         },
         {
             "symbol": "VST",
-            "price": 140.43,
-            "change": 0.27,
-            "change_pct": 0.19
+            "price": 142.09,
+            "change": 1.93,
+            "change_pct": 1.38
         },
         {
             "symbol": "NOK",
-            "price": 8.4,
-            "change": 0.26,
-            "change_pct": 3.19
+            "price": 8.72,
+            "change": 0.58,
+            "change_pct": 7.13
         },
         {
             "symbol": "ONDS",
-            "price": 6.14,
-            "change": -0.06,
-            "change_pct": -0.97
+            "price": 6.2,
+            "change": 0.0,
+            "change_pct": 0.0
         },
         {
             "symbol": "NBIS",
-            "price": 152.47,
-            "change": -6.27,
-            "change_pct": -3.95
+            "price": 160.34,
+            "change": 1.6,
+            "change_pct": 1.01
         },
         {
             "symbol": "WMT",
-            "price": 121.69,
-            "change": 1.8,
-            "change_pct": 1.5
+            "price": 119.77,
+            "change": -0.12,
+            "change_pct": -0.1
         },
         {
             "symbol": "COST",
-            "price": 1014.58,
-            "change": 11.26,
-            "change_pct": 1.12
+            "price": 1001.44,
+            "change": -1.88,
+            "change_pct": -0.19
         },
         {
             "symbol": "PG",
-            "price": 161.09,
-            "change": 0.07,
-            "change_pct": 0.04
+            "price": 159.02,
+            "change": -2.0,
+            "change_pct": -1.24
         },
         {
             "symbol": "KO",
-            "price": 92.28,
-            "change": -0.43,
-            "change_pct": -0.46
+            "price": 92.56,
+            "change": -0.15,
+            "change_pct": -0.16
         },
         {
             "symbol": "PEP",
-            "price": 137.21,
-            "change": 1.44,
-            "change_pct": 1.06
+            "price": 135.43,
+            "change": -0.34,
+            "change_pct": -0.25
         },
         {
             "symbol": "DIS",
-            "price": 111.97,
-            "change": -0.55,
-            "change_pct": -0.49
+            "price": 110.14,
+            "change": -2.38,
+            "change_pct": -2.12
         }
     ],
     "screener_data": [
         {
-            "symbol": "DIA",
-            "price": 524.89,
-            "rvol": 0.21,
-            "dist_20ma": 1.52,
+            "symbol": "TXN",
+            "price": 297.31,
+            "rvol": 0.49,
+            "dist_20ma": 4.4,
             "smc_id": "fvg_sweep",
             "smc_text": "🔥 S級 掃損+OB (多)",
             "smc_class": "border-yellow-500 text-yellow-400 font-bold",
             "label": "強勢多頭",
             "label_class": "bg-green-900/50 text-green-400",
-            "entry_bot": 493.19,
-            "entry_top": 494.06,
-            "sl": 487.01,
-            "tp": 536.38,
-            "rrr": 6.5,
+            "entry_bot": 254.57,
+            "entry_top": 256.46,
+            "sl": 246.89,
+            "tp": 298.75,
+            "rrr": 5.0,
             "earnings_alert": false,
             "confluence": true,
             "direction": "long",
-            "macro_bsl": 544.92,
-            "macro_ssl": 483.65,
-            "macro_eq": 514.28
-        },
-        {
-            "symbol": "SPCX",
-            "price": 145.98,
-            "rvol": 0.27,
-            "dist_20ma": -5.85,
-            "smc_id": "fvg_sweep",
-            "smc_text": "🩸 S級 掃損+OB (空)",
-            "smc_class": "border-red-500 text-red-400 font-bold",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 167.6,
-            "entry_top": 171.39,
-            "sl": 177.3,
-            "tp": 137.9,
-            "rrr": 4.0,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 225.64,
-            "macro_ssl": 104.83,
-            "macro_eq": 165.24
-        },
-        {
-            "symbol": "LITE",
-            "price": 785.9,
-            "rvol": 0.28,
-            "dist_20ma": -17.01,
-            "smc_id": "fvg_sweep",
-            "smc_text": "🩸 S級 掃損+OB (空)",
-            "smc_class": "border-red-500 text-red-400 font-bold",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 993.0,
-            "entry_top": 1077.38,
-            "sl": 1148.71,
-            "tp": 736.01,
-            "rrr": 2.6,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 1143.0,
-            "macro_ssl": 594.84,
-            "macro_eq": 868.92
-        },
-        {
-            "symbol": "APP",
-            "price": 260.17,
-            "rvol": 0.11,
-            "dist_20ma": -5.22,
-            "smc_id": "fvg_sweep",
-            "smc_text": "🩸 S級 掃損+OB (空)",
-            "smc_class": "border-red-500 text-red-400 font-bold",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 350.93,
-            "entry_top": 416.09,
-            "sl": 439.98,
-            "tp": 258.32,
-            "rrr": 2.2,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 622.0,
-            "macro_ssl": 255.46,
-            "macro_eq": 438.73
+            "macro_bsl": 332.33,
+            "macro_ssl": 248.13,
+            "macro_eq": 290.23
         },
         {
             "symbol": "CRWD",
-            "price": 257.84,
-            "rvol": 0.24,
-            "dist_20ma": 0.87,
+            "price": 263.13,
+            "rvol": 0.67,
+            "dist_20ma": 2.84,
             "smc_id": "fvg_sweep",
             "smc_text": "🔥 S級 掃損+OB (多)",
             "smc_class": "border-yellow-500 text-yellow-400 font-bold",
@@ -547,9 +481,9 @@
         },
         {
             "symbol": "NFLX",
-            "price": 65.31,
-            "rvol": 0.17,
-            "dist_20ma": -5.29,
+            "price": 63.12,
+            "rvol": 0.91,
+            "dist_20ma": -8.32,
             "smc_id": "fvg_sweep",
             "smc_text": "🩸 S級 掃損+OB (空)",
             "smc_class": "border-red-500 text-red-400 font-bold",
@@ -564,212 +498,14 @@
             "confluence": true,
             "direction": "short",
             "macro_bsl": 94.7,
-            "macro_ssl": 64.1,
-            "macro_eq": 79.4
-        },
-        {
-            "symbol": "SPY",
-            "price": 764.61,
-            "rvol": 0.13,
-            "dist_20ma": -0.71,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 776.35,
-            "entry_top": 777.05,
-            "sl": 785.53,
-            "tp": 747.74,
-            "rrr": 3.3,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 781.62,
-            "macro_ssl": 704.8,
-            "macro_eq": 743.21
-        },
-        {
-            "symbol": "QQQ",
-            "price": 708.73,
-            "rvol": 0.2,
-            "dist_20ma": -3.42,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 740.53,
-            "entry_top": 744.85,
-            "sl": 766.67,
-            "tp": 699.27,
-            "rrr": 1.8,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 762.86,
-            "macro_ssl": 652.41,
-            "macro_eq": 707.64
-        },
-        {
-            "symbol": "VOO",
-            "price": 702.86,
-            "rvol": 0.27,
-            "dist_20ma": -0.71,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 710.4,
-            "entry_top": 713.27,
-            "sl": 722.06,
-            "tp": 687.27,
-            "rrr": 2.4,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 718.47,
-            "macro_ssl": 647.7,
-            "macro_eq": 683.08
-        },
-        {
-            "symbol": "QQQM",
-            "price": 291.83,
-            "rvol": 0.22,
-            "dist_20ma": -3.43,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 304.9,
-            "entry_top": 306.68,
-            "sl": 315.69,
-            "tp": 287.93,
-            "rrr": 1.8,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 314.11,
-            "macro_ssl": 268.61,
-            "macro_eq": 291.36
-        },
-        {
-            "symbol": "SPYM",
-            "price": 90.0,
-            "rvol": 0.13,
-            "dist_20ma": -0.71,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 91.37,
-            "entry_top": 91.45,
-            "sl": 92.46,
-            "tp": 88.0,
-            "rrr": 3.2,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 92.0,
-            "macro_ssl": 82.93,
-            "macro_eq": 87.46
-        },
-        {
-            "symbol": "SMH",
-            "price": 533.64,
-            "rvol": 0.29,
-            "dist_20ma": -8.34,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 588.68,
-            "entry_top": 601.38,
-            "sl": 642.67,
-            "tp": 520.53,
-            "rrr": 1.6,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 671.83,
-            "macro_ssl": 483.29,
-            "macro_eq": 577.56
-        },
-        {
-            "symbol": "SOXL",
-            "price": 85.88,
-            "rvol": 0.42,
-            "dist_20ma": -31.31,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 134.54,
-            "entry_top": 136.32,
-            "sl": 170.68,
-            "tp": 80.22,
-            "rrr": 1.6,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 301.8,
-            "macro_ssl": 80.22,
-            "macro_eq": 191.01
-        },
-        {
-            "symbol": "XLK",
-            "price": 184.33,
-            "rvol": 0.16,
-            "dist_20ma": -4.35,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 194.66,
-            "entry_top": 195.82,
-            "sl": 204.27,
-            "tp": 181.5,
-            "rrr": 1.5,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 203.25,
-            "macro_ssl": 155.79,
-            "macro_eq": 179.52
-        },
-        {
-            "symbol": "XLF",
-            "price": 56.28,
-            "rvol": 0.09,
-            "dist_20ma": 2.72,
-            "smc_id": "fvg",
-            "smc_text": "⚡ 1D FVG 缺口 (多)",
-            "smc_class": "border-blue-500 text-blue-400",
-            "label": "強勢多頭",
-            "label_class": "bg-green-900/50 text-green-400",
-            "entry_bot": 54.52,
-            "entry_top": 55.19,
-            "sl": 52.55,
-            "tp": 58.39,
-            "rrr": 1.5,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "long",
-            "macro_bsl": 58.39,
-            "macro_ssl": 50.17,
-            "macro_eq": 54.28
+            "macro_ssl": 62.87,
+            "macro_eq": 78.78
         },
         {
             "symbol": "XLE",
-            "price": 69.26,
-            "rvol": 0.3,
-            "dist_20ma": 5.32,
+            "price": 69.62,
+            "rvol": 0.72,
+            "dist_20ma": 5.85,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -788,252 +524,32 @@
             "macro_eq": 61.08
         },
         {
-            "symbol": "NVDA",
-            "price": 214.57,
-            "rvol": 0.18,
-            "dist_20ma": -4.56,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 233.92,
-            "entry_top": 236.38,
-            "sl": 244.59,
-            "tp": 208.93,
-            "rrr": 2.8,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 243.37,
-            "macro_ssl": 189.59,
-            "macro_eq": 216.48
-        },
-        {
-            "symbol": "AMD",
-            "price": 517.66,
-            "rvol": 0.17,
-            "dist_20ma": -11.16,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 601.77,
-            "entry_top": 613.34,
-            "sl": 661.81,
-            "tp": 440.5,
-            "rrr": 3.1,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 658.52,
-            "macro_ssl": 310.0,
-            "macro_eq": 484.26
-        },
-        {
-            "symbol": "TSM",
-            "price": 421.59,
-            "rvol": 0.18,
-            "dist_20ma": -5.05,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 464.83,
-            "entry_top": 471.3,
-            "sl": 489.91,
-            "tp": 406.73,
-            "rrr": 2.8,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 487.47,
-            "macro_ssl": 371.72,
-            "macro_eq": 429.6
-        },
-        {
-            "symbol": "AVGO",
-            "price": 326.19,
-            "rvol": 0.13,
-            "dist_20ma": -6.14,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 359.25,
-            "entry_top": 361.1,
-            "sl": 382.74,
-            "tp": 320.23,
-            "rrr": 1.8,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 493.32,
-            "macro_ssl": 320.23,
-            "macro_eq": 406.78
-        },
-        {
-            "symbol": "ASML",
-            "price": 1595.32,
-            "rvol": 0.14,
-            "dist_20ma": -7.44,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 1725.27,
-            "entry_top": 1778.0,
-            "sl": 1882.87,
-            "tp": 1550.0,
-            "rrr": 1.5,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 1997.38,
-            "macro_ssl": 1363.05,
-            "macro_eq": 1680.22
-        },
-        {
-            "symbol": "ARM",
-            "price": 215.0,
-            "rvol": 0.14,
-            "dist_20ma": -16.62,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 281.5,
-            "entry_top": 290.5,
-            "sl": 327.63,
-            "tp": 208.3,
-            "rrr": 1.9,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 452.7,
-            "macro_ssl": 193.91,
-            "macro_eq": 323.3
-        },
-        {
-            "symbol": "SMCI",
-            "price": 32.9,
-            "rvol": 0.14,
-            "dist_20ma": -14.01,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 39.49,
-            "entry_top": 40.63,
-            "sl": 46.0,
-            "tp": 30.92,
-            "rrr": 1.5,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 51.4,
-            "macro_ssl": 23.38,
-            "macro_eq": 37.39
-        },
-        {
-            "symbol": "WDC",
-            "price": 346.48,
-            "rvol": 0.18,
-            "dist_20ma": -11.09,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 409.39,
-            "entry_top": 429.44,
-            "sl": 478.04,
-            "tp": 331.81,
-            "rrr": 1.5,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 799.61,
-            "macro_ssl": 331.81,
-            "macro_eq": 565.71
-        },
-        {
-            "symbol": "AAOI",
-            "price": 67.6,
-            "rvol": 0.18,
-            "dist_20ma": -28.54,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 117.16,
-            "entry_top": 119.73,
-            "sl": 131.81,
-            "tp": 66.28,
-            "rrr": 3.9,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 233.67,
-            "macro_ssl": 66.28,
-            "macro_eq": 149.98
-        },
-        {
-            "symbol": "POET",
-            "price": 5.34,
-            "rvol": 0.14,
-            "dist_20ma": -18.18,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 7.26,
-            "entry_top": 7.64,
-            "sl": 8.24,
-            "tp": 5.22,
-            "rrr": 2.8,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 20.81,
-            "macro_ssl": 5.22,
-            "macro_eq": 13.01
-        },
-        {
-            "symbol": "ADBE",
-            "price": 261.87,
-            "rvol": 0.13,
-            "dist_20ma": 6.62,
+            "symbol": "QCOM",
+            "price": 178.86,
+            "rvol": 0.38,
+            "dist_20ma": 0.63,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
             "label": "強勢多頭",
             "label_class": "bg-green-900/50 text-green-400",
-            "entry_bot": 247.63,
-            "entry_top": 252.52,
-            "sl": 225.86,
-            "tp": 294.53,
-            "rrr": 1.8,
+            "entry_bot": 160.91,
+            "entry_top": 161.04,
+            "sl": 154.61,
+            "tp": 205.85,
+            "rrr": 7.0,
             "earnings_alert": false,
             "confluence": true,
             "direction": "long",
-            "macro_bsl": 294.53,
-            "macro_ssl": 190.12,
-            "macro_eq": 242.32
+            "macro_bsl": 257.56,
+            "macro_ssl": 142.12,
+            "macro_eq": 199.84
         },
         {
             "symbol": "PANW",
-            "price": 386.08,
-            "rvol": 0.27,
-            "dist_20ma": 0.55,
+            "price": 393.44,
+            "rvol": 0.7,
+            "dist_20ma": 2.37,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1053,19 +569,19 @@
         },
         {
             "symbol": "MARA",
-            "price": 6.8,
-            "rvol": 0.23,
-            "dist_20ma": -26.16,
+            "price": 6.95,
+            "rvol": 0.78,
+            "dist_20ma": -24.61,
             "smc_id": "fvg",
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
             "label": "弱勢空頭",
             "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 6.86,
-            "entry_top": 7.11,
-            "sl": 10.14,
-            "tp": -0.91,
-            "rrr": 2.5,
+            "entry_bot": 12.74,
+            "entry_top": 12.84,
+            "sl": 14.05,
+            "tp": 7.01,
+            "rrr": 4.6,
             "earnings_alert": false,
             "confluence": true,
             "direction": "short",
@@ -1074,54 +590,10 @@
             "macro_eq": 11.52
         },
         {
-            "symbol": "RIOT",
-            "price": 12.11,
-            "rvol": 0.2,
-            "dist_20ma": -26.19,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 12.29,
-            "entry_top": 12.67,
-            "sl": 17.26,
-            "tp": 0.54,
-            "rrr": 2.5,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 30.32,
-            "macro_ssl": 11.79,
-            "macro_eq": 21.06
-        },
-        {
-            "symbol": "FUTU",
-            "price": 101.65,
-            "rvol": 0.15,
-            "dist_20ma": -5.62,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 110.04,
-            "entry_top": 111.11,
-            "sl": 115.75,
-            "tp": 98.18,
-            "rrr": 2.4,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 168.65,
-            "macro_ssl": 80.5,
-            "macro_eq": 124.58
-        },
-        {
             "symbol": "JPM",
-            "price": 335.96,
-            "rvol": 0.09,
-            "dist_20ma": 0.81,
+            "price": 335.3,
+            "rvol": 0.33,
+            "dist_20ma": 0.62,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1140,32 +612,32 @@
             "macro_eq": 327.79
         },
         {
-            "symbol": "GS",
-            "price": 891.0,
-            "rvol": 0.11,
-            "dist_20ma": -0.07,
+            "symbol": "BAC",
+            "price": 50.72,
+            "rvol": 0.35,
+            "dist_20ma": -3.71,
             "smc_id": "fvg",
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
             "label": "弱勢空頭",
             "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 988.28,
-            "entry_top": 1018.59,
-            "sl": 1049.06,
-            "tp": 859.03,
-            "rrr": 3.2,
+            "entry_bot": 58.5,
+            "entry_top": 58.77,
+            "sl": 64.15,
+            "tp": 49.26,
+            "rrr": 1.7,
             "earnings_alert": false,
             "confluence": true,
             "direction": "short",
-            "macro_bsl": 1148.37,
-            "macro_ssl": 859.03,
-            "macro_eq": 1003.7
+            "macro_bsl": 64.9,
+            "macro_ssl": 48.8,
+            "macro_eq": 56.85
         },
         {
             "symbol": "XOM",
-            "price": 183.12,
-            "rvol": 0.16,
-            "dist_20ma": 6.54,
+            "price": 184.31,
+            "rvol": 0.52,
+            "dist_20ma": 7.2,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1179,81 +651,15 @@
             "earnings_alert": false,
             "confluence": true,
             "direction": "long",
-            "macro_bsl": 184.36,
+            "macro_bsl": 184.5,
             "macro_ssl": 134.08,
-            "macro_eq": 159.22
-        },
-        {
-            "symbol": "BE",
-            "price": 199.18,
-            "rvol": 0.4,
-            "dist_20ma": -21.62,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 264.14,
-            "entry_top": 271.0,
-            "sl": 303.87,
-            "tp": 189.0,
-            "rrr": 2.2,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 351.28,
-            "macro_ssl": 157.33,
-            "macro_eq": 254.3
-        },
-        {
-            "symbol": "NOK",
-            "price": 8.4,
-            "rvol": 0.22,
-            "dist_20ma": -13.08,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 9.77,
-            "entry_top": 9.89,
-            "sl": 11.04,
-            "tp": 7.78,
-            "rrr": 1.7,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 17.45,
-            "macro_ssl": 7.78,
-            "macro_eq": 12.62
-        },
-        {
-            "symbol": "NBIS",
-            "price": 152.47,
-            "rvol": 0.41,
-            "dist_20ma": -24.69,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 155.3,
-            "entry_top": 155.73,
-            "sl": 226.43,
-            "tp": -21.76,
-            "rrr": 2.5,
-            "earnings_alert": false,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 299.86,
-            "macro_ssl": 132.7,
-            "macro_eq": 216.28
+            "macro_eq": 159.29
         },
         {
             "symbol": "WMT",
-            "price": 121.69,
-            "rvol": 0.1,
-            "dist_20ma": 7.84,
+            "price": 119.77,
+            "rvol": 0.4,
+            "dist_20ma": 6.23,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1272,32 +678,10 @@
             "macro_eq": 118.5
         },
         {
-            "symbol": "AMZN",
-            "price": 249.88,
-            "rvol": 0.19,
-            "dist_20ma": -1.86,
-            "smc_id": "fvg_sweep",
-            "smc_text": "🩸 S級 掃損+OB (空)",
-            "smc_class": "border-red-500 text-red-400 font-bold",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 258.41,
-            "entry_top": 260.42,
-            "sl": 266.67,
-            "tp": 244.3,
-            "rrr": 2.1,
-            "earnings_alert": true,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 287.2,
-            "macro_ssl": 225.55,
-            "macro_eq": 256.38
-        },
-        {
             "symbol": "GOOG",
-            "price": 316.58,
-            "rvol": 0.18,
-            "dist_20ma": -6.45,
+            "price": 314.33,
+            "rvol": 0.61,
+            "dist_20ma": -7.08,
             "smc_id": "fvg_sweep",
             "smc_text": "🩸 S級 掃損+OB (空)",
             "smc_class": "border-red-500 text-red-400 font-bold",
@@ -1312,14 +696,14 @@
             "confluence": true,
             "direction": "short",
             "macro_bsl": 403.96,
-            "macro_ssl": 314.6,
-            "macro_eq": 359.28
+            "macro_ssl": 314.22,
+            "macro_eq": 359.09
         },
         {
             "symbol": "GOOGL",
-            "price": 319.68,
-            "rvol": 0.19,
-            "dist_20ma": -6.51,
+            "price": 317.45,
+            "rvol": 0.59,
+            "dist_20ma": -7.13,
             "smc_id": "fvg_sweep",
             "smc_text": "🩸 S級 掃損+OB (空)",
             "smc_class": "border-red-500 text-red-400 font-bold",
@@ -1338,76 +722,54 @@
             "macro_eq": 361.4
         },
         {
-            "symbol": "INTC",
-            "price": 87.17,
-            "rvol": 0.21,
-            "dist_20ma": -15.08,
+            "symbol": "MSFT",
+            "price": 532.66,
+            "rvol": 0.48,
+            "dist_20ma": 0.91,
             "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 111.6,
-            "entry_top": 112.0,
-            "sl": 128.08,
-            "tp": 84.65,
-            "rrr": 1.7,
+            "smc_text": "⚡ 1D FVG 缺口 (多)",
+            "smc_class": "border-blue-500 text-blue-400",
+            "label": "強勢多頭",
+            "label_class": "bg-green-900/50 text-green-400",
+            "entry_bot": 498.9,
+            "entry_top": 502.22,
+            "sl": 484.79,
+            "tp": 551.15,
+            "rrr": 3.2,
             "earnings_alert": true,
             "confluence": true,
-            "direction": "short",
-            "macro_bsl": 142.35,
-            "macro_ssl": 80.8,
-            "macro_eq": 111.57
+            "direction": "long",
+            "macro_bsl": 551.15,
+            "macro_ssl": 348.54,
+            "macro_eq": 449.84
         },
         {
-            "symbol": "SNDK",
-            "price": 1244.72,
-            "rvol": 0.23,
-            "dist_20ma": -17.43,
+            "symbol": "NOW",
+            "price": 156.85,
+            "rvol": 0.91,
+            "dist_20ma": 9.72,
             "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 2052.54,
-            "entry_top": 2070.0,
-            "sl": 2366.16,
-            "tp": 1228.89,
-            "rrr": 2.7,
+            "smc_text": "⚡ 1D FVG 缺口 (多)",
+            "smc_class": "border-blue-500 text-blue-400",
+            "label": "強勢多頭",
+            "label_class": "bg-green-900/50 text-green-400",
+            "entry_bot": 98.93,
+            "entry_top": 106.5,
+            "sl": 91.07,
+            "tp": 159.5,
+            "rrr": 4.9,
             "earnings_alert": true,
             "confluence": true,
-            "direction": "short",
-            "macro_bsl": 2354.39,
-            "macro_ssl": 980.28,
-            "macro_eq": 1667.34
-        },
-        {
-            "symbol": "COIN",
-            "price": 158.5,
-            "rvol": 0.24,
-            "dist_20ma": -10.78,
-            "smc_id": "fvg",
-            "smc_text": "📉 1D FVG 缺口 (空)",
-            "smc_class": "border-purple-500 text-purple-400",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 160.0,
-            "entry_top": 166.73,
-            "sl": 186.42,
-            "tp": 105.73,
-            "rrr": 2.5,
-            "earnings_alert": true,
-            "confluence": true,
-            "direction": "short",
-            "macro_bsl": 222.35,
-            "macro_ssl": 139.11,
-            "macro_eq": 180.73
+            "direction": "long",
+            "macro_bsl": 159.5,
+            "macro_ssl": 85.44,
+            "macro_eq": 122.47
         },
         {
             "symbol": "MSTR",
-            "price": 140.06,
-            "rvol": 0.26,
-            "dist_20ma": -7.14,
+            "price": 140.76,
+            "rvol": 0.61,
+            "dist_20ma": -6.7,
             "smc_id": "fvg",
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
@@ -1427,18 +789,18 @@
         },
         {
             "symbol": "HOOD",
-            "price": 92.28,
-            "rvol": 0.21,
-            "dist_20ma": -12.47,
+            "price": 93.04,
+            "rvol": 0.62,
+            "dist_20ma": -11.79,
             "smc_id": "fvg",
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
             "label": "弱勢空頭",
             "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 94.19,
+            "entry_bot": 94.37,
             "entry_top": 95.62,
             "sl": 112.55,
-            "tp": 50.81,
+            "tp": 51.11,
             "rrr": 2.5,
             "earnings_alert": true,
             "confluence": true,
@@ -1448,54 +810,296 @@
             "macro_eq": 98.34
         },
         {
-            "symbol": "QCOM",
-            "price": 176.74,
-            "rvol": 0.07,
-            "dist_20ma": -0.5,
-            "smc_id": "fvg_sweep",
-            "smc_text": "🩸 S級 掃損+OB (空)",
-            "smc_class": "border-red-500 text-red-400 font-bold",
-            "label": "弱勢空頭",
-            "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 190.03,
-            "entry_top": 194.53,
-            "sl": 206.88,
-            "tp": 161.02,
-            "rrr": 2.1,
-            "earnings_alert": false,
-            "confluence": false,
-            "direction": "short",
-            "macro_bsl": 257.56,
-            "macro_ssl": 142.12,
-            "macro_eq": 199.84
-        },
-        {
-            "symbol": "TXN",
-            "price": 286.53,
-            "rvol": 0.12,
-            "dist_20ma": 0.8,
+            "symbol": "DIA",
+            "price": 522.86,
+            "rvol": 0.5,
+            "dist_20ma": 1.15,
             "smc_id": "fvg_sweep",
             "smc_text": "🔥 S級 掃損+OB (多)",
             "smc_class": "border-yellow-500 text-yellow-400 font-bold",
             "label": "強勢多頭",
             "label_class": "bg-green-900/50 text-green-400",
-            "entry_bot": 254.57,
-            "entry_top": 256.46,
-            "sl": 246.89,
-            "tp": 298.75,
-            "rrr": 5.0,
+            "entry_bot": 493.19,
+            "entry_top": 494.06,
+            "sl": 487.01,
+            "tp": 536.38,
+            "rrr": 6.5,
             "earnings_alert": false,
             "confluence": false,
             "direction": "long",
-            "macro_bsl": 332.33,
-            "macro_ssl": 248.13,
-            "macro_eq": 290.23
+            "macro_bsl": 544.92,
+            "macro_ssl": 483.65,
+            "macro_eq": 514.28
+        },
+        {
+            "symbol": "SPCX",
+            "price": 149.01,
+            "rvol": 0.85,
+            "dist_20ma": -3.99,
+            "smc_id": "fvg_sweep",
+            "smc_text": "🩸 S級 掃損+OB (空)",
+            "smc_class": "border-red-500 text-red-400 font-bold",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 167.6,
+            "entry_top": 171.39,
+            "sl": 177.3,
+            "tp": 137.9,
+            "rrr": 4.0,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 225.64,
+            "macro_ssl": 104.83,
+            "macro_eq": 165.24
+        },
+        {
+            "symbol": "LITE",
+            "price": 833.44,
+            "rvol": 1.0,
+            "dist_20ma": -12.21,
+            "smc_id": "fvg_sweep",
+            "smc_text": "🩸 S級 掃損+OB (空)",
+            "smc_class": "border-red-500 text-red-400 font-bold",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 993.0,
+            "entry_top": 1077.38,
+            "sl": 1148.71,
+            "tp": 736.01,
+            "rrr": 2.6,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 1143.0,
+            "macro_ssl": 594.84,
+            "macro_eq": 868.92
+        },
+        {
+            "symbol": "APP",
+            "price": 259.44,
+            "rvol": 0.32,
+            "dist_20ma": -5.47,
+            "smc_id": "fvg_sweep",
+            "smc_text": "🩸 S級 掃損+OB (空)",
+            "smc_class": "border-red-500 text-red-400 font-bold",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 350.93,
+            "entry_top": 416.09,
+            "sl": 439.98,
+            "tp": 258.32,
+            "rrr": 2.2,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 622.0,
+            "macro_ssl": 255.46,
+            "macro_eq": 438.73
+        },
+        {
+            "symbol": "SPY",
+            "price": 765.45,
+            "rvol": 0.45,
+            "dist_20ma": -0.61,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 776.35,
+            "entry_top": 777.05,
+            "sl": 785.53,
+            "tp": 747.74,
+            "rrr": 3.3,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 781.62,
+            "macro_ssl": 704.8,
+            "macro_eq": 743.21
+        },
+        {
+            "symbol": "QQQ",
+            "price": 713.59,
+            "rvol": 0.66,
+            "dist_20ma": -2.79,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 740.53,
+            "entry_top": 744.85,
+            "sl": 766.67,
+            "tp": 699.27,
+            "rrr": 1.8,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 762.86,
+            "macro_ssl": 652.41,
+            "macro_eq": 707.64
+        },
+        {
+            "symbol": "VOO",
+            "price": 703.58,
+            "rvol": 0.59,
+            "dist_20ma": -0.61,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 710.4,
+            "entry_top": 713.27,
+            "sl": 722.06,
+            "tp": 687.27,
+            "rrr": 2.4,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 718.47,
+            "macro_ssl": 647.7,
+            "macro_eq": 683.08
+        },
+        {
+            "symbol": "QQQM",
+            "price": 293.85,
+            "rvol": 0.84,
+            "dist_20ma": -2.79,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 304.9,
+            "entry_top": 306.68,
+            "sl": 315.69,
+            "tp": 287.93,
+            "rrr": 1.8,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 314.11,
+            "macro_ssl": 268.61,
+            "macro_eq": 291.36
+        },
+        {
+            "symbol": "SPYM",
+            "price": 90.08,
+            "rvol": 0.73,
+            "dist_20ma": -0.62,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 91.37,
+            "entry_top": 91.45,
+            "sl": 92.46,
+            "tp": 88.0,
+            "rrr": 3.2,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 92.0,
+            "macro_ssl": 82.93,
+            "macro_eq": 87.46
+        },
+        {
+            "symbol": "SMH",
+            "price": 544.62,
+            "rvol": 0.9,
+            "dist_20ma": -6.55,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 588.68,
+            "entry_top": 601.38,
+            "sl": 642.67,
+            "tp": 520.53,
+            "rrr": 1.6,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 671.83,
+            "macro_ssl": 483.29,
+            "macro_eq": 577.56
+        },
+        {
+            "symbol": "SOXL",
+            "price": 92.68,
+            "rvol": 0.99,
+            "dist_20ma": -26.07,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 134.54,
+            "entry_top": 136.32,
+            "sl": 170.68,
+            "tp": 80.22,
+            "rrr": 1.6,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 301.8,
+            "macro_ssl": 80.22,
+            "macro_eq": 191.01
+        },
+        {
+            "symbol": "XLK",
+            "price": 186.87,
+            "rvol": 0.59,
+            "dist_20ma": -3.1,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 194.66,
+            "entry_top": 195.82,
+            "sl": 204.27,
+            "tp": 181.5,
+            "rrr": 1.5,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 203.25,
+            "macro_ssl": 155.79,
+            "macro_eq": 179.52
+        },
+        {
+            "symbol": "XLF",
+            "price": 56.07,
+            "rvol": 0.46,
+            "dist_20ma": 2.36,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG 缺口 (多)",
+            "smc_class": "border-blue-500 text-blue-400",
+            "label": "強勢多頭",
+            "label_class": "bg-green-900/50 text-green-400",
+            "entry_bot": 54.52,
+            "entry_top": 55.19,
+            "sl": 52.55,
+            "tp": 58.39,
+            "rrr": 1.5,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "long",
+            "macro_bsl": 58.39,
+            "macro_ssl": 50.17,
+            "macro_eq": 54.28
         },
         {
             "symbol": "DRAM",
-            "price": 47.55,
-            "rvol": 0.23,
-            "dist_20ma": -11.92,
+            "price": 48.78,
+            "rvol": 0.53,
+            "dist_20ma": -9.76,
             "smc_id": "fvg",
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
@@ -1515,9 +1119,9 @@
         },
         {
             "symbol": "AAPL",
-            "price": 344.31,
-            "rvol": 0.18,
-            "dist_20ma": 1.51,
+            "price": 342.95,
+            "rvol": 0.53,
+            "dist_20ma": 1.13,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1536,10 +1140,120 @@
             "macro_eq": 308.17
         },
         {
+            "symbol": "NVDA",
+            "price": 216.11,
+            "rvol": 0.58,
+            "dist_20ma": -3.91,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 233.92,
+            "entry_top": 236.38,
+            "sl": 244.59,
+            "tp": 208.93,
+            "rrr": 2.8,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 243.37,
+            "macro_ssl": 189.59,
+            "macro_eq": 216.48
+        },
+        {
+            "symbol": "AMD",
+            "price": 533.21,
+            "rvol": 0.58,
+            "dist_20ma": -8.62,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 601.77,
+            "entry_top": 613.34,
+            "sl": 661.81,
+            "tp": 440.5,
+            "rrr": 3.1,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 658.52,
+            "macro_ssl": 310.0,
+            "macro_eq": 484.26
+        },
+        {
+            "symbol": "TSM",
+            "price": 427.78,
+            "rvol": 0.53,
+            "dist_20ma": -3.73,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 464.83,
+            "entry_top": 471.3,
+            "sl": 489.91,
+            "tp": 406.73,
+            "rrr": 2.8,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 487.47,
+            "macro_ssl": 371.72,
+            "macro_eq": 429.6
+        },
+        {
+            "symbol": "AVGO",
+            "price": 331.24,
+            "rvol": 0.48,
+            "dist_20ma": -4.76,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 359.25,
+            "entry_top": 361.1,
+            "sl": 382.74,
+            "tp": 320.23,
+            "rrr": 1.8,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 493.32,
+            "macro_ssl": 320.23,
+            "macro_eq": 406.78
+        },
+        {
+            "symbol": "ASML",
+            "price": 1598.29,
+            "rvol": 0.59,
+            "dist_20ma": -7.27,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 1725.27,
+            "entry_top": 1778.0,
+            "sl": 1882.87,
+            "tp": 1550.0,
+            "rrr": 1.5,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 1997.38,
+            "macro_ssl": 1363.05,
+            "macro_eq": 1680.22
+        },
+        {
             "symbol": "MU",
-            "price": 887.27,
-            "rvol": 0.22,
-            "dist_20ma": -9.3,
+            "price": 913.36,
+            "rvol": 0.65,
+            "dist_20ma": -6.76,
             "smc_id": "fvg",
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
@@ -1558,10 +1272,120 @@
             "macro_eq": 871.34
         },
         {
+            "symbol": "ARM",
+            "price": 223.55,
+            "rvol": 0.66,
+            "dist_20ma": -13.45,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 281.5,
+            "entry_top": 290.5,
+            "sl": 327.63,
+            "tp": 208.3,
+            "rrr": 1.9,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 452.7,
+            "macro_ssl": 193.91,
+            "macro_eq": 323.3
+        },
+        {
+            "symbol": "SMCI",
+            "price": 33.1,
+            "rvol": 0.48,
+            "dist_20ma": -13.51,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 39.49,
+            "entry_top": 40.63,
+            "sl": 46.0,
+            "tp": 30.92,
+            "rrr": 1.5,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 51.4,
+            "macro_ssl": 23.38,
+            "macro_eq": 37.39
+        },
+        {
+            "symbol": "WDC",
+            "price": 361.93,
+            "rvol": 0.71,
+            "dist_20ma": -7.31,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 409.39,
+            "entry_top": 429.44,
+            "sl": 478.04,
+            "tp": 331.81,
+            "rrr": 1.5,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 799.61,
+            "macro_ssl": 331.81,
+            "macro_eq": 565.71
+        },
+        {
+            "symbol": "AAOI",
+            "price": 74.12,
+            "rvol": 0.69,
+            "dist_20ma": -21.92,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 117.16,
+            "entry_top": 119.73,
+            "sl": 131.81,
+            "tp": 66.28,
+            "rrr": 3.9,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 233.67,
+            "macro_ssl": 66.28,
+            "macro_eq": 149.98
+        },
+        {
+            "symbol": "POET",
+            "price": 5.51,
+            "rvol": 0.49,
+            "dist_20ma": -15.68,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 7.26,
+            "entry_top": 7.64,
+            "sl": 8.24,
+            "tp": 5.22,
+            "rrr": 2.8,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 20.81,
+            "macro_ssl": 5.22,
+            "macro_eq": 13.01
+        },
+        {
             "symbol": "PLTR",
-            "price": 196.28,
-            "rvol": 0.17,
-            "dist_20ma": 0.17,
+            "price": 199.74,
+            "rvol": 0.47,
+            "dist_20ma": 1.84,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1581,9 +1405,9 @@
         },
         {
             "symbol": "SNOW",
-            "price": 328.45,
-            "rvol": 0.08,
-            "dist_20ma": -1.86,
+            "price": 333.57,
+            "rvol": 0.43,
+            "dist_20ma": -0.41,
             "smc_id": "fvg",
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
@@ -1603,9 +1427,9 @@
         },
         {
             "symbol": "CRM",
-            "price": 248.01,
-            "rvol": 0.09,
-            "dist_20ma": 4.84,
+            "price": 245.2,
+            "rvol": 0.3,
+            "dist_20ma": 3.71,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1624,32 +1448,76 @@
             "macro_eq": 206.93
         },
         {
-            "symbol": "BAC",
-            "price": 51.21,
-            "rvol": 0.14,
-            "dist_20ma": -2.82,
+            "symbol": "ADBE",
+            "price": 254.92,
+            "rvol": 0.47,
+            "dist_20ma": 3.94,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG 缺口 (多)",
+            "smc_class": "border-blue-500 text-blue-400",
+            "label": "強勢多頭",
+            "label_class": "bg-green-900/50 text-green-400",
+            "entry_bot": 247.63,
+            "entry_top": 252.52,
+            "sl": 225.86,
+            "tp": 294.53,
+            "rrr": 1.8,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "long",
+            "macro_bsl": 294.53,
+            "macro_ssl": 190.12,
+            "macro_eq": 242.32
+        },
+        {
+            "symbol": "RIOT",
+            "price": 12.85,
+            "rvol": 0.83,
+            "dist_20ma": -21.85,
             "smc_id": "fvg",
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
             "label": "弱勢空頭",
             "label_class": "bg-red-900/50 text-red-400",
-            "entry_bot": 58.5,
-            "entry_top": 58.77,
-            "sl": 64.15,
-            "tp": 49.26,
-            "rrr": 1.7,
+            "entry_bot": 22.85,
+            "entry_top": 23.45,
+            "sl": 25.52,
+            "tp": 12.44,
+            "rrr": 4.5,
             "earnings_alert": false,
             "confluence": false,
             "direction": "short",
-            "macro_bsl": 64.9,
-            "macro_ssl": 48.8,
-            "macro_eq": 56.85
+            "macro_bsl": 30.32,
+            "macro_ssl": 11.79,
+            "macro_eq": 21.06
+        },
+        {
+            "symbol": "FUTU",
+            "price": 100.88,
+            "rvol": 0.62,
+            "dist_20ma": -6.3,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 110.04,
+            "entry_top": 111.11,
+            "sl": 115.75,
+            "tp": 98.18,
+            "rrr": 2.4,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 168.65,
+            "macro_ssl": 80.5,
+            "macro_eq": 124.58
         },
         {
             "symbol": "RKLB",
-            "price": 53.18,
-            "rvol": 0.14,
-            "dist_20ma": -14.81,
+            "price": 54.75,
+            "rvol": 0.43,
+            "dist_20ma": -12.4,
             "smc_id": "fvg",
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
@@ -1668,10 +1536,54 @@
             "macro_eq": 100.12
         },
         {
+            "symbol": "BE",
+            "price": 208.36,
+            "rvol": 1.1,
+            "dist_20ma": -18.15,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 264.14,
+            "entry_top": 271.0,
+            "sl": 303.87,
+            "tp": 189.0,
+            "rrr": 2.2,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 351.28,
+            "macro_ssl": 157.33,
+            "macro_eq": 254.3
+        },
+        {
+            "symbol": "NOK",
+            "price": 8.72,
+            "rvol": 0.76,
+            "dist_20ma": -10.02,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 9.77,
+            "entry_top": 9.89,
+            "sl": 11.04,
+            "tp": 7.78,
+            "rrr": 1.7,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 17.45,
+            "macro_ssl": 7.78,
+            "macro_eq": 12.62
+        },
+        {
             "symbol": "ONDS",
-            "price": 6.14,
-            "rvol": 0.12,
-            "dist_20ma": -7.99,
+            "price": 6.2,
+            "rvol": 0.49,
+            "dist_20ma": -7.07,
             "smc_id": "fvg",
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
@@ -1690,10 +1602,32 @@
             "macro_eq": 9.98
         },
         {
+            "symbol": "NBIS",
+            "price": 160.34,
+            "rvol": 1.05,
+            "dist_20ma": -20.96,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 217.2,
+            "entry_top": 217.73,
+            "sl": 256.38,
+            "tp": 155.73,
+            "rrr": 1.6,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 299.86,
+            "macro_ssl": 132.7,
+            "macro_eq": 216.28
+        },
+        {
             "symbol": "COST",
-            "price": 1014.58,
-            "rvol": 0.19,
-            "dist_20ma": 5.39,
+            "price": 1001.44,
+            "rvol": 0.48,
+            "dist_20ma": 4.09,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1713,9 +1647,9 @@
         },
         {
             "symbol": "PG",
-            "price": 161.09,
-            "rvol": 0.09,
-            "dist_20ma": 5.66,
+            "price": 159.02,
+            "rvol": 0.38,
+            "dist_20ma": 4.38,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1735,9 +1669,9 @@
         },
         {
             "symbol": "DIS",
-            "price": 111.97,
-            "rvol": 0.1,
-            "dist_20ma": 3.71,
+            "price": 110.14,
+            "rvol": 0.43,
+            "dist_20ma": 2.1,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1757,9 +1691,9 @@
         },
         {
             "symbol": "IWM",
-            "price": 278.13,
-            "rvol": 0.16,
-            "dist_20ma": 0.37,
+            "price": 277.23,
+            "rvol": 0.45,
+            "dist_20ma": 0.06,
             "smc_id": null,
             "smc_text": "-",
             "smc_class": "border-gray-600 text-gray-400",
@@ -1779,9 +1713,9 @@
         },
         {
             "symbol": "TSLA",
-            "price": 393.42,
-            "rvol": 0.48,
-            "dist_20ma": 5.85,
+            "price": 394.9,
+            "rvol": 1.11,
+            "dist_20ma": 6.23,
             "smc_id": null,
             "smc_text": "-",
             "smc_class": "border-gray-600 text-gray-400",
@@ -1801,9 +1735,9 @@
         },
         {
             "symbol": "META",
-            "price": 634.71,
-            "rvol": 0.34,
-            "dist_20ma": -11.06,
+            "price": 631.2,
+            "rvol": 0.83,
+            "dist_20ma": -11.53,
             "smc_id": null,
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
@@ -1823,9 +1757,9 @@
         },
         {
             "symbol": "UBER",
-            "price": 66.63,
-            "rvol": 0.13,
-            "dist_20ma": -3.8,
+            "price": 66.0,
+            "rvol": 0.66,
+            "dist_20ma": -4.68,
             "smc_id": null,
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
@@ -1844,10 +1778,32 @@
             "macro_eq": 73.88
         },
         {
+            "symbol": "GS",
+            "price": 897.57,
+            "rvol": 0.45,
+            "dist_20ma": 0.63,
+            "smc_id": null,
+            "smc_text": "-",
+            "smc_class": "border-gray-600 text-gray-400",
+            "label": "強勢多頭",
+            "label_class": "bg-green-900/50 text-green-400",
+            "entry_bot": 0,
+            "entry_top": 0,
+            "sl": 0,
+            "tp": 0,
+            "rrr": 0,
+            "earnings_alert": false,
+            "confluence": false,
+            "direction": "long",
+            "macro_bsl": 1148.37,
+            "macro_ssl": 859.03,
+            "macro_eq": 1003.7
+        },
+        {
             "symbol": "VST",
-            "price": 140.43,
-            "rvol": 0.1,
-            "dist_20ma": -6.53,
+            "price": 142.09,
+            "rvol": 0.38,
+            "dist_20ma": -5.48,
             "smc_id": null,
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
@@ -1867,9 +1823,9 @@
         },
         {
             "symbol": "PEP",
-            "price": 137.21,
-            "rvol": 0.09,
-            "dist_20ma": 5.81,
+            "price": 135.43,
+            "rvol": 0.34,
+            "dist_20ma": 4.51,
             "smc_id": null,
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1888,54 +1844,76 @@
             "macro_eq": 140.06
         },
         {
-            "symbol": "NOW",
-            "price": 157.11,
-            "rvol": 0.23,
-            "dist_20ma": 9.9,
-            "smc_id": "fvg",
-            "smc_text": "⚡ 1D FVG 缺口 (多)",
-            "smc_class": "border-blue-500 text-blue-400",
-            "label": "強勢多頭",
-            "label_class": "bg-green-900/50 text-green-400",
-            "entry_bot": 98.93,
-            "entry_top": 106.5,
-            "sl": 91.07,
-            "tp": 159.5,
-            "rrr": 4.9,
+            "symbol": "AMZN",
+            "price": 248.73,
+            "rvol": 0.58,
+            "dist_20ma": -2.29,
+            "smc_id": "fvg_sweep",
+            "smc_text": "🩸 S級 掃損+OB (空)",
+            "smc_class": "border-red-500 text-red-400 font-bold",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 258.41,
+            "entry_top": 260.42,
+            "sl": 266.67,
+            "tp": 244.3,
+            "rrr": 2.1,
             "earnings_alert": true,
             "confluence": false,
-            "direction": "long",
-            "macro_bsl": 159.5,
-            "macro_ssl": 85.44,
-            "macro_eq": 122.47
+            "direction": "short",
+            "macro_bsl": 287.2,
+            "macro_ssl": 225.55,
+            "macro_eq": 256.38
         },
         {
-            "symbol": "PYPL",
-            "price": 55.64,
-            "rvol": 0.22,
-            "dist_20ma": 0.25,
+            "symbol": "INTC",
+            "price": 91.96,
+            "rvol": 0.73,
+            "dist_20ma": -10.61,
             "smc_id": "fvg",
-            "smc_text": "⚡ 1D FVG 缺口 (多)",
-            "smc_class": "border-blue-500 text-blue-400",
-            "label": "強勢多頭",
-            "label_class": "bg-green-900/50 text-green-400",
-            "entry_bot": 53.4,
-            "entry_top": 54.0,
-            "sl": 51.55,
-            "tp": 57.95,
-            "rrr": 2.0,
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 111.6,
+            "entry_top": 112.0,
+            "sl": 128.08,
+            "tp": 84.65,
+            "rrr": 1.7,
             "earnings_alert": true,
             "confluence": false,
-            "direction": "long",
-            "macro_bsl": 62.58,
-            "macro_ssl": 40.1,
-            "macro_eq": 51.34
+            "direction": "short",
+            "macro_bsl": 142.35,
+            "macro_ssl": 80.8,
+            "macro_eq": 111.57
+        },
+        {
+            "symbol": "SNDK",
+            "price": 1271.1,
+            "rvol": 0.65,
+            "dist_20ma": -15.76,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 2052.54,
+            "entry_top": 2070.0,
+            "sl": 2366.16,
+            "tp": 1228.89,
+            "rrr": 2.7,
+            "earnings_alert": true,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 2354.39,
+            "macro_ssl": 980.28,
+            "macro_eq": 1667.34
         },
         {
             "symbol": "SOFI",
-            "price": 14.6,
-            "rvol": 0.16,
-            "dist_20ma": -3.97,
+            "price": 14.48,
+            "rvol": 0.65,
+            "dist_20ma": -4.79,
             "smc_id": "fvg",
             "smc_text": "📉 1D FVG 缺口 (空)",
             "smc_class": "border-purple-500 text-purple-400",
@@ -1955,9 +1933,9 @@
         },
         {
             "symbol": "V",
-            "price": 406.4,
-            "rvol": 0.11,
-            "dist_20ma": 4.96,
+            "price": 403.89,
+            "rvol": 0.57,
+            "dist_20ma": 4.35,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1977,9 +1955,9 @@
         },
         {
             "symbol": "KO",
-            "price": 92.28,
-            "rvol": 0.21,
-            "dist_20ma": 2.73,
+            "price": 92.56,
+            "rvol": 0.71,
+            "dist_20ma": 3.03,
             "smc_id": "fvg",
             "smc_text": "⚡ 1D FVG 缺口 (多)",
             "smc_class": "border-blue-500 text-blue-400",
@@ -1998,10 +1976,32 @@
             "macro_eq": 84.92
         },
         {
-            "symbol": "MSFT",
-            "price": 526.16,
-            "rvol": 0.12,
-            "dist_20ma": -0.26,
+            "symbol": "COIN",
+            "price": 159.68,
+            "rvol": 0.52,
+            "dist_20ma": -10.14,
+            "smc_id": null,
+            "smc_text": "📉 1D FVG 缺口 (空)",
+            "smc_class": "border-purple-500 text-purple-400",
+            "label": "弱勢空頭",
+            "label_class": "bg-red-900/50 text-red-400",
+            "entry_bot": 169.84,
+            "entry_top": 172.04,
+            "sl": 186.42,
+            "tp": 161.18,
+            "rrr": 0.6,
+            "earnings_alert": true,
+            "confluence": false,
+            "direction": "short",
+            "macro_bsl": 222.35,
+            "macro_ssl": 139.11,
+            "macro_eq": 180.73
+        },
+        {
+            "symbol": "PYPL",
+            "price": 54.59,
+            "rvol": 0.67,
+            "dist_20ma": -1.55,
             "smc_id": null,
             "smc_text": "-",
             "smc_class": "border-gray-600 text-gray-400",
@@ -2015,9 +2015,9 @@
             "earnings_alert": true,
             "confluence": false,
             "direction": "short",
-            "macro_bsl": 551.15,
-            "macro_ssl": 348.54,
-            "macro_eq": 449.84
+            "macro_bsl": 62.58,
+            "macro_ssl": 40.1,
+            "macro_eq": 51.34
         }
     ],
     "chart_data": {
@@ -2907,9 +2907,9 @@
             {
                 "time": "2026-10-26",
                 "open": 762.25,
-                "high": 764.77,
+                "high": 767.73,
                 "low": 761.64,
-                "close": 764.61
+                "close": 765.45
             }
         ],
         "QQQ": [
@@ -3798,9 +3798,9 @@
             {
                 "time": "2026-10-26",
                 "open": 707.06,
-                "high": 709.57,
+                "high": 715.25,
                 "low": 705.58,
-                "close": 708.73
+                "close": 713.59
             }
         ],
         "DIA": [
@@ -4689,9 +4689,9 @@
             {
                 "time": "2026-10-26",
                 "open": 523.89,
-                "high": 524.89,
-                "low": 522.65,
-                "close": 524.89
+                "high": 525.61,
+                "low": 521.94,
+                "close": 522.86
             }
         ],
         "IWM": [
@@ -5580,9 +5580,9 @@
             {
                 "time": "2026-10-26",
                 "open": 276.17,
-                "high": 278.13,
+                "high": 278.76,
                 "low": 276.0,
-                "close": 278.13
+                "close": 277.23
             }
         ],
         "VOO": [
@@ -6471,9 +6471,9 @@
             {
                 "time": "2026-10-26",
                 "open": 700.66,
-                "high": 702.97,
+                "high": 705.66,
                 "low": 700.1,
-                "close": 702.86
+                "close": 703.58
             }
         ],
         "QQQM": [
@@ -7362,9 +7362,9 @@
             {
                 "time": "2026-10-26",
                 "open": 291.16,
-                "high": 292.16,
+                "high": 294.48,
                 "low": 290.55,
-                "close": 291.83
+                "close": 293.85
             }
         ],
         "SPYM": [
@@ -8253,9 +8253,9 @@
             {
                 "time": "2026-10-26",
                 "open": 89.71,
-                "high": 90.0,
+                "high": 90.36,
                 "low": 89.64,
-                "close": 90.0
+                "close": 90.08
             }
         ],
         "SMH": [
@@ -9144,9 +9144,9 @@
             {
                 "time": "2026-10-26",
                 "open": 531.48,
-                "high": 537.12,
+                "high": 545.34,
                 "low": 530.2,
-                "close": 533.64
+                "close": 544.62
             }
         ],
         "SOXL": [
@@ -10035,9 +10035,9 @@
             {
                 "time": "2026-10-26",
                 "open": 85.88,
-                "high": 88.06,
+                "high": 93.14,
                 "low": 84.23,
-                "close": 85.88
+                "close": 92.68
             }
         ],
         "XLK": [
@@ -10926,9 +10926,9 @@
             {
                 "time": "2026-10-26",
                 "open": 184.11,
-                "high": 184.96,
+                "high": 186.95,
                 "low": 183.43,
-                "close": 184.33
+                "close": 186.87
             }
         ],
         "XLF": [
@@ -11818,8 +11818,8 @@
                 "time": "2026-10-26",
                 "open": 56.0,
                 "high": 56.35,
-                "low": 56.0,
-                "close": 56.28
+                "low": 55.98,
+                "close": 56.07
             }
         ],
         "XLE": [
@@ -12710,7 +12710,7 @@
                 "open": 68.73,
                 "high": 69.86,
                 "low": 68.68,
-                "close": 69.26
+                "close": 69.62
             }
         ],
         "SPCX": [
@@ -13368,9 +13368,9 @@
             {
                 "time": "2026-10-26",
                 "open": 146.88,
-                "high": 147.83,
+                "high": 150.24,
                 "low": 144.57,
-                "close": 145.98
+                "close": 149.01
             }
         ],
         "DRAM": [
@@ -14259,9 +14259,9 @@
             {
                 "time": "2026-10-26",
                 "open": 47.69,
-                "high": 48.27,
+                "high": 49.01,
                 "low": 47.27,
-                "close": 47.55
+                "close": 48.78
             }
         ],
         "AAPL": [
@@ -15150,9 +15150,9 @@
             {
                 "time": "2026-10-26",
                 "open": 343.9,
-                "high": 346.21,
+                "high": 347.09,
                 "low": 341.03,
-                "close": 344.31
+                "close": 342.95
             }
         ],
         "MSFT": [
@@ -16041,9 +16041,9 @@
             {
                 "time": "2026-10-26",
                 "open": 527.41,
-                "high": 529.06,
+                "high": 532.76,
                 "low": 521.69,
-                "close": 526.16
+                "close": 532.66
             }
         ],
         "NVDA": [
@@ -16932,9 +16932,9 @@
             {
                 "time": "2026-10-26",
                 "open": 213.12,
-                "high": 215.98,
+                "high": 217.75,
                 "low": 212.61,
-                "close": 214.57
+                "close": 216.11
             }
         ],
         "TSLA": [
@@ -17823,9 +17823,9 @@
             {
                 "time": "2026-10-26",
                 "open": 383.97,
-                "high": 394.93,
+                "high": 397.27,
                 "low": 383.84,
-                "close": 393.42
+                "close": 394.9
             }
         ],
         "AMZN": [
@@ -18714,9 +18714,9 @@
             {
                 "time": "2026-10-26",
                 "open": 249.42,
-                "high": 250.49,
+                "high": 250.79,
                 "low": 247.24,
-                "close": 249.88
+                "close": 248.73
             }
         ],
         "META": [
@@ -19605,9 +19605,9 @@
             {
                 "time": "2026-10-26",
                 "open": 637.89,
-                "high": 641.7,
+                "high": 647.69,
                 "low": 629.02,
-                "close": 634.71
+                "close": 631.2
             }
         ],
         "GOOG": [
@@ -20497,8 +20497,8 @@
                 "time": "2026-10-26",
                 "open": 317.95,
                 "high": 318.39,
-                "low": 314.6,
-                "close": 316.58
+                "low": 314.22,
+                "close": 314.33
             }
         ],
         "GOOGL": [
@@ -21387,9 +21387,9 @@
             {
                 "time": "2026-10-26",
                 "open": 320.89,
-                "high": 321.34,
-                "low": 317.6,
-                "close": 319.68
+                "high": 321.48,
+                "low": 317.3,
+                "close": 317.45
             }
         ],
         "AMD": [
@@ -22278,9 +22278,9 @@
             {
                 "time": "2026-10-26",
                 "open": 522.75,
-                "high": 526.86,
+                "high": 533.4,
                 "low": 514.01,
-                "close": 517.66
+                "close": 533.21
             }
         ],
         "TSM": [
@@ -23169,9 +23169,9 @@
             {
                 "time": "2026-10-26",
                 "open": 418.07,
-                "high": 423.66,
+                "high": 428.85,
                 "low": 417.72,
-                "close": 421.59
+                "close": 427.78
             }
         ],
         "AVGO": [
@@ -24060,9 +24060,9 @@
             {
                 "time": "2026-10-26",
                 "open": 324.45,
-                "high": 327.82,
+                "high": 332.12,
                 "low": 323.3,
-                "close": 326.19
+                "close": 331.24
             }
         ],
         "ASML": [
@@ -24951,9 +24951,9 @@
             {
                 "time": "2026-10-26",
                 "open": 1587.98,
-                "high": 1602.83,
+                "high": 1612.0,
                 "low": 1583.04,
-                "close": 1595.32
+                "close": 1598.29
             }
         ],
         "QCOM": [
@@ -25842,9 +25842,9 @@
             {
                 "time": "2026-10-26",
                 "open": 176.74,
-                "high": 177.49,
+                "high": 181.0,
                 "low": 175.49,
-                "close": 176.74
+                "close": 178.86
             }
         ],
         "TXN": [
@@ -26733,9 +26733,9 @@
             {
                 "time": "2026-10-26",
                 "open": 288.92,
-                "high": 289.69,
+                "high": 297.31,
                 "low": 284.4,
-                "close": 286.53
+                "close": 297.31
             }
         ],
         "INTC": [
@@ -27624,9 +27624,9 @@
             {
                 "time": "2026-10-26",
                 "open": 87.92,
-                "high": 88.14,
+                "high": 92.09,
                 "low": 86.46,
-                "close": 87.17
+                "close": 91.96
             }
         ],
         "MU": [
@@ -28515,9 +28515,9 @@
             {
                 "time": "2026-10-26",
                 "open": 889.88,
-                "high": 908.5,
+                "high": 915.75,
                 "low": 882.77,
-                "close": 887.27
+                "close": 913.36
             }
         ],
         "SNDK": [
@@ -29406,9 +29406,9 @@
             {
                 "time": "2026-10-26",
                 "open": 1251.02,
-                "high": 1278.57,
-                "low": 1231.8,
-                "close": 1244.72
+                "high": 1287.84,
+                "low": 1229.0,
+                "close": 1271.1
             }
         ],
         "ARM": [
@@ -30297,9 +30297,9 @@
             {
                 "time": "2026-10-26",
                 "open": 211.58,
-                "high": 215.84,
+                "high": 223.72,
                 "low": 210.85,
-                "close": 215.0
+                "close": 223.55
             }
         ],
         "SMCI": [
@@ -31188,9 +31188,9 @@
             {
                 "time": "2026-10-26",
                 "open": 33.07,
-                "high": 33.41,
-                "low": 32.68,
-                "close": 32.9
+                "high": 33.5,
+                "low": 32.58,
+                "close": 33.1
             }
         ],
         "WDC": [
@@ -32079,9 +32079,9 @@
             {
                 "time": "2026-10-26",
                 "open": 346.28,
-                "high": 352.45,
+                "high": 363.78,
                 "low": 340.3,
-                "close": 346.48
+                "close": 361.93
             }
         ],
         "LITE": [
@@ -32970,9 +32970,9 @@
             {
                 "time": "2026-10-26",
                 "open": 765.18,
-                "high": 800.75,
+                "high": 840.47,
                 "low": 756.0,
-                "close": 785.9
+                "close": 833.44
             }
         ],
         "AAOI": [
@@ -33861,9 +33861,9 @@
             {
                 "time": "2026-10-26",
                 "open": 67.46,
-                "high": 68.89,
+                "high": 74.25,
                 "low": 66.51,
-                "close": 67.6
+                "close": 74.12
             }
         ],
         "POET": [
@@ -34752,9 +34752,9 @@
             {
                 "time": "2026-10-26",
                 "open": 5.45,
-                "high": 5.45,
+                "high": 5.58,
                 "low": 5.26,
-                "close": 5.34
+                "close": 5.51
             }
         ],
         "PLTR": [
@@ -35643,9 +35643,9 @@
             {
                 "time": "2026-10-26",
                 "open": 198.1,
-                "high": 198.2,
+                "high": 199.99,
                 "low": 192.91,
-                "close": 196.28
+                "close": 199.74
             }
         ],
         "SNOW": [
@@ -36534,9 +36534,9 @@
             {
                 "time": "2026-10-26",
                 "open": 324.7,
-                "high": 329.47,
+                "high": 337.99,
                 "low": 322.74,
-                "close": 328.45
+                "close": 333.57
             }
         ],
         "APP": [
@@ -37427,7 +37427,7 @@
                 "open": 261.1,
                 "high": 262.93,
                 "low": 255.46,
-                "close": 260.17
+                "close": 259.44
             }
         ],
         "CRM": [
@@ -38317,8 +38317,8 @@
                 "time": "2026-10-26",
                 "open": 247.76,
                 "high": 250.99,
-                "low": 245.93,
-                "close": 248.01
+                "low": 243.43,
+                "close": 245.2
             }
         ],
         "ADBE": [
@@ -39208,8 +39208,8 @@
                 "time": "2026-10-26",
                 "open": 262.3,
                 "high": 263.35,
-                "low": 259.06,
-                "close": 261.87
+                "low": 254.06,
+                "close": 254.92
             }
         ],
         "NOW": [
@@ -40099,8 +40099,8 @@
                 "time": "2026-10-26",
                 "open": 158.55,
                 "high": 159.29,
-                "low": 155.25,
-                "close": 157.11
+                "low": 155.0,
+                "close": 156.85
             }
         ],
         "CRWD": [
@@ -40989,9 +40989,9 @@
             {
                 "time": "2026-10-26",
                 "open": 258.53,
-                "high": 260.1,
+                "high": 264.39,
                 "low": 254.06,
-                "close": 257.84
+                "close": 263.13
             }
         ],
         "PANW": [
@@ -41880,9 +41880,9 @@
             {
                 "time": "2026-10-26",
                 "open": 384.05,
-                "high": 390.99,
+                "high": 394.7,
                 "low": 379.48,
-                "close": 386.08
+                "close": 393.44
             }
         ],
         "NFLX": [
@@ -42772,8 +42772,8 @@
                 "time": "2026-10-26",
                 "open": 65.16,
                 "high": 65.49,
-                "low": 64.86,
-                "close": 65.31
+                "low": 62.87,
+                "close": 63.12
             }
         ],
         "UBER": [
@@ -43662,9 +43662,9 @@
             {
                 "time": "2026-10-26",
                 "open": 66.62,
-                "high": 66.72,
-                "low": 66.11,
-                "close": 66.63
+                "high": 66.84,
+                "low": 65.9,
+                "close": 66.0
             }
         ],
         "COIN": [
@@ -44553,9 +44553,9 @@
             {
                 "time": "2026-10-26",
                 "open": 159.63,
-                "high": 160.0,
+                "high": 162.47,
                 "low": 155.31,
-                "close": 158.5
+                "close": 159.68
             }
         ],
         "MSTR": [
@@ -45444,9 +45444,9 @@
             {
                 "time": "2026-10-26",
                 "open": 141.68,
-                "high": 141.69,
+                "high": 144.7,
                 "low": 137.26,
-                "close": 140.06
+                "close": 140.76
             }
         ],
         "MARA": [
@@ -46335,9 +46335,9 @@
             {
                 "time": "2026-10-26",
                 "open": 6.82,
-                "high": 6.86,
+                "high": 7.11,
                 "low": 6.62,
-                "close": 6.8
+                "close": 6.95
             }
         ],
         "RIOT": [
@@ -47226,9 +47226,9 @@
             {
                 "time": "2026-10-26",
                 "open": 12.14,
-                "high": 12.29,
+                "high": 13.02,
                 "low": 11.79,
-                "close": 12.11
+                "close": 12.85
             }
         ],
         "HOOD": [
@@ -48117,9 +48117,9 @@
             {
                 "time": "2026-10-26",
                 "open": 94.19,
-                "high": 94.19,
+                "high": 94.37,
                 "low": 91.63,
-                "close": 92.28
+                "close": 93.04
             }
         ],
         "PYPL": [
@@ -49009,8 +49009,8 @@
                 "time": "2026-10-26",
                 "open": 56.77,
                 "high": 56.81,
-                "low": 55.36,
-                "close": 55.64
+                "low": 54.47,
+                "close": 54.59
             }
         ],
         "SOFI": [
@@ -49899,9 +49899,9 @@
             {
                 "time": "2026-10-26",
                 "open": 14.54,
-                "high": 14.65,
+                "high": 14.67,
                 "low": 14.4,
-                "close": 14.6
+                "close": 14.48
             }
         ],
         "FUTU": [
@@ -50790,9 +50790,9 @@
             {
                 "time": "2026-10-26",
                 "open": 99.64,
-                "high": 101.65,
+                "high": 102.14,
                 "low": 97.82,
-                "close": 101.65
+                "close": 100.88
             }
         ],
         "V": [
@@ -51682,8 +51682,8 @@
                 "time": "2026-10-26",
                 "open": 405.75,
                 "high": 407.53,
-                "low": 404.19,
-                "close": 406.4
+                "low": 402.64,
+                "close": 403.89
             }
         ],
         "JPM": [
@@ -52572,9 +52572,9 @@
             {
                 "time": "2026-10-26",
                 "open": 334.0,
-                "high": 336.35,
+                "high": 336.49,
                 "low": 333.16,
-                "close": 335.96
+                "close": 335.3
             }
         ],
         "GS": [
@@ -53463,9 +53463,9 @@
             {
                 "time": "2026-10-26",
                 "open": 886.5,
-                "high": 891.88,
+                "high": 900.53,
                 "low": 881.53,
-                "close": 891.0
+                "close": 897.57
             }
         ],
         "BAC": [
@@ -54355,8 +54355,8 @@
                 "time": "2026-10-26",
                 "open": 50.72,
                 "high": 51.49,
-                "low": 50.72,
-                "close": 51.21
+                "low": 50.7,
+                "close": 50.72
             }
         ],
         "RKLB": [
@@ -55245,9 +55245,9 @@
             {
                 "time": "2026-10-26",
                 "open": 52.58,
-                "high": 54.33,
+                "high": 54.99,
                 "low": 52.15,
-                "close": 53.18
+                "close": 54.75
             }
         ],
         "XOM": [
@@ -56136,9 +56136,9 @@
             {
                 "time": "2026-10-26",
                 "open": 181.86,
-                "high": 184.36,
+                "high": 184.5,
                 "low": 181.52,
-                "close": 183.12
+                "close": 184.31
             }
         ],
         "BE": [
@@ -57027,9 +57027,9 @@
             {
                 "time": "2026-10-26",
                 "open": 193.0,
-                "high": 203.43,
+                "high": 210.86,
                 "low": 192.15,
-                "close": 199.18
+                "close": 208.36
             }
         ],
         "VST": [
@@ -57918,9 +57918,9 @@
             {
                 "time": "2026-10-26",
                 "open": 140.9,
-                "high": 142.43,
+                "high": 143.52,
                 "low": 139.07,
-                "close": 140.43
+                "close": 142.09
             }
         ],
         "NOK": [
@@ -58809,9 +58809,9 @@
             {
                 "time": "2026-10-26",
                 "open": 8.33,
-                "high": 8.47,
+                "high": 8.77,
                 "low": 8.3,
-                "close": 8.4
+                "close": 8.72
             }
         ],
         "ONDS": [
@@ -59700,9 +59700,9 @@
             {
                 "time": "2026-10-26",
                 "open": 6.17,
-                "high": 6.24,
+                "high": 6.32,
                 "low": 6.04,
-                "close": 6.14
+                "close": 6.2
             }
         ],
         "NBIS": [
@@ -60591,9 +60591,9 @@
             {
                 "time": "2026-10-26",
                 "open": 153.97,
-                "high": 155.3,
+                "high": 165.86,
                 "low": 149.49,
-                "close": 152.47
+                "close": 160.34
             }
         ],
         "WMT": [
@@ -61482,9 +61482,9 @@
             {
                 "time": "2026-10-26",
                 "open": 119.83,
-                "high": 121.71,
-                "low": 119.59,
-                "close": 121.69
+                "high": 121.77,
+                "low": 119.56,
+                "close": 119.77
             }
         ],
         "COST": [
@@ -62375,7 +62375,7 @@
                 "open": 1001.32,
                 "high": 1015.14,
                 "low": 999.08,
-                "close": 1014.58
+                "close": 1001.44
             }
         ],
         "PG": [
@@ -63265,8 +63265,8 @@
                 "time": "2026-10-26",
                 "open": 160.76,
                 "high": 161.6,
-                "low": 160.23,
-                "close": 161.09
+                "low": 158.85,
+                "close": 159.02
             }
         ],
         "KO": [
@@ -64156,8 +64156,8 @@
                 "time": "2026-10-26",
                 "open": 92.69,
                 "high": 92.88,
-                "low": 91.94,
-                "close": 92.28
+                "low": 91.93,
+                "close": 92.56
             }
         ],
         "PEP": [
@@ -65047,8 +65047,8 @@
                 "time": "2026-10-26",
                 "open": 135.57,
                 "high": 137.64,
-                "low": 135.5,
-                "close": 137.21
+                "low": 135.0,
+                "close": 135.43
             }
         ],
         "DIS": [
@@ -65938,8 +65938,8 @@
                 "time": "2026-10-26",
                 "open": 112.09,
                 "high": 112.4,
-                "low": 111.54,
-                "close": 111.97
+                "low": 110.0,
+                "close": 110.14
             }
         ]
     }
