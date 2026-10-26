@@ -233,7 +233,7 @@
                 <div class="border-t border-[#30363d] pt-3">
                     <h4 class="font-bold text-white mb-1"><i class="fa-solid fa-earth-americas text-purple-400 mr-1"></i>宏觀溢折價區 (Macro Premium/Discount)</h4>
                     <ul class="space-y-2 pl-2">
-                        <li>由後端鎖定過去半年的絕對高低點。圖表上的灰色虛線分別為 <b>Macro BSL(溢價天花板)</b>、<b>Macro EQ(價值中樞)</b> 與 <b>Macro SSL(折價地板)</b>。絕不在極度溢價區做多。</li>
+                        <li>由後端鎖定過去半年的絕對高低點。圖表上的虛線分別為 <b>Macro BSL(溢價天花板)</b>、<b>Macro EQ(價值中樞)</b> 與 <b>Macro SSL(折價地板)</b>。絕不在極度溢價區做多。</li>
                     </ul>
                 </div>
             </div>
@@ -259,7 +259,7 @@
 
         let activePriceLines = [], currentPriceLine = null;
         let currentCandleData = [], currentSymbolData = null;
-        let macroPriceLines = []; // 專門存放宏觀線
+        let macroPriceLines = []; 
 
         document.addEventListener('DOMContentLoaded', async () => {
             try { initCharts(); } catch (e) {}
@@ -515,11 +515,13 @@
                 }
 
                 if (symbolData) {
-                    // ⚡ 宏觀解讀
+                    // ⚡ 宏觀解讀防呆判斷
                     if (symbolData.macro_bsl) {
                         if (livePrice > symbolData.macro_eq) phaseEl.innerHTML = `<span class="text-red-400 font-bold">昂貴溢價區 (Premium)</span>`;
                         else phaseEl.innerHTML = `<span class="text-green-400 font-bold">便宜折價區 (Discount)</span>`;
-                    } else { phaseEl.innerText = "震盪中樞"; }
+                    } else { 
+                        phaseEl.innerHTML = `<span class="text-gray-400">等待更新宏觀數據...</span>`; 
+                    }
 
                     const distMa = symbolData.dist_20ma || 0;
                     trendEl.innerText = distMa > 0 ? `20MA 強勢多頭 (乖離 +${distMa}%)` : `20MA 弱勢空頭 (乖離 ${distMa}%)`;
@@ -572,7 +574,13 @@
                     } else {
                         smcEl.innerText = "目前未形成高勝率 SMC 形態";
                         smcEl.className = "text-gray-400";
-                        insightEl.innerHTML = `該股目前暫無合格的 SMC 進場信號。圖表已為您標註宏觀的 <b class="text-gray-300">Macro BSL(頂部)</b> 與 <b class="text-gray-300">Macro SSL(底部)</b>。<div class="mt-2">${macdInsightText}</div>`;
+                        
+                        // ⚡ 防呆文字：如果沒有 macro_bsl 就提示使用者更新
+                        if (symbolData.macro_bsl) {
+                            insightEl.innerHTML = `該股目前暫無合格的 SMC 進場信號。圖表已為您標註宏觀的 <b class="text-gray-300">Macro BSL(頂部)</b> 與 <b class="text-gray-300">Macro SSL(底部)</b>。<div class="mt-2">${macdInsightText}</div>`;
+                        } else {
+                            insightEl.innerHTML = `該股目前暫無合格的 SMC 進場信號。系統已自動為您標註 <b class="text-gray-300">Local BSL / Local SSL</b>。<b>(請點擊頂部「更新 SMC」以獲取完整宏觀數據)</b><div class="mt-2">${macdInsightText}</div>`;
+                        }
                     }
                 } else {
                     trendEl.innerText = "即時監察模式";
@@ -755,7 +763,6 @@
                 if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
                 candleSeries.setMarkers([]);
 
-                // ⚡ 向 Vercel API 請求目前週期的真實 K 線
                 let data = [];
                 const tfParam = currentTimeFrame.toLowerCase();
                 try {
@@ -796,15 +803,21 @@
                     
                     // ⚡ 畫出絕對宏觀座標 (Macro Premium/Discount)
                     if (currentSymbolData.macro_bsl) {
-                        macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_bsl, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Macro BSL` }));
-                        macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#4b5563', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, title: `Macro EQ 50%` }));
-                        macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_ssl, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Macro SSL` }));
+                        macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_bsl, color: '#ef4444', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Macro BSL` }));
+                        macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#4b5563', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, title: `Macro EQ` }));
+                        macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_ssl, color: '#22c55e', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Macro SSL` }));
+                    } else if (currentCandleData.length > 0) {
+                        // 🛡️ 防呆機制：如果 data.json 沒更新，自動用當前圖表計算 Local BSL/SSL
+                        let highest = Math.max(...currentCandleData.map(d => d.high));
+                        let lowest = Math.min(...currentCandleData.map(d => d.low));
+                        let eq = (highest + lowest) / 2;
+                        macroPriceLines.push(candleSeries.createPriceLine({ price: highest, color: '#9ca3af', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Local BSL` }));
+                        macroPriceLines.push(candleSeries.createPriceLine({ price: eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, title: `Local EQ` }));
+                        macroPriceLines.push(candleSeries.createPriceLine({ price: lowest, color: '#9ca3af', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Local SSL` }));
                     }
 
-                    // ⚡ 畫出雙向 SMC 結構
                     if (currentSymbolData.smc_id) {
                         const isShort = currentSymbolData.direction === 'short';
-                        
                         const topLine = candleSeries.createPriceLine({ price: currentSymbolData.entry_top || 0, color: isShort ? '#c084fc' : '#3b82f6', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: `${isShort?'做空(上)':'做多(上)'}: $${currentSymbolData.entry_top||0}` });
                         const botLine = candleSeries.createPriceLine({ price: currentSymbolData.entry_bot || 0, color: isShort ? '#c084fc' : '#3b82f6', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `${isShort?'做空(下)':'做多(下)'}: $${currentSymbolData.entry_bot||0}` });
                         const slLine = candleSeries.createPriceLine({ price: currentSymbolData.sl || 0, color: '#ef5350', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `防守(SL): $${currentSymbolData.sl||0}` });
