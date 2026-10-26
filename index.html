@@ -11,10 +11,11 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
         .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
         
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        /* 📱 滾動條加粗圓潤化 (Mobile Friendly) */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
         ::-webkit-scrollbar-track { background: #0d1117; }
-        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
+        ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
         
         #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 50; display: flex; flex-direction: column; gap: 10px; }
         .toast { padding: 12px 20px; border-radius: 8px; background-color: #238636; color: white; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.5); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
@@ -53,15 +54,15 @@
             <div class="flex flex-col">
                 <div class="flex items-center gap-3">
                     <span class="text-xs font-bold text-green-400 flex items-center">
-                        <i class="fa-solid fa-circle-dot text-red-500 mr-1.5 animate-pulse"></i> LIVE 報價 (每 10 秒更新)
+                        <i class="fa-solid fa-circle-dot text-red-500 mr-1.5 animate-pulse"></i> LIVE 報價 (每 10 秒)
                     </span>
                     <a href="https://github.com/singfeehily/us-stock-tracker/actions" target="_blank" 
                        class="bg-[#21262d] hover:bg-[#30363d] text-gray-400 border border-[#30363d] px-2 py-1 rounded text-[10px] font-medium transition-colors">
                         <i class="fa-solid fa-rotate"></i> 更新 SMC
                     </a>
                 </div>
-                <span id="updateTimeText" class="text-[10px] text-gray-500 mt-1.5">數據連線中，請稍候...</span>
-                <span class="text-[10px] text-blue-400 mt-0.5">🕒 自動更新排程: 每日美股開盤前及收盤後 (香港時間)</span>
+                <span id="updateTimeText" class="text-[10px] text-gray-500 mt-1.5">數據連線中...</span>
+                <span class="text-[10px] text-blue-400 mt-0.5">🕒 自動更新排程: 每日開盤前及收盤後</span>
             </div>
         </div>
         
@@ -78,14 +79,13 @@
     </header>
 
     <main class="flex-grow p-3 md:p-6 flex flex-col gap-6">
-        <!-- 🚀 升級板塊資金熱力圖 -->
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-2 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('marketFlowContent', 'marketFlowIcon')">
                 <span class="font-semibold text-white text-sm"><i class="fa-solid fa-fire text-orange-500 mr-2"></i>大盤與板塊資金熱力圖 (Heatmap)</span>
                 <i id="marketFlowIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
             </div>
             <div id="marketFlowContent" class="collapsible-content flex gap-3 overflow-x-auto py-3 px-4" style="max-height: 100px;">
-                <span class="text-gray-500 text-sm" id="emptyMarketFlowMsg">等待報價系統啟動...</span>
+                <span class="text-gray-500 text-sm">等待報價...</span>
             </div>
         </section>
 
@@ -99,7 +99,7 @@
             </div>
             <div id="watchlistContent" class="collapsible-content" style="max-height: 300px;">
                 <div id="watchlistContainer" class="flex gap-4 overflow-x-auto p-4">
-                    <div class="text-gray-500 text-sm py-4 px-2" id="emptyWatchlistMsg">正在初始化自選股...</div>
+                    <div class="text-gray-500 text-sm py-4 px-2">載入中...</div>
                 </div>
             </div>
         </section>
@@ -136,29 +136,38 @@
                     </div>
                 </div>
 
-                <!-- 🤖 AI 智能股票深度解析面板 -->
-                <div class="glass-panel rounded-xl flex flex-col p-4 gap-3">
-                    <div class="flex justify-between items-center border-b border-[#30363d] pb-2">
-                        <span class="font-semibold text-white text-sm"><i class="fa-solid fa-robot text-blue-400 mr-2"></i>AI 智能操盤手深度解析 (LIVE)</span>
-                        <span id="panelSymbolBadge" class="bg-blue-900/50 text-blue-400 px-2 py-0.5 rounded text-xs font-bold">--</span>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5">
-                            <span class="text-gray-400 block mb-1">市場階段 (Market Phase)</span>
-                            <span id="panelPhase" class="font-bold text-gray-200">請選擇股票</span>
+                <!-- 🤖 AI 智能股票深度解析面板 (加入摺疊功能) -->
+                <div class="glass-panel rounded-xl flex flex-col relative overflow-hidden">
+                    <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('aiPanelContent', 'aiPanelIcon')">
+                        <div class="flex items-center gap-2">
+                            <span class="font-semibold text-white text-sm"><i class="fa-solid fa-robot text-blue-400 mr-2"></i>AI 智能操盤手 (LIVE)</span>
+                            <span id="panelSymbolBadge" class="bg-blue-900/50 text-blue-400 px-2 py-0.5 rounded text-xs font-bold">--</span>
                         </div>
-                        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5">
-                            <span class="text-gray-400 block mb-1">趨勢與技術結構 (Trend)</span>
-                            <span id="panelTrend" class="font-bold text-gray-200">--</span>
+                        <i id="aiPanelIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+                    </div>
+                    
+                    <div id="aiPanelContent" class="collapsible-content p-4 flex flex-col gap-3" style="max-height: 800px;">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                            <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5">
+                                <span class="text-gray-400 block mb-1">市場階段 (Market Phase)</span>
+                                <span id="panelPhase" class="font-bold text-gray-200">請選擇股票</span>
+                            </div>
+                            <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5">
+                                <span class="text-gray-400 block mb-1">趨勢與技術結構 (Trend)</span>
+                                <span id="panelTrend" class="font-bold text-gray-200">--</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-xs">
-                        <span class="text-gray-400 block mb-1">SMC 結構與戰術訊號 (SMC Context)</span>
-                        <span id="panelSMC" class="font-bold text-yellow-400">--</span>
-                    </div>
-                    <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-[13px]">
-                        <span class="text-gray-400 block mb-1 text-xs">操盤手深度總結 (Actionable Insight)</span>
-                        <div id="panelInsight" class="text-gray-300 leading-relaxed font-medium">點擊上方任一股票，AI 操盤手將即時為您拆解當前價格結構與勝率評估...</div>
+                        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-xs">
+                            <span class="text-gray-400 block mb-1 flex items-center justify-between">
+                                <span>SMC 結構與戰術訊號</span>
+                                <i class="fa-solid fa-circle-info text-blue-500 cursor-pointer" onclick="openSMCModal()"></i>
+                            </span>
+                            <span id="panelSMC" class="font-bold text-yellow-400">--</span>
+                        </div>
+                        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-[13px]">
+                            <span class="text-gray-400 block mb-1 text-xs">操盤手深度總結 (Actionable Insight)</span>
+                            <div id="panelInsight" class="text-gray-300 leading-relaxed font-medium">點擊上方任一股票，AI 操盤手將即時為您拆解當前價格結構與勝率評估...</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -184,10 +193,8 @@
                         <table class="w-full text-left border-collapse whitespace-nowrap text-sm">
                             <thead>
                                 <tr class="border-b border-[#30363d] bg-[#0d1117]">
-                                    <th class="px-4 py-3 font-medium text-gray-400">股票</th>
-                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">SMC 形態 
-                                        <i class="fa-solid fa-circle-info text-blue-500 cursor-pointer hover:text-blue-400 ml-1" onclick="openSMCModal()"></i>
-                                    </th>
+                                    <th class="px-4 py-3 font-medium text-gray-400">股票 <i class="fa-solid fa-circle-info ml-1 cursor-pointer text-blue-500 hover:text-blue-400" onclick="openSMCModal()"></i></th>
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">SMC 形態</th>
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center cursor-pointer hover:text-white group" onclick="changeSort('rrr')">
                                         盈虧比 <i class="fa-solid fa-sort text-gray-600 group-hover:text-blue-400 transition-colors ml-1"></i>
                                     </th>
@@ -200,38 +207,49 @@
                                 </tr>
                             </thead>
                             <tbody id="screenerTableBody">
-                                <tr><td colspan="7" class="px-4 py-8 text-center text-gray-500" id="emptyScreenerMsg">過濾池初始化中...</td></tr>
+                                <tr><td colspan="7" class="px-4 py-8 text-center text-gray-500">初始化中...</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            
         </div>
     </main>
 
     <div id="toast-container"></div>
     
+    <!-- 📚 術語百科全書 (更新釋義) -->
     <div id="smcModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="glass-panel p-6 rounded-xl max-w-md w-full relative">
+        <div class="glass-panel p-6 rounded-xl max-w-lg w-full relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeSMCModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-book text-blue-400 mr-2"></i>SMC 形態與戰術百科</h3>
-            <ul class="space-y-4 text-sm text-gray-300">
-                <li><span class="text-yellow-400 font-bold border border-yellow-500 px-1 rounded mr-2">👑 SS級 共振</span>(即將推出) 日線與4小時級別同時給出看漲結構，勝率極高。</li>
-                <li><span class="text-red-400 font-bold border border-red-500 px-1 rounded mr-2">⚠️ 財報警告</span>(即將推出) 偵測到3日內即將發布財報，請嚴格控管風險。</li>
-                <li><span class="text-yellow-400 font-bold border border-yellow-500 px-1 rounded mr-2">🔥 S級 掃損</span>主力跌破前低觸發散戶停損後迅速拉升，機構介入最強信號。</li>
-                <li><span class="text-blue-400 font-bold border border-blue-500 px-1 rounded mr-2">⚡ 1D FVG</span>價格極速噴出留下的真空缺口，極易回踩此區接單，為黃金買入區。</li>
-                <li><span class="text-gray-400 font-bold border border-gray-500 px-1 rounded mr-2">⚖️ EQ 50%</span>無信號時顯示的結構中軸。價格在 EQ 上方為溢價區，下方為折價區。</li>
-            </ul>
+            <h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-book text-blue-400 mr-2"></i>專業術語與指標百科</h3>
+            
+            <div class="space-y-5 text-sm text-gray-300">
+                <div>
+                    <h4 class="font-bold text-white mb-1"><i class="fa-solid fa-layer-group text-blue-400 mr-1"></i>SMC 結構 (Smart Money Concepts)</h4>
+                    <ul class="space-y-2 pl-2">
+                        <li><span class="text-yellow-400 font-bold border border-yellow-500 px-1 rounded mr-2">👑 SS級 共振</span>日線與4小時級別同時具備看漲缺口，極高勝率。</li>
+                        <li><span class="text-yellow-400 font-bold border border-yellow-500 px-1 rounded mr-2">🔥 掃損 Sweep</span>跌破前低誘發散戶停損後迅速拉升，機構接盤的強烈訊號。</li>
+                        <li><span class="text-blue-400 font-bold border border-blue-500 px-1 rounded mr-2">⚡ 1D FVG</span>(Fair Value Gap) 價格極速噴出的真空缺口，極易回踩此區接單。</li>
+                        <li><span class="text-gray-400 font-bold border border-gray-500 px-1 rounded mr-2">BSL / SSL</span>(Buy/Sell Side Liquidity) 近期波段的高低點，即散戶最常放止損的位置。</li>
+                        <li><span class="text-gray-400 font-bold border border-gray-500 px-1 rounded mr-2">EQ 50%</span>近期高低點的中軸。價格在 EQ 上方為溢價區，下方為折價區。</li>
+                    </ul>
+                </div>
+                <div class="border-t border-[#30363d] pt-3">
+                    <h4 class="font-bold text-white mb-1"><i class="fa-solid fa-chart-line text-green-400 mr-1"></i>技術指標 (Technical Indicators)</h4>
+                    <ul class="space-y-2 pl-2">
+                        <li><span class="text-white font-bold bg-blue-900/50 px-1 rounded mr-1">MACD</span>判斷動能強弱。當藍線(快)向上穿過橘線(慢)，稱為<span class="text-green-400">金叉</span>，代表多頭動能發動。</li>
+                        <li><span class="text-white font-bold bg-purple-900/50 px-1 rounded mr-1">RSI (14)</span>相對強弱指數。低於 30 為超賣 (易反彈)，高於 70 為超買 (易回調)。</li>
+                        <li><span class="text-white font-bold bg-green-900/50 px-1 rounded mr-1">多頭 / 爆量</span>價格站上 20MA 稱為多頭。成交量大於 20日均量 2 倍稱為爆量。</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // -------------------------------------------------------------
-        // 防崩潰全域變數區 (Safe Global State)
-        // -------------------------------------------------------------
         const VERCEL_API_URL = "https://stock-live-api.vercel.app/api/quote";
         const TARGET_INDICES_MAP = {
             'SPY': '標普 500', 'QQQ': '納斯達克', 'DIA': '道瓊斯',
@@ -242,42 +260,33 @@
         let globalData = { updated_at: '載入中...', watchlist_data: [], screener_data: [] };
         let currentLivePrices = {}; 
         
-        let sortCol = 'rrr'; 
-        let sortDesc = true;
-        let currentTab = 'smc';
-        let currentTimeFrame = '1D'; 
+        let sortCol = 'rrr'; let sortDesc = true;
+        let currentTab = 'smc'; let currentTimeFrame = '1D'; 
         let userWatchlist = ['FUTU', 'PLTR', 'NVDA', 'TSLA', 'SPY'];
 
         let chart = null, subChart = null, candleSeries = null;
-        let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null, subIndicatorSeries = null;
+        let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null;
+        let subIndicatorSeries = null; // 用於 RSI
+        let macdLineSeries = null, macdSignalSeries = null, macdHistSeries = null; // MACD 全套快慢線
+
         let activePriceLines = [], currentPriceLine = null;
         let currentCandleData = [], currentSymbolData = null;
 
-        // -------------------------------------------------------------
-        // 啟動點 (Entry Point)
-        // -------------------------------------------------------------
         document.addEventListener('DOMContentLoaded', async () => {
-            try { initCharts(); } catch (e) { console.error("圖表引擎初始化失敗:", e); }
-            try { await loadJSONData(); } catch (e) { console.error("JSON數據載入失敗:", e); }
-            try { fetchLiveQuotes(); } catch (e) { console.error("報價系統啟動失敗:", e); }
+            try { initCharts(); } catch (e) { console.error(e); }
+            try { await loadJSONData(); } catch (e) { console.error(e); }
+            try { fetchLiveQuotes(); } catch (e) { console.error(e); }
             setInterval(() => { try { fetchLiveQuotes(); } catch(e){} }, 10000); 
         });
 
-        // -------------------------------------------------------------
-        // JSON 數據讀取與降級處理
-        // -------------------------------------------------------------
         async function loadJSONData() {
             try {
                 const response = await fetch('data.json?t=' + new Date().getTime());
-                if (!response.ok) throw new Error('data.json 無法訪問');
-                const rawData = await response.json();
-                if (!rawData) throw new Error('讀取到空資料');
-                globalData = rawData;
-                
+                if (!response.ok) throw new Error('連線異常');
+                globalData = await response.json();
                 const timeEl = document.getElementById('updateTimeText');
                 if (timeEl) timeEl.innerText = `SMC 計算時間: ${globalData.updated_at || '最新'} (HKT)`;
             } catch (err) {
-                console.warn("系統自動降級為離線模式:", err);
                 const timeEl = document.getElementById('updateTimeText');
                 if (timeEl) timeEl.innerText = `SMC 計算時間: 離線安全模式 (僅支援即時報價)`;
                 globalData = { updated_at: '離線模式', watchlist_data: [], screener_data: [] };
@@ -299,22 +308,17 @@
                 }
             } catch(e) {}
 
-            try { renderMarketFlow(); } catch(e) { console.error(e); }
-            try { renderWatchlist(); } catch(e) { console.error(e); }
-            try { renderScreenerData(); } catch(e) { console.error(e); }
+            try { renderMarketFlow(); } catch(e){}
+            try { renderWatchlist(); } catch(e){}
+            try { renderScreenerData(); } catch(e){}
             
             try {
                 if (globalData && Array.isArray(globalData.screener_data) && globalData.screener_data.length > 0) {
                     updateChartSymbol(globalData.screener_data[0].symbol);
-                } else {
-                    updateChartSymbol('SPY');
-                }
+                } else { updateChartSymbol('SPY'); }
             } catch(e) {}
         }
 
-        // -------------------------------------------------------------
-        // Vercel Live API 與 Heatmap UI 即時刷新
-        // -------------------------------------------------------------
         async function fetchLiveQuotes() {
             try {
                 const symbolsSet = new Set();
@@ -328,21 +332,16 @@
                 if (symbolsSet.size === 0) return;
 
                 const response = await fetch(`${VERCEL_API_URL}?symbols=${Array.from(symbolsSet).join(',')}`);
-                if (!response.ok) throw new Error("API 回傳失敗");
+                if (!response.ok) return;
                 
                 const liveData = await response.json();
-                if (!liveData || typeof liveData !== 'object') return;
+                if (!liveData) return;
 
                 for(let sym in liveData) {
-                    if (liveData[sym] && liveData[sym].price) {
-                        currentLivePrices[sym] = liveData[sym].price;
-                    }
+                    if (liveData[sym] && liveData[sym].price) currentLivePrices[sym] = liveData[sym].price;
                 }
-                
                 updateLiveUI(liveData, currentSymbol); 
-            } catch (err) { 
-                console.error("Vercel Live API 連線中斷:", err); 
-            }
+            } catch (err) { }
         }
 
         function updateLiveUI(liveData, currentSymbol) {
@@ -365,7 +364,6 @@
                     }
                 });
 
-                // ⚡ 更新板塊熱力圖 (Heatmap)
                 TARGET_INDICES.forEach(sym => {
                     if(liveData[sym]) {
                         const flowEl = document.getElementById(`flow-change-${sym}`);
@@ -391,7 +389,6 @@
                     try { updateIntelligencePanel(currentSymbol, currentSymbolData); } catch(e){}
                 }
 
-                // 刷新表格距買點
                 const screenerArr = (globalData && Array.isArray(globalData.screener_data)) ? globalData.screener_data : [];
                 for (let sym in liveData) {
                     const distEl = document.getElementById(`dist-val-${sym}`);
@@ -418,12 +415,9 @@
                     if (newPrice < lastCandle.low) lastCandle.low = newPrice;
                     candleSeries.update(lastCandle);
                 }
-            } catch (err) { console.error(err); }
+            } catch (err) { }
         }
 
-        // -------------------------------------------------------------
-        // 原生 Canvas 繪製微型趨勢線
-        // -------------------------------------------------------------
         function drawSparkline(canvasId, basePrice, isPositive) {
             try {
                 const canvas = document.getElementById(canvasId);
@@ -461,7 +455,6 @@
                 let html = '';
                 TARGET_INDICES.forEach((sym, idx) => {
                     const name = TARGET_INDICES_MAP[sym];
-                    // 初始化為預設暗色
                     html += `
                         <div id="flow-card-${sym}" class="flex items-center gap-2 whitespace-nowrap cursor-pointer px-3 py-1.5 rounded transition-all bg-[#1f242c] hover:bg-[#30363d]" onclick="updateChartSymbol('${sym}')">
                             <span class="font-bold text-gray-300">${name} <span class="text-xs font-mono opacity-70">(${sym})</span></span>
@@ -469,23 +462,20 @@
                         </div>`;
                 });
                 container.innerHTML = html;
-            } catch(e) { console.error(e); }
+            } catch(e) {}
         }
 
         function renderWatchlist() {
             try {
                 const container = document.getElementById('watchlistContainer');
                 if (!container) return;
-                
                 const emptyMsg = document.getElementById('emptyWatchlistMsg');
                 if (emptyMsg) emptyMsg.style.display = 'none'; 
                 container.innerHTML = '';
                 
                 const watchlistMap = new Map();
                 if (globalData && Array.isArray(globalData.watchlist_data)) {
-                    globalData.watchlist_data.forEach(item => {
-                        if (item && item.symbol) watchlistMap.set(item.symbol, item);
-                    });
+                    globalData.watchlist_data.forEach(item => { if (item && item.symbol) watchlistMap.set(item.symbol, item); });
                 }
 
                 userWatchlist.forEach(sym => {
@@ -510,15 +500,14 @@
                         <canvas id="sparkline-${item.symbol}" width="150" height="32" class="sparkline pointer-events-none"></canvas>
                     `;
                     container.appendChild(card);
-                    
                     setTimeout(() => { drawSparkline(`sparkline-${item.symbol}`, price, isPositive); }, 50);
                 });
-            } catch(e) { console.error(e); }
+            } catch(e) {}
         }
 
-        // -------------------------------------------------------------
-        // AI 智能分析與表格動態排序 (已預留共振與財報 UI 接口)
-        // -------------------------------------------------------------
+        // ==============================================================
+        // 🤖 升級版 AI 智能分析與 MACD 動態寫入
+        // ==============================================================
         function updateIntelligencePanel(symbol, symbolData) {
             try {
                 const badgeEl = document.getElementById('panelSymbolBadge');
@@ -532,6 +521,21 @@
                 if (!phaseEl || !trendEl || !smcEl || !insightEl) return;
 
                 let livePrice = (currentLivePrices && symbol in currentLivePrices) ? currentLivePrices[symbol] : (symbolData ? symbolData.price : 0);
+                
+                // ⚡ 即時計算 MACD 並解讀 (取用當前 K 線資料)
+                let macdInsightText = "";
+                if (currentCandleData && currentCandleData.length > 30) {
+                    const mData = calculateMACD(currentCandleData, 12, 26, 9);
+                    if (mData.macd.length >= 2) {
+                        const idx = mData.macd.length - 1;
+                        const curM = mData.macd[idx].value, curS = mData.signal[idx].value;
+                        const prevM = mData.macd[idx-1].value, prevS = mData.signal[idx-1].value;
+                        
+                        if (curM > curS && prevM <= prevS) macdInsightText = "<span class='text-green-400'>【MACD 動能】黃金交叉發動，有利短線推升。</span>";
+                        else if (curM < curS && prevM >= prevS) macdInsightText = "<span class='text-red-400'>【MACD 動能】死叉現形，需提防動能枯竭回調。</span>";
+                        else if (curM > curS) macdInsightText = "<span class='text-blue-300'>【MACD 動能】維持多頭發散，上升趨勢延續中。</span>";
+                    }
+                }
 
                 if (symbolData) {
                     const distMa = symbolData.dist_20ma !== undefined ? symbolData.dist_20ma : 0;
@@ -540,7 +544,6 @@
                     trendEl.className = isUptrend ? "font-bold text-green-400" : "font-bold text-red-400";
 
                     if (symbolData.smc_id) {
-                        // ⚡ 預留 4H+1D 共振接口
                         if (symbolData.confluence) {
                             phaseEl.innerHTML = `<i class="fa-solid fa-crown mr-1"></i>SS級 1D+4H 雙週期共振`;
                             phaseEl.className = "font-bold text-yellow-300 drop-shadow-md";
@@ -565,10 +568,10 @@
 
                         insightEl.innerHTML = `
                             <div class="mb-1">該股目前觸發 <b>${symbolData.smc_text || '-'}</b>。${distStatusText}</div>
-                            <div>建議買入區為 <b class="text-blue-300 font-mono">$${symbolData.entry_bot || 0} - $${symbolData.entry_top || 0}</b>，防守止損 <b class="text-red-400 font-mono">$${symbolData.sl || 0}</b>。目標價 <b class="text-green-400 font-mono">$${symbolData.tp || 0}</b>。</div>
+                            <div class="mb-1">建議買入區為 <b class="text-blue-300 font-mono">$${symbolData.entry_bot || 0} - $${symbolData.entry_top || 0}</b>，防守止損 <b class="text-red-400 font-mono">$${symbolData.sl || 0}</b>。目標價 <b class="text-green-400 font-mono">$${symbolData.tp || 0}</b>。</div>
+                            <div class="mt-2 text-sm">${macdInsightText}</div>
                         `;
 
-                        // ⚡ 預留財報警告接口
                         if (symbolData.earnings_alert) {
                             insightEl.innerHTML += `<div class="mt-2 text-red-400 bg-red-900/20 p-2 rounded border border-red-500/30 text-xs"><i class="fa-solid fa-triangle-exclamation mr-1"></i><b>風險警告：</b>該股即將發布財報，極易發生無序跳空滑點，建議嚴格控管風險或暫時觀望。</div>`;
                         }
@@ -576,7 +579,7 @@
                         phaseEl.innerText = "區間震盪 / 尋找結構中";
                         phaseEl.className = "font-bold text-gray-400";
                         smcEl.innerText = "目前未形成高勝率之 FVG 或掃損形態";
-                        insightEl.innerHTML = `該股目前暫無合格的 SMC 進場信號。圖表已為您標註 <b class="text-gray-300">BSL (近期高點)</b> 與 <b class="text-gray-300">SSL (近期低點)</b> 結構邊界，建議等待價格觸及邊界或 EQ 50% 再作定奪。`;
+                        insightEl.innerHTML = `該股目前暫無合格的 SMC 進場信號。圖表已標註 <b class="text-gray-300">BSL (近期高點)</b> 與 <b class="text-gray-300">SSL (近期低點)</b>，建議等待價格觸及邊界。<div class="mt-2">${macdInsightText}</div>`;
                     }
                 } else {
                     trendEl.innerText = "即時監察模式";
@@ -584,9 +587,9 @@
                     phaseEl.innerText = "大盤指數 / 自選追蹤";
                     phaseEl.className = "font-bold text-purple-400";
                     smcEl.innerText = "無後端量化數據 (僅提供即時價格)";
-                    insightEl.innerHTML = `此代號主要作為大盤資金流向參考或自選監察。您可以透過上方圖表勾選 <b class="text-blue-300">EMA</b>、<b class="text-blue-300">RSI</b> 或 <b class="text-blue-300">MACD</b> 進行技術面綜合研判。`;
+                    insightEl.innerHTML = `此代號主要作為大盤資金流向參考或自選監察。您可以透過上方圖表勾選 <b class="text-blue-300">EMA</b>、<b class="text-blue-300">MACD</b> 進行技術面綜合研判。<div class="mt-2">${macdInsightText}</div>`;
                 }
-            } catch(e) { console.error("解析面板更新失敗:", e); }
+            } catch(e) {}
         }
 
         function changeSort(col) {
@@ -595,6 +598,9 @@
             renderScreenerData();
         }
 
+        // ==============================================================
+        // 🚀 過濾池表格 (加入分析 Label, 例如多頭/爆量)
+        // ==============================================================
         function renderScreenerData() {
             try {
                 const tbody = document.getElementById('screenerTableBody');
@@ -645,20 +651,30 @@
                     tr.className = 'border-b border-[#30363d] clickable-row'; 
                     tr.onclick = () => updateChartSymbol(item.symbol);
                     
+                    let livePrice = (currentLivePrices && item.symbol in currentLivePrices) ? currentLivePrices[item.symbol] : (item.price || 0);
                     let distHtml = `<span class="text-gray-500">-</span>`;
+                    let isRecommend = false; // 判斷是否為「建議買入」區間
+
                     if (item.entry_top && item._liveDist !== 9999) {
-                        let livePrice = (currentLivePrices && item.symbol in currentLivePrices) ? currentLivePrices[item.symbol] : (item.price || 0);
                         if (livePrice <= item.entry_top && livePrice >= (item.entry_bot||0)) {
                             distHtml = `<span class="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded font-bold border border-yellow-500/50">買入區間內</span>`;
+                            isRecommend = True;
                         } else {
                             distHtml = item._liveDist > 0 ? `<span class="text-gray-400">距 ${item._liveDist.toFixed(2)}%</span>` : `<span class="text-red-400">跌破 ${Math.abs(item._liveDist).toFixed(2)}%</span>`;
                         }
                     }
 
-                    // ⚡ 預留財報與共振 UI
-                    let nameHtml = `<div class="flex items-center gap-2">${item.symbol || '--'}`;
+                    // ⚡ 組裝股票名稱 + 分析 Label (多頭/空頭/爆量 + 財報/建議買入)
+                    let nameHtml = `<div class="flex items-center gap-1.5">${item.symbol || '--'}`;
+                    
+                    if (item.label) {
+                        nameHtml += `<span class="${item.label_class || 'bg-gray-800 text-gray-400'} text-[10px] px-1.5 py-0.5 rounded">${item.label}</span>`;
+                    }
+                    if (isRecommend) {
+                        nameHtml += `<span class="bg-yellow-900/50 text-yellow-400 text-[10px] px-1.5 py-0.5 rounded border border-yellow-500/50 animate-pulse"><i class="fa-solid fa-bullseye mr-1"></i>買入區</span>`;
+                    }
                     if (item.earnings_alert) {
-                        nameHtml += `<span title="近期發布財報" class="bg-red-500/20 text-red-400 text-[10px] px-1.5 py-0.5 rounded border border-red-500/50 flex items-center"><i class="fa-solid fa-triangle-exclamation mr-1"></i>財報</span>`;
+                        nameHtml += `<span title="近期發布財報" class="bg-red-500/20 text-red-400 text-[10px] px-1.5 py-0.5 rounded border border-red-500/50"><i class="fa-solid fa-triangle-exclamation mr-1"></i>財報</span>`;
                     }
                     nameHtml += `</div>`;
 
@@ -668,7 +684,7 @@
                     }
 
                     tr.innerHTML = `
-                        <td class="px-4 py-3 font-bold text-white">${nameHtml}</td>
+                        <td class="px-4 py-3 font-bold text-white whitespace-nowrap">${nameHtml}</td>
                         <td class="px-4 py-3 text-center">${smcHtml}</td>
                         <td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td>
                         <td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot || 0} - $${item.entry_top || 0}</td>
@@ -678,10 +694,10 @@
                     `;
                     tbody.appendChild(tr);
                 });
-            } catch(e) { console.error(e); }
+            } catch(e) {}
         }
 
-        // ================== 圖表與指標區塊保持完全一致 ==================
+        // ================== 圖表與指標區塊 ==================
         function initCharts() {
             const container = document.getElementById('tv_chart_container'), subContainer = document.getElementById('sub_chart_container'), tooltip = document.getElementById('chartTooltip');
             if(!container) return;
@@ -721,10 +737,17 @@
             new ResizeObserver(entries => {
                 for (let entry of entries) {
                     if (entry.target === container && container.clientWidth > 0) chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
-                    if (entry.target === subContainer && subContainer.clientWidth > 0) subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
+                    if (entry.target === subContainer && subContainer.clientWidth > 0 && subContainer.style.display !== 'none') {
+                        subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
+                    }
                 }
             }).observe(container);
-            new ResizeObserver(() => { if(subContainer.clientWidth > 0) subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight }); }).observe(subContainer);
+            
+            new ResizeObserver(() => { 
+                if(subContainer.clientWidth > 0 && subContainer.style.display !== 'none') {
+                    subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight }); 
+                }
+            }).observe(subContainer);
         }
 
         function updateChartSymbol(symbol) {
@@ -734,8 +757,6 @@
                 
                 let screenerList = (globalData && Array.isArray(globalData.screener_data)) ? globalData.screener_data : [];
                 currentSymbolData = screenerList.find(x => x && x.symbol === symbol);
-
-                try { updateIntelligencePanel(symbol, currentSymbolData); } catch(e) {}
 
                 if(!candleSeries) return;
 
@@ -760,6 +781,8 @@
 
                 currentCandleData = data; 
                 candleSeries.setData(data);
+                
+                try { updateIntelligencePanel(symbol, currentSymbolData); } catch(e) {}
 
                 if (currentSymbolData) {
                     currentPriceLine = candleSeries.createPriceLine({ price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: `市價: $${currentSymbolData.price || 0}` });
@@ -772,7 +795,7 @@
                         activePriceLines.push(topLine, botLine, slLine, tpLine);
 
                         let markerColor = currentSymbolData.smc_id === 'fvg_sweep' ? '#f59e0b' : '#3b82f6'; 
-                        if (currentSymbolData.confluence) markerColor = '#fde047'; // 黃色 SS級
+                        if (currentSymbolData.confluence) markerColor = '#fde047';
 
                         if(currentCandleData.length >= 2) {
                             candleSeries.setMarkers([{
@@ -801,6 +824,7 @@
             } catch(e) {}
         }
 
+        // ⚡ 徹底修復圖表 MACD/RSI 時有時無的現象
         function updateChartIndicators(clickedType = null) {
             try {
                 if (!currentCandleData || !currentCandleData.length || !chart) return;
@@ -810,7 +834,8 @@
                 if (clickedType === 'rsi' && rsiCheck.checked) macdCheck.checked = false;
                 if (clickedType === 'macd' && macdCheck.checked) rsiCheck.checked = false;
 
-                const showEma = document.getElementById('ind_ema').checked, showBoll = document.getElementById('ind_boll').checked, showRsi = rsiCheck.checked, showMacd = macdCheck.checked;
+                const showEma = document.getElementById('ind_ema').checked, showBoll = document.getElementById('ind_boll').checked;
+                const showRsi = rsiCheck.checked, showMacd = macdCheck.checked;
                 
                 if (showEma) {
                     const ema20 = calculateEMA(currentCandleData, 20), ema50 = calculateEMA(currentCandleData, 50);
@@ -835,22 +860,35 @@
                 }
 
                 const subContainer = document.getElementById('sub_chart_container');
+                
+                // 完全清理舊的副圖指標
+                if (subIndicatorSeries && subChart) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; }
+                if (macdHistSeries && subChart) { subChart.removeSeries(macdHistSeries); macdHistSeries = null; }
+                if (macdLineSeries && subChart) { subChart.removeSeries(macdLineSeries); macdLineSeries = null; }
+                if (macdSignalSeries && subChart) { subChart.removeSeries(macdSignalSeries); macdSignalSeries = null; }
+
                 if (showRsi || showMacd) {
                     subContainer.style.display = 'block';
+                    // ⚡ 強制更新副圖容器尺寸，解決隱藏再顯示時的破版/消失問題
                     if (subChart) subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
-                    if (subIndicatorSeries) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; }
                     
                     if (showRsi) {
                         subIndicatorSeries = subChart.addLineSeries({ color: '#06b6d4', lineWidth: 1.5, title: 'RSI (14)' });
                         subIndicatorSeries.setData(calculateRSI(currentCandleData, 14));
                     } else if (showMacd) {
-                        subIndicatorSeries = subChart.addHistogramSeries({ color: '#26a69a', title: 'MACD' });
-                        subIndicatorSeries.setData(calculateMACD(currentCandleData, 12, 26, 9));
+                        // ⚡ 實裝完整 MACD (柱狀體 + 快線 + 慢線)
+                        const macdData = calculateMACD(currentCandleData, 12, 26, 9);
+                        macdHistSeries = subChart.addHistogramSeries({ color: '#26a69a', title: 'Hist' });
+                        macdLineSeries = subChart.addLineSeries({ color: '#2962FF', lineWidth: 1.5, title: 'MACD' });
+                        macdSignalSeries = subChart.addLineSeries({ color: '#FF6D00', lineWidth: 1.5, title: 'Signal' });
+                        
+                        macdHistSeries.setData(macdData.hist);
+                        macdLineSeries.setData(macdData.macd);
+                        macdSignalSeries.setData(macdData.signal);
                     }
                     if(subChart) subChart.timeScale().fitContent();
                 } else { 
                     subContainer.style.display = 'none'; 
-                    if (subIndicatorSeries && subChart) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; }
                 }
             } catch(e) {}
         }
@@ -892,10 +930,22 @@
             } return result;
         }
 
+        // ⚡ MACD 返回完整的 Histogram, Fast Line, Signal Line
         function calculateMACD(data, fast, slow, sig) {
             let fEma = calculateEMA(data, fast), sEma = calculateEMA(data, slow), macdLine = [];
             for (let i = 0; i < data.length; i++) macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value });
-            return macdLine.map(item => ({ time: item.time, value: Number(item.value.toFixed(2)), color: item.value >= 0 ? '#26a69a' : '#ef5350' }));
+            
+            let sigLine = calculateEMA(macdLine, sig);
+            let histLine = [];
+            for(let i=0; i<data.length; i++) {
+                let hist = macdLine[i].value - sigLine[i].value;
+                histLine.push({ time: data[i].time, value: Number(hist.toFixed(2)), color: hist >= 0 ? '#26a69a' : '#ef5350' });
+            }
+            return {
+                macd: macdLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})),
+                signal: sigLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})),
+                hist: histLine
+            };
         }
 
         function switchTab(tab) {
@@ -938,7 +988,13 @@
 
         function toggleSection(cId, iId) { 
             const c = document.getElementById(cId), i = document.getElementById(iId);
-            if(c) c.classList.toggle('collapsed'); 
+            if(c) {
+                c.classList.toggle('collapsed');
+                // 特殊處理：當圖表展開時，強制重繪避免被壓扁
+                if (!c.classList.contains('collapsed') && cId === 'chartContent') {
+                    setTimeout(() => { if (chart) chart.timeScale().fitContent(); updateChartIndicators(); }, 350);
+                }
+            }
             if(i) i.classList.toggle('rotate-180'); 
         }
         function showToast(msg, type='success') { 
