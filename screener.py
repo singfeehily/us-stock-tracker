@@ -93,23 +93,18 @@ def detect_smc(df):
                 
                 entry_top, entry_bot = fvg_top, fvg_bot
                 
-                # ==========================================
-                # 🛡️ 優化二：精準緊縮止損 (SL Refinement)
-                # ==========================================
+                # 緊縮止損
                 sl_raw = swing_low_before_fvg
                 if (fvg_bot - sl_raw) / fvg_bot > 0.05:
-                    sl = fvg_bot * 0.995 # 前低太遠，改設在 FVG 底層下方 0.5%
+                    sl = fvg_bot * 0.995 
                 else:
                     sl = sl_raw * 0.995
                 
-                # ==========================================
-                # 🛡️ 優化一：破頂強勢股的動態獲利目標 (ATH TP)
-                # ==========================================
+                # 破頂強勢股目標價延伸
                 tp_raw = find_swing_high(df, len(df)-1, 40) 
                 risk = entry_bot - sl
                 
                 if tp_raw <= entry_top:
-                    # 創新高沒有前高可參考，強制給予 1:2.5 延伸盈虧比
                     tp = entry_bot + (risk * 2.5)
                 else:
                     tp = tp_raw
@@ -127,12 +122,25 @@ def detect_smc(df):
 def main():
     print(f"啟動高勝率 SMC 量化雷達... 共監測 {len(WATCHLIST)} 檔股票")
     screener_data, watchlist_data = [], []
+    chart_data_map = {} # ⚡ 核心新增：儲存真實 K 線數據供前端 1D 圖表使用
     
     for symbol in WATCHLIST:
         try:
             ticker_obj = yf.Ticker(symbol)
             df = ticker_obj.history(period="6mo")
             if df.empty: continue
+            
+            # ⚡ 核心新增：提取真實 K 線並轉化為前端 Lightweight Charts 可讀格式
+            kline_list = []
+            for idx, row in df.iterrows():
+                kline_list.append({
+                    "time": idx.strftime('%Y-%m-%d'),
+                    "open": round(row['Open'], 2),
+                    "high": round(row['High'], 2),
+                    "low": round(row['Low'], 2),
+                    "close": round(row['Close'], 2)
+                })
+            chart_data_map[symbol] = kline_list
             
             df = calculate_indicators(df)
             
@@ -181,12 +189,18 @@ def main():
     hk_timezone = timezone(timedelta(hours=8))
     updated_at = datetime.now(hk_timezone).strftime("%Y-%m-%d %H:%M:%S")
 
-    output = {"updated_at": updated_at, "watchlist_data": watchlist_data, "screener_data": screener_data}
+    # ⚡ 核心新增：將 chart_data 寫出到 json
+    output = {
+        "updated_at": updated_at, 
+        "watchlist_data": watchlist_data, 
+        "screener_data": screener_data,
+        "chart_data": chart_data_map 
+    }
 
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump(output, f, ensure_ascii=False, indent=4)
         
-    print(f"\n🎉 雙週期量化引擎與防呆優化已成功寫入 data.json！\n🕒 最新更新時間: {updated_at} (HKT)")
+    print(f"\n🎉 雙週期量化引擎與真實K線數據已成功寫入 data.json！\n🕒 最新更新時間: {updated_at} (HKT)")
 
 if __name__ == "__main__":
     main()
