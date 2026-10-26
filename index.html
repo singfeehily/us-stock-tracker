@@ -114,7 +114,7 @@
                             <i id="chartIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
                         </div>
                     </div>
-                    <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 750px;">
+                    <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 650px;">
                         <div class="flex flex-col xl:flex-row gap-3">
                             <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-1.5 flex gap-1 text-xs items-center justify-center">
                                 <button onclick="changeTimeFrame('15m')" id="tf_15m" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">15m</button>
@@ -131,7 +131,7 @@
                         <div id="tv_chart_container" style="height: 320px; width: 100%; position: relative;">
                             <div id="chartTooltip"></div>
                         </div>
-                        <div id="sub_chart_container" style="height: 150px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
+                        <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
                     </div>
                 </div>
 
@@ -265,16 +265,16 @@
 
         let chart = null, subChart = null, candleSeries = null;
         let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null;
-        let subIndicatorSeries = null; 
-        let macdLineSeries = null, macdSignalSeries = null, macdHistSeries = null; 
+        let subIndicatorSeries = null;
+        let macdLineSeries = null, macdSignalSeries = null, macdHistSeries = null;
 
         let activePriceLines = [], currentPriceLine = null;
         let currentCandleData = [], currentSymbolData = null;
 
         document.addEventListener('DOMContentLoaded', async () => {
-            try { initCharts(); } catch (e) { console.error(e); }
-            try { await loadJSONData(); } catch (e) { console.error(e); }
-            try { fetchLiveQuotes(); } catch (e) { console.error(e); }
+            try { initCharts(); } catch (e) {}
+            try { await loadJSONData(); } catch (e) {}
+            try { fetchLiveQuotes(); } catch (e) {}
             setInterval(() => { try { fetchLiveQuotes(); } catch(e){} }, 10000); 
         });
 
@@ -505,7 +505,7 @@
         }
 
         // ==============================================================
-        // 🤖 安全版 AI 智能分析與 MACD 動態寫入
+        // 🤖 AI 智能分析與 MACD 動態寫入
         // ==============================================================
         function updateIntelligencePanel(symbol, symbolData) {
             try {
@@ -521,22 +521,19 @@
 
                 let livePrice = (currentLivePrices && symbol in currentLivePrices) ? currentLivePrices[symbol] : (symbolData ? symbolData.price : 0);
                 
-                // ⚡ 安全計算 MACD 並解讀
                 let macdInsightText = "";
-                try {
-                    if (currentCandleData && currentCandleData.length > 30) {
-                        const mData = calculateMACD(currentCandleData, 12, 26, 9);
-                        if (mData && mData.macd && mData.macd.length >= 2) {
-                            const idx = mData.macd.length - 1;
-                            const curM = mData.macd[idx].value, curS = mData.signal[idx].value;
-                            const prevM = mData.macd[idx-1].value, prevS = mData.signal[idx-1].value;
-                            
-                            if (curM > curS && prevM <= prevS) macdInsightText = "<span class='text-green-400'>【MACD 動能】黃金交叉發動，有利短線推升。</span>";
-                            else if (curM < curS && prevM >= prevS) macdInsightText = "<span class='text-red-400'>【MACD 動能】死叉現形，需提防動能枯竭回調。</span>";
-                            else if (curM > curS) macdInsightText = "<span class='text-blue-300'>【MACD 動能】維持多頭發散，上升趨勢延續中。</span>";
-                        }
+                if (currentCandleData && currentCandleData.length > 30) {
+                    const mData = calculateMACD(currentCandleData, 12, 26, 9);
+                    if (mData.macd.length >= 2) {
+                        const idx = mData.macd.length - 1;
+                        const curM = mData.macd[idx].value, curS = mData.signal[idx].value;
+                        const prevM = mData.macd[idx-1].value, prevS = mData.signal[idx-1].value;
+                        
+                        if (curM > curS && prevM <= prevS) macdInsightText = "<span class='text-green-400'>【MACD 動能】黃金交叉發動，有利短線推升。</span>";
+                        else if (curM < curS && prevM >= prevS) macdInsightText = "<span class='text-red-400'>【MACD 動能】死叉現形，需提防動能枯竭回調。</span>";
+                        else if (curM > curS) macdInsightText = "<span class='text-blue-300'>【MACD 動能】維持多頭發散，上升趨勢延續中。</span>";
                     }
-                } catch(e) { console.error("MACD 解讀生成失敗", e); }
+                }
 
                 if (symbolData) {
                     const distMa = symbolData.dist_20ma !== undefined ? symbolData.dist_20ma : 0;
@@ -593,15 +590,15 @@
             } catch(e) {}
         }
 
-        // ==============================================================
-        // 🚀 過濾池表格 (加入分析 Label)
-        // ==============================================================
         function changeSort(col) {
             if (sortCol === col) sortDesc = !sortDesc;
             else { sortCol = col; sortDesc = true; }
             renderScreenerData();
         }
 
+        // ==============================================================
+        // 🚀 過濾池表格
+        // ==============================================================
         function renderScreenerData() {
             try {
                 const tbody = document.getElementById('screenerTableBody');
@@ -654,7 +651,7 @@
                     
                     let livePrice = (currentLivePrices && item.symbol in currentLivePrices) ? currentLivePrices[item.symbol] : (item.price || 0);
                     let distHtml = `<span class="text-gray-500">-</span>`;
-                    let isRecommend = false; 
+                    let isRecommend = false;
 
                     if (item.entry_top && item._liveDist !== 9999) {
                         if (livePrice <= item.entry_top && livePrice >= (item.entry_bot||0)) {
@@ -667,23 +664,23 @@
 
                     let nameHtml = `<div class="flex items-center gap-1.5">${item.symbol || '--'}`;
                     if (item.label) {
-                        nameHtml += `<span class="${item.label_class || 'bg-gray-800 text-gray-400'} text-[10px] px-1.5 py-0.5 rounded">${item.label}</span>`;
+                        nameHtml += `<span class="${item.label_class || 'bg-gray-800 text-gray-400'} text-[10px] px-1.5 py-0.5 rounded whitespace-nowrap">${item.label}</span>`;
                     }
                     if (isRecommend) {
-                        nameHtml += `<span class="bg-yellow-900/50 text-yellow-400 text-[10px] px-1.5 py-0.5 rounded border border-yellow-500/50 animate-pulse"><i class="fa-solid fa-bullseye mr-1"></i>買入區</span>`;
+                        nameHtml += `<span class="bg-yellow-900/50 text-yellow-400 text-[10px] px-1.5 py-0.5 rounded border border-yellow-500/50 animate-pulse whitespace-nowrap"><i class="fa-solid fa-bullseye mr-1"></i>買入區</span>`;
                     }
                     if (item.earnings_alert) {
-                        nameHtml += `<span title="近期發布財報" class="bg-red-500/20 text-red-400 text-[10px] px-1.5 py-0.5 rounded border border-red-500/50"><i class="fa-solid fa-triangle-exclamation mr-1"></i>財報</span>`;
+                        nameHtml += `<span title="近期發布財報" class="bg-red-500/20 text-red-400 text-[10px] px-1.5 py-0.5 rounded border border-red-500/50 whitespace-nowrap"><i class="fa-solid fa-triangle-exclamation mr-1"></i>財報</span>`;
                     }
                     nameHtml += `</div>`;
 
-                    let smcHtml = `<span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class || 'border-gray-600 text-gray-400'}">${item.smc_text || '-'}</span>`;
+                    let smcHtml = `<span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class || 'border-gray-600 text-gray-400'} whitespace-nowrap">${item.smc_text || '-'}</span>`;
                     if (item.confluence) {
-                        smcHtml = `<span class="px-2 py-1 rounded text-xs font-semibold border border-yellow-300 text-yellow-300 bg-yellow-900/30 flex items-center justify-center"><i class="fa-solid fa-crown mr-1"></i>SS級 共振</span>`;
+                        smcHtml = `<span class="px-2 py-1 rounded text-xs font-semibold border border-yellow-300 text-yellow-300 bg-yellow-900/30 flex items-center justify-center whitespace-nowrap"><i class="fa-solid fa-crown mr-1"></i>SS級 共振</span>`;
                     }
 
                     tr.innerHTML = `
-                        <td class="px-4 py-3 font-bold text-white whitespace-nowrap">${nameHtml}</td>
+                        <td class="px-4 py-3 font-bold text-white">${nameHtml}</td>
                         <td class="px-4 py-3 text-center">${smcHtml}</td>
                         <td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td>
                         <td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot || 0} - $${item.entry_top || 0}</td>
@@ -696,7 +693,7 @@
             } catch(e) {}
         }
 
-        // ================== 圖表引擎與動態指標修復 ==================
+        // ================== 圖表與指標區塊 ==================
         function initCharts() {
             const container = document.getElementById('tv_chart_container'), subContainer = document.getElementById('sub_chart_container'), tooltip = document.getElementById('chartTooltip');
             if(!container) return;
@@ -823,7 +820,7 @@
             } catch(e) {}
         }
 
-        // ⚡ 徹底修復圖表 MACD/RSI 時有時無的現象與當機 Bug
+        // ⚡ 徹底修復圖表 MACD/RSI 時有時無的現象
         function updateChartIndicators(clickedType = null) {
             try {
                 if (!currentCandleData || !currentCandleData.length || !chart) return;
@@ -860,25 +857,20 @@
 
                 const subContainer = document.getElementById('sub_chart_container');
                 
-                // 完全清理舊的副圖指標
-                if (subIndicatorSeries && subChart) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; }
-                if (macdHistSeries && subChart) { subChart.removeSeries(macdHistSeries); macdHistSeries = null; }
-                if (macdLineSeries && subChart) { subChart.removeSeries(macdLineSeries); macdLineSeries = null; }
-                if (macdSignalSeries && subChart) { subChart.removeSeries(macdSignalSeries); macdSignalSeries = null; }
+                // ⚡ 獨立隔離防護：安全清除舊指標
+                try { if (subIndicatorSeries && subChart) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; } } catch(e){}
+                try { if (macdHistSeries && subChart) { subChart.removeSeries(macdHistSeries); macdHistSeries = null; } } catch(e){}
+                try { if (macdLineSeries && subChart) { subChart.removeSeries(macdLineSeries); macdLineSeries = null; } } catch(e){}
+                try { if (macdSignalSeries && subChart) { subChart.removeSeries(macdSignalSeries); macdSignalSeries = null; } } catch(e){}
 
                 if (showRsi || showMacd) {
                     subContainer.style.display = 'block';
-                    
-                    // ⚡ 強制更新副圖容器尺寸，解決隱藏再顯示時的破版/消失問題
-                    const safeWidth = subContainer.clientWidth || document.getElementById('chartContent').clientWidth - 24;
-                    const safeHeight = subContainer.clientHeight || 150;
-                    if (subChart) subChart.applyOptions({ width: safeWidth, height: safeHeight });
+                    if (subChart) subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
                     
                     if (showRsi) {
                         subIndicatorSeries = subChart.addLineSeries({ color: '#06b6d4', lineWidth: 1.5, title: 'RSI (14)' });
                         subIndicatorSeries.setData(calculateRSI(currentCandleData, 14));
                     } else if (showMacd) {
-                        // ⚡ 實裝完整 MACD (柱狀體 + 快線 + 慢線)
                         const macdData = calculateMACD(currentCandleData, 12, 26, 9);
                         macdHistSeries = subChart.addHistogramSeries({ color: '#26a69a', title: 'Hist' });
                         macdLineSeries = subChart.addLineSeries({ color: '#2962FF', lineWidth: 1.5, title: 'MACD' });
@@ -892,20 +884,17 @@
                 } else { 
                     subContainer.style.display = 'none'; 
                 }
-            } catch(e) { console.error("指標更新失敗:", e); }
+            } catch(e) {}
         }
 
-        // ⚡ 核心修正：動態兼容 `.close` (K線) 與 `.value` (指標線) 的防呆提取
-        function calculateEMA(data, period) {
+        // ⚡ 完美修復：動態支援取值欄位 (避免 NaN 報錯)
+        function calculateEMA(data, period, key = 'close') {
             if (!data || !data.length) return [];
             let result = [], multiplier = 2 / (period + 1);
-            let getVal = (d) => d.close !== undefined ? d.close : d.value;
-            let prevEMA = getVal(data[0]);
-            
+            let prevEMA = data[0][key] || 0;
             for (let i = 0; i < data.length; i++) {
-                let currentVal = getVal(data[i]);
-                if (isNaN(currentVal)) currentVal = 0;
-                let ema = (i === 0) ? currentVal : (currentVal - prevEMA) * multiplier + prevEMA;
+                let val = data[i][key] || 0;
+                let ema = (i === 0) ? val : (val - prevEMA) * multiplier + prevEMA;
                 prevEMA = ema; 
                 result.push({ time: data[i].time, value: Number(ema.toFixed(2)) });
             } 
@@ -941,12 +930,17 @@
             } return result;
         }
 
-        // ⚡ MACD 返回完整的 Histogram, Fast Line, Signal Line
+        // ⚡ 修正 MACD 的訊號線計算
         function calculateMACD(data, fast, slow, sig) {
-            let fEma = calculateEMA(data, fast), sEma = calculateEMA(data, slow), macdLine = [];
-            for (let i = 0; i < data.length; i++) macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value });
+            let fEma = calculateEMA(data, fast, 'close');
+            let sEma = calculateEMA(data, slow, 'close');
+            let macdLine = [];
+            for (let i = 0; i < data.length; i++) {
+                macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value });
+            }
             
-            let sigLine = calculateEMA(macdLine, sig);
+            // 安全取值：傳入 'value'
+            let sigLine = calculateEMA(macdLine, sig, 'value');
             let histLine = [];
             for(let i=0; i<data.length; i++) {
                 let hist = macdLine[i].value - sigLine[i].value;
