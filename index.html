@@ -40,6 +40,9 @@
         
         #smcModal { display: none; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
         canvas.sparkline { width: 100%; height: 32px; margin-top: 6px; opacity: 0.8; }
+        
+        /* Loading 遮罩 */
+        #chartLoader { display: none; position: absolute; inset: 0; background: rgba(13,17,23,0.7); backdrop-filter: blur(2px); z-index: 20; align-items: center; justify-content: center; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -108,7 +111,7 @@
                 <!-- 圖表區 -->
                 <div class="glass-panel rounded-xl flex flex-col relative">
                     <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('chartContent', 'chartIcon')">
-                        <span class="font-semibold text-white"><i class="fa-solid fa-display text-purple-400 mr-2"></i>SMC 作戰區間圖</span>
+                        <span class="font-semibold text-white"><i class="fa-solid fa-display text-purple-400 mr-2"></i>SMC 作戰區間圖 <span class="text-[10px] bg-blue-600/30 text-blue-400 px-1.5 py-0.5 rounded ml-1 border border-blue-500/50" id="chartTypeBadge">真實 K 線</span></span>
                         <div class="flex items-center gap-3">
                             <span id="currentChartSymbol" class="bg-blue-900/50 text-blue-400 px-2 py-1 rounded text-xs font-bold">--</span>
                             <i id="chartIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
@@ -129,6 +132,8 @@
                             </div>
                         </div>
                         <div id="tv_chart_container" style="height: 320px; width: 100%; position: relative;">
+                            <!-- ⚡ Loading 遮罩 -->
+                            <div id="chartLoader"><i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-3xl"></i></div>
                             <div id="chartTooltip"></div>
                         </div>
                         <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
@@ -256,11 +261,12 @@
         };
         const TARGET_INDICES = Object.keys(TARGET_INDICES_MAP);
 
-        let globalData = { updated_at: '載入中...', watchlist_data: [], screener_data: [] };
+        let globalData = { updated_at: '載入中...', watchlist_data: [], screener_data: [], chart_data: {} };
         let currentLivePrices = {}; 
         
         let sortCol = 'rrr'; let sortDesc = true;
-        let currentTab = 'smc'; let currentTimeFrame = '1D'; 
+        let currentTab = 'smc'; 
+        let currentTimeFrame = '1D'; 
         let userWatchlist = ['FUTU', 'PLTR', 'NVDA', 'TSLA', 'SPY'];
 
         let chart = null, subChart = null, candleSeries = null;
@@ -288,7 +294,7 @@
             } catch (err) {
                 const timeEl = document.getElementById('updateTimeText');
                 if (timeEl) timeEl.innerText = `SMC 計算時間: 離線安全模式 (僅支援即時報價)`;
-                globalData = { updated_at: '離線模式', watchlist_data: [], screener_data: [] };
+                globalData = { updated_at: '離線模式', watchlist_data: [], screener_data: [], chart_data: {} };
             }
 
             try {
@@ -330,6 +336,7 @@
                 
                 if (symbolsSet.size === 0) return;
 
+                // ⚡ 10秒循環僅抓取價格，不帶 interval 減輕後端壓力
                 const response = await fetch(`${VERCEL_API_URL}?symbols=${Array.from(symbolsSet).join(',')}`);
                 if (!response.ok) return;
                 
@@ -405,14 +412,18 @@
                     }
                 }
 
+                // ⚡ 實時更新圖表最後一根 K 線與指標
                 if (currentSymbol && liveData[currentSymbol] && currentPriceLine && candleSeries && currentCandleData.length > 0) {
                     const newPrice = liveData[currentSymbol].price;
                     currentPriceLine.applyOptions({ price: newPrice, title: `Live: $${newPrice.toFixed(2)}` });
+                    
                     const lastCandle = currentCandleData[currentCandleData.length - 1];
                     lastCandle.close = newPrice;
                     if (newPrice > lastCandle.high) lastCandle.high = newPrice;
                     if (newPrice < lastCandle.low) lastCandle.low = newPrice;
+                    
                     candleSeries.update(lastCandle);
+                    updateChartIndicators(); // 即時重繪 MACD 確保交叉敏銳度
                 }
             } catch (err) { }
         }
@@ -746,7 +757,8 @@
             }).observe(subContainer);
         }
 
-        function updateChartSymbol(symbol) {
+        // ⚡ 核心進化：圖表數據由 Vercel API 真實供應
+        async function updateChartSymbol(symbol) {
             try {
                 const symEl = document.getElementById('currentChartSymbol');
                 if (symEl) symEl.innerText = symbol || '--';
@@ -756,31 +768,63 @@
 
                 if(!candleSeries) return;
 
+                // 喚醒 Loading 遮罩
+                const loader = document.getElementById('chartLoader');
+                if(loader) loader.style.display = 'flex';
+
                 activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); 
                 activePriceLines = [];
                 if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
                 candleSeries.setMarkers([]);
 
-                let data = [], basePrice = currentSymbolData ? (currentSymbolData.price || 220) : 220;
-                let candleCount = 80, timeStep = 86400; 
-                if (currentTimeFrame === '15m') { candleCount = 150; timeStep = 900; } if (currentTimeFrame === '4H') { candleCount = 120; timeStep = 14400; }
-                let currentTime = Math.floor(Date.now() / 1000) - (candleCount * timeStep);
-                
-                let prices = [basePrice];
-                for(let i=1; i<candleCount; i++){ prices.unshift(prices[0] + (Math.random() - 0.5) * (basePrice * 0.006)); }
+                // ⚡ 向 Vercel API 請求目前週期的真實 K 線
+                let data = [];
+                const tfParam = currentTimeFrame.toLowerCase();
+                try {
+                    const res = await fetch(`${VERCEL_API_URL}?symbols=${symbol}&interval=${tfParam}`);
+                    if (res.ok) {
+                        const jsonRes = await res.json();
+                        if (jsonRes[symbol] && jsonRes[symbol].chart) {
+                            // 過濾 Yahoo 可能產生的重複 timestamp
+                            let uniqueChart = [];
+                            let lastTime = 0;
+                            // 注意：1D回傳字串，15m/4h回傳數字，Lightweight均支援，只要保證遞增
+                            for (let c of jsonRes[symbol].chart) {
+                                // 簡易去重機制
+                                if (c.time !== lastTime) {
+                                    uniqueChart.push(c);
+                                    lastTime = c.time;
+                                }
+                            }
+                            data = uniqueChart;
+                        }
+                    }
+                } catch(e) { console.error("歷史數據拉取失敗", e); }
 
-                for (let i = 0; i < candleCount; i++) {
-                    const open = prices[i], close = (i === candleCount - 1) ? basePrice : prices[i] + (Math.random() - 0.5) * (basePrice * 0.004);
-                    const high = Math.max(open, close) + Math.random() * (basePrice * 0.002), low = Math.min(open, close) - Math.random() * (basePrice * 0.002);
-                    data.push({ time: currentTime, open, high, low, close }); currentTime += timeStep;
+                // 關閉 Loading 遮罩
+                if(loader) loader.style.display = 'none';
+
+                if (data.length === 0) {
+                    currentCandleData = [];
+                    candleSeries.setData([]);
+                    showToast(`無法獲取 ${symbol} 的 ${currentTimeFrame} 數據`, 'error');
+                } else {
+                    currentCandleData = data;
+                    
+                    let livePrice = currentLivePrices[symbol];
+                    if (livePrice) {
+                        let lastCandle = currentCandleData[currentCandleData.length - 1];
+                        lastCandle.close = livePrice;
+                        if (livePrice > lastCandle.high) lastCandle.high = livePrice;
+                        if (livePrice < lastCandle.low) lastCandle.low = livePrice;
+                    }
+                    candleSeries.setData(currentCandleData);
                 }
-
-                currentCandleData = data; 
-                candleSeries.setData(data);
                 
                 try { updateIntelligencePanel(symbol, currentSymbolData); } catch(e) {}
 
-                if (currentSymbolData) {
+                // SMC 標記 (基於日線結構)
+                if (currentSymbolData && currentCandleData.length > 0) {
                     currentPriceLine = candleSeries.createPriceLine({ price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: `市價: $${currentSymbolData.price || 0}` });
                     
                     if (currentSymbolData.smc_id) {
@@ -801,13 +845,14 @@
                             }]);
                         }
                     } else {
+                        // 在 15m 畫面中，若無 SMC，畫出本級別的 BSL / SSL
                         let highest = Math.max(...data.map(d => d.high));
                         let lowest = Math.min(...data.map(d => d.low));
                         let eq = (highest + lowest) / 2;
                         
-                        const highLine = candleSeries.createPriceLine({ price: highest, color: '#9ca3af', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `近期高點(BSL)` });
-                        const eqLine = candleSeries.createPriceLine({ price: eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: `EQ 50% (中軸)` });
-                        const lowLine = candleSeries.createPriceLine({ price: lowest, color: '#9ca3af', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `近期低點(SSL)` });
+                        const highLine = candleSeries.createPriceLine({ price: highest, color: '#9ca3af', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `BSL (流動性高點)` });
+                        const eqLine = candleSeries.createPriceLine({ price: eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: `EQ 50%` });
+                        const lowLine = candleSeries.createPriceLine({ price: lowest, color: '#9ca3af', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `SSL (流動性低點)` });
                         activePriceLines.push(highLine, eqLine, lowLine);
                     }
                 }
@@ -816,11 +861,9 @@
                 chart.priceScale('right').applyOptions({ autoScale: true });
                 
                 updateChartIndicators(); 
-                try { fetchLiveQuotes(); } catch(e){}
             } catch(e) {}
         }
 
-        // ⚡ 徹底修復圖表 MACD/RSI 時有時無的現象
         function updateChartIndicators(clickedType = null) {
             try {
                 if (!currentCandleData || !currentCandleData.length || !chart) return;
@@ -834,7 +877,7 @@
                 const showRsi = rsiCheck.checked, showMacd = macdCheck.checked;
                 
                 if (showEma) {
-                    const ema20 = calculateEMA(currentCandleData, 20), ema50 = calculateEMA(currentCandleData, 50);
+                    const ema20 = calculateEMA(currentCandleData, 20, 'close'), ema50 = calculateEMA(currentCandleData, 50, 'close');
                     if (!ema20Series) ema20Series = chart.addLineSeries({ color: '#f59e0b', lineWidth: 1.5, title: 'EMA 20' });
                     if (!ema50Series) ema50Series = chart.addLineSeries({ color: '#8b5cf6', lineWidth: 1.5, title: 'EMA 50' });
                     ema20Series.setData(ema20); ema50Series.setData(ema50);
@@ -857,7 +900,6 @@
 
                 const subContainer = document.getElementById('sub_chart_container');
                 
-                // ⚡ 獨立隔離防護：安全清除舊指標
                 try { if (subIndicatorSeries && subChart) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; } } catch(e){}
                 try { if (macdHistSeries && subChart) { subChart.removeSeries(macdHistSeries); macdHistSeries = null; } } catch(e){}
                 try { if (macdLineSeries && subChart) { subChart.removeSeries(macdLineSeries); macdLineSeries = null; } } catch(e){}
@@ -887,7 +929,6 @@
             } catch(e) {}
         }
 
-        // ⚡ 完美修復：動態支援取值欄位 (避免 NaN 報錯)
         function calculateEMA(data, period, key = 'close') {
             if (!data || !data.length) return [];
             let result = [], multiplier = 2 / (period + 1);
@@ -930,7 +971,6 @@
             } return result;
         }
 
-        // ⚡ 修正 MACD 的訊號線計算
         function calculateMACD(data, fast, slow, sig) {
             let fEma = calculateEMA(data, fast, 'close');
             let sEma = calculateEMA(data, slow, 'close');
@@ -939,7 +979,6 @@
                 macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value });
             }
             
-            // 安全取值：傳入 'value'
             let sigLine = calculateEMA(macdLine, sig, 'value');
             let histLine = [];
             for(let i=0; i<data.length; i++) {
@@ -1011,15 +1050,23 @@
             setTimeout(()=>t.classList.add('show'),10); 
             setTimeout(()=>{t.classList.remove('show'); setTimeout(()=>t.remove(),300);}, 3000); 
         }
+        
+        // ⚡ 切換週期並立即觸發拉取數據
         function changeTimeFrame(tf) { 
             currentTimeFrame = tf; 
             ['15m','4H','1D'].forEach(t => { 
                 const btn = document.getElementById('tf_'+t);
                 if(btn) btn.className = (t===tf) ? "px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors" : "px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors"; 
             }); 
+            
+            // 更新圖表標籤顯示
+            const badge = document.getElementById('chartTypeBadge');
+            if(badge) badge.innerText = `真實 K 線 (${tf})`;
+
             const curSym = document.getElementById('currentChartSymbol');
-            if(curSym) updateChartSymbol(curSym.innerText); 
+            if(curSym && curSym.innerText !== '--') updateChartSymbol(curSym.innerText); 
         }
+        
         function openSMCModal() { const m = document.getElementById('smcModal'); if(m) m.style.display = 'flex'; }
         function closeSMCModal() { const m = document.getElementById('smcModal'); if(m) m.style.display = 'none'; }
     </script>
