@@ -16,6 +16,7 @@ XLK
 XLF
 XLE
 SPCX
+DRAM
 
 # --- 七大科技巨頭 (Magnificent 7) ---
 AAPL
