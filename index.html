@@ -11,7 +11,6 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
         .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
         
-        /* 📱 滾動條加粗圓潤化 (Mobile Friendly) */
         ::-webkit-scrollbar { width: 10px; height: 10px; }
         ::-webkit-scrollbar-track { background: #0d1117; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
@@ -115,7 +114,7 @@
                             <i id="chartIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
                         </div>
                     </div>
-                    <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 650px;">
+                    <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 750px;">
                         <div class="flex flex-col xl:flex-row gap-3">
                             <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-1.5 flex gap-1 text-xs items-center justify-center">
                                 <button onclick="changeTimeFrame('15m')" id="tf_15m" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">15m</button>
@@ -132,11 +131,11 @@
                         <div id="tv_chart_container" style="height: 320px; width: 100%; position: relative;">
                             <div id="chartTooltip"></div>
                         </div>
-                        <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
+                        <div id="sub_chart_container" style="height: 150px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
                     </div>
                 </div>
 
-                <!-- 🤖 AI 智能股票深度解析面板 (加入摺疊功能) -->
+                <!-- 🤖 AI 智能股票深度解析面板 -->
                 <div class="glass-panel rounded-xl flex flex-col relative overflow-hidden">
                     <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('aiPanelContent', 'aiPanelIcon')">
                         <div class="flex items-center gap-2">
@@ -218,7 +217,7 @@
 
     <div id="toast-container"></div>
     
-    <!-- 📚 術語百科全書 (更新釋義) -->
+    <!-- 📚 術語百科全書 -->
     <div id="smcModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="glass-panel p-6 rounded-xl max-w-lg w-full relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeSMCModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
@@ -266,8 +265,8 @@
 
         let chart = null, subChart = null, candleSeries = null;
         let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null;
-        let subIndicatorSeries = null; // 用於 RSI
-        let macdLineSeries = null, macdSignalSeries = null, macdHistSeries = null; // MACD 全套快慢線
+        let subIndicatorSeries = null; 
+        let macdLineSeries = null, macdSignalSeries = null, macdHistSeries = null; 
 
         let activePriceLines = [], currentPriceLine = null;
         let currentCandleData = [], currentSymbolData = null;
@@ -506,7 +505,7 @@
         }
 
         // ==============================================================
-        // 🤖 升級版 AI 智能分析與 MACD 動態寫入
+        // 🤖 安全版 AI 智能分析與 MACD 動態寫入
         // ==============================================================
         function updateIntelligencePanel(symbol, symbolData) {
             try {
@@ -522,20 +521,22 @@
 
                 let livePrice = (currentLivePrices && symbol in currentLivePrices) ? currentLivePrices[symbol] : (symbolData ? symbolData.price : 0);
                 
-                // ⚡ 即時計算 MACD 並解讀 (取用當前 K 線資料)
+                // ⚡ 安全計算 MACD 並解讀
                 let macdInsightText = "";
-                if (currentCandleData && currentCandleData.length > 30) {
-                    const mData = calculateMACD(currentCandleData, 12, 26, 9);
-                    if (mData.macd.length >= 2) {
-                        const idx = mData.macd.length - 1;
-                        const curM = mData.macd[idx].value, curS = mData.signal[idx].value;
-                        const prevM = mData.macd[idx-1].value, prevS = mData.signal[idx-1].value;
-                        
-                        if (curM > curS && prevM <= prevS) macdInsightText = "<span class='text-green-400'>【MACD 動能】黃金交叉發動，有利短線推升。</span>";
-                        else if (curM < curS && prevM >= prevS) macdInsightText = "<span class='text-red-400'>【MACD 動能】死叉現形，需提防動能枯竭回調。</span>";
-                        else if (curM > curS) macdInsightText = "<span class='text-blue-300'>【MACD 動能】維持多頭發散，上升趨勢延續中。</span>";
+                try {
+                    if (currentCandleData && currentCandleData.length > 30) {
+                        const mData = calculateMACD(currentCandleData, 12, 26, 9);
+                        if (mData && mData.macd && mData.macd.length >= 2) {
+                            const idx = mData.macd.length - 1;
+                            const curM = mData.macd[idx].value, curS = mData.signal[idx].value;
+                            const prevM = mData.macd[idx-1].value, prevS = mData.signal[idx-1].value;
+                            
+                            if (curM > curS && prevM <= prevS) macdInsightText = "<span class='text-green-400'>【MACD 動能】黃金交叉發動，有利短線推升。</span>";
+                            else if (curM < curS && prevM >= prevS) macdInsightText = "<span class='text-red-400'>【MACD 動能】死叉現形，需提防動能枯竭回調。</span>";
+                            else if (curM > curS) macdInsightText = "<span class='text-blue-300'>【MACD 動能】維持多頭發散，上升趨勢延續中。</span>";
+                        }
                     }
-                }
+                } catch(e) { console.error("MACD 解讀生成失敗", e); }
 
                 if (symbolData) {
                     const distMa = symbolData.dist_20ma !== undefined ? symbolData.dist_20ma : 0;
@@ -592,15 +593,15 @@
             } catch(e) {}
         }
 
+        // ==============================================================
+        // 🚀 過濾池表格 (加入分析 Label)
+        // ==============================================================
         function changeSort(col) {
             if (sortCol === col) sortDesc = !sortDesc;
             else { sortCol = col; sortDesc = true; }
             renderScreenerData();
         }
 
-        // ==============================================================
-        // 🚀 過濾池表格 (加入分析 Label, 例如多頭/爆量)
-        // ==============================================================
         function renderScreenerData() {
             try {
                 const tbody = document.getElementById('screenerTableBody');
@@ -653,20 +654,18 @@
                     
                     let livePrice = (currentLivePrices && item.symbol in currentLivePrices) ? currentLivePrices[item.symbol] : (item.price || 0);
                     let distHtml = `<span class="text-gray-500">-</span>`;
-                    let isRecommend = false; // 判斷是否為「建議買入」區間
+                    let isRecommend = false; 
 
                     if (item.entry_top && item._liveDist !== 9999) {
                         if (livePrice <= item.entry_top && livePrice >= (item.entry_bot||0)) {
                             distHtml = `<span class="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded font-bold border border-yellow-500/50">買入區間內</span>`;
-                            isRecommend = True;
+                            isRecommend = true;
                         } else {
                             distHtml = item._liveDist > 0 ? `<span class="text-gray-400">距 ${item._liveDist.toFixed(2)}%</span>` : `<span class="text-red-400">跌破 ${Math.abs(item._liveDist).toFixed(2)}%</span>`;
                         }
                     }
 
-                    // ⚡ 組裝股票名稱 + 分析 Label (多頭/空頭/爆量 + 財報/建議買入)
                     let nameHtml = `<div class="flex items-center gap-1.5">${item.symbol || '--'}`;
-                    
                     if (item.label) {
                         nameHtml += `<span class="${item.label_class || 'bg-gray-800 text-gray-400'} text-[10px] px-1.5 py-0.5 rounded">${item.label}</span>`;
                     }
@@ -697,7 +696,7 @@
             } catch(e) {}
         }
 
-        // ================== 圖表與指標區塊 ==================
+        // ================== 圖表引擎與動態指標修復 ==================
         function initCharts() {
             const container = document.getElementById('tv_chart_container'), subContainer = document.getElementById('sub_chart_container'), tooltip = document.getElementById('chartTooltip');
             if(!container) return;
@@ -824,7 +823,7 @@
             } catch(e) {}
         }
 
-        // ⚡ 徹底修復圖表 MACD/RSI 時有時無的現象
+        // ⚡ 徹底修復圖表 MACD/RSI 時有時無的現象與當機 Bug
         function updateChartIndicators(clickedType = null) {
             try {
                 if (!currentCandleData || !currentCandleData.length || !chart) return;
@@ -869,8 +868,11 @@
 
                 if (showRsi || showMacd) {
                     subContainer.style.display = 'block';
+                    
                     // ⚡ 強制更新副圖容器尺寸，解決隱藏再顯示時的破版/消失問題
-                    if (subChart) subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
+                    const safeWidth = subContainer.clientWidth || document.getElementById('chartContent').clientWidth - 24;
+                    const safeHeight = subContainer.clientHeight || 150;
+                    if (subChart) subChart.applyOptions({ width: safeWidth, height: safeHeight });
                     
                     if (showRsi) {
                         subIndicatorSeries = subChart.addLineSeries({ color: '#06b6d4', lineWidth: 1.5, title: 'RSI (14)' });
@@ -890,15 +892,24 @@
                 } else { 
                     subContainer.style.display = 'none'; 
                 }
-            } catch(e) {}
+            } catch(e) { console.error("指標更新失敗:", e); }
         }
 
+        // ⚡ 核心修正：動態兼容 `.close` (K線) 與 `.value` (指標線) 的防呆提取
         function calculateEMA(data, period) {
-            let result = [], multiplier = 2 / (period + 1), prevEMA = data[0].close;
+            if (!data || !data.length) return [];
+            let result = [], multiplier = 2 / (period + 1);
+            let getVal = (d) => d.close !== undefined ? d.close : d.value;
+            let prevEMA = getVal(data[0]);
+            
             for (let i = 0; i < data.length; i++) {
-                let ema = (i === 0) ? data[i].close : (data[i].close - prevEMA) * multiplier + prevEMA;
-                prevEMA = ema; result.push({ time: data[i].time, value: Number(ema.toFixed(2)) });
-            } return result;
+                let currentVal = getVal(data[i]);
+                if (isNaN(currentVal)) currentVal = 0;
+                let ema = (i === 0) ? currentVal : (currentVal - prevEMA) * multiplier + prevEMA;
+                prevEMA = ema; 
+                result.push({ time: data[i].time, value: Number(ema.toFixed(2)) });
+            } 
+            return result;
         }
 
         function calculateBOLL(data, period, stdDevMultiplier) {
@@ -990,7 +1001,6 @@
             const c = document.getElementById(cId), i = document.getElementById(iId);
             if(c) {
                 c.classList.toggle('collapsed');
-                // 特殊處理：當圖表展開時，強制重繪避免被壓扁
                 if (!c.classList.contains('collapsed') && cId === 'chartContent') {
                     setTimeout(() => { if (chart) chart.timeScale().fitContent(); updateChartIndicators(); }, 350);
                 }
