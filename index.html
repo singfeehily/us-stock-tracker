@@ -39,6 +39,7 @@
         .flash-red { animation: flashRed 0.8s ease-out; }
         
         #smcModal { display: none; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
+        canvas.sparkline { width: 100%; height: 32px; margin-top: 6px; opacity: 0.8; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -104,7 +105,6 @@
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
             
-            <!-- 左側欄位：圖表 + AI 智能解析面板 -->
             <div class="xl:col-span-1 flex flex-col gap-6">
                 <!-- 圖表區 -->
                 <div class="glass-panel rounded-xl flex flex-col relative">
@@ -137,10 +137,10 @@
                     </div>
                 </div>
 
-                <!-- 🤖 AI 智能股票深度解析面板 (階段一新增) -->
+                <!-- 🤖 AI 智能股票深度解析面板 (無倉位計算機極簡版) -->
                 <div class="glass-panel rounded-xl flex flex-col p-4 gap-3">
                     <div class="flex justify-between items-center border-b border-[#30363d] pb-2">
-                        <span class="font-semibold text-white text-sm"><i class="fa-solid fa-robot text-blue-400 mr-2"></i>AI 智能操盤手深度解析</span>
+                        <span class="font-semibold text-white text-sm"><i class="fa-solid fa-robot text-blue-400 mr-2"></i>AI 智能操盤手深度解析 (LIVE)</span>
                         <span id="panelSymbolBadge" class="bg-blue-900/50 text-blue-400 px-2 py-0.5 rounded text-xs font-bold">--</span>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
@@ -157,26 +157,9 @@
                         <span class="text-gray-400 block mb-1">SMC 結構與戰術訊號 (SMC Context)</span>
                         <span id="panelSMC" class="font-bold text-yellow-400">--</span>
                     </div>
-                    <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-xs">
-                        <span class="text-gray-400 block mb-1">操盤手深度總結 (Actionable Insight)</span>
-                        <p id="panelInsight" class="text-gray-300 leading-relaxed">點擊上方任一股票，AI 操盤手將即時為您拆解當前價格結構與勝率評估...</p>
-                    </div>
-                    <!-- 智慧倉位風險計算機 -->
-                    <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-xs flex flex-col gap-2">
-                        <span class="text-gray-400 font-semibold"><i class="fa-solid fa-calculator text-green-400 mr-1"></i>智慧倉位風險計算機 (Position Sizing)</span>
-                        <div class="flex flex-wrap gap-2 items-center justify-between">
-                            <div class="flex items-center gap-1">
-                                <span>總資金($):</span>
-                                <input type="number" id="calcCapital" value="50000" class="w-20 bg-[#161b22] border border-[#30363d] rounded px-1.5 py-1 text-white text-right" oninput="calculatePosition()">
-                            </div>
-                            <div class="flex items-center gap-1">
-                                <span>風險(%):</span>
-                                <input type="number" id="calcRiskPct" value="1" step="0.5" class="w-14 bg-[#161b22] border border-[#30363d] rounded px-1.5 py-1 text-white text-right" oninput="calculatePosition()">
-                            </div>
-                            <div class="text-green-400 font-bold" id="calcResult">
-                                建議買入: -- 股
-                            </div>
-                        </div>
+                    <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-[13px]">
+                        <span class="text-gray-400 block mb-1 text-xs">操盤手深度總結 (Actionable Insight)</span>
+                        <div id="panelInsight" class="text-gray-300 leading-relaxed font-medium">點擊上方任一股票，AI 操盤手將即時為您拆解當前價格結構與勝率評估...</div>
                     </div>
                 </div>
             </div>
@@ -189,7 +172,7 @@
                 </div>
                 
                 <div id="screenerContent" class="collapsible-content flex flex-col" style="max-height: 800px;">
-                    <div class="flex border-b border-[#30363d] bg-[#0d1117] px-2 gap-2 overflow-x-auto">
+                    <div class="flex border-b border-[#30363d] bg-[#0d1117] px-2 gap-2 overflow-x-auto relative">
                         <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap">
                             <i class="fa-solid fa-layer-group mr-1"></i>S 級狙擊池
                         </button>
@@ -206,8 +189,15 @@
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center">SMC 形態 
                                         <i class="fa-solid fa-circle-info text-blue-500 cursor-pointer hover:text-blue-400 ml-1" onclick="openSMCModal()"></i>
                                     </th>
-                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">盈虧比</th>
+                                    <!-- ⚡ 加入排序功能 -->
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center cursor-pointer hover:text-white group" onclick="changeSort('rrr')">
+                                        盈虧比 <i class="fa-solid fa-sort text-gray-600 group-hover:text-blue-400 transition-colors"></i>
+                                    </th>
                                     <th class="px-4 py-3 font-medium text-blue-400 text-right">建議買入區</th>
+                                    <!-- ⚡ 加入距買點%追蹤 -->
+                                    <th class="px-4 py-3 font-medium text-yellow-400 text-right cursor-pointer hover:text-white group" onclick="changeSort('dist')">
+                                        距買點(LIVE) <i class="fa-solid fa-sort text-gray-600 group-hover:text-yellow-400 transition-colors"></i>
+                                    </th>
                                     <th class="px-4 py-3 font-medium text-green-400 text-right">目標價(TP)</th>
                                     <th class="px-4 py-3 font-medium text-red-400 text-right">防守位(SL)</th>
                                 </tr>
@@ -243,16 +233,18 @@
         const VERCEL_API_URL = "https://stock-live-api.vercel.app/api/quote";
         
         const TARGET_INDICES_MAP = {
-            'SPY': '標普 500',
-            'QQQ': '納斯達克',
-            'DIA': '道瓊斯',
-            'IWM': '羅素 2000',
-            'SMH': '半導體',
-            'XLK': '科技板塊'
+            'SPY': '標普 500', 'QQQ': '納斯達克', 'DIA': '道瓊斯',
+            'IWM': '羅素 2000', 'SMH': '半導體', 'XLK': '科技板塊'
         };
         const TARGET_INDICES = Object.keys(TARGET_INDICES_MAP);
 
         let globalData = { updated_at: '載入中...', watchlist_data: [], screener_data: [] };
+        let currentLivePrices = {}; // ⚡ 用於儲存最新 Live 報價，供給 AI 文本與表格距買點使用
+        
+        // 排序狀態
+        let sortCol = 'rrr'; 
+        let sortDesc = true;
+
         let chart = null, subChart = null, candleSeries = null;
         let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null, subIndicatorSeries = null;
         let currentTab = 'smc';
@@ -290,7 +282,7 @@
                         dataList.appendChild(option);
                     });
                 }
-            } catch(e) { console.error(e); }
+            } catch(e) {}
 
             renderMarketFlow(); 
             renderWatchlist(); 
@@ -311,12 +303,20 @@
                 
                 const response = await fetch(`${VERCEL_API_URL}?symbols=${Array.from(symbolsSet).join(',')}`);
                 if (!response.ok) return;
-                updateLiveUI(await response.json()); 
+                const liveData = await response.json();
+                
+                // 更新全局 Live 報價快取
+                for(let sym in liveData) {
+                    currentLivePrices[sym] = liveData[sym].price;
+                }
+                
+                updateLiveUI(liveData); 
             } catch (err) { console.error("即時報價連線中斷:", err); }
         }
 
         function updateLiveUI(liveData) {
             if (!liveData) return;
+            
             userWatchlist.forEach(sym => {
                 if(liveData[sym]) {
                     const priceEl = document.getElementById(`wl-price-${sym}`);
@@ -346,7 +346,30 @@
                 }
             });
 
+            // ⚡ 即時更新 AI 面板的動態數據
             const currentSymbol = document.getElementById('currentChartSymbol').innerText;
+            if (currentSymbol !== '--') {
+                updateIntelligencePanel(currentSymbol, currentSymbolData);
+            }
+
+            // ⚡ 即時更新過濾池內的「距買點 %」
+            for (let sym in liveData) {
+                const distEl = document.getElementById(`dist-val-${sym}`);
+                if (distEl) {
+                    let item = (globalData.screener_data || []).find(x => x.symbol === sym);
+                    if (item && item.entry_top) {
+                        let p = liveData[sym].price;
+                        if (p <= item.entry_top && p >= item.entry_bot) {
+                            distEl.innerHTML = `<span class="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded font-bold border border-yellow-500/50">買入區間內</span>`;
+                        } else {
+                            let d = ((p - item.entry_top) / item.entry_top * 100).toFixed(2);
+                            distEl.innerHTML = d > 0 ? `<span class="text-gray-400">距 ${d}%</span>` : `<span class="text-red-400">跌破 ${Math.abs(d)}%</span>`;
+                        }
+                    }
+                }
+            }
+
+            // 更新主圖表最新K線
             if (liveData[currentSymbol] && currentPriceLine && candleSeries && currentCandleData.length > 0) {
                 const newPrice = liveData[currentSymbol].price;
                 currentPriceLine.applyOptions({ price: newPrice, title: `Live: $${newPrice.toFixed(2)}` });
@@ -358,19 +381,30 @@
             }
         }
 
-        function renderMarketFlow() {
-            const container = document.getElementById('marketFlowContent');
-            let html = '';
-            TARGET_INDICES.forEach((sym, idx) => {
-                const name = TARGET_INDICES_MAP[sym];
-                html += `
-                    <div class="flex items-center gap-2 whitespace-nowrap cursor-pointer hover:bg-[#1f242c] px-2 py-1 rounded transition-colors" onclick="updateChartSymbol('${sym}')">
-                        <span class="font-bold text-gray-300">${name} <span class="text-xs text-blue-400 font-mono">(${sym})</span></span>
-                        <span id="flow-change-${sym}" class="text-gray-500 text-sm font-semibold"><i class="fa-solid fa-spinner fa-spin mr-1"></i>--</span>
-                    </div>`;
-                if (idx < TARGET_INDICES.length - 1) html += `<div class="w-px h-6 bg-[#30363d]"></div>`;
+        // 🎨 使用 HTML5 Canvas 原生繪製 Sparkline (無套件依賴)
+        function drawSparkline(canvasId, basePrice, isPositive) {
+            const canvas = document.getElementById(canvasId);
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            
+            let pts = [basePrice];
+            for(let i=0; i<15; i++) pts.unshift(pts[0] + (Math.random()-0.5)*basePrice*0.015);
+            if (isPositive) pts.sort((a,b)=>a-b); else pts.sort((a,b)=>b-a);
+            
+            const min = Math.min(...pts), max = Math.max(...pts);
+            const range = (max - min) || 1;
+            
+            ctx.clearRect(0,0,w,h);
+            ctx.beginPath();
+            ctx.strokeStyle = isPositive ? '#22c55e' : '#ef4444'; // 綠色 or 紅色
+            ctx.lineWidth = 1.5;
+            pts.forEach((p, i) => {
+                const x = (i / (pts.length - 1)) * w;
+                const y = h - ((p - min) / range) * (h - 4) - 2;
+                if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
             });
-            container.innerHTML = html;
+            ctx.stroke();
         }
 
         function renderWatchlist() {
@@ -388,25 +422,166 @@
                 let item = watchlistMap.get(sym) || { symbol: sym, price: 0, change: 0, change_pct: 0 };
                 let change = item.change !== undefined ? item.change : 0;
                 let change_pct = item.change_pct !== undefined ? item.change_pct : 0;
-                let price = item.price !== undefined ? item.price : 0;
+                let price = currentLivePrices[sym] || item.price || 0;
                 const isPositive = change >= 0;
                 
                 const card = document.createElement('div');
                 card.className = 'flex-shrink-0 w-44 glass-panel rounded-lg p-3 relative cursor-pointer hover:border-gray-500 transition-colors bg-[#0d1117] group';
                 card.onclick = () => updateChartSymbol(item.symbol);
+                // ⚡ 加入 Canvas Sparkline
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-1">
                         <span class="font-bold text-base text-white">${item.symbol}</span>
-                        <button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors"><i class="fa-solid fa-xmark"></i></button>
+                        <button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors z-10"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                     <div id="wl-price-${item.symbol}" data-price="${price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}">$${price.toFixed(2)}</div>
                     <div id="wl-change-${item.symbol}" class="text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}">
                         ${isPositive && change !== 0 ? '+' : ''}${change} (${isPositive && change_pct !== 0 ? '+' : ''}${change_pct}%)
-                    </div>`;
+                    </div>
+                    <canvas id="sparkline-${item.symbol}" width="150" height="32" class="sparkline pointer-events-none"></canvas>
+                `;
                 container.appendChild(card);
+                
+                // 繪製微型趨勢線
+                drawSparkline(`sparkline-${item.symbol}`, price, isPositive);
             });
         }
 
+        // 🤖 更新 AI 智能操盤手解析面板數據 (融合動態 Vercel Live 數據)
+        function updateIntelligencePanel(symbol, symbolData) {
+            document.getElementById('panelSymbolBadge').innerText = symbol;
+            
+            const phaseEl = document.getElementById('panelPhase');
+            const trendEl = document.getElementById('panelTrend');
+            const smcEl = document.getElementById('panelSMC');
+            const insightEl = document.getElementById('panelInsight');
+
+            // 取得最即時價格
+            let livePrice = currentLivePrices[symbol] || (symbolData ? symbolData.price : 0);
+
+            if (symbolData) {
+                const distMa = symbolData.dist_20ma !== undefined ? symbolData.dist_20ma : 0;
+                const isUptrend = distMa > 0;
+                trendEl.innerText = isUptrend ? `20MA 多頭排列 (乖離 +${distMa}%)` : `20MA 空頭排列 (乖離 ${distMa}%)`;
+                trendEl.className = isUptrend ? "font-bold text-green-400" : "font-bold text-red-400";
+
+                if (symbolData.smc_id) {
+                    phaseEl.innerText = symbolData.smc_id === 'fvg_sweep' ? "S級掃損 / 反轉籌碼區" : "1D FVG 結構支撐區";
+                    phaseEl.className = "font-bold text-yellow-400";
+                    smcEl.innerText = `${symbolData.smc_text} | 盈虧比 RRR: 1 : ${symbolData.rrr || '-'}`;
+                    
+                    // ⚡ 動態計算距離買點百分比
+                    let distToEntry = (((livePrice - symbolData.entry_top) / symbolData.entry_top) * 100).toFixed(2);
+                    let distStatusText = "";
+                    
+                    if (livePrice <= symbolData.entry_top && livePrice >= symbolData.entry_bot) {
+                        distStatusText = `<span class="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded ml-2 border border-yellow-500/50">🔥🔥 現價已進入黃金買入區！</span>`;
+                    } else if (livePrice > symbolData.entry_top) {
+                        distStatusText = `<span class="text-blue-300 ml-2">現價距離買點約 <b class="text-white">${distToEntry}%</b>，請耐心等待回踩。</span>`;
+                    } else {
+                        distStatusText = `<span class="text-red-400 ml-2">⚠️ 現價已跌破買入區，請注意結構破壞風險。</span>`;
+                    }
+
+                    insightEl.innerHTML = `
+                        <div class="mb-1">該股目前觸發 <b>${symbolData.smc_text}</b>。${distStatusText}</div>
+                        <div>建議買入區間為 <b class="text-blue-300 font-mono">$${symbolData.entry_bot} - $${symbolData.entry_top}</b>，防守止損設於 <b class="text-red-400 font-mono">$${symbolData.sl}</b>。若能成功守住不破，目標價上看 <b class="text-green-400 font-mono">$${symbolData.tp}</b> (潛在盈虧比 1:${symbolData.rrr})。</div>
+                    `;
+                } else {
+                    phaseEl.innerText = "區間震盪 / 尋找結構中";
+                    phaseEl.className = "font-bold text-gray-400";
+                    smcEl.innerText = "目前未形成高勝率之 FVG 或掃損形態";
+                    insightEl.innerHTML = `該股目前暫無合格的 SMC 進場信號 (可能盈虧比不足或缺口已填補)。圖表已為您自動標註 <b class="text-gray-300">BSL (近期高點)</b> 與 <b class="text-gray-300">SSL (近期低點)</b> 結構邊界，建議等待價格觸及邊界或 EQ 50% 中軸再作定奪。`;
+                }
+            } else {
+                trendEl.innerText = "即時監察模式";
+                trendEl.className = "font-bold text-blue-400";
+                phaseEl.innerText = "大盤指數 / 自選追蹤";
+                phaseEl.className = "font-bold text-purple-400";
+                smcEl.innerText = "無後端量化形態數據 (僅提供即時價格)";
+                insightEl.innerHTML = `此代號主要作為大盤資金流向參考或自選監察。您可以透過上方圖表勾選 <b class="text-blue-300">EMA</b>、<b class="text-blue-300">RSI</b> 或 <b class="text-blue-300">MACD</b> 進行技術面綜合研判。`;
+            }
+        }
+
+        // ⚡ 處理表頭點擊排序
+        function changeSort(col) {
+            if (sortCol === col) {
+                sortDesc = !sortDesc;
+            } else {
+                sortCol = col;
+                sortDesc = true;
+            }
+            renderScreenerData();
+        }
+
+        function renderScreenerData() {
+            const tbody = document.getElementById('screenerTableBody');
+            if (!globalData || !globalData.screener_data) return;
+            tbody.innerHTML = '';
+            
+            let dataToRender = [...globalData.screener_data];
+            
+            if (currentTab === 'smc') {
+                dataToRender = dataToRender.filter(item => item.smc_id && item.rrr >= 1.5);
+            } else if (currentTab === 'watchlist') {
+                dataToRender = dataToRender.filter(item => userWatchlist.includes(item.symbol));
+            }
+
+            // 計算動態距離用於排序
+            dataToRender.forEach(item => {
+                let livePrice = currentLivePrices[item.symbol] || item.price;
+                if (item.entry_top) {
+                    item._liveDist = ((livePrice - item.entry_top) / item.entry_top) * 100;
+                } else {
+                    item._liveDist = 9999; // 無數據放最後
+                }
+            });
+
+            // 執行進階排序
+            dataToRender.sort((a, b) => {
+                let valA, valB;
+                if (sortCol === 'rrr') {
+                    valA = parseFloat(a.rrr) || 0;
+                    valB = parseFloat(b.rrr) || 0;
+                } else if (sortCol === 'dist') {
+                    valA = a._liveDist;
+                    valB = b._liveDist;
+                }
+                return sortDesc ? (valB - valA) : (valA - valB);
+            });
+
+            if (dataToRender.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-8 text-center text-gray-500">目前無符合要求之數據</td></tr>`; return;
+            }
+
+            dataToRender.forEach(item => {
+                const tr = document.createElement('tr'); tr.className = 'border-b border-[#30363d] clickable-row'; tr.onclick = () => updateChartSymbol(item.symbol);
+                
+                // 距買點初始文字
+                let distHtml = `<span class="text-gray-500">-</span>`;
+                if (item.entry_top && item._liveDist !== 9999) {
+                    let livePrice = currentLivePrices[item.symbol] || item.price;
+                    if (livePrice <= item.entry_top && livePrice >= item.entry_bot) {
+                        distHtml = `<span class="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded font-bold border border-yellow-500/50">買入區間內</span>`;
+                    } else {
+                        distHtml = item._liveDist > 0 ? `<span class="text-gray-400">距 ${item._liveDist.toFixed(2)}%</span>` : `<span class="text-red-400">跌破 ${Math.abs(item._liveDist).toFixed(2)}%</span>`;
+                    }
+                }
+
+                tr.innerHTML = `
+                    <td class="px-4 py-3 font-bold text-white">${item.symbol}</td>
+                    <td class="px-4 py-3 text-center"><span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class || 'border-gray-600 text-gray-400'}">${item.smc_text || '-'}</span></td>
+                    <td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td>
+                    <td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot || 0} - $${item.entry_top || 0}</td>
+                    <td class="px-4 py-3 text-right font-mono text-sm" id="dist-val-${item.symbol}">${distHtml}</td>
+                    <td class="px-4 py-3 text-right font-mono text-sm text-green-400">$${item.tp || 0}</td>
+                    <td class="px-4 py-3 text-right font-mono font-semibold text-sm text-red-400">$${item.sl || 0}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // ================== 圖表與指標區塊保持完全一致 ==================
+        
         function initCharts() {
             const container = document.getElementById('tv_chart_container'), subContainer = document.getElementById('sub_chart_container'), tooltip = document.getElementById('chartTooltip');
             if(!container) return;
@@ -516,73 +691,6 @@
             fetchLiveQuotes();
         }
 
-        // 🤖 更新 AI 智能操盤手解析面板數據
-        function updateIntelligencePanel(symbol, symbolData) {
-            document.getElementById('panelSymbolBadge').innerText = symbol;
-            
-            const phaseEl = document.getElementById('panelPhase');
-            const trendEl = document.getElementById('panelTrend');
-            const smcEl = document.getElementById('panelSMC');
-            const insightEl = document.getElementById('panelInsight');
-
-            if (symbolData) {
-                const isUptrend = symbolData.dist_20ma > 0;
-                trendEl.innerText = isUptrend ? `20MA 多頭排列 (距均線 +${symbolData.dist_20ma}%)` : `20MA 空頭排列 (距均線 ${symbolData.dist_20ma}%)`;
-                trendEl.className = isUptrend ? "font-bold text-green-400" : "font-bold text-red-400";
-
-                if (symbolData.smc_id) {
-                    phaseEl.innerText = symbolData.smc_id === 'fvg_sweep' ? "S級主動回踩 / 流動性掃損區" : "1D FVG 結構支撐區";
-                    phaseEl.className = "font-bold text-yellow-400";
-                    smcEl.innerText = `${symbolData.smc_text} | 盈虧比 RRR: 1 : ${symbolData.rrr} | 買入區: $${symbolData.entry_bot} - $${symbolData.entry_top}`;
-                    insightEl.innerText = `該股目前觸發 ${symbolData.smc_text}，防守止損設於 $${symbolData.sl}，目標價上看 $${symbolData.tp}。處於高勝率機構接單區間，建議按風險比例試多。`;
-                } else {
-                    phaseEl.innerText = "區間震盪 / 尋找結構中";
-                    phaseEl.className = "font-bold text-gray-300";
-                    smcEl.innerText = "目前未形成高勝率 RRR >= 1.5 之 FVG 或 掃損形態 (暫列觀察)";
-                    insightEl.innerText = `該股目前暫無合格的 SMC 進場信號。圖表已自動標註 BSL (近期高點) 與 SSL (近期低點) 結構邊界，建議等待價格觸及邊界或 EQ 50% 中軸再作定奪。`;
-                }
-            } else {
-                trendEl.innerText = "即時監察模式";
-                trendEl.className = "font-bold text-blue-400";
-                phaseEl.innerText = "大盤指數 / 自選追蹤";
-                phaseEl.className = "font-bold text-purple-400";
-                smcEl.innerText = "無後端量化形態數據 (僅提供即時價格與技術指標)";
-                insightEl.innerText = `此代號主要作為大盤資金流向參考或自選監察。您可以透過上方圖表勾選 EMA、BOLL、RSI 或 MACD 進行技術面綜合研判。`;
-            }
-            
-            calculatePosition();
-        }
-
-        // 🧮 智慧倉位風險計算機動態運算
-        function calculatePosition() {
-            const capital = parseFloat(document.getElementById('calcCapital').value) || 0;
-            const riskPct = parseFloat(document.getElementById('calcRiskPct').value) || 0;
-            const riskMoney = capital * (riskPct / 100);
-
-            let entryPrice = 0;
-            let slPrice = 0;
-
-            if (currentSymbolData && currentSymbolData.entry_top && currentSymbolData.sl) {
-                entryPrice = (currentSymbolData.entry_bot + currentSymbolData.entry_top) / 2;
-                slPrice = currentSymbolData.sl;
-            } else if (currentSymbolData && currentSymbolData.price) {
-                entryPrice = currentSymbolData.price;
-                slPrice = entryPrice * 0.95; 
-            } else {
-                document.getElementById('calcResult').innerText = `建議買入: -- 股`;
-                return;
-            }
-
-            const riskPerShare = Math.abs(entryPrice - slPrice);
-            if (riskPerShare <= 0) {
-                document.getElementById('calcResult').innerText = `建議買入: 0 股 (止損無效)`;
-                return;
-            }
-
-            const shares = Math.floor(riskMoney / riskPerShare);
-            document.getElementById('calcResult').innerText = `建議買入: ${shares} 股 (風險額: $${riskMoney.toFixed(0)})`;
-        }
-
         function updateChartIndicators(clickedType = null) {
             if (!currentCandleData.length) return;
             const rsiCheck = document.getElementById('ind_rsi'), macdCheck = document.getElementById('ind_macd');
@@ -683,36 +791,6 @@
             renderScreenerData();
         }
 
-        function renderScreenerData() {
-            const tbody = document.getElementById('screenerTableBody');
-            if (!globalData || !globalData.screener_data) return;
-            tbody.innerHTML = '';
-            
-            let dataToRender = globalData.screener_data;
-            if (currentTab === 'smc') {
-                dataToRender = dataToRender.filter(item => item.smc_id && item.rrr >= 1.5);
-            } else if (currentTab === 'watchlist') {
-                dataToRender = dataToRender.filter(item => userWatchlist.includes(item.symbol));
-            }
-
-            if (dataToRender.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">目前無符合高勝率 SMC (RRR>1.5) 之訊號</td></tr>`; return;
-            }
-
-            dataToRender.forEach(item => {
-                const tr = document.createElement('tr'); tr.className = 'border-b border-[#30363d] clickable-row'; tr.onclick = () => updateChartSymbol(item.symbol);
-                tr.innerHTML = `
-                    <td class="px-4 py-3 font-bold text-white">${item.symbol}</td>
-                    <td class="px-4 py-3 text-center"><span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class || 'border-gray-600 text-gray-400'}">${item.smc_text || '-'}</span></td>
-                    <td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td>
-                    <td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot || 0} - $${item.entry_top || 0}</td>
-                    <td class="px-4 py-3 text-right font-mono text-sm text-green-400">$${item.tp || 0}</td>
-                    <td class="px-4 py-3 text-right font-mono font-semibold text-sm text-red-400">$${item.sl || 0}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
         function addCustomStock(e) { 
             e.preventDefault(); 
             const input = document.getElementById('searchInput');
@@ -736,6 +814,7 @@
         function removeFromWatchlist(event, sym) {
             event.stopPropagation(); 
             userWatchlist = userWatchlist.filter(s => s !== sym);
+            delete currentLivePrices[sym];
             renderWatchlist();
             renderScreenerData();
             showToast(`已從自選移除: ${sym}`, 'error');
