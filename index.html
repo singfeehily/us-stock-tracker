@@ -270,6 +270,7 @@
 
         async function loadJSONData() {
             try {
+                // 讀取靜態 json 本身就有 timestamp，避免緩存
                 const response = await fetch('data.json?t=' + new Date().getTime());
                 if (!response.ok) throw new Error('連線異常');
                 globalData = await response.json();
@@ -310,7 +311,8 @@
                 
                 if (symbolsSet.size === 0) return;
 
-                const response = await fetch(`${VERCEL_API_URL}?symbols=${Array.from(symbolsSet).join(',')}`);
+                // ⚡ 加上動態時間戳，徹底破壞所有 API 緩存
+                const response = await fetch(`${VERCEL_API_URL}?symbols=${Array.from(symbolsSet).join(',')}&t=${Date.now()}`);
                 if (!response.ok) return;
                 
                 const liveData = await response.json();
@@ -484,9 +486,6 @@
             } catch(e) {}
         }
 
-        // ==============================================================
-        // 🤖 雙向 AI 智能分析與宏觀解讀
-        // ==============================================================
         function updateIntelligencePanel(symbol, symbolData) {
             try {
                 const badgeEl = document.getElementById('panelSymbolBadge');
@@ -515,7 +514,6 @@
                 }
 
                 if (symbolData) {
-                    // ⚡ 宏觀解讀防呆判斷
                     if (symbolData.macro_bsl) {
                         if (livePrice > symbolData.macro_eq) phaseEl.innerHTML = `<span class="text-red-400 font-bold">昂貴溢價區 (Premium)</span>`;
                         else phaseEl.innerHTML = `<span class="text-green-400 font-bold">便宜折價區 (Discount)</span>`;
@@ -575,7 +573,6 @@
                         smcEl.innerText = "目前未形成高勝率 SMC 形態";
                         smcEl.className = "text-gray-400";
                         
-                        // ⚡ 防呆文字：如果沒有 macro_bsl 就提示使用者更新
                         if (symbolData.macro_bsl) {
                             insightEl.innerHTML = `該股目前暫無合格的 SMC 進場信號。圖表已為您標註宏觀的 <b class="text-gray-300">Macro BSL(頂部)</b> 與 <b class="text-gray-300">Macro SSL(底部)</b>。<div class="mt-2">${macdInsightText}</div>`;
                         } else {
@@ -597,9 +594,6 @@
             renderScreenerData();
         }
 
-        // ==============================================================
-        // 🚀 雙向過濾池表格
-        // ==============================================================
         function renderScreenerData() {
             try {
                 const tbody = document.getElementById('screenerTableBody');
@@ -696,7 +690,6 @@
             } catch(e) {}
         }
 
-        // ================== 圖表與指標區塊 ==================
         function initCharts() {
             const container = document.getElementById('tv_chart_container'), subContainer = document.getElementById('sub_chart_container'), tooltip = document.getElementById('chartTooltip');
             if(!container) return;
@@ -766,7 +759,8 @@
                 let data = [];
                 const tfParam = currentTimeFrame.toLowerCase();
                 try {
-                    const res = await fetch(`${VERCEL_API_URL}?symbols=${symbol}&interval=${tfParam}`);
+                    // ⚡ 加上動態時間戳，破壞歷史圖表的緩存鎖死
+                    const res = await fetch(`${VERCEL_API_URL}?symbols=${symbol}&interval=${tfParam}&t=${Date.now()}`);
                     if (res.ok) {
                         const jsonRes = await res.json();
                         if (jsonRes[symbol] && jsonRes[symbol].chart) {
@@ -801,13 +795,11 @@
                 if (currentSymbolData && currentCandleData.length > 0) {
                     currentPriceLine = candleSeries.createPriceLine({ price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: `市價: $${currentSymbolData.price || 0}` });
                     
-                    // ⚡ 畫出絕對宏觀座標 (Macro Premium/Discount)
                     if (currentSymbolData.macro_bsl) {
                         macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_bsl, color: '#ef4444', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Macro BSL` }));
                         macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#4b5563', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, title: `Macro EQ` }));
                         macroPriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_ssl, color: '#22c55e', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, title: `Macro SSL` }));
                     } else if (currentCandleData.length > 0) {
-                        // 🛡️ 防呆機制：如果 data.json 沒更新，自動用當前圖表計算 Local BSL/SSL
                         let highest = Math.max(...currentCandleData.map(d => d.high));
                         let lowest = Math.min(...currentCandleData.map(d => d.low));
                         let eq = (highest + lowest) / 2;
