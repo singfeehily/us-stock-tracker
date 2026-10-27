@@ -62,6 +62,17 @@
 
         .drag-over { border-color: #3b82f6 !important; background-color: rgba(59, 130, 246, 0.1) !important; }
         .dragging { opacity: 0.5; }
+
+        /* ⚡ 自選股選中時的特殊外框效果 */
+        .watchlist-card {
+            border: 1px solid #30363d;
+            transition: all 0.2s ease-in-out;
+        }
+        .watchlist-card.active-selected {
+            border: 2px solid #3b82f6 !important;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+            background: rgba(59, 130, 246, 0.08);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative">
@@ -212,8 +223,6 @@
                 </div>
                 
                 <div id="screenerContent" class="collapsible-content flex flex-col" style="max-height: 800px;">
-                    
-                    <!-- ⚡ 修正後的獨立 Tab 選單容器，絕不重疊 -->
                     <div class="bg-[#161b22] border-b border-[#30363d] px-3 flex gap-2 flex-shrink-0">
                         <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2.5 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap">
                             <i class="fa-solid fa-layer-group mr-1"></i>S 級狙擊池
@@ -616,6 +625,8 @@
 
             const session = getMarketSession();
             const sessionBadge = `<span class="ml-1 text-[10px] px-1 py-0.5 rounded border ${session.style}">${session.text}</span>`;
+            const currentSymbolEl = document.getElementById('currentChartSymbol');
+            const activeSymbol = currentSymbolEl ? currentSymbolEl.innerText : '';
 
             userWatchlist.forEach(sym => {
                 let item = watchlistMap.get(sym) || { symbol: sym, price: 0, change: 0, change_pct: 0 };
@@ -623,7 +634,10 @@
                 const isPositive = (item.change || 0) >= 0;
                 
                 const card = document.createElement('div');
-                card.className = 'flex-shrink-0 w-44 glass-panel rounded-lg p-3 relative cursor-move hover:border-gray-500 transition-colors bg-[#0d1117] group border border-[#30363d]';
+                // ⚡ 核心修正：如果正在查看該股票，自動加上 active-selected 特殊外框效果
+                const isActive = (sym === activeSymbol);
+                card.className = `flex-shrink-0 w-44 glass-panel rounded-lg p-3 relative cursor-move hover:border-gray-500 transition-colors bg-[#0d1117] group watchlist-card ${isActive ? 'active-selected' : ''}`;
+                
                 card.onclick = () => updateChartSymbol(item.symbol);
                 card.draggable = true;
                 card.dataset.symbol = item.symbol;
@@ -923,8 +937,8 @@
                     if (livePrice) {
                         let lastCandle = currentCandleData[currentCandleData.length - 1];
                         lastCandle.close = livePrice;
-                        if (newPrice > lastCandle.high) lastCandle.high = newPrice;
-                        if (newPrice < lastCandle.low) lastCandle.low = newPrice;
+                        if (livePrice > lastCandle.high) lastCandle.high = livePrice;
+                        if (livePrice < lastCandle.low) lastCandle.low = livePrice;
                     }
                     candleSeries.setData(currentCandleData);
                 }
@@ -940,10 +954,14 @@
                 }
                 
                 chart.timeScale().fitContent(); 
+
+                // ⚡ 核心修復：切換股票時，強制重新渲染副圖指標與自選股選中外框
+                updateChartIndicators();
+                renderWatchlist();
+
             } catch(e) {}
         }
 
-        // ⚡ 結合：高辨識度染色塊 (FVG 淺色 + OB 深色) + 右側清晰軸標籤 (axisLabelVisible: true)
         function updateChartOverlays(caller = null) {
             if (!candleSeries || !currentSymbolData) return;
             
@@ -968,7 +986,6 @@
                     const slLineColor = '#ef4444';
                     const tpLineColor = '#10b981';
 
-                    // 1. 繪製 FVG 缺口區塊 (半透明淺色)
                     let fvgSeries = chart.addAreaSeries({
                         baseValue: { type: 'price', price: currentSymbolData.entry_bot },
                         topColor: fvgColor, bottomColor: fvgColor,
@@ -978,7 +995,6 @@
                     fvgSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top })));
                     activeAreaSeries.push(fvgSeries);
 
-                    // 2. 繪製 OB 防守區塊 (深色，由 OB 邊緣延伸至 SL 止損位)
                     let obBasePrice = isShort ? currentSymbolData.entry_top : currentSymbolData.entry_bot;
                     let obSeries = chart.addAreaSeries({
                         baseValue: { type: 'price', price: obBasePrice },
@@ -989,7 +1005,6 @@
                     obSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.sl })));
                     activeAreaSeries.push(obSeries);
 
-                    // ⚡ 恢復右側 Y 軸標籤與線條名稱 (axisLabelVisible: true)
                     activePriceLines.push(candleSeries.createPriceLine({ 
                         price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, 
                         axisLabelVisible: true, title: '⚡ FVG' 
