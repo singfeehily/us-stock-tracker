@@ -11,12 +11,16 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
         .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
         
+        /* 表格與列表專用的加粗滾動條 */
         ::-webkit-scrollbar { width: 12px; height: 12px; }
         ::-webkit-scrollbar-track { background: #0d1117; border-radius: 6px; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
         ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
-        
         .custom-scrollbar::-webkit-scrollbar { height: 12px; } 
+
+        /* 隱藏 Tab 選單的滾動條，避免擠壓版面 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         @media (max-width: 768px) {
             ::-webkit-scrollbar { height: 10px; width: 10px; } 
@@ -45,14 +49,6 @@
             background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(4px);
             border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px;
             font-family: monospace; font-size: 12px; pointer-events: none; display: none;
-        }
-
-        #smcLegend {
-            position: absolute; right: 60px; top: 12px; z-index: 10;
-            background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(4px);
-            border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px;
-            font-family: monospace; font-size: 11px; pointer-events: none; display: none;
-            flex-direction: column; gap: 4px;
         }
 
         @keyframes flashGreen { 0% { color: #4ade80; text-shadow: 0 0 10px #4ade80; transform: scale(1.05); } 100% { color: inherit; text-shadow: none; transform: scale(1); } }
@@ -171,7 +167,6 @@
                         <div id="tv_chart_container" style="height: 380px; width: 100%; position: relative;">
                             <div id="chartLoader"><i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-3xl"></i></div>
                             <div id="chartTooltip"></div>
-                            <div id="smcLegend"></div>
                         </div>
                         <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
                     </div>
@@ -221,11 +216,13 @@
                 </div>
                 
                 <div id="screenerContent" class="collapsible-content flex flex-col" style="max-height: 800px;">
-                    <div class="flex border-b border-[#30363d] bg-[#0d1117] px-2 gap-2 overflow-x-auto relative custom-scrollbar">
-                        <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap">
+                    
+                    <!-- ⚡ 修正: 加入 flex-shrink-0 和 min-h-[44px]，並使用 no-scrollbar，徹底解決 Tab 被裁切擠壓的問題 -->
+                    <div class="flex border-b border-[#30363d] bg-[#0d1117] px-2 gap-2 overflow-x-auto relative no-scrollbar flex-shrink-0 min-h-[44px] items-end">
+                        <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2.5 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap">
                             <i class="fa-solid fa-layer-group mr-1"></i>S 級狙擊池
                         </button>
-                        <button onclick="switchTab('watchlist')" id="tabWatchlist" class="px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors whitespace-nowrap">
+                        <button onclick="switchTab('watchlist')" id="tabWatchlist" class="px-4 py-2.5 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors whitespace-nowrap">
                             <i class="fa-solid fa-star mr-1"></i>核心監察總表
                         </button>
                     </div>
@@ -905,8 +902,6 @@
                 activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} });
                 activeAreaSeries = [];
                 if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
-                const smcLegend = document.getElementById('smcLegend');
-                if(smcLegend) smcLegend.style.display = 'none';
 
                 let data = [];
                 const tfParam = currentTimeFrame.toLowerCase();
@@ -952,7 +947,7 @@
             } catch(e) {}
         }
 
-        // ⚡ 終極視覺優化：高對比顏色 + 釋放 Y 軸 + 極簡微光進場區
+        // ⚡ 終極渲染：恢復高對比透明色塊
         function updateChartOverlays(caller = null) {
             if (!candleSeries || !currentSymbolData) return;
             
@@ -960,9 +955,6 @@
             activePriceLines = [];
             activeAreaSeries.forEach(s => chart.removeSeries(s));
             activeAreaSeries = [];
-            
-            const smcLegend = document.getElementById('smcLegend');
-            if (smcLegend) { smcLegend.innerHTML = ''; smcLegend.style.display = 'none'; }
 
             const showLong = document.getElementById('layer_long').checked;
             const showShort = document.getElementById('layer_short').checked;
@@ -973,41 +965,52 @@
                 
                 if ((isShort && showShort) || (!isShort && showLong)) {
                     
-                    const slColor = '#ef4444'; // 紅色 🚨
-                    const obColor = '#f59e0b'; // 橙色 📦
-                    const fvgColor = '#8b5cf6'; // 紫色 ⚡
-                    const tpColor = '#10b981'; // 綠色 🎯
-                    const zoneBgColor = 'rgba(245, 158, 11, 0.08)'; // 8% 極淡橙色微光
+                    // FVG (缺口區) 使用 20% 透明度
+                    const fvgColor = isShort ? 'rgba(239, 68, 68, 0.2)' : 'rgba(34, 197, 94, 0.2)'; 
+                    // OB (訂單防守區) 使用 40% 透明度，明顯區分
+                    const obColor  = isShort ? 'rgba(239, 68, 68, 0.4)' : 'rgba(34, 197, 94, 0.4)'; 
                     
-                    // 繪製核心進場微光區
-                    let areaSeries = chart.addAreaSeries({
+                    const lineColor = isShort ? 'rgba(239, 68, 68, 0.6)' : 'rgba(34, 197, 94, 0.6)';
+                    const slLineColor = '#ef4444';
+                    const tpLineColor = '#10b981';
+
+                    // 1. 繪製 FVG 缺口區塊 (半透明淺色)
+                    let fvgSeries = chart.addAreaSeries({
                         baseValue: { type: 'price', price: currentSymbolData.entry_bot },
-                        topColor: zoneBgColor, bottomColor: zoneBgColor,
+                        topColor: fvgColor, bottomColor: fvgColor,
                         lineColor: 'rgba(0,0,0,0)', lineWidth: 0,
                         priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null, 
                     });
-                    areaSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top })));
-                    activeAreaSeries.push(areaSeries);
+                    fvgSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top })));
+                    activeAreaSeries.push(fvgSeries);
 
-                    // 畫線並將文字改為「線上懸浮」，關閉右側 Y 軸大色塊 (axisLabelVisible: false)
+                    // 2. 繪製 OB 防守區塊 (深色，由 OB 邊緣延伸至 SL 止損位)
+                    let obBasePrice = isShort ? currentSymbolData.entry_top : currentSymbolData.entry_bot;
+                    let obSeries = chart.addAreaSeries({
+                        baseValue: { type: 'price', price: obBasePrice },
+                        topColor: obColor, bottomColor: obColor,
+                        lineColor: 'rgba(0,0,0,0)', lineWidth: 0,
+                        priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null, 
+                    });
+                    obSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.sl })));
+                    activeAreaSeries.push(obSeries);
+
+                    // 畫出水平實體線與標籤 (維持在線上方的無遮擋設計)
                     activePriceLines.push(candleSeries.createPriceLine({ 
-                        price: currentSymbolData.entry_top, color: fvgColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dashed, 
-                        axisLabelVisible: false, title: '⚡ FVG 缺口' 
+                        price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, 
+                        axisLabelVisible: false, title: '⚡ FVG' 
                     }));
-                    
                     activePriceLines.push(candleSeries.createPriceLine({ 
-                        price: currentSymbolData.entry_bot, color: obColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, 
-                        axisLabelVisible: false, title: '📦 OB 訂單塊' 
+                        price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, 
+                        axisLabelVisible: false, title: '📦 OB' 
                     }));
-                    
                     activePriceLines.push(candleSeries.createPriceLine({ 
-                        price: currentSymbolData.sl, color: slColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, 
-                        axisLabelVisible: false, title: '🚨 SL 失效線' 
+                        price: currentSymbolData.sl, color: slLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, 
+                        axisLabelVisible: false, title: '🚨 SL' 
                     }));
-                    
                     activePriceLines.push(candleSeries.createPriceLine({ 
-                        price: currentSymbolData.tp, color: tpColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dotted, 
-                        axisLabelVisible: false, title: '🎯 TP 目標' 
+                        price: currentSymbolData.tp, color: tpLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dotted, 
+                        axisLabelVisible: false, title: '🎯 TP' 
                     }));
                 }
             }
