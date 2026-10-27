@@ -51,7 +51,6 @@
         canvas.sparkline { width: 100%; height: 32px; margin-top: 6px; opacity: 0.8; }
         #chartLoader { display: none; position: absolute; inset: 0; background: rgba(13,17,23,0.7); backdrop-filter: blur(2px); z-index: 20; align-items: center; justify-content: center; }
 
-        /* P/D 矩陣滑桿背景 */
         .pd-track { background: linear-gradient(to right, #166534 0%, #166534 49%, #4b5563 49%, #4b5563 51%, #991b1b 51%, #991b1b 100%); }
     </style>
 </head>
@@ -126,14 +125,13 @@
                     <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 650px;">
                         
                         <div class="flex flex-col gap-2">
-                            <!-- 週期切換 -->
+                            <!-- 週期切換與圖層控制 -->
                             <div class="flex flex-wrap gap-2 items-center justify-between">
                                 <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-1.5 flex gap-1 text-xs">
                                     <button onclick="changeTimeFrame('15m')" id="tf_15m" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">15m</button>
                                     <button onclick="changeTimeFrame('4H')" id="tf_4H" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">4H</button>
                                     <button onclick="changeTimeFrame('1D')" id="tf_1D" class="px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors">1D</button>
                                 </div>
-                                <!-- ⚡ 新增圖層開關 (保留於原版圖表上方) -->
                                 <div class="flex items-center gap-3 text-[11px] text-gray-300 bg-[#0d1117] border border-[#30363d] rounded-lg p-2">
                                     <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="layer_long" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> 做多區(綠)</label>
                                     <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="layer_short" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> 做空區(紅)</label>
@@ -185,7 +183,7 @@
                 </div>
             </div>
 
-            <!-- 右側欄位：篩選表格區 (整合了新版 P/D 與 交易狀態) -->
+            <!-- 右側欄位：篩選表格區 -->
             <div class="xl:col-span-2 glass-panel rounded-xl flex flex-col overflow-hidden">
                 <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('screenerContent', 'screenerIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i>全方位 SMC 量化過濾池</span>
@@ -207,13 +205,22 @@
                             <thead>
                                 <tr class="border-b border-[#30363d] bg-[#0d1117]">
                                     <th class="px-4 py-3 font-medium text-gray-400">股票</th>
-                                    <!-- ⚡ 整合了「交易狀態」與「距離%」 -->
-                                    <th class="px-4 py-3 font-medium text-gray-400 text-left">交易狀態 & 價格差異 %</th>
+                                    
+                                    <!-- ⚡ 加入了「交易狀態」的下拉過濾 -->
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-left">
+                                        交易狀態 
+                                        <select id="filterStatus" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none focus:border-blue-500">
+                                            <option value="ALL">全部</option>
+                                            <option value="GREEN">🟢 可執行</option>
+                                            <option value="YELLOW">🟡 接近中</option>
+                                            <option value="RED">🔴 觀察中</option>
+                                        </select>
+                                    </th>
                                     
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center">
                                         形態
                                         <select id="filterDirection" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none focus:border-blue-500">
-                                            <option value="ALL">全部 (All)</option>
+                                            <option value="ALL">全部</option>
                                             <option value="LONG">做多</option>
                                             <option value="SHORT">做空</option>
                                             <option value="SS">SS級</option>
@@ -224,7 +231,6 @@
                                         R:R <i class="fa-solid fa-sort text-gray-600 group-hover:text-blue-400 transition-colors ml-1"></i>
                                     </th>
                                     <th class="px-4 py-3 font-medium text-blue-400 text-right">建議入場區</th>
-                                    <!-- ⚡ 加入 P/D Matrix 橫條 -->
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center">溢價/折價 (P/D Matrix)</th>
                                 </tr>
                             </thead>
@@ -272,6 +278,7 @@
 
         let chart = null, candleSeries = null;
         let activePriceLines = [], currentPriceLine = null;
+        let activeAreaSeries = []; // ⚡ 新增：追蹤半透明區塊
         let currentCandleData = [], currentSymbolData = null;
 
         let lastScrollTop = 0;
@@ -302,9 +309,9 @@
                 globalData = { updated_at: '離線模式', watchlist_data: [], screener_data: [], chart_data: {} };
             }
 
-            try {
-                if (globalData && Array.isArray(globalData.watchlist_data)) {
-                    const dataList = document.getElementById('stock-suggestions');
+            if (globalData && Array.isArray(globalData.watchlist_data)) {
+                const dataList = document.getElementById('stock-suggestions');
+                if (dataList) {
                     dataList.innerHTML = '';
                     globalData.watchlist_data.forEach(item => {
                         if (item && item.symbol) {
@@ -314,7 +321,7 @@
                         }
                     });
                 }
-            } catch(e) {}
+            }
 
             renderMarketFlow(); renderWatchlist(); renderScreenerData();
             if (globalData && Array.isArray(globalData.screener_data) && globalData.screener_data.length > 0) {
@@ -339,6 +346,39 @@
                 for(let sym in liveData) if (liveData[sym] && liveData[sym].price) currentLivePrices[sym] = liveData[sym].price;
                 updateLiveUI(liveData, curSym ? curSym.innerText : null); 
             } catch (err) {}
+        }
+
+        // ⚡ 將全域交易狀態判定邏輯獨立，確保 UI 一致
+        function getTradeStatus(item, livePrice) {
+            let dist = 9999;
+            let label = "🔴 觀察中", colorClass = "text-gray-400", dotClass = "bg-gray-500", distText = "-";
+
+            if (item.entry_top && item.entry_top > 0) {
+                if (item.direction === 'short') {
+                    dist = ((item.entry_bot - livePrice) / livePrice) * 100;
+                    if (livePrice <= item.entry_top && livePrice >= item.entry_bot) {
+                        label = "🟢 可執行"; colorClass = "text-green-400 font-bold"; dotClass = "bg-green-500"; distText = "已入區 (0.0%)";
+                    } else if (dist <= 2.0 && dist > 0) {
+                        label = "🟡 接近中"; colorClass = "text-yellow-400"; dotClass = "bg-yellow-500"; distText = `差異: -${dist.toFixed(1)}%`;
+                    } else if (dist > 2.0) {
+                        label = "🔴 觀察中"; colorClass = "text-red-500"; dotClass = "bg-red-500"; distText = `差異: -${dist.toFixed(1)}%`;
+                    } else { distText = "已突破"; }
+                } else {
+                    dist = ((livePrice - item.entry_top) / item.entry_top) * 100;
+                    if (livePrice <= item.entry_top && livePrice >= item.entry_bot) {
+                        label = "🟢 可執行"; colorClass = "text-green-400 font-bold"; dotClass = "bg-green-500"; distText = "已入區 (0.0%)";
+                    } else if (dist <= 2.0 && dist > 0) {
+                        label = "🟡 接近中"; colorClass = "text-yellow-400"; dotClass = "bg-yellow-500"; distText = `差異: -${dist.toFixed(1)}%`;
+                    } else if (dist > 2.0) {
+                        label = "🔴 觀察中"; colorClass = "text-red-500"; dotClass = "bg-red-500"; distText = `差異: -${dist.toFixed(1)}%`;
+                    } else { distText = "已跌破"; }
+                }
+            }
+
+            if (item.trade_status && (item.trade_status.includes('❌') || item.trade_status.includes('條件不足') || item.trade_status.includes('⚠️'))) {
+                label = "🔴 觀察中"; colorClass = "text-gray-400"; dotClass = "bg-gray-500";
+            }
+            return { dist, label, colorClass, dotClass, distText };
         }
 
         function updateLiveUI(liveData, currentSymbol) {
@@ -386,44 +426,18 @@
                     updateIntelligencePanel(currentSymbol, symbolData, liveData[currentSymbol] ? liveData[currentSymbol].price : null);
                 }
 
-                // ⚡ 實時更新過濾池內的距離與狀態
+                // 實時更新過濾池內的距離與狀態
                 const screenerArr = (globalData && Array.isArray(globalData.screener_data)) ? globalData.screener_data : [];
                 for (let sym in liveData) {
                     const statusDistEl = document.getElementById(`status-dist-${sym}`);
                     if (statusDistEl) {
                         let item = screenerArr.find(x => x && x.symbol === sym);
-                        if (item && item.entry_top > 0 && !item.trade_status.includes('⚠️')) {
+                        if (item && item.entry_top > 0) {
                             let p = liveData[sym].price || 0;
-                            let distText = "", statusLabel = "🔴 觀察中", statusColor = "text-gray-400", dot = "bg-gray-500";
-                            
-                            if (item.direction === 'short') {
-                                let dist = ((item.entry_bot - p) / p) * 100;
-                                if (p <= item.entry_top && p >= item.entry_bot) {
-                                    statusLabel = "🟢 可執行"; statusColor = "text-green-400 font-bold"; dot = "bg-green-500"; distText = "已入區 (0.0%)";
-                                } else if (dist <= 2.0 && dist > 0) {
-                                    statusLabel = "🟡 接近中"; statusColor = "text-yellow-400"; dot = "bg-yellow-500"; distText = `差異: -${dist.toFixed(1)}%`;
-                                } else if (dist > 2.0) {
-                                    statusLabel = "🔴 觀察中"; statusColor = "text-red-500"; dot = "bg-red-500"; distText = `差異: -${dist.toFixed(1)}%`;
-                                } else { distText = "已突破"; }
-                            } else {
-                                let dist = ((p - item.entry_top) / item.entry_top) * 100;
-                                if (p <= item.entry_top && p >= item.entry_bot) {
-                                    statusLabel = "🟢 可執行"; statusColor = "text-green-400 font-bold"; dot = "bg-green-500"; distText = "已入區 (0.0%)";
-                                } else if (dist <= 2.0 && dist > 0) {
-                                    statusLabel = "🟡 接近中"; statusColor = "text-yellow-400"; dot = "bg-yellow-500"; distText = `差異: -${dist.toFixed(1)}%`;
-                                } else if (dist > 2.0) {
-                                    statusLabel = "🔴 觀察中"; statusColor = "text-red-500"; dot = "bg-red-500"; distText = `差異: -${dist.toFixed(1)}%`;
-                                } else { distText = "已跌破"; }
-                            }
-
-                            // 覆蓋為強制擋單狀態 (如果有)
-                            if (item.trade_status.includes('❌') || item.trade_status.includes('條件不足')) {
-                                statusLabel = "🔴 觀察中"; statusColor = "text-gray-400"; dot = "bg-gray-500";
-                            }
-
+                            let st = getTradeStatus(item, p);
                             statusDistEl.innerHTML = `
-                                <div class="flex items-center gap-1.5 ${statusColor} text-sm font-semibold"><div class="w-2 h-2 rounded-full ${dot}"></div> ${statusLabel}</div>
-                                <div class="text-[11px] text-gray-400 mt-1">建議價格差異: <span class="${distText.includes('-')?'text-red-400':''}">${distText}</span></div>
+                                <div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold"><div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}</div>
+                                <div class="text-[11px] text-gray-400 mt-1">建議價格差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>
                             `;
                         }
                     }
@@ -508,7 +522,6 @@
             });
         }
 
-        // ================== 左側原版 AI 智能面板更新 ==================
         function updateIntelligencePanel(symbol, symbolData, livePriceOverride = null) {
             try {
                 const badgeEl = document.getElementById('panelSymbolBadge');
@@ -543,9 +556,7 @@
                             smcEl.className = isShort ? "font-bold text-purple-400" : "font-bold text-yellow-400";
                         }
 
-                        // ⚡ 將新的「紀律與防守」警語寫入面板
                         let bgStyle = symbolData.trade_status.includes('⚠️') || symbolData.trade_status.includes('❌') ? "bg-red-900/20 border border-red-500/30 text-red-400" : "bg-blue-900/20 border border-blue-500/30 text-blue-300";
-                        
                         insightEl.innerHTML = `
                             <div class="mb-2 p-2 rounded border bg-[#1f242c] border-[#30363d] text-white">
                                 系統判定狀態：<span class="${symbolData.status_color || 'text-gray-400'}">${symbolData.trade_status || '-'}</span>
@@ -572,81 +583,71 @@
             renderScreenerData();
         }
 
-        // ================== 新版過濾池渲染 (加入 P/D Matrix) ==================
+        // ⚡ Tab 修復與全域 Filter 整合
         function renderScreenerData() {
             try {
                 const tbody = document.getElementById('screenerTableBody');
                 if (!tbody) return;
                 
-                if (!globalData || !Array.isArray(globalData.screener_data)) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">尚無數據</td></tr>`; 
-                    return;
+                const rawData = globalData.screener_data || [];
+                let processedData = [];
+
+                // 1. 處理 Tab 顯示 (修復新增股票無法顯示的問題)
+                if (currentTab === 'smc') {
+                    processedData = rawData.filter(item => item && item.smc_id);
+                } else {
+                    processedData = userWatchlist.map(sym => {
+                        let found = rawData.find(x => x && x.symbol === sym);
+                        return found || { symbol: sym, price: 0, rrr: 0, direction: 'none' };
+                    });
                 }
-                
-                let dataToRender = [...globalData.screener_data].filter(x => x !== null);
-                
-                if (currentTab === 'smc') dataToRender = dataToRender.filter(item => item && item.smc_id);
-                else if (currentTab === 'watchlist') dataToRender = dataToRender.filter(item => item && userWatchlist.includes(item.symbol));
 
-                const directionFilter = document.getElementById('filterDirection') ? document.getElementById('filterDirection').value : 'ALL';
-                if (directionFilter === 'LONG') dataToRender = dataToRender.filter(item => item.direction !== 'short');
-                else if (directionFilter === 'SHORT') dataToRender = dataToRender.filter(item => item.direction === 'short');
-                else if (directionFilter === 'SS') dataToRender = dataToRender.filter(item => item.confluence === true);
-
-                dataToRender.forEach(item => {
+                // 2. 計算即時價格與狀態
+                processedData = processedData.map(item => {
                     let livePrice = currentLivePrices[item.symbol] || item.price || 0;
-                    if (item.entry_top && item.entry_top > 0) {
-                        if (item.direction === 'short') item._liveDist = ((item.entry_bot - livePrice) / livePrice) * 100;
-                        else item._liveDist = ((livePrice - item.entry_top) / item.entry_top) * 100;
-                    } else { item._liveDist = 9999; }
+                    let st = getTradeStatus(item, livePrice);
+                    return { ...item, _livePrice: livePrice, _status: st };
                 });
 
-                dataToRender.sort((a, b) => {
+                // 3. 處理「形態」Filter
+                const directionFilter = document.getElementById('filterDirection') ? document.getElementById('filterDirection').value : 'ALL';
+                if (directionFilter === 'LONG') processedData = processedData.filter(item => item.direction !== 'short');
+                else if (directionFilter === 'SHORT') processedData = processedData.filter(item => item.direction === 'short');
+                else if (directionFilter === 'SS') processedData = processedData.filter(item => item.confluence === true);
+
+                // 4. ⚡ 處理「交易狀態」Filter
+                const statusFilter = document.getElementById('filterStatus') ? document.getElementById('filterStatus').value : 'ALL';
+                if (statusFilter === 'GREEN') processedData = processedData.filter(item => item._status.label === '🟢 可執行');
+                else if (statusFilter === 'YELLOW') processedData = processedData.filter(item => item._status.label === '🟡 接近中');
+                else if (statusFilter === 'RED') processedData = processedData.filter(item => item._status.label === '🔴 觀察中');
+
+                // 5. 排序
+                processedData.sort((a, b) => {
                     let valA = 0, valB = 0;
                     if (sortCol === 'rrr') { valA = parseFloat(a.rrr) || 0; valB = parseFloat(b.rrr) || 0; } 
                     return sortDesc ? (valB - valA) : (valA - valB);
                 });
 
                 tbody.innerHTML = '';
-                if (dataToRender.length === 0) {
+                if (processedData.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">目前無符合要求之數據</td></tr>`; 
                     return;
                 }
 
-                dataToRender.forEach(item => {
+                processedData.forEach(item => {
                     const tr = document.createElement('tr'); 
                     tr.className = 'border-b border-[#30363d] clickable-row'; 
                     tr.onclick = () => updateChartSymbol(item.symbol);
                     
-                    let livePrice = currentLivePrices[item.symbol] || item.price || 0;
-                    
-                    // ⚡ 整合狀態與距離
-                    let distText = "", statusLabel = "🔴 觀察中", statusColor = "text-gray-400", dot = "bg-gray-500";
-                    if (item.entry_top && item._liveDist !== 9999) {
-                        if (item.direction === 'short') {
-                            if (livePrice <= item.entry_top && livePrice >= item.entry_bot) { statusLabel = "🟢 可執行"; statusColor = "text-green-400 font-bold"; dot = "bg-green-500"; distText = "已入區 (0.0%)"; }
-                            else if (item._liveDist <= 2.0 && item._liveDist > 0) { statusLabel = "🟡 接近中"; statusColor = "text-yellow-400"; dot = "bg-yellow-500"; distText = `差異: -${item._liveDist.toFixed(1)}%`; }
-                            else if (item._liveDist > 2.0) { statusLabel = "🔴 觀察中"; statusColor = "text-red-500"; dot = "bg-red-500"; distText = `差異: -${item._liveDist.toFixed(1)}%`; }
-                            else distText = "已突破";
-                        } else {
-                            if (livePrice <= item.entry_top && livePrice >= item.entry_bot) { statusLabel = "🟢 可執行"; statusColor = "text-green-400 font-bold"; dot = "bg-green-500"; distText = "已入區 (0.0%)"; }
-                            else if (item._liveDist <= 2.0 && item._liveDist > 0) { statusLabel = "🟡 接近中"; statusColor = "text-yellow-400"; dot = "bg-yellow-500"; distText = `差異: -${item._liveDist.toFixed(1)}%`; }
-                            else if (item._liveDist > 2.0) { statusLabel = "🔴 觀察中"; statusColor = "text-red-500"; dot = "bg-red-500"; distText = `差異: -${item._liveDist.toFixed(1)}%`; }
-                            else distText = "已跌破";
-                        }
-                    }
-                    if (item.trade_status && (item.trade_status.includes('❌') || item.trade_status.includes('條件不足') || item.trade_status.includes('⚠️'))) {
-                        statusLabel = "🔴 觀察中"; statusColor = "text-gray-400"; dot = "bg-gray-500";
-                    }
+                    const st = item._status;
 
                     let statusDistHtml = `
-                        <div class="flex items-center gap-1.5 ${statusColor} text-sm font-semibold" id="status-dist-${item.symbol}">
-                            <div class="w-2 h-2 rounded-full ${dot}"></div> ${statusLabel}
+                        <div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold" id="status-dist-${item.symbol}">
+                            <div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}
                         </div>
-                        <div class="text-[11px] text-gray-400 mt-1">建議價格差異: <span class="${distText.includes('-')?'text-red-400':''}">${distText}</span></div>
+                        <div class="text-[11px] text-gray-400 mt-1">建議價格差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>
                     `;
 
-                    // ⚡ P/D Matrix 橫條
                     let pdVal = item.pd_percent !== undefined ? item.pd_percent : 50;
                     let pdDotColor = pdVal > 50 ? '#ef4444' : '#22c55e';
                     let pdHtml = `
@@ -739,8 +740,11 @@
                 const loader = document.getElementById('chartLoader');
                 if(loader) loader.style.display = 'flex';
 
+                // 清理舊圖層
                 activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); 
                 activePriceLines = []; 
+                activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} });
+                activeAreaSeries = [];
                 if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
 
                 let data = [];
@@ -780,19 +784,22 @@
                         price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, 
                         lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: `市價: $${currentSymbolData.price || 0}` 
                     });
-                    updateChartOverlays(); // ⚡ 呼叫覆蓋圖層繪製邏輯
+                    updateChartOverlays(); // ⚡ 繪製色塊與標籤
                 }
                 
                 chart.timeScale().fitContent(); 
             } catch(e) {}
         }
 
-        // ⚡ 新版低透明度色塊、邊緣標籤與失效線邏輯
+        // ⚡ 核心升級：完美的半透明面積圖層 (AreaSeries 模擬色塊)
         function updateChartOverlays() {
             if (!candleSeries || !currentSymbolData) return;
             
+            // 清理舊標籤與舊色塊
             activePriceLines.forEach(line => candleSeries.removePriceLine(line));
             activePriceLines = [];
+            activeAreaSeries.forEach(s => chart.removeSeries(s));
+            activeAreaSeries = [];
 
             const showLong = document.getElementById('layer_long').checked;
             const showShort = document.getElementById('layer_short').checked;
@@ -802,21 +809,33 @@
                 const isShort = currentSymbolData.direction === 'short';
                 
                 if ((isShort && showShort) || (!isShort && showLong)) {
-                    // 極低透明度色塊設定 (15%)
                     const zoneColor = isShort ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 197, 94, 0.15)'; 
-                    const topName = isShort ? '1D FVG (未緩解)' : '1D FVG (未緩解)';
-                    const botName = isShort ? '1D OB (未緩解)' : '1D OB (未緩解)';
+                    const lineColor = isShort ? 'rgba(239, 68, 68, 0.3)' : 'rgba(34, 197, 94, 0.3)';
+                    const topName = isShort ? '1D FVG' : '1D FVG';
+                    const botName = isShort ? '1D OB' : '1D OB';
                     
-                    // 邊緣對齊中文標籤 (axisLabelVisible: true)
-                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: zoneColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: topName }));
-                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: zoneColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: botName }));
+                    // ⚡ 使用 AreaSeries 繪製 15% 半透明色塊
+                    let areaSeries = chart.addAreaSeries({
+                        baseValue: { type: 'price', price: currentSymbolData.entry_bot },
+                        topColor: zoneColor,
+                        bottomColor: zoneColor,
+                        lineColor: 'rgba(0,0,0,0)', // 隱藏自帶的線，我們用 PriceLine 畫
+                        lineWidth: 0,
+                        priceLineVisible: false,
+                        lastValueVisible: false,
+                        crosshairMarkerVisible: false,
+                        autoscaleInfoProvider: () => null, // 不影響圖表自動縮放
+                    });
                     
-                    // 中間虛線製造色塊感
-                    const step = (currentSymbolData.entry_top - currentSymbolData.entry_bot) / 4;
-                    for(let i=1; i<4; i++) {
-                        activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot + (step*i), color: zoneColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: false }));
-                    }
+                    // 覆蓋整個時間軸
+                    let areaData = currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top }));
+                    areaSeries.setData(areaData);
+                    activeAreaSeries.push(areaSeries);
 
+                    // 繪製上下邊界實線與中文標籤
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: topName }));
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: botName }));
+                    
                     // 🚨 紅色強制失效線 (Invalidation)
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.sl, color: '#ef4444', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `失效線 (SL)` }));
                     
@@ -833,12 +852,22 @@
             }
         }
 
+        // ⚡ 安全的 Tab 切換邏輯 (使用 classList 避免吃掉圖示)
         function switchTab(tab) {
             currentTab = tab;
             const tSmc = document.getElementById('tabSmc');
             const tWl = document.getElementById('tabWatchlist');
-            if(tSmc) tSmc.className = (tab==='smc') ? "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap" : "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
-            if(tWl) tWl.className = (tab==='watchlist') ? "px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap" : "px-4 py-2 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
+            
+            const activeClass = ["text-blue-400", "border-blue-500"];
+            const inactiveClass = ["text-gray-400", "border-transparent", "hover:text-white"];
+            
+            if (tab === 'smc') {
+                tSmc.classList.add(...activeClass); tSmc.classList.remove(...inactiveClass);
+                tWl.classList.add(...inactiveClass); tWl.classList.remove(...activeClass);
+            } else {
+                tWl.classList.add(...activeClass); tWl.classList.remove(...inactiveClass);
+                tSmc.classList.add(...inactiveClass); tSmc.classList.remove(...activeClass);
+            }
             renderScreenerData();
         }
 
