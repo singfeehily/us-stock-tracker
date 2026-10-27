@@ -11,13 +11,12 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
         .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
         
-        /* ⚡ 加粗並美化所有 Scrollbar */
         ::-webkit-scrollbar { width: 12px; height: 12px; }
         ::-webkit-scrollbar-track { background: #0d1117; border-radius: 6px; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
         ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
         
-        .custom-scrollbar::-webkit-scrollbar { height: 12px; } /* 針對表格與自選股特別確保 12px 高度 */
+        .custom-scrollbar::-webkit-scrollbar { height: 12px; } 
 
         @media (max-width: 768px) {
             ::-webkit-scrollbar { height: 10px; width: 10px; } 
@@ -69,7 +68,6 @@
         .help-icon { color: #6b7280; margin-left: 4px; transition: color 0.2s; cursor: help; padding: 4px; }
         .help-icon:hover, .help-icon:active { color: #60a5fa; }
 
-        /* ⚡ 拖曳視覺回饋 */
         .drag-over { border-color: #3b82f6 !important; background-color: rgba(59, 130, 246, 0.1) !important; }
         .dragging { opacity: 0.5; }
     </style>
@@ -127,7 +125,6 @@
                 <i id="watchlistIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
             </div>
             <div id="watchlistContent" class="collapsible-content" style="max-height: 300px;">
-                <!-- ⚡ 加入 custom-scrollbar -->
                 <div id="watchlistContainer" class="flex gap-4 overflow-x-auto p-4 custom-scrollbar"></div>
             </div>
         </section>
@@ -154,29 +151,20 @@
                                 </div>
                                 <div class="flex items-center gap-3 text-[11px] text-gray-300 bg-[#0d1117] border border-[#30363d] rounded-lg p-2">
                                     <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_long" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做多區 
-                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做多區】顯示下方買單堆積的支撐區域，深色為 OB，淺色為 FVG 缺口', 'info');"></i>
+                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做多區】顯示下方買單堆積的支撐區域，深色為 OB 防守區，淺色為 FVG 缺口', 'info');"></i>
                                     </label>
                                     <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_short" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做空區 
-                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做空區】顯示上方賣單堆積的壓力區域，深色為 OB，淺色為 FVG 缺口', 'info');"></i>
+                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做空區】顯示上方賣單堆積的壓力區域，深色為 OB 防守區，淺色為 FVG 缺口', 'info');"></i>
                                     </label>
                                     <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_pd" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 溢折價 
-                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【溢/折價】絕對中軸(0.5)，上方為溢價(太貴)，下方為折價(便宜)', 'info');"></i>
                                     </label>
                                 </div>
                             </div>
                             <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2 flex flex-wrap gap-4 text-xs items-center justify-center">
-                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators('ema')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> EMA 
-                                    <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【指數移動平均線】快速判斷近期趨勢方向與動能 (黃線20/紫線50)', 'info');"></i>
-                                </label>
-                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators('boll')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> BOLL 
-                                    <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【布林通道】觀察價格波動率，突破上下軌常伴隨極端情緒', 'info');"></i>
-                                </label>
-                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> RSI 
-                                    <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【相對強弱指標】數值 > 70 為超買(過熱)，< 30 為超賣(過冷)', 'info');"></i>
-                                </label>
-                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_macd" onchange="updateChartIndicators('macd')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> MACD 
-                                    <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【平滑異同移動平均線】捕捉中長線趨勢反轉與動能爆發點', 'info');"></i>
-                                </label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators('ema')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> EMA</label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators('boll')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> BOLL</label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> RSI</label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_macd" onchange="updateChartIndicators('macd')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> MACD</label>
                             </div>
                         </div>
 
@@ -242,7 +230,6 @@
                         </button>
                     </div>
 
-                    <!-- ⚡ 加上 custom-scrollbar 確保高度充足 -->
                     <div class="overflow-x-auto flex-grow custom-scrollbar">
                         <table class="w-full text-left border-collapse whitespace-nowrap text-sm">
                             <thead>
@@ -315,7 +302,6 @@
         let sortCol = 'rrr'; let sortDesc = true;
         let currentTab = 'smc'; let currentTimeFrame = '1D'; 
         
-        // ⚡ 讀取 LocalStorage 自選股，預設清單不遺失
         let userWatchlist = JSON.parse(localStorage.getItem('smc_watchlist')) || ['AAPL', 'NVDA', 'TSLA', 'SPY', 'QQQ'];
 
         let chart = null, subChart = null, candleSeries = null;
@@ -429,7 +415,6 @@
             let dist = 9999;
             let label = "🔴 觀察中", colorClass = "text-gray-400", dotClass = "bg-gray-500", distText = "-";
 
-            // 確保防呆
             if (item && item.entry_top && item.entry_top > 0) {
                 if (item.direction === 'short') {
                     dist = ((item.entry_bot - livePrice) / livePrice) * 100;
@@ -577,7 +562,6 @@
             container.innerHTML = html;
         }
 
-        // ⚡ Drag & Drop 事件處理
         let dragSrcEl = null;
 
         function handleDragStart(e) {
@@ -646,7 +630,6 @@
                 const isPositive = (item.change || 0) >= 0;
                 
                 const card = document.createElement('div');
-                // ⚡ 加入 Drag & Drop 屬性
                 card.className = 'flex-shrink-0 w-44 glass-panel rounded-lg p-3 relative cursor-move hover:border-gray-500 transition-colors bg-[#0d1117] group border border-[#30363d]';
                 card.onclick = () => updateChartSymbol(item.symbol);
                 card.draggable = true;
@@ -735,7 +718,6 @@
             renderScreenerData();
         }
 
-        // ⚡ 完善的 Tab 防呆切換
         function renderScreenerData() {
             try {
                 const tbody = document.getElementById('screenerTableBody');
@@ -745,10 +727,8 @@
                 let processedData = [];
 
                 if (currentTab === 'smc') {
-                    // S 級狙擊池：嚴格要求必須有 smc_id
                     processedData = rawData.filter(item => item && item.smc_id);
                 } else {
-                    // 核心監察總表：按照自選股順序排列，沒有數據的補上預設防呆結構
                     processedData = userWatchlist.map(sym => {
                         let found = rawData.find(x => x && x.symbol === sym);
                         return found || { 
@@ -775,7 +755,6 @@
                 else if (statusFilter === 'YELLOW') processedData = processedData.filter(item => item._status.label === '🟡 接近中');
                 else if (statusFilter === 'RED') processedData = processedData.filter(item => item._status.label === '🔴 觀察中');
 
-                // 只有在 SMC 池才強制排序，自選股池保持拖曳順序
                 if (currentTab === 'smc') {
                     processedData.sort((a, b) => {
                         let valA = 0, valB = 0;
@@ -926,8 +905,6 @@
                 activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} });
                 activeAreaSeries = [];
                 if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
-                const smcLegend = document.getElementById('smcLegend');
-                if(smcLegend) smcLegend.style.display = 'none';
 
                 let data = [];
                 const tfParam = currentTimeFrame.toLowerCase();
@@ -973,7 +950,7 @@
             } catch(e) {}
         }
 
-        // ⚡ 核心視覺升級：漸層渲染 (FVG 與 OB 深度區分)
+        // ⚡ 終極分層渲染：徹底分開 FVG 與 OB 兩個獨立色塊
         function updateChartOverlays(caller = null) {
             if (!candleSeries || !currentSymbolData) return;
             
@@ -981,41 +958,40 @@
             activePriceLines = [];
             activeAreaSeries.forEach(s => chart.removeSeries(s));
             activeAreaSeries = [];
-            
-            const smcLegend = document.getElementById('smcLegend');
-            if (smcLegend) { smcLegend.innerHTML = ''; smcLegend.style.display = 'none'; }
 
             const showLong = document.getElementById('layer_long').checked;
             const showShort = document.getElementById('layer_short').checked;
             const showPd = document.getElementById('layer_pd').checked;
 
-            let legendHtml = `<div class="text-gray-300 font-bold mb-1 border-b border-gray-600 pb-1">SMC 戰術標記</div>`;
-            let hasLegend = false;
-
             if (currentSymbolData.entry_top > 0) {
                 const isShort = currentSymbolData.direction === 'short';
                 
                 if ((isShort && showShort) || (!isShort && showLong)) {
-                    hasLegend = true;
-                    // ⚡ 漸層邏輯：
-                    // 做空時 (阻力區)：上方為 OB (深紅)，下方為 FVG (淺紅)
-                    // 做多時 (支撐區)：下方為 OB (深綠)，上方為 FVG (淺綠)
-                    const topColor = isShort ? 'rgba(239, 68, 68, 0.35)' : 'rgba(34, 197, 94, 0.05)'; 
-                    const bottomColor = isShort ? 'rgba(239, 68, 68, 0.05)' : 'rgba(34, 197, 94, 0.35)'; 
-                    const lineColor = isShort ? 'rgba(239, 68, 68, 0.4)' : 'rgba(34, 197, 94, 0.4)';
-                    const textColor = isShort ? 'text-red-400' : 'text-green-400';
-                    const icon = isShort ? '🔻' : '🔺';
                     
-                    let areaSeries = chart.addAreaSeries({
+                    const fvgColor = isShort ? 'rgba(239, 68, 68, 0.12)' : 'rgba(34, 197, 94, 0.12)'; 
+                    const obColor  = isShort ? 'rgba(239, 68, 68, 0.35)' : 'rgba(34, 197, 94, 0.35)'; 
+                    const lineColor = isShort ? 'rgba(239, 68, 68, 0.6)' : 'rgba(34, 197, 94, 0.6)';
+                    
+                    // 1. 繪製 FVG 缺口區塊 (淺色)
+                    let fvgSeries = chart.addAreaSeries({
                         baseValue: { type: 'price', price: currentSymbolData.entry_bot },
-                        topColor: topColor, bottomColor: bottomColor,
+                        topColor: fvgColor, bottomColor: fvgColor,
                         lineColor: 'rgba(0,0,0,0)', lineWidth: 0,
                         priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null, 
                     });
-                    
-                    let areaData = currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top }));
-                    areaSeries.setData(areaData);
-                    activeAreaSeries.push(areaSeries);
+                    fvgSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top })));
+                    activeAreaSeries.push(fvgSeries);
+
+                    // 2. 繪製 OB 防守區塊 (深色，由 OB 邊緣延伸至 SL)
+                    let obBasePrice = isShort ? currentSymbolData.entry_top : currentSymbolData.entry_bot;
+                    let obSeries = chart.addAreaSeries({
+                        baseValue: { type: 'price', price: obBasePrice },
+                        topColor: obColor, bottomColor: obColor,
+                        lineColor: 'rgba(0,0,0,0)', lineWidth: 0,
+                        priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null, 
+                    });
+                    obSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.sl })));
+                    activeAreaSeries.push(obSeries);
 
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ FVG' }));
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ OB' }));
@@ -1174,7 +1150,7 @@
             const val = input.value.trim().toUpperCase(); 
             if(!val) return;
             if (userWatchlist.includes(val)) { showToast(`股票 ${val} 已經在自選清單中`, 'error'); input.value = ''; return; }
-            userWatchlist.unshift(val); // 加入最前面
+            userWatchlist.unshift(val); 
             saveWatchlist();
             renderWatchlist(); renderScreenerData(); 
             try { fetchLiveQuotes(); } catch(err){}
