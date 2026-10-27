@@ -16,19 +16,28 @@
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
         ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
         
+        /* 📱 手機版專屬 UX 優化 */
         @media (max-width: 768px) {
-            ::-webkit-scrollbar { height: 6px; } 
-            ::-webkit-scrollbar-thumb { background: #6b7280; border-radius: 6px; border: 1px solid #0d1117; }
-            .overflow-x-auto { -webkit-overflow-scrolling: touch; padding-bottom: 6px; }
+            /* 1. 加粗滾動條，方便手指滑動 */
+            ::-webkit-scrollbar { height: 10px; width: 10px; } 
+            ::-webkit-scrollbar-thumb { background: #6b7280; border-radius: 8px; border: 2px solid #0d1117; }
+            .overflow-x-auto { -webkit-overflow-scrolling: touch; padding-bottom: 12px; }
+            /* 2. 鎖死圖表區的網頁預設滑動，防止 Zoom In/Out 時畫面走位 */
+            #tv_chart_container, #sub_chart_container { 
+                touch-action: none !important; 
+                overscroll-behavior: none !important; 
+            }
         }
         
         #mainHeader { transition: transform 0.3s ease-in-out; }
         .header-hidden { transform: translateY(-100%); }
 
         #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 50; display: flex; flex-direction: column; gap: 10px; }
-        .toast { padding: 12px 20px; border-radius: 8px; background-color: #238636; color: white; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.5); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
+        .toast { padding: 12px 20px; border-radius: 8px; color: white; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.5); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
         .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background-color: #238636; }
         .toast.error { background-color: #da3633; }
+        .toast.info { background-color: #3b82f6; } /* 新增藍色 Info Toast 給手機指標說明用 */
         
         .clickable-row { cursor: pointer; transition: background-color 0.2s; }
         .clickable-row:hover { background-color: #1f242c; }
@@ -42,6 +51,14 @@
             font-family: monospace; font-size: 12px; pointer-events: none; display: none;
         }
 
+        #smcLegend {
+            position: absolute; right: 60px; top: 12px; z-index: 10;
+            background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(4px);
+            border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px;
+            font-family: monospace; font-size: 11px; pointer-events: none; display: none;
+            flex-direction: column; gap: 4px;
+        }
+
         @keyframes flashGreen { 0% { color: #4ade80; text-shadow: 0 0 10px #4ade80; transform: scale(1.05); } 100% { color: inherit; text-shadow: none; transform: scale(1); } }
         @keyframes flashRed { 0% { color: #f87171; text-shadow: 0 0 10px #f87171; transform: scale(1.05); } 100% { color: inherit; text-shadow: none; transform: scale(1); } }
         .flash-green { animation: flashGreen 0.8s ease-out; }
@@ -52,8 +69,8 @@
         #chartLoader { display: none; position: absolute; inset: 0; background: rgba(13,17,23,0.7); backdrop-filter: blur(2px); z-index: 20; align-items: center; justify-content: center; }
 
         .pd-track { background: linear-gradient(to right, #166534 0%, #166534 49%, #4b5563 49%, #4b5563 51%, #991b1b 51%, #991b1b 100%); }
-        .help-icon { color: #6b7280; margin-left: 4px; transition: color 0.2s; }
-        .help-icon:hover { color: #60a5fa; }
+        .help-icon { color: #6b7280; margin-left: 4px; transition: color 0.2s; cursor: help; padding: 4px; }
+        .help-icon:hover, .help-icon:active { color: #60a5fa; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative">
@@ -134,23 +151,40 @@
                                     <button onclick="changeTimeFrame('1D')" id="tf_1D" class="px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors">1D</button>
                                 </div>
                                 <div class="flex items-center gap-3 text-[11px] text-gray-300 bg-[#0d1117] border border-[#30363d] rounded-lg p-2">
-                                    <label class="flex items-center cursor-pointer" title="顯示下方買單堆積的支撐區域"><input type="checkbox" id="layer_long" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做多區 <i class="fa-solid fa-circle-question help-icon"></i></label>
-                                    <label class="flex items-center cursor-pointer" title="顯示上方賣單堆積的壓力區域"><input type="checkbox" id="layer_short" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做空區 <i class="fa-solid fa-circle-question help-icon"></i></label>
-                                    <label class="flex items-center cursor-pointer" title="絕對中軸(0.5)，上方為溢價(太貴)，下方為折價(便宜)"><input type="checkbox" id="layer_pd" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 溢折價 <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                    <!-- 手機版支援點擊 ? 彈出提示，避免誤觸 -->
+                                    <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_long" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做多區 
+                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做多區】顯示下方買單堆積的支撐區域，價格回踩此區容易反彈', 'info');"></i>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_short" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做空區 
+                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做空區】顯示上方賣單堆積的壓力區域，價格觸及此區容易回落', 'info');"></i>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_pd" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 溢折價 
+                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【溢/折價】絕對中軸(0.5)，上方為溢價(太貴)，下方為折價(便宜)', 'info');"></i>
+                                    </label>
                                 </div>
                             </div>
                             <!-- 副圖指標開關 -->
                             <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2 flex flex-wrap gap-4 text-xs items-center justify-center">
-                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【指數移動平均線】快速判斷近期趨勢方向與動能"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators('ema')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> EMA <i class="fa-solid fa-circle-question help-icon"></i></label>
-                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【布林通道】觀察價格波動率，突破上下軌常伴隨極端情緒"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators('boll')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> BOLL <i class="fa-solid fa-circle-question help-icon"></i></label>
-                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【相對強弱指標】數值>70為超買，<30為超賣"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> RSI <i class="fa-solid fa-circle-question help-icon"></i></label>
-                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【平滑異同移動平均線】捕捉中長線趨勢反轉與動能爆發點"><input type="checkbox" id="ind_macd" onchange="updateChartIndicators('macd')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> MACD <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators('ema')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> EMA 
+                                    <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【指數移動平均線】快速判斷近期趨勢方向與動能 (黃線20/紫線50)', 'info');"></i>
+                                </label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators('boll')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> BOLL 
+                                    <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【布林通道】觀察價格波動率，突破上下軌常伴隨極端情緒', 'info');"></i>
+                                </label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> RSI 
+                                    <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【相對強弱指標】數值 > 70 為超買(過熱)，< 30 為超賣(過冷)', 'info');"></i>
+                                </label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_macd" onchange="updateChartIndicators('macd')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> MACD 
+                                    <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【平滑異同移動平均線】捕捉中長線趨勢反轉與動能爆發點', 'info');"></i>
+                                </label>
                             </div>
                         </div>
 
+                        <!-- 圖表區 -->
                         <div id="tv_chart_container" style="height: 380px; width: 100%; position: relative;">
                             <div id="chartLoader"><i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-3xl"></i></div>
                             <div id="chartTooltip"></div>
+                            <div id="smcLegend"></div>
                         </div>
                         <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
                     </div>
@@ -180,7 +214,7 @@
                         <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-xs">
                             <span class="text-gray-400 block mb-1 flex items-center justify-between">
                                 <span>SMC 戰術與 OB 入場區 (SMC & OB)</span>
-                                <i class="fa-solid fa-circle-info text-blue-500 cursor-pointer" onclick="openSMCModal()"></i>
+                                <i class="fa-solid fa-circle-info text-blue-500 cursor-pointer p-1" onclick="openSMCModal()"></i>
                             </span>
                             <span id="panelSMC" class="font-bold text-yellow-400">--</span>
                         </div>
@@ -214,20 +248,16 @@
                             <thead>
                                 <tr class="border-b border-[#30363d] bg-[#0d1117]">
                                     <th class="px-4 py-3 font-medium text-gray-400">股票</th>
-                                    
-                                    <!-- ⚡ 新增現價與時段欄位 -->
                                     <th class="px-4 py-3 font-medium text-gray-400 text-right">即時現價</th>
-
                                     <th class="px-4 py-3 font-medium text-gray-400 text-left">
                                         交易狀態 
-                                        <select id="filterStatus" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none focus:border-blue-500" title="根據價格距離與盈虧比所判定的安全狀態">
+                                        <select id="filterStatus" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none focus:border-blue-500">
                                             <option value="ALL">全部</option>
                                             <option value="GREEN">🟢 可執行</option>
                                             <option value="YELLOW">🟡 接近中</option>
                                             <option value="RED">🔴 觀察中</option>
                                         </select>
                                     </th>
-                                    
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center">
                                         形態
                                         <select id="filterDirection" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none focus:border-blue-500">
@@ -237,12 +267,11 @@
                                             <option value="SS">SS級</option>
                                         </select>
                                     </th>
-                                    
-                                    <th class="px-4 py-3 font-medium text-gray-400 text-center cursor-pointer hover:text-white group" onclick="changeSort('rrr')" title="真實的盈虧比 (預期利潤 ÷ 風險)，>= 2.0 方為安全">
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center cursor-pointer hover:text-white group" onclick="changeSort('rrr')">
                                         R:R <i class="fa-solid fa-sort text-gray-600 group-hover:text-blue-400 transition-colors ml-1"></i>
                                     </th>
                                     <th class="px-4 py-3 font-medium text-blue-400 text-right">建議入場區</th>
-                                    <th class="px-4 py-3 font-medium text-gray-400 text-center" title="價格位於近半年波動區間的相對位置">溢價/折價 (P/D Matrix)</th>
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">溢價/折價 (P/D Matrix)</th>
                                 </tr>
                             </thead>
                             <tbody id="screenerTableBody">
@@ -259,7 +288,7 @@
     
     <div id="smcModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="glass-panel p-6 rounded-xl max-w-lg w-full relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeSMCModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+            <button onclick="closeSMCModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
             <h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-book text-blue-400 mr-2"></i>專業術語與指標百科</h3>
@@ -312,26 +341,19 @@
             try { startSmartPolling(); fetchLiveQuotes(); } catch (e) {}
         });
 
-        // ⚡ 智能判斷美股時段引擎
         function getMarketSession() {
-            // 轉換為紐約時間 (自動處理冬/夏令時)
             const nyTime = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
             const day = nyTime.getDay();
             const h = nyTime.getHours();
             const m = nyTime.getMinutes();
-            const timeStr = h * 100 + m; // 格式化為整數方便比對，例如 9:30 = 930
+            const timeStr = h * 100 + m; 
 
-            // 週末休市
             if (day === 0 || day === 6) return { text: "休市", style: "bg-gray-800/80 text-gray-400 border-gray-600", dot: "text-gray-500", interval: 60000 };
             
-            // 美東 04:00 - 09:30 (盤前)
             if (timeStr >= 400 && timeStr < 930) return { text: "盤前", style: "bg-blue-900/40 text-blue-400 border-blue-500/50", dot: "text-blue-500 animate-pulse", interval: 10000 };
-            // 美東 09:30 - 16:00 (盤中)
             if (timeStr >= 930 && timeStr < 1600) return { text: "盤中", style: "bg-green-900/40 text-green-400 border-green-500/50", dot: "text-red-500 animate-pulse", interval: 10000 };
-            // 美東 16:00 - 20:00 (盤後)
             if (timeStr >= 1600 && timeStr < 2000) return { text: "盤後", style: "bg-purple-900/40 text-purple-400 border-purple-500/50", dot: "text-purple-500 animate-pulse", interval: 10000 };
             
-            // 其他時間視為收盤/休市
             return { text: "收盤", style: "bg-gray-800/80 text-gray-400 border-gray-600", dot: "text-gray-500", interval: 60000 };
         }
 
@@ -446,7 +468,6 @@
                                 priceEl.classList.remove('flash-green', 'flash-red'); void priceEl.offsetWidth; 
                                 priceEl.classList.add(newPrice > oldPrice ? 'flash-green' : 'flash-red');
                             }
-                            // ⚡ 插入時段徽章
                             priceEl.innerHTML = `$${newPrice.toFixed(2)} ${sessionBadge}`; 
                             priceEl.dataset.price = newPrice;
                             
@@ -744,7 +765,6 @@
             } catch(e) {}
         }
 
-        // ================== 圖表引擎初始化 ==================
         function initCharts() {
             const container = document.getElementById('tv_chart_container');
             const subContainer = document.getElementById('sub_chart_container');
@@ -756,7 +776,11 @@
                 grid: { vertLines: { color: 'rgba(48, 54, 61, 0.5)' }, horzLines: { color: 'rgba(48, 54, 61, 0.5)' } },
                 timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false }, 
                 crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-                rightPriceScale: { borderColor: '#30363d' }
+                rightPriceScale: { borderColor: '#30363d' },
+                // 📱 手機防走位：觸控結束時自動退出十字線模式，並允許各種滑動行為鎖定在圖表內
+                trackingMode: { exitMode: LightweightCharts.TrackingModeExitMode.OnTouchEnd },
+                handleScroll: { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: true },
+                handleScale: { mouseWheel: true, pinch: true, axisPressedMouseMove: true }
             });
             
             candleSeries = chart.addCandlestickSeries({ 
@@ -767,7 +791,10 @@
             subChart = LightweightCharts.createChart(subContainer, {
                 layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } },
                 grid: { vertLines: { color: 'rgba(48, 54, 61, 0.3)' }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } },
-                timeScale: { borderColor: '#30363d', visible: false }
+                timeScale: { borderColor: '#30363d', visible: false },
+                trackingMode: { exitMode: LightweightCharts.TrackingModeExitMode.OnTouchEnd },
+                handleScroll: { horzTouchDrag: true, vertTouchDrag: true },
+                handleScale: { pinch: true }
             });
 
             chart.timeScale().subscribeVisibleTimeRangeChange(range => { if (subContainer.style.display !== 'none') subChart.timeScale().setVisibleRange(range); });
@@ -824,6 +851,8 @@
                 activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} });
                 activeAreaSeries = [];
                 if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
+                const smcLegend = document.getElementById('smcLegend');
+                if(smcLegend) smcLegend.style.display = 'none';
 
                 let data = [];
                 const tfParam = currentTimeFrame.toLowerCase();
@@ -869,25 +898,33 @@
             } catch(e) {}
         }
 
-        // ⚡ 核心視覺升級：方案 B (精簡文字靠右，完全不遮擋 K 線實體)
-        function updateChartOverlays() {
+        function updateChartOverlays(caller = null) {
             if (!candleSeries || !currentSymbolData) return;
             
             activePriceLines.forEach(line => candleSeries.removePriceLine(line));
             activePriceLines = [];
             activeAreaSeries.forEach(s => chart.removeSeries(s));
             activeAreaSeries = [];
+            
+            const smcLegend = document.getElementById('smcLegend');
+            if (smcLegend) { smcLegend.innerHTML = ''; smcLegend.style.display = 'none'; }
 
             const showLong = document.getElementById('layer_long').checked;
             const showShort = document.getElementById('layer_short').checked;
             const showPd = document.getElementById('layer_pd').checked;
 
+            let legendHtml = `<div class="text-gray-300 font-bold mb-1 border-b border-gray-600 pb-1">SMC 戰術標記</div>`;
+            let hasLegend = false;
+
             if (currentSymbolData.entry_top > 0) {
                 const isShort = currentSymbolData.direction === 'short';
                 
                 if ((isShort && showShort) || (!isShort && showLong)) {
+                    hasLegend = true;
                     const zoneColor = isShort ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 197, 94, 0.15)'; 
                     const lineColor = isShort ? 'rgba(239, 68, 68, 0.3)' : 'rgba(34, 197, 94, 0.3)';
+                    const textColor = isShort ? 'text-red-400' : 'text-green-400';
+                    const icon = isShort ? '🔻' : '🔺';
                     
                     let areaSeries = chart.addAreaSeries({
                         baseValue: { type: 'price', price: currentSymbolData.entry_bot },
@@ -900,7 +937,6 @@
                     areaSeries.setData(areaData);
                     activeAreaSeries.push(areaSeries);
 
-                    // ⚡ 使用原生 PriceLine 的 title 屬性達成方案 B (浮水印靠右，短標籤不干擾)
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ FVG' }));
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ OB' }));
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.sl, color: '#ef4444', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '🚨 SL' }));
@@ -910,7 +946,6 @@
 
             if (showPd && currentSymbolData.macro_eq) {
                 activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '➖ 0.5 均衡' }));
-                // 為了畫面極度乾淨，Premium / Discount 不再畫滿版虛線干擾視線
             }
         }
 
@@ -980,7 +1015,6 @@
             } catch(e) {}
         }
 
-        // ================== 數學計算函數 ==================
         function calculateEMA(data, period, key = 'close') {
             if (!data || !data.length) return [];
             let result = [], multiplier = 2 / (period + 1), prevEMA = data[0][key] || 0;
@@ -1088,11 +1122,13 @@
             const c = document.getElementById('toast-container');
             if(!c) return;
             const t = document.createElement('div'); 
-            t.className = `toast ${type==='error'?'error':''}`; 
-            t.innerHTML = `<i class="fa-solid ${type==='error'?'fa-trash':'fa-check-circle'} mr-2"></i> ${msg}`; 
+            let typeClass = type === 'error' ? 'error' : (type === 'info' ? 'info' : 'success');
+            t.className = `toast ${typeClass}`; 
+            let iconClass = type === 'error' ? 'fa-trash' : (type === 'info' ? 'fa-circle-info' : 'fa-check-circle');
+            t.innerHTML = `<i class="fa-solid ${iconClass} mr-2"></i> ${msg}`; 
             c.appendChild(t); 
             setTimeout(() => t.classList.add('show'), 10); 
-            setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 3000); 
+            setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, type === 'info' ? 4000 : 3000); 
         }
         
         function changeTimeFrame(tf) { 
