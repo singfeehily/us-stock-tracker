@@ -26,9 +26,54 @@ def find_swing_high(df, current_idx, lookback=20):
     start = max(0, current_idx - lookback)
     return df['High'].iloc[start:current_idx].max()
 
-def find_swing_low(df, current_idx, lookback=10):
+def find_swing_low(df, current_idx, lookback=20):
     start = max(0, current_idx - lookback)
     return df['Low'].iloc[start:current_idx].min()
+
+# ⚡ 核心演算法升級：尋找真實的 SMC 目標價 (未緩解 FVG 或 流動性池)
+def find_smc_tp(df, current_idx, direction, entry_price):
+    lookback = min(60, current_idx)
+    ufvg_levels = []
+    
+    for i in range(current_idx - lookback + 2, current_idx):
+        if direction == 'long':
+            # 尋找做多目標：上方未緩解的看跌 FVG (Bearish FVG)
+            if df['High'].iloc[i] < df['Low'].iloc[i-2]:
+                fvg_bot = df['High'].iloc[i]
+                if fvg_bot > entry_price:
+                    # 檢查此 FVG 是否已被後續的 K 線刺破 (緩解)
+                    mitigated = False
+                    for j in range(i+1, current_idx+1):
+                        if df['High'].iloc[j] >= fvg_bot:
+                            mitigated = True
+                            break
+                    if not mitigated:
+                        ufvg_levels.append(fvg_bot)
+        else:
+            # 尋找做空目標：下方未緩解的看漲 FVG (Bullish FVG)
+            if df['Low'].iloc[i] > df['High'].iloc[i-2]:
+                fvg_top = df['Low'].iloc[i]
+                if fvg_top < entry_price:
+                    mitigated = False
+                    for j in range(i+1, current_idx+1):
+                        if df['Low'].iloc[j] <= fvg_top:
+                            mitigated = True
+                            break
+                    if not mitigated:
+                        ufvg_levels.append(fvg_top)
+                        
+    # 結合波段高低點 (Liquidity Pool)
+    if direction == 'long':
+        swing_target = find_swing_high(df, current_idx, 40)
+        # 取距離最近的阻力作為 TP1
+        if ufvg_levels:
+            return min(min(ufvg_levels), swing_target)
+        return swing_target
+    else:
+        swing_target = find_swing_low(df, current_idx, 40)
+        if ufvg_levels:
+            return max(max(ufvg_levels), swing_target)
+        return swing_target
 
 def get_earnings_alert(ticker_obj):
     try:
@@ -40,7 +85,6 @@ def get_earnings_alert(ticker_obj):
             elif isinstance(ed, datetime): target_date = ed.date()
             else: target_date = ed 
             today = datetime.now().date()
-            # ⚡ 嚴格濾網：3天內發布財報即刻鎖定
             if today <= target_date <= today + timedelta(days=3):
                 return True
     except: pass
@@ -93,14 +137,22 @@ def detect_smc(df):
                     smc_class = "border-green-500 text-green-400"
                     
                     entry_top, entry_bot = fvg_top, fvg_bot
-                    sl = min(df['Low'].iloc[i-2], swing_low_before_fvg) * 0.995 
-                    tp_raw = find_swing_high(df, len(df)-1, 40) 
                     
-                    risk = ((entry_top + entry_bot) / 2) - sl
-                    tp = ((entry_top + entry_bot) / 2) + (risk * 2.5) if tp_raw <= entry_top else tp_raw
-                    rrr = round((tp - ((entry_top + entry_bot) / 2)) / risk, 1) if risk > 0 else 0
-                    if rrr >= 1.0: break
-                    else: smc_id = None 
+                    # 防守(SL)：波段低點往下預留 0.5% 防止獵殺
+                    sl = min(df['Low'].iloc[i-2], swing_low_before_fvg) * 0.995 
+                    
+                    # 真實進場中軸與真實 TP1
+                    entry_mid = (entry_top + entry_bot) / 2
+                    tp_raw = find_smc_tp(df, len(df)-1, 'long', entry_top)
+                    
+                    risk = entry_mid - sl
+                    reward = tp_raw - entry_mid
+                    
+                    if risk > 0 and reward > 0:
+                        tp = tp_raw
+                        rrr = round(reward / risk, 1)
+                        if rrr >= 1.0: break # 只顯示 RRR 大於 1 的，讓濾網去擋小於 2 的
+                    smc_id = None 
         else:
             if df['High'].iloc[i] < df['Low'].iloc[i-2]: 
                 fvg_bot, fvg_top = df['High'].iloc[i], df['Low'].iloc[i-2]
@@ -115,19 +167,26 @@ def detect_smc(df):
                     smc_class = "border-red-500 text-red-400"
                     
                     entry_top, entry_bot = fvg_top, fvg_bot
-                    sl = max(df['High'].iloc[i-2], swing_high_before_fvg) * 1.005 
-                    tp_raw = find_swing_low(df, len(df)-1, 40) 
                     
-                    risk = sl - ((entry_top + entry_bot) / 2)
-                    tp = ((entry_top + entry_bot) / 2) - (risk * 2.5) if tp_raw >= entry_bot else tp_raw
-                    rrr = round((((entry_top + entry_bot) / 2) - tp) / risk, 1) if risk > 0 else 0
-                    if rrr >= 1.0: break
-                    else: smc_id = None 
+                    # 防守(SL)：波段高點往上預留 0.5% 防止獵殺
+                    sl = max(df['High'].iloc[i-2], swing_high_before_fvg) * 1.005 
+                    
+                    entry_mid = (entry_top + entry_bot) / 2
+                    tp_raw = find_smc_tp(df, len(df)-1, 'short', entry_bot)
+                    
+                    risk = sl - entry_mid
+                    reward = entry_mid - tp_raw
+                    
+                    if risk > 0 and reward > 0:
+                        tp = tp_raw
+                        rrr = round(reward / risk, 1)
+                        if rrr >= 1.0: break
+                    smc_id = None 
     
     return smc_id, smc_text, smc_class, round(entry_top, 2), round(entry_bot, 2), round(sl, 2), round(tp, 2), rrr, direction, is_sweep
 
 def main():
-    print(f"啟動全方位 SMC 量化雷達 (強制濾網升級版)...")
+    print(f"啟動全方位 SMC 量化雷達 (真實 TP 演算法升級)...")
     screener_data, watchlist_data, chart_data_map = [], [], {}
     
     for symbol in WATCHLIST:
@@ -146,7 +205,6 @@ def main():
             current_price = round(latest['Close'], 2)
             change_pct = round(((current_price - round(prev['Close'], 2)) / round(prev['Close'], 2)) * 100, 2)
             
-            # P/D 位置計算 (0-100%)
             pd_percent = 50
             if macro_bsl - macro_ssl > 0:
                 pd_percent = round(((current_price - macro_ssl) / (macro_bsl - macro_ssl)) * 100, 1)
@@ -158,16 +216,14 @@ def main():
             earnings_alert = get_earnings_alert(ticker_obj)
             confluence = check_intraday_confluence(symbol, direction) if smc_id else False
             
-            # ⚡ 嚴格評分系統 (星級)
             stars = 0
             if smc_id:
-                stars += 1 # 基礎形態
-                if is_sweep: stars += 1 # 掃損
-                if (direction == 'long' and pd_percent < 50) or (direction == 'short' and pd_percent > 50): stars += 1 # P/D 合理
-                if rrr >= 2.0: stars += 1 # 盈虧比達標
-                if confluence: stars += 1 # 小級別共振
+                stars += 1 
+                if is_sweep: stars += 1 
+                if (direction == 'long' and pd_percent < 50) or (direction == 'short' and pd_percent > 50): stars += 1 
+                if rrr >= 2.0: stars += 1 
+                if confluence: stars += 1 
             
-            # ⚡ 交易狀態與濾網擋單機制
             trade_status = "無效"
             status_color = "text-gray-500"
             inv_text = "無形態"
@@ -176,17 +232,17 @@ def main():
                 if earnings_alert:
                     trade_status = "⚠️ 財報將至 (暫停交易)"
                     status_color = "text-yellow-500 font-bold"
+                # ⚡ 嚴格濾網發揮作用：真實 TP 算出來的 R:R 若低於 2，強制擋單
                 elif rrr < 2.0:
-                    trade_status = "🔴 觀察中 (❌ 盈虧比不佳)"
+                    trade_status = f"🔴 觀察中 (❌ RRR {rrr} 不佳)"
                     status_color = "text-red-500"
                 elif stars >= 4:
-                    trade_status = "🟢 4-5星 可執行"
+                    trade_status = "🟢 可執行"
                     status_color = "text-green-400 font-bold"
                 else:
                     trade_status = f"🔴 觀察中 (⭐ {stars}星 條件不足)"
                     status_color = "text-gray-400"
                 
-                # 具體化失效提示
                 inv_dir = "收低於" if direction == 'long' else "收高於"
                 inv_struct = "看漲" if direction == 'long' else "看跌"
                 inv_text = f"🚨 紀律底線：若日線實體{inv_dir} ${sl}，{inv_struct}結構即刻失效，必須無條件平倉。"
@@ -197,25 +253,25 @@ def main():
                 "entry_bot": entry_bot, "entry_top": entry_top, "sl": sl, "tp": tp, "rrr": rrr,
                 "direction": direction, "macro_bsl": macro_bsl, "macro_ssl": macro_ssl, "macro_eq": macro_eq,
                 "pd_percent": pd_percent, "stars": stars, "trade_status": trade_status, 
-                "status_color": status_color, "inv_text": inv_text
+                "status_color": status_color, "inv_text": inv_text, "confluence": confluence
             })
-            print(f"完成 {symbol} | 狀態: {trade_status}")
+            print(f"完成 {symbol} | 狀態: {trade_status} | TP1: ${tp} | RRR: {rrr}")
             
         except Exception as e:
             print(f"❌ {symbol} 錯誤: {e}")
 
-    # 排序：星級 > RRR > P/D 完美度
     def sort_key(x):
         if x['smc_id'] is None: return -100
         score = x['stars'] * 1000 + x['rrr'] * 100
         if x['trade_status'].startswith('⚠️'): score -= 5000
+        if '❌' in x['trade_status']: score -= 2000
         return score
     screener_data.sort(key=sort_key, reverse=True)
 
     hk_timezone = timezone(timedelta(hours=8))
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump({"updated_at": datetime.now(hk_timezone).strftime("%Y-%m-%d %H:%M:%S"), "watchlist_data": watchlist_data, "screener_data": screener_data, "chart_data": chart_data_map}, f, ensure_ascii=False, indent=4)
-    print("🎉 data.json 寫入完成！")
+    print("🎉 data.json 寫入完成！真實 SMC 目標已生效。")
 
 if __name__ == "__main__":
     main()
