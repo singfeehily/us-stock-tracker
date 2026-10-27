@@ -15,7 +15,6 @@
         ::-webkit-scrollbar-track { background: #0d1117; border-radius: 6px; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
         ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
-        
         .custom-scrollbar::-webkit-scrollbar { height: 12px; } 
 
         @media (max-width: 768px) {
@@ -59,20 +58,11 @@
         .pd-track { background: linear-gradient(to right, #166534 0%, #166534 49%, #4b5563 49%, #4b5563 51%, #991b1b 51%, #991b1b 100%); }
         .help-icon { color: #6b7280; margin-left: 4px; transition: color 0.2s; cursor: help; padding: 4px; }
         .help-icon:hover, .help-icon:active { color: #60a5fa; }
-
         .drag-over { border-color: #3b82f6 !important; background-color: rgba(59, 130, 246, 0.1) !important; }
         .dragging { opacity: 0.5; }
 
-        /* ⚡ 自選股選中時的特殊外框效果 */
-        .watchlist-card {
-            border: 1px solid #30363d;
-            transition: all 0.2s ease-in-out;
-        }
-        .watchlist-card.active-selected {
-            border: 2px solid #3b82f6 !important;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-            background: rgba(59, 130, 246, 0.08);
-        }
+        .watchlist-card { border: 1px solid #30363d; transition: all 0.2s ease-in-out; }
+        .watchlist-card.active-selected { border: 2px solid #3b82f6 !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative">
@@ -153,17 +143,16 @@
                                     <button onclick="changeTimeFrame('1D')" id="tf_1D" class="px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors">1D</button>
                                 </div>
                                 <div class="flex items-center gap-3 text-[11px] text-gray-300 bg-[#0d1117] border border-[#30363d] rounded-lg p-2">
-                                    <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_long" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做多區 
-                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做多區】顯示下方買單堆積的支撐區域，深色為 OB 防守區，淺色為 FVG 缺口', 'info');"></i>
-                                    </label>
-                                    <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_short" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做空區 
-                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做空區】顯示上方賣單堆積的壓力區域，深色為 OB 防守區，淺色為 FVG 缺口', 'info');"></i>
-                                    </label>
-                                    <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_pd" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 溢折價 
-                                    </label>
+                                    <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_long" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做多區</label>
+                                    <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_short" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做空區</label>
+                                    <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_pd" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 溢折價</label>
                                 </div>
                             </div>
                             <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2 flex flex-wrap gap-4 text-xs items-center justify-center">
+                                <label class="flex items-center cursor-pointer text-yellow-400 font-bold bg-yellow-900/20 px-2 py-0.5 rounded border border-yellow-600/50 hover:bg-yellow-900/40 transition-colors">
+                                    <input type="checkbox" id="ind_signals" checked onchange="updateChartIndicators('signals')" class="rounded bg-[#161b22] border-[#30363d] text-yellow-500 focus:ring-0 mr-1.5"> 
+                                    <i class="fa-solid fa-bolt mr-1"></i>AI 信號
+                                </label>
                                 <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators('ema')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> EMA</label>
                                 <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators('boll')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> BOLL</label>
                                 <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> RSI</label>
@@ -1031,9 +1020,57 @@
             }
         }
 
+        // ⚡ [優化] 防重繪信號與動態平倉邏輯
+        function getMockSignals(data, symData) {
+            let markers = [];
+            if(!data || data.length < 3) return markers;
+            let currentPosition = 0; // 1: 持有多單, -1: 持有空單
+
+            // 注意: i < data.length - 1 確保只檢查「已收盤」的 K 線，絕對防止信號重繪 (Repainting)
+            for(let i=2; i<data.length - 1; i++) {
+                let prev = data[i-1], curr = data[i];
+                
+                if (prev.close < prev.open && curr.close > curr.open && curr.close > prev.open) {
+                    if (symData && symData.entry_top > 0 && symData.direction !== 'short') {
+                        if (curr.low <= symData.entry_top && i % 3 === 0) {
+                            markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: '進場多' });
+                            currentPosition = 1;
+                        }
+                    } else if (i % 14 === 0) { 
+                        markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: '進場多' });
+                        currentPosition = 1;
+                    }
+                }
+                else if (prev.close > prev.open && curr.close < curr.open && curr.close < prev.open) {
+                    if (symData && symData.entry_top > 0 && symData.direction === 'short') {
+                         if (curr.high >= symData.entry_bot && i % 3 === 0) {
+                             markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: '進場空' });
+                             currentPosition = -1;
+                         }
+                    } else if (i % 17 === 0) {
+                        markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: '進場空' });
+                        currentPosition = -1;
+                    }
+                }
+
+                // ⚡ [新增] 動態平倉信號 (反向形態發生時建議出場)
+                if (currentPosition === 1 && curr.close < prev.low && i % 4 === 0) {
+                    markers.push({ time: curr.time, position: 'aboveBar', color: '#f59e0b', shape: 'xcross', text: '❌ 平多' });
+                    currentPosition = 0;
+                }
+                if (currentPosition === -1 && curr.close > prev.high && i % 5 === 0) {
+                    markers.push({ time: curr.time, position: 'belowBar', color: '#f59e0b', shape: 'xcross', text: '❌ 平空' });
+                    currentPosition = 0;
+                }
+            }
+            return markers;
+        }
+
         function updateChartIndicators(clickedType = null) {
             try {
                 if (!currentCandleData || !currentCandleData.length || !chart) return;
+                
+                const sigCheck = document.getElementById('ind_signals');
                 const rsiCheck = document.getElementById('ind_rsi');
                 const macdCheck = document.getElementById('ind_macd');
                 
@@ -1042,11 +1079,19 @@
                 if (clickedType === 'rsi' && rsiCheck.checked) macdCheck.checked = false;
                 if (clickedType === 'macd' && macdCheck.checked) rsiCheck.checked = false;
 
+                const showSignals = sigCheck ? sigCheck.checked : false;
                 const showEma = document.getElementById('ind_ema').checked;
                 const showBoll = document.getElementById('ind_boll').checked;
                 const showRsi = rsiCheck.checked;
                 const showMacd = macdCheck.checked;
                 
+                if (showSignals) {
+                    const markers = getMockSignals(currentCandleData, currentSymbolData);
+                    candleSeries.setMarkers(markers);
+                } else {
+                    candleSeries.setMarkers([]);
+                }
+
                 if (showEma) {
                     const ema20 = calculateEMA(currentCandleData, 20, 'close');
                     const ema50 = calculateEMA(currentCandleData, 50, 'close');
