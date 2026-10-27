@@ -42,15 +42,6 @@
             font-family: monospace; font-size: 12px; pointer-events: none; display: none;
         }
 
-        /* SMC 浮動戰術圖例 (右上角) */
-        #smcLegend {
-            position: absolute; right: 60px; top: 12px; z-index: 10;
-            background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(4px);
-            border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px;
-            font-family: monospace; font-size: 11px; pointer-events: none; display: none;
-            flex-direction: column; gap: 4px;
-        }
-
         @keyframes flashGreen { 0% { color: #4ade80; text-shadow: 0 0 10px #4ade80; transform: scale(1.05); } 100% { color: inherit; text-shadow: none; transform: scale(1); } }
         @keyframes flashRed { 0% { color: #f87171; text-shadow: 0 0 10px #f87171; transform: scale(1.05); } 100% { color: inherit; text-shadow: none; transform: scale(1); } }
         .flash-green { animation: flashGreen 0.8s ease-out; }
@@ -61,8 +52,6 @@
         #chartLoader { display: none; position: absolute; inset: 0; background: rgba(13,17,23,0.7); backdrop-filter: blur(2px); z-index: 20; align-items: center; justify-content: center; }
 
         .pd-track { background: linear-gradient(to right, #166534 0%, #166534 49%, #4b5563 49%, #4b5563 51%, #991b1b 51%, #991b1b 100%); }
-        
-        /* Tooltip 問號圖示樣式 */
         .help-icon { color: #6b7280; margin-left: 4px; transition: color 0.2s; }
         .help-icon:hover { color: #60a5fa; }
     </style>
@@ -77,8 +66,8 @@
             </div>
             <div class="flex flex-col">
                 <div class="flex items-center gap-3">
-                    <span class="text-xs font-bold text-green-400 flex items-center">
-                        <span id="liveStatusIcon"><i class="fa-solid fa-circle-dot text-red-500 mr-1.5 animate-pulse"></i> 盤中LIVE</span>
+                    <span class="text-xs font-bold flex items-center" id="liveStatusIcon">
+                        <i class="fa-solid fa-spinner fa-spin text-gray-500 mr-1.5"></i> 偵測中
                     </span>
                     <a href="https://github.com/singfeehily/us-stock-tracker/actions" target="_blank" 
                        class="bg-[#21262d] hover:bg-[#30363d] text-gray-400 border border-[#30363d] px-2 py-1 rounded text-[10px] font-medium transition-colors">
@@ -86,7 +75,7 @@
                     </a>
                 </div>
                 <span id="updateTimeText" class="text-[10px] text-gray-500 mt-1.5">SMC 運算時間: 讀取中...</span>
-                <span id="liveTimeText" class="text-[10px] text-blue-400 mt-0.5">LIVE 報價更新於: 連線中...</span>
+                <span id="liveTimeText" class="text-[10px] text-blue-400 mt-0.5">即時報價更新於: 連線中...</span>
             </div>
         </div>
         
@@ -138,7 +127,6 @@
                     <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 750px;">
                         
                         <div class="flex flex-col gap-2">
-                            <!-- 週期切換與圖層控制 -->
                             <div class="flex flex-wrap gap-2 items-center justify-between">
                                 <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-1.5 flex gap-1 text-xs">
                                     <button onclick="changeTimeFrame('15m')" id="tf_15m" class="px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors">15m</button>
@@ -146,16 +134,16 @@
                                     <button onclick="changeTimeFrame('1D')" id="tf_1D" class="px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors">1D</button>
                                 </div>
                                 <div class="flex items-center gap-3 text-[11px] text-gray-300 bg-[#0d1117] border border-[#30363d] rounded-lg p-2">
-                                    <label class="flex items-center cursor-pointer" title="顯示下方買單堆積的支撐區域，價格回踩此區容易反彈"><input type="checkbox" id="layer_long" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做多區(綠) <i class="fa-solid fa-circle-question help-icon"></i></label>
-                                    <label class="flex items-center cursor-pointer" title="顯示上方賣單堆積的壓力區域，價格觸及此區容易回落"><input type="checkbox" id="layer_short" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做空區(紅) <i class="fa-solid fa-circle-question help-icon"></i></label>
-                                    <label class="flex items-center cursor-pointer" title="以近半年最高最低點計算出的絕對中軸(0.5)，上方為溢價(太貴)，下方為折價(便宜)"><input type="checkbox" id="layer_pd" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 溢折價區 <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                    <label class="flex items-center cursor-pointer" title="顯示下方買單堆積的支撐區域"><input type="checkbox" id="layer_long" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做多區 <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                    <label class="flex items-center cursor-pointer" title="顯示上方賣單堆積的壓力區域"><input type="checkbox" id="layer_short" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做空區 <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                    <label class="flex items-center cursor-pointer" title="絕對中軸(0.5)，上方為溢價(太貴)，下方為折價(便宜)"><input type="checkbox" id="layer_pd" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 溢折價 <i class="fa-solid fa-circle-question help-icon"></i></label>
                                 </div>
                             </div>
-                            <!-- 副圖指標開關 (加入 Tooltip) -->
+                            <!-- 副圖指標開關 -->
                             <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2 flex flex-wrap gap-4 text-xs items-center justify-center">
-                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【指數移動平均線】快速判斷近期趨勢方向與動能 (黃線20/紫線50)"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators('ema')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> EMA <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【指數移動平均線】快速判斷近期趨勢方向與動能"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators('ema')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> EMA <i class="fa-solid fa-circle-question help-icon"></i></label>
                                 <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【布林通道】觀察價格波動率，突破上下軌常伴隨極端情緒"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators('boll')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> BOLL <i class="fa-solid fa-circle-question help-icon"></i></label>
-                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【相對強弱指標】數值>70為超買(過熱)，<30為超賣(過冷)"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> RSI <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【相對強弱指標】數值>70為超買，<30為超賣"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> RSI <i class="fa-solid fa-circle-question help-icon"></i></label>
                                 <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【平滑異同移動平均線】捕捉中長線趨勢反轉與動能爆發點"><input type="checkbox" id="ind_macd" onchange="updateChartIndicators('macd')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> MACD <i class="fa-solid fa-circle-question help-icon"></i></label>
                             </div>
                         </div>
@@ -163,8 +151,6 @@
                         <div id="tv_chart_container" style="height: 380px; width: 100%; position: relative;">
                             <div id="chartLoader"><i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-3xl"></i></div>
                             <div id="chartTooltip"></div>
-                            <!-- ⚡ 新增：右上角無遮擋戰術圖例 -->
-                            <div id="smcLegend"></div>
                         </div>
                         <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
                     </div>
@@ -229,7 +215,9 @@
                                 <tr class="border-b border-[#30363d] bg-[#0d1117]">
                                     <th class="px-4 py-3 font-medium text-gray-400">股票</th>
                                     
-                                    <!-- 交易狀態下拉過濾 -->
+                                    <!-- ⚡ 新增現價與時段欄位 -->
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-right">即時現價</th>
+
                                     <th class="px-4 py-3 font-medium text-gray-400 text-left">
                                         交易狀態 
                                         <select id="filterStatus" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none focus:border-blue-500" title="根據價格距離與盈虧比所判定的安全狀態">
@@ -258,7 +246,7 @@
                                 </tr>
                             </thead>
                             <tbody id="screenerTableBody">
-                                <tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">初始化中...</td></tr>
+                                <tr><td colspan="7" class="px-4 py-8 text-center text-gray-500">初始化中...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -306,6 +294,7 @@
         let activePriceLines = [], currentPriceLine = null;
         let activeAreaSeries = []; 
         let currentCandleData = [], currentSymbolData = null;
+        let fetchIntervalId = null;
 
         let lastScrollTop = 0;
         window.addEventListener('scroll', () => {
@@ -317,39 +306,46 @@
             lastScrollTop = scrollTop;
         });
 
-        // ⚡ 智能抓取控制變數
-        let fetchIntervalId = null;
-
         document.addEventListener('DOMContentLoaded', async () => {
             try { initCharts(); } catch (e) {}
             try { await loadJSONData(); } catch (e) {}
             try { startSmartPolling(); fetchLiveQuotes(); } catch (e) {}
         });
 
-        // ⚡ 智能判斷美股時段，調整抓取頻率
+        // ⚡ 智能判斷美股時段引擎
+        function getMarketSession() {
+            // 轉換為紐約時間 (自動處理冬/夏令時)
+            const nyTime = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+            const day = nyTime.getDay();
+            const h = nyTime.getHours();
+            const m = nyTime.getMinutes();
+            const timeStr = h * 100 + m; // 格式化為整數方便比對，例如 9:30 = 930
+
+            // 週末休市
+            if (day === 0 || day === 6) return { text: "休市", style: "bg-gray-800/80 text-gray-400 border-gray-600", dot: "text-gray-500", interval: 60000 };
+            
+            // 美東 04:00 - 09:30 (盤前)
+            if (timeStr >= 400 && timeStr < 930) return { text: "盤前", style: "bg-blue-900/40 text-blue-400 border-blue-500/50", dot: "text-blue-500 animate-pulse", interval: 10000 };
+            // 美東 09:30 - 16:00 (盤中)
+            if (timeStr >= 930 && timeStr < 1600) return { text: "盤中", style: "bg-green-900/40 text-green-400 border-green-500/50", dot: "text-red-500 animate-pulse", interval: 10000 };
+            // 美東 16:00 - 20:00 (盤後)
+            if (timeStr >= 1600 && timeStr < 2000) return { text: "盤後", style: "bg-purple-900/40 text-purple-400 border-purple-500/50", dot: "text-purple-500 animate-pulse", interval: 10000 };
+            
+            // 其他時間視為收盤/休市
+            return { text: "收盤", style: "bg-gray-800/80 text-gray-400 border-gray-600", dot: "text-gray-500", interval: 60000 };
+        }
+
         function startSmartPolling() {
             if(fetchIntervalId) clearInterval(fetchIntervalId);
-            
-            // 取得香港時間小時
-            const now = new Date();
-            const h = now.getHours();
-            
-            // 簡易美股時段判斷 (HKT 21:00 至 隔天 05:00)
-            const isMarketOpen = (h >= 21 || h < 5);
-            
-            // 盤中每 10 秒抓取，盤後/休市每 60 秒抓取
-            const interval = isMarketOpen ? 10000 : 60000;
+            const session = getMarketSession();
             
             const liveStatusIcon = document.getElementById('liveStatusIcon');
             if(liveStatusIcon) {
-                if(isMarketOpen) {
-                    liveStatusIcon.innerHTML = `<i class="fa-solid fa-circle-dot text-red-500 mr-1.5 animate-pulse"></i> 盤中LIVE`;
-                } else {
-                    liveStatusIcon.innerHTML = `<i class="fa-solid fa-moon text-gray-500 mr-1.5"></i> 盤後監測`;
-                }
+                liveStatusIcon.innerHTML = `<i class="fa-solid fa-circle-dot ${session.dot} mr-1.5"></i> ${session.text} LIVE`;
+                liveStatusIcon.className = `text-xs font-bold ${session.text === '收盤' || session.text === '休市' ? 'text-gray-400' : 'text-green-400'} flex items-center`;
             }
             
-            fetchIntervalId = setInterval(fetchLiveQuotes, interval);
+            fetchIntervalId = setInterval(fetchLiveQuotes, session.interval);
         }
 
         async function loadJSONData() {
@@ -395,11 +391,8 @@
                 const liveData = await response.json();
 
                 const now = new Date();
-                const h = now.getHours();
-                const isMarketOpen = (h >= 21 || h < 5);
                 const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
-                
-                document.getElementById('liveTimeText').innerText = `更新於: ${timeStr} (HKT)`;
+                document.getElementById('liveTimeText').innerText = `即時報價更新於: ${timeStr} (HKT)`;
 
                 for(let sym in liveData) if (liveData[sym] && liveData[sym].price) currentLivePrices[sym] = liveData[sym].price;
                 updateLiveUI(liveData, curSym ? curSym.innerText : null); 
@@ -440,6 +433,9 @@
 
         function updateLiveUI(liveData, currentSymbol) {
             try {
+                const session = getMarketSession();
+                const sessionBadge = `<span class="ml-1 text-[10px] px-1 py-0.5 rounded border ${session.style}">${session.text}</span>`;
+
                 userWatchlist.forEach(sym => {
                     if(liveData[sym]) {
                         const priceEl = document.getElementById(`wl-price-${sym}`);
@@ -450,7 +446,10 @@
                                 priceEl.classList.remove('flash-green', 'flash-red'); void priceEl.offsetWidth; 
                                 priceEl.classList.add(newPrice > oldPrice ? 'flash-green' : 'flash-red');
                             }
-                            priceEl.innerText = `$${newPrice.toFixed(2)}`; priceEl.dataset.price = newPrice;
+                            // ⚡ 插入時段徽章
+                            priceEl.innerHTML = `$${newPrice.toFixed(2)} ${sessionBadge}`; 
+                            priceEl.dataset.price = newPrice;
+                            
                             const isUp = (liveData[sym].change || 0) >= 0;
                             changeEl.className = `text-xs font-medium transition-colors ${isUp ? 'text-green-500' : 'text-red-500'}`;
                             changeEl.innerText = `${isUp ? '+' : ''}${(liveData[sym].change||0)} (${isUp ? '+' : ''}${(liveData[sym].change_pct||0)}%)`;
@@ -485,11 +484,18 @@
 
                 const screenerArr = (globalData && Array.isArray(globalData.screener_data)) ? globalData.screener_data : [];
                 for (let sym in liveData) {
+                    const priceColEl = document.getElementById(`screener-price-${sym}`);
                     const statusDistEl = document.getElementById(`status-dist-${sym}`);
+                    
+                    let p = liveData[sym].price || 0;
+                    
+                    if (priceColEl) {
+                        priceColEl.innerHTML = `$${p.toFixed(2)}<div class="mt-1">${sessionBadge}</div>`;
+                    }
+
                     if (statusDistEl) {
                         let item = screenerArr.find(x => x && x.symbol === sym);
                         if (item && item.entry_top > 0) {
-                            let p = liveData[sym].price || 0;
                             let st = getTradeStatus(item, p);
                             statusDistEl.innerHTML = `
                                 <div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold"><div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}</div>
@@ -553,6 +559,9 @@
                 globalData.watchlist_data.forEach(item => { if (item && item.symbol) watchlistMap.set(item.symbol, item); });
             }
 
+            const session = getMarketSession();
+            const sessionBadge = `<span class="ml-1 text-[10px] px-1 py-0.5 rounded border ${session.style}">${session.text}</span>`;
+
             userWatchlist.forEach(sym => {
                 let item = watchlistMap.get(sym) || { symbol: sym, price: 0, change: 0, change_pct: 0 };
                 let price = currentLivePrices[sym] || item.price || 0;
@@ -567,7 +576,7 @@
                         <span class="font-bold text-base text-white">${item.symbol || '--'}</span>
                         <button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors z-10"><i class="fa-solid fa-xmark"></i></button>
                     </div>
-                    <div id="wl-price-${item.symbol}" data-price="${price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}">$${price.toFixed(2)}</div>
+                    <div id="wl-price-${item.symbol}" data-price="${price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}">$${price.toFixed(2)} ${sessionBadge}</div>
                     <div id="wl-change-${item.symbol}" class="text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}">
                         ${isPositive && item.change !== 0 ? '+' : ''}${item.change||0} (${isPositive && item.change_pct !== 0 ? '+' : ''}${item.change_pct||0}%)
                     </div>
@@ -680,9 +689,12 @@
 
                 tbody.innerHTML = '';
                 if (processedData.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">目前無符合要求之數據</td></tr>`; 
+                    tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-8 text-center text-gray-500">目前無符合要求之數據</td></tr>`; 
                     return;
                 }
+
+                const session = getMarketSession();
+                const sessionBadge = `<span class="ml-1 text-[9px] px-1 py-0.5 rounded border ${session.style}">${session.text}</span>`;
 
                 processedData.forEach(item => {
                     const tr = document.createElement('tr'); 
@@ -718,6 +730,9 @@
 
                     tr.innerHTML = `
                         <td class="px-4 py-3">${nameHtml}</td>
+                        <td class="px-4 py-3 text-right font-mono font-bold text-gray-200" id="screener-price-${item.symbol}">
+                            $${item._livePrice.toFixed(2)}<br><div class="mt-1">${sessionBadge}</div>
+                        </td>
                         <td class="px-4 py-3">${statusDistHtml}</td>
                         <td class="px-4 py-3 text-center">${smcHtml}</td>
                         <td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td>
@@ -809,8 +824,6 @@
                 activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} });
                 activeAreaSeries = [];
                 if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
-                const smcLegend = document.getElementById('smcLegend');
-                if(smcLegend) smcLegend.style.display = 'none';
 
                 let data = [];
                 const tfParam = currentTimeFrame.toLowerCase();
@@ -847,7 +860,7 @@
                 if (currentSymbolData && currentCandleData.length > 0) {
                     currentPriceLine = candleSeries.createPriceLine({ 
                         price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, 
-                        lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '' // 移除了 title 以防遮擋
+                        lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '' 
                     });
                     updateChartOverlays('init'); 
                 }
@@ -856,34 +869,25 @@
             } catch(e) {}
         }
 
-        // ⚡ 核心升級：圖表內部無文字遮擋，改用浮動 Legend 顯示
-        function updateChartOverlays(caller = null) {
+        // ⚡ 核心視覺升級：方案 B (精簡文字靠右，完全不遮擋 K 線實體)
+        function updateChartOverlays() {
             if (!candleSeries || !currentSymbolData) return;
             
             activePriceLines.forEach(line => candleSeries.removePriceLine(line));
             activePriceLines = [];
             activeAreaSeries.forEach(s => chart.removeSeries(s));
             activeAreaSeries = [];
-            
-            const smcLegend = document.getElementById('smcLegend');
-            if (smcLegend) { smcLegend.innerHTML = ''; smcLegend.style.display = 'none'; }
 
             const showLong = document.getElementById('layer_long').checked;
             const showShort = document.getElementById('layer_short').checked;
             const showPd = document.getElementById('layer_pd').checked;
 
-            let legendHtml = `<div class="text-gray-300 font-bold mb-1 border-b border-gray-600 pb-1">SMC 戰術標記</div>`;
-            let hasLegend = false;
-
             if (currentSymbolData.entry_top > 0) {
                 const isShort = currentSymbolData.direction === 'short';
                 
                 if ((isShort && showShort) || (!isShort && showLong)) {
-                    hasLegend = true;
                     const zoneColor = isShort ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 197, 94, 0.15)'; 
                     const lineColor = isShort ? 'rgba(239, 68, 68, 0.3)' : 'rgba(34, 197, 94, 0.3)';
-                    const textColor = isShort ? 'text-red-400' : 'text-green-400';
-                    const icon = isShort ? '🔻' : '🔺';
                     
                     let areaSeries = chart.addAreaSeries({
                         baseValue: { type: 'price', price: currentSymbolData.entry_bot },
@@ -896,39 +900,20 @@
                     areaSeries.setData(areaData);
                     activeAreaSeries.push(areaSeries);
 
-                    // ⚡ 重點：將 title: '' 設為空，保留 axisLabelVisible: true，圖表內不會有文字干擾
-                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '' }));
-                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '' }));
-                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.sl, color: '#ef4444', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '' }));
-                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.tp, color: '#4ade80', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: '' }));
-
-                    legendHtml += `
-                        <div class="${textColor} flex justify-between gap-4"><span>${icon} FVG (未緩解):</span> <span>$${currentSymbolData.entry_top}</span></div>
-                        <div class="${textColor} flex justify-between gap-4"><span>${icon} OB (未緩解):</span> <span>$${currentSymbolData.entry_bot}</span></div>
-                        <div class="text-red-400 flex justify-between gap-4"><span>🚨 失效線 (SL):</span> <span>$${currentSymbolData.sl}</span></div>
-                        <div class="text-green-400 flex justify-between gap-4"><span>🎯 目標價 (TP):</span> <span>$${currentSymbolData.tp}</span></div>
-                    `;
+                    // ⚡ 使用原生 PriceLine 的 title 屬性達成方案 B (浮水印靠右，短標籤不干擾)
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ FVG' }));
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ OB' }));
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.sl, color: '#ef4444', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '🚨 SL' }));
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.tp, color: '#4ade80', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: '🎯 TP' }));
                 }
             }
 
             if (showPd && currentSymbolData.macro_eq) {
-                hasLegend = true;
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '' }));
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq + ((currentSymbolData.macro_bsl - currentSymbolData.macro_eq) * 0.5), color: 'rgba(239, 68, 68, 0.4)', lineWidth: 0, lineStyle: LightweightCharts.LineStyle.SparseDotted, axisLabelVisible: true, title: '' }));
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq - ((currentSymbolData.macro_eq - currentSymbolData.macro_ssl) * 0.5), color: 'rgba(34, 197, 94, 0.4)', lineWidth: 0, lineStyle: LightweightCharts.LineStyle.SparseDotted, axisLabelVisible: true, title: '' }));
-                
-                legendHtml += `
-                    <div class="text-gray-400 border-t border-gray-600 pt-1 mt-1 flex justify-between gap-4"><span>➖ 0.5 均衡點:</span> <span>$${currentSymbolData.macro_eq}</span></div>
-                `;
-            }
-
-            if (hasLegend && smcLegend) {
-                smcLegend.innerHTML = legendHtml;
-                smcLegend.style.display = 'flex';
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '➖ 0.5 均衡' }));
+                // 為了畫面極度乾淨，Premium / Discount 不再畫滿版虛線干擾視線
             }
         }
 
-        // ================== 指標副圖 ==================
         function updateChartIndicators(clickedType = null) {
             try {
                 if (!currentCandleData || !currentCandleData.length || !chart) return;
