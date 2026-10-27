@@ -223,6 +223,7 @@
                 </div>
                 
                 <div id="screenerContent" class="collapsible-content flex flex-col" style="max-height: 800px;">
+                    
                     <div class="bg-[#161b22] border-b border-[#30363d] px-3 flex gap-2 flex-shrink-0">
                         <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2.5 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap">
                             <i class="fa-solid fa-layer-group mr-1"></i>S 級狙擊池
@@ -634,7 +635,6 @@
                 const isPositive = (item.change || 0) >= 0;
                 
                 const card = document.createElement('div');
-                // ⚡ 核心修正：如果正在查看該股票，自動加上 active-selected 特殊外框效果
                 const isActive = (sym === activeSymbol);
                 card.className = `flex-shrink-0 w-44 glass-panel rounded-lg p-3 relative cursor-move hover:border-gray-500 transition-colors bg-[#0d1117] group watchlist-card ${isActive ? 'active-selected' : ''}`;
                 
@@ -955,7 +955,6 @@
                 
                 chart.timeScale().fitContent(); 
 
-                // ⚡ 核心修復：切換股票時，強制重新渲染副圖指標與自選股選中外框
                 updateChartIndicators();
                 renderWatchlist();
 
