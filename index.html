@@ -42,6 +42,15 @@
             font-family: monospace; font-size: 12px; pointer-events: none; display: none;
         }
 
+        /* SMC 浮動戰術圖例 (右上角) */
+        #smcLegend {
+            position: absolute; right: 60px; top: 12px; z-index: 10;
+            background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(4px);
+            border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px;
+            font-family: monospace; font-size: 11px; pointer-events: none; display: none;
+            flex-direction: column; gap: 4px;
+        }
+
         @keyframes flashGreen { 0% { color: #4ade80; text-shadow: 0 0 10px #4ade80; transform: scale(1.05); } 100% { color: inherit; text-shadow: none; transform: scale(1); } }
         @keyframes flashRed { 0% { color: #f87171; text-shadow: 0 0 10px #f87171; transform: scale(1.05); } 100% { color: inherit; text-shadow: none; transform: scale(1); } }
         .flash-green { animation: flashGreen 0.8s ease-out; }
@@ -52,6 +61,10 @@
         #chartLoader { display: none; position: absolute; inset: 0; background: rgba(13,17,23,0.7); backdrop-filter: blur(2px); z-index: 20; align-items: center; justify-content: center; }
 
         .pd-track { background: linear-gradient(to right, #166534 0%, #166534 49%, #4b5563 49%, #4b5563 51%, #991b1b 51%, #991b1b 100%); }
+        
+        /* Tooltip 問號圖示樣式 */
+        .help-icon { color: #6b7280; margin-left: 4px; transition: color 0.2s; }
+        .help-icon:hover { color: #60a5fa; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative">
@@ -65,7 +78,7 @@
             <div class="flex flex-col">
                 <div class="flex items-center gap-3">
                     <span class="text-xs font-bold text-green-400 flex items-center">
-                        <i class="fa-solid fa-circle-dot text-red-500 mr-1.5 animate-pulse"></i> LIVE 報價
+                        <span id="liveStatusIcon"><i class="fa-solid fa-circle-dot text-red-500 mr-1.5 animate-pulse"></i> 盤中LIVE</span>
                     </span>
                     <a href="https://github.com/singfeehily/us-stock-tracker/actions" target="_blank" 
                        class="bg-[#21262d] hover:bg-[#30363d] text-gray-400 border border-[#30363d] px-2 py-1 rounded text-[10px] font-medium transition-colors">
@@ -73,7 +86,7 @@
                     </a>
                 </div>
                 <span id="updateTimeText" class="text-[10px] text-gray-500 mt-1.5">SMC 運算時間: 讀取中...</span>
-                <span id="liveTimeText" class="text-[10px] text-blue-400 mt-0.5">LIVE 報價: 連線中...</span>
+                <span id="liveTimeText" class="text-[10px] text-blue-400 mt-0.5">LIVE 報價更新於: 連線中...</span>
             </div>
         </div>
         
@@ -122,7 +135,7 @@
                             <i id="chartIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
                         </div>
                     </div>
-                    <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 650px;">
+                    <div id="chartContent" class="collapsible-content p-3 flex flex-col gap-3" style="max-height: 750px;">
                         
                         <div class="flex flex-col gap-2">
                             <!-- 週期切換與圖層控制 -->
@@ -133,17 +146,27 @@
                                     <button onclick="changeTimeFrame('1D')" id="tf_1D" class="px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors">1D</button>
                                 </div>
                                 <div class="flex items-center gap-3 text-[11px] text-gray-300 bg-[#0d1117] border border-[#30363d] rounded-lg p-2">
-                                    <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="layer_long" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> 做多區(綠)</label>
-                                    <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="layer_short" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> 做空區(紅)</label>
-                                    <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="layer_pd" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0"> 溢折價區</label>
+                                    <label class="flex items-center cursor-pointer" title="顯示下方買單堆積的支撐區域，價格回踩此區容易反彈"><input type="checkbox" id="layer_long" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做多區(綠) <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                    <label class="flex items-center cursor-pointer" title="顯示上方賣單堆積的壓力區域，價格觸及此區容易回落"><input type="checkbox" id="layer_short" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做空區(紅) <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                    <label class="flex items-center cursor-pointer" title="以近半年最高最低點計算出的絕對中軸(0.5)，上方為溢價(太貴)，下方為折價(便宜)"><input type="checkbox" id="layer_pd" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 溢折價區 <i class="fa-solid fa-circle-question help-icon"></i></label>
                                 </div>
+                            </div>
+                            <!-- 副圖指標開關 (加入 Tooltip) -->
+                            <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2 flex flex-wrap gap-4 text-xs items-center justify-center">
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【指數移動平均線】快速判斷近期趨勢方向與動能 (黃線20/紫線50)"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators('ema')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> EMA <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【布林通道】觀察價格波動率，突破上下軌常伴隨極端情緒"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators('boll')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> BOLL <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【相對強弱指標】數值>70為超買(過熱)，<30為超賣(過冷)"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> RSI <i class="fa-solid fa-circle-question help-icon"></i></label>
+                                <label class="flex items-center cursor-pointer text-gray-300 hover:text-white" title="【平滑異同移動平均線】捕捉中長線趨勢反轉與動能爆發點"><input type="checkbox" id="ind_macd" onchange="updateChartIndicators('macd')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> MACD <i class="fa-solid fa-circle-question help-icon"></i></label>
                             </div>
                         </div>
 
                         <div id="tv_chart_container" style="height: 380px; width: 100%; position: relative;">
                             <div id="chartLoader"><i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-3xl"></i></div>
                             <div id="chartTooltip"></div>
+                            <!-- ⚡ 新增：右上角無遮擋戰術圖例 -->
+                            <div id="smcLegend"></div>
                         </div>
+                        <div id="sub_chart_container" style="height: 130px; width: 100%; position: relative; display: none;" class="border-t border-[#30363d] pt-2"></div>
                     </div>
                 </div>
 
@@ -206,10 +229,10 @@
                                 <tr class="border-b border-[#30363d] bg-[#0d1117]">
                                     <th class="px-4 py-3 font-medium text-gray-400">股票</th>
                                     
-                                    <!-- ⚡ 加入了「交易狀態」的下拉過濾 -->
+                                    <!-- 交易狀態下拉過濾 -->
                                     <th class="px-4 py-3 font-medium text-gray-400 text-left">
                                         交易狀態 
-                                        <select id="filterStatus" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none focus:border-blue-500">
+                                        <select id="filterStatus" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none focus:border-blue-500" title="根據價格距離與盈虧比所判定的安全狀態">
                                             <option value="ALL">全部</option>
                                             <option value="GREEN">🟢 可執行</option>
                                             <option value="YELLOW">🟡 接近中</option>
@@ -220,18 +243,18 @@
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center">
                                         形態
                                         <select id="filterDirection" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none focus:border-blue-500">
-                                            <option value="ALL">全部</option>
+                                            <option value="ALL">全部 (All)</option>
                                             <option value="LONG">做多</option>
                                             <option value="SHORT">做空</option>
                                             <option value="SS">SS級</option>
                                         </select>
                                     </th>
                                     
-                                    <th class="px-4 py-3 font-medium text-gray-400 text-center cursor-pointer hover:text-white group" onclick="changeSort('rrr')">
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center cursor-pointer hover:text-white group" onclick="changeSort('rrr')" title="真實的盈虧比 (預期利潤 ÷ 風險)，>= 2.0 方為安全">
                                         R:R <i class="fa-solid fa-sort text-gray-600 group-hover:text-blue-400 transition-colors ml-1"></i>
                                     </th>
                                     <th class="px-4 py-3 font-medium text-blue-400 text-right">建議入場區</th>
-                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">溢價/折價 (P/D Matrix)</th>
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center" title="價格位於近半年波動區間的相對位置">溢價/折價 (P/D Matrix)</th>
                                 </tr>
                             </thead>
                             <tbody id="screenerTableBody">
@@ -276,9 +299,12 @@
         let currentTab = 'smc'; let currentTimeFrame = '1D'; 
         let userWatchlist = ['FUTU', 'PLTR', 'NVDA', 'TSLA', 'SPY'];
 
-        let chart = null, candleSeries = null;
+        let chart = null, subChart = null, candleSeries = null;
+        let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null;
+        let subIndicatorSeries = null, macdLineSeries = null, macdSignalSeries = null, macdHistSeries = null;
+
         let activePriceLines = [], currentPriceLine = null;
-        let activeAreaSeries = []; // ⚡ 新增：追蹤半透明區塊
+        let activeAreaSeries = []; 
         let currentCandleData = [], currentSymbolData = null;
 
         let lastScrollTop = 0;
@@ -291,12 +317,40 @@
             lastScrollTop = scrollTop;
         });
 
+        // ⚡ 智能抓取控制變數
+        let fetchIntervalId = null;
+
         document.addEventListener('DOMContentLoaded', async () => {
             try { initCharts(); } catch (e) {}
             try { await loadJSONData(); } catch (e) {}
-            try { fetchLiveQuotes(); } catch (e) {}
-            setInterval(() => { try { fetchLiveQuotes(); } catch(e){} }, 10000); 
+            try { startSmartPolling(); fetchLiveQuotes(); } catch (e) {}
         });
+
+        // ⚡ 智能判斷美股時段，調整抓取頻率
+        function startSmartPolling() {
+            if(fetchIntervalId) clearInterval(fetchIntervalId);
+            
+            // 取得香港時間小時
+            const now = new Date();
+            const h = now.getHours();
+            
+            // 簡易美股時段判斷 (HKT 21:00 至 隔天 05:00)
+            const isMarketOpen = (h >= 21 || h < 5);
+            
+            // 盤中每 10 秒抓取，盤後/休市每 60 秒抓取
+            const interval = isMarketOpen ? 10000 : 60000;
+            
+            const liveStatusIcon = document.getElementById('liveStatusIcon');
+            if(liveStatusIcon) {
+                if(isMarketOpen) {
+                    liveStatusIcon.innerHTML = `<i class="fa-solid fa-circle-dot text-red-500 mr-1.5 animate-pulse"></i> 盤中LIVE`;
+                } else {
+                    liveStatusIcon.innerHTML = `<i class="fa-solid fa-moon text-gray-500 mr-1.5"></i> 盤後監測`;
+                }
+            }
+            
+            fetchIntervalId = setInterval(fetchLiveQuotes, interval);
+        }
 
         async function loadJSONData() {
             try {
@@ -341,14 +395,17 @@
                 const liveData = await response.json();
 
                 const now = new Date();
-                document.getElementById('liveTimeText').innerText = `LIVE 報價更新於: ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')} (HKT)`;
+                const h = now.getHours();
+                const isMarketOpen = (h >= 21 || h < 5);
+                const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
+                
+                document.getElementById('liveTimeText').innerText = `更新於: ${timeStr} (HKT)`;
 
                 for(let sym in liveData) if (liveData[sym] && liveData[sym].price) currentLivePrices[sym] = liveData[sym].price;
                 updateLiveUI(liveData, curSym ? curSym.innerText : null); 
             } catch (err) {}
         }
 
-        // ⚡ 將全域交易狀態判定邏輯獨立，確保 UI 一致
         function getTradeStatus(item, livePrice) {
             let dist = 9999;
             let label = "🔴 觀察中", colorClass = "text-gray-400", dotClass = "bg-gray-500", distText = "-";
@@ -426,7 +483,6 @@
                     updateIntelligencePanel(currentSymbol, symbolData, liveData[currentSymbol] ? liveData[currentSymbol].price : null);
                 }
 
-                // 實時更新過濾池內的距離與狀態
                 const screenerArr = (globalData && Array.isArray(globalData.screener_data)) ? globalData.screener_data : [];
                 for (let sym in liveData) {
                     const statusDistEl = document.getElementById(`status-dist-${sym}`);
@@ -437,7 +493,7 @@
                             let st = getTradeStatus(item, p);
                             statusDistEl.innerHTML = `
                                 <div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold"><div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}</div>
-                                <div class="text-[11px] text-gray-400 mt-1">建議價格差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>
+                                <div class="text-[11px] text-gray-400 mt-1">建議差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>
                             `;
                         }
                     }
@@ -583,7 +639,6 @@
             renderScreenerData();
         }
 
-        // ⚡ Tab 修復與全域 Filter 整合
         function renderScreenerData() {
             try {
                 const tbody = document.getElementById('screenerTableBody');
@@ -592,7 +647,6 @@
                 const rawData = globalData.screener_data || [];
                 let processedData = [];
 
-                // 1. 處理 Tab 顯示 (修復新增股票無法顯示的問題)
                 if (currentTab === 'smc') {
                     processedData = rawData.filter(item => item && item.smc_id);
                 } else {
@@ -602,26 +656,22 @@
                     });
                 }
 
-                // 2. 計算即時價格與狀態
                 processedData = processedData.map(item => {
                     let livePrice = currentLivePrices[item.symbol] || item.price || 0;
                     let st = getTradeStatus(item, livePrice);
                     return { ...item, _livePrice: livePrice, _status: st };
                 });
 
-                // 3. 處理「形態」Filter
                 const directionFilter = document.getElementById('filterDirection') ? document.getElementById('filterDirection').value : 'ALL';
                 if (directionFilter === 'LONG') processedData = processedData.filter(item => item.direction !== 'short');
                 else if (directionFilter === 'SHORT') processedData = processedData.filter(item => item.direction === 'short');
                 else if (directionFilter === 'SS') processedData = processedData.filter(item => item.confluence === true);
 
-                // 4. ⚡ 處理「交易狀態」Filter
                 const statusFilter = document.getElementById('filterStatus') ? document.getElementById('filterStatus').value : 'ALL';
                 if (statusFilter === 'GREEN') processedData = processedData.filter(item => item._status.label === '🟢 可執行');
                 else if (statusFilter === 'YELLOW') processedData = processedData.filter(item => item._status.label === '🟡 接近中');
                 else if (statusFilter === 'RED') processedData = processedData.filter(item => item._status.label === '🔴 觀察中');
 
-                // 5. 排序
                 processedData.sort((a, b) => {
                     let valA = 0, valB = 0;
                     if (sortCol === 'rrr') { valA = parseFloat(a.rrr) || 0; valB = parseFloat(b.rrr) || 0; } 
@@ -645,7 +695,7 @@
                         <div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold" id="status-dist-${item.symbol}">
                             <div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}
                         </div>
-                        <div class="text-[11px] text-gray-400 mt-1">建議價格差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>
+                        <div class="text-[11px] text-gray-400 mt-1">建議差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>
                     `;
 
                     let pdVal = item.pd_percent !== undefined ? item.pd_percent : 50;
@@ -682,6 +732,7 @@
         // ================== 圖表引擎初始化 ==================
         function initCharts() {
             const container = document.getElementById('tv_chart_container');
+            const subContainer = document.getElementById('sub_chart_container');
             const tooltip = document.getElementById('chartTooltip');
             if(!container) return;
 
@@ -697,6 +748,15 @@
                 upColor: '#22c55e', downColor: '#ef4444', borderVisible: false, 
                 wickUpColor: '#22c55e', wickDownColor: '#ef4444' 
             });
+
+            subChart = LightweightCharts.createChart(subContainer, {
+                layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } },
+                grid: { vertLines: { color: 'rgba(48, 54, 61, 0.3)' }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } },
+                timeScale: { borderColor: '#30363d', visible: false }
+            });
+
+            chart.timeScale().subscribeVisibleTimeRangeChange(range => { if (subContainer.style.display !== 'none') subChart.timeScale().setVisibleRange(range); });
+            subChart.timeScale().subscribeVisibleTimeRangeChange(range => { if (subContainer.style.display !== 'none') chart.timeScale().setVisibleRange(range); });
 
             chart.subscribeCrosshairMove(param => {
                 if (!param.point || !param.time || param.point.x < 0 || param.point.x > container.clientWidth || param.point.y < 0 || param.point.y > container.clientHeight) {
@@ -723,8 +783,12 @@
                     if (entry.target === container && container.clientWidth > 0) {
                         chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
                     }
+                    if (entry.target === subContainer && subContainer.clientWidth > 0 && subContainer.style.display !== 'none') {
+                        subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
+                    }
                 }
             }).observe(container);
+            new ResizeObserver(() => { if(subContainer.clientWidth > 0 && subContainer.style.display !== 'none') subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight }); }).observe(subContainer);
         }
 
         async function updateChartSymbol(symbol) {
@@ -740,12 +804,13 @@
                 const loader = document.getElementById('chartLoader');
                 if(loader) loader.style.display = 'flex';
 
-                // 清理舊圖層
                 activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); 
                 activePriceLines = []; 
                 activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} });
                 activeAreaSeries = [];
                 if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
+                const smcLegend = document.getElementById('smcLegend');
+                if(smcLegend) smcLegend.style.display = 'none';
 
                 let data = [];
                 const tfParam = currentTimeFrame.toLowerCase();
@@ -782,77 +847,209 @@
                 if (currentSymbolData && currentCandleData.length > 0) {
                     currentPriceLine = candleSeries.createPriceLine({ 
                         price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, 
-                        lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: `市價: $${currentSymbolData.price || 0}` 
+                        lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '' // 移除了 title 以防遮擋
                     });
-                    updateChartOverlays(); // ⚡ 繪製色塊與標籤
+                    updateChartOverlays('init'); 
                 }
                 
                 chart.timeScale().fitContent(); 
             } catch(e) {}
         }
 
-        // ⚡ 核心升級：完美的半透明面積圖層 (AreaSeries 模擬色塊)
-        function updateChartOverlays() {
+        // ⚡ 核心升級：圖表內部無文字遮擋，改用浮動 Legend 顯示
+        function updateChartOverlays(caller = null) {
             if (!candleSeries || !currentSymbolData) return;
             
-            // 清理舊標籤與舊色塊
             activePriceLines.forEach(line => candleSeries.removePriceLine(line));
             activePriceLines = [];
             activeAreaSeries.forEach(s => chart.removeSeries(s));
             activeAreaSeries = [];
+            
+            const smcLegend = document.getElementById('smcLegend');
+            if (smcLegend) { smcLegend.innerHTML = ''; smcLegend.style.display = 'none'; }
 
             const showLong = document.getElementById('layer_long').checked;
             const showShort = document.getElementById('layer_short').checked;
             const showPd = document.getElementById('layer_pd').checked;
 
+            let legendHtml = `<div class="text-gray-300 font-bold mb-1 border-b border-gray-600 pb-1">SMC 戰術標記</div>`;
+            let hasLegend = false;
+
             if (currentSymbolData.entry_top > 0) {
                 const isShort = currentSymbolData.direction === 'short';
                 
                 if ((isShort && showShort) || (!isShort && showLong)) {
+                    hasLegend = true;
                     const zoneColor = isShort ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 197, 94, 0.15)'; 
                     const lineColor = isShort ? 'rgba(239, 68, 68, 0.3)' : 'rgba(34, 197, 94, 0.3)';
-                    const topName = isShort ? '1D FVG' : '1D FVG';
-                    const botName = isShort ? '1D OB' : '1D OB';
+                    const textColor = isShort ? 'text-red-400' : 'text-green-400';
+                    const icon = isShort ? '🔻' : '🔺';
                     
-                    // ⚡ 使用 AreaSeries 繪製 15% 半透明色塊
                     let areaSeries = chart.addAreaSeries({
                         baseValue: { type: 'price', price: currentSymbolData.entry_bot },
-                        topColor: zoneColor,
-                        bottomColor: zoneColor,
-                        lineColor: 'rgba(0,0,0,0)', // 隱藏自帶的線，我們用 PriceLine 畫
-                        lineWidth: 0,
-                        priceLineVisible: false,
-                        lastValueVisible: false,
-                        crosshairMarkerVisible: false,
-                        autoscaleInfoProvider: () => null, // 不影響圖表自動縮放
+                        topColor: zoneColor, bottomColor: zoneColor,
+                        lineColor: 'rgba(0,0,0,0)', lineWidth: 0,
+                        priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null, 
                     });
                     
-                    // 覆蓋整個時間軸
                     let areaData = currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top }));
                     areaSeries.setData(areaData);
                     activeAreaSeries.push(areaSeries);
 
-                    // 繪製上下邊界實線與中文標籤
-                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: topName }));
-                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: botName }));
-                    
-                    // 🚨 紅色強制失效線 (Invalidation)
-                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.sl, color: '#ef4444', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: `失效線 (SL)` }));
-                    
-                    // 目標價
-                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.tp, color: '#4ade80', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: `TP` }));
+                    // ⚡ 重點：將 title: '' 設為空，保留 axisLabelVisible: true，圖表內不會有文字干擾
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '' }));
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '' }));
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.sl, color: '#ef4444', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '' }));
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.tp, color: '#4ade80', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: '' }));
+
+                    legendHtml += `
+                        <div class="${textColor} flex justify-between gap-4"><span>${icon} FVG (未緩解):</span> <span>$${currentSymbolData.entry_top}</span></div>
+                        <div class="${textColor} flex justify-between gap-4"><span>${icon} OB (未緩解):</span> <span>$${currentSymbolData.entry_bot}</span></div>
+                        <div class="text-red-400 flex justify-between gap-4"><span>🚨 失效線 (SL):</span> <span>$${currentSymbolData.sl}</span></div>
+                        <div class="text-green-400 flex justify-between gap-4"><span>🎯 目標價 (TP):</span> <span>$${currentSymbolData.tp}</span></div>
+                    `;
                 }
             }
 
-            // P/D 矩陣圖層
             if (showPd && currentSymbolData.macro_eq) {
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '0.5 均衡點' }));
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq + ((currentSymbolData.macro_bsl - currentSymbolData.macro_eq) * 0.5), color: 'rgba(239, 68, 68, 0.4)', lineWidth: 0, lineStyle: LightweightCharts.LineStyle.SparseDotted, axisLabelVisible: true, title: '溢價區 (Premium)' }));
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq - ((currentSymbolData.macro_eq - currentSymbolData.macro_ssl) * 0.5), color: 'rgba(34, 197, 94, 0.4)', lineWidth: 0, lineStyle: LightweightCharts.LineStyle.SparseDotted, axisLabelVisible: true, title: '折價區 (Discount)' }));
+                hasLegend = true;
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '' }));
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq + ((currentSymbolData.macro_bsl - currentSymbolData.macro_eq) * 0.5), color: 'rgba(239, 68, 68, 0.4)', lineWidth: 0, lineStyle: LightweightCharts.LineStyle.SparseDotted, axisLabelVisible: true, title: '' }));
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq - ((currentSymbolData.macro_eq - currentSymbolData.macro_ssl) * 0.5), color: 'rgba(34, 197, 94, 0.4)', lineWidth: 0, lineStyle: LightweightCharts.LineStyle.SparseDotted, axisLabelVisible: true, title: '' }));
+                
+                legendHtml += `
+                    <div class="text-gray-400 border-t border-gray-600 pt-1 mt-1 flex justify-between gap-4"><span>➖ 0.5 均衡點:</span> <span>$${currentSymbolData.macro_eq}</span></div>
+                `;
+            }
+
+            if (hasLegend && smcLegend) {
+                smcLegend.innerHTML = legendHtml;
+                smcLegend.style.display = 'flex';
             }
         }
 
-        // ⚡ 安全的 Tab 切換邏輯 (使用 classList 避免吃掉圖示)
+        // ================== 指標副圖 ==================
+        function updateChartIndicators(clickedType = null) {
+            try {
+                if (!currentCandleData || !currentCandleData.length || !chart) return;
+                const rsiCheck = document.getElementById('ind_rsi');
+                const macdCheck = document.getElementById('ind_macd');
+                
+                if(!rsiCheck || !macdCheck) return;
+                
+                if (clickedType === 'rsi' && rsiCheck.checked) macdCheck.checked = false;
+                if (clickedType === 'macd' && macdCheck.checked) rsiCheck.checked = false;
+
+                const showEma = document.getElementById('ind_ema').checked;
+                const showBoll = document.getElementById('ind_boll').checked;
+                const showRsi = rsiCheck.checked;
+                const showMacd = macdCheck.checked;
+                
+                if (showEma) {
+                    const ema20 = calculateEMA(currentCandleData, 20, 'close');
+                    const ema50 = calculateEMA(currentCandleData, 50, 'close');
+                    if (!ema20Series) ema20Series = chart.addLineSeries({ color: '#f59e0b', lineWidth: 1.5, title: 'EMA 20' });
+                    if (!ema50Series) ema50Series = chart.addLineSeries({ color: '#8b5cf6', lineWidth: 1.5, title: 'EMA 50' });
+                    ema20Series.setData(ema20); ema50Series.setData(ema50);
+                } else {
+                    if (ema20Series) { chart.removeSeries(ema20Series); ema20Series = null; }
+                    if (ema50Series) { chart.removeSeries(ema50Series); ema50Series = null; }
+                }
+
+                if (showBoll) {
+                    const boll = calculateBOLL(currentCandleData, 20, 2);
+                    if (!bollUpperSeries) bollUpperSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Upper' });
+                    if (!bollMidSeries) bollMidSeries = chart.addLineSeries({ color: 'rgba(234, 179, 8, 0.8)', lineWidth: 1.5, title: 'Mid' });
+                    if (!bollLowerSeries) bollLowerSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Lower' });
+                    bollUpperSeries.setData(boll.upper); bollMidSeries.setData(boll.middle); bollLowerSeries.setData(boll.lower);
+                } else {
+                    if (bollUpperSeries) { chart.removeSeries(bollUpperSeries); bollUpperSeries = null; }
+                    if (bollMidSeries) { chart.removeSeries(bollMidSeries); bollMidSeries = null; }
+                    if (bollLowerSeries) { chart.removeSeries(bollLowerSeries); bollLowerSeries = null; }
+                }
+
+                const subContainer = document.getElementById('sub_chart_container');
+                try { if (subIndicatorSeries && subChart) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; } } catch(e){}
+                try { if (macdHistSeries && subChart) { subChart.removeSeries(macdHistSeries); macdHistSeries = null; } } catch(e){}
+                try { if (macdLineSeries && subChart) { subChart.removeSeries(macdLineSeries); macdLineSeries = null; } } catch(e){}
+                try { if (macdSignalSeries && subChart) { subChart.removeSeries(macdSignalSeries); macdSignalSeries = null; } } catch(e){}
+
+                if (showRsi || showMacd) {
+                    subContainer.style.display = 'block';
+                    if (subChart) subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
+                    
+                    if (showRsi) {
+                        subIndicatorSeries = subChart.addLineSeries({ color: '#06b6d4', lineWidth: 1.5, title: 'RSI (14)' });
+                        subIndicatorSeries.setData(calculateRSI(currentCandleData, 14));
+                    } else if (showMacd) {
+                        const macdData = calculateMACD(currentCandleData, 12, 26, 9);
+                        macdHistSeries = subChart.addHistogramSeries({ color: '#26a69a', title: 'Hist' });
+                        macdLineSeries = subChart.addLineSeries({ color: '#2962FF', lineWidth: 1.5, title: 'MACD' });
+                        macdSignalSeries = subChart.addLineSeries({ color: '#FF6D00', lineWidth: 1.5, title: 'Signal' });
+                        macdHistSeries.setData(macdData.hist); macdLineSeries.setData(macdData.macd); macdSignalSeries.setData(macdData.signal);
+                    }
+                    if(subChart && clickedType !== null) subChart.timeScale().fitContent();
+                } else { 
+                    subContainer.style.display = 'none'; 
+                }
+            } catch(e) {}
+        }
+
+        // ================== 數學計算函數 ==================
+        function calculateEMA(data, period, key = 'close') {
+            if (!data || !data.length) return [];
+            let result = [], multiplier = 2 / (period + 1), prevEMA = data[0][key] || 0;
+            for (let i = 0; i < data.length; i++) {
+                let val = data[i][key] || 0;
+                let ema = (i === 0) ? val : (val - prevEMA) * multiplier + prevEMA;
+                prevEMA = ema; result.push({ time: data[i].time, value: Number(ema.toFixed(2)) });
+            } return result;
+        }
+
+        function calculateBOLL(data, period, stdDevMultiplier) {
+            let upper = [], middle = [], lower = [];
+            for (let i = period - 1; i < data.length; i++) {
+                let slice = data.slice(i - period + 1, i + 1), sma = slice.reduce((acc, val) => acc + val.close, 0) / period;
+                let stdDev = Math.sqrt(slice.reduce((acc, val) => acc + Math.pow(val.close - sma, 2), 0) / period);
+                middle.push({ time: data[i].time, value: Number(sma.toFixed(2)) });
+                upper.push({ time: data[i].time, value: Number((sma + stdDevMultiplier * stdDev).toFixed(2)) });
+                lower.push({ time: data[i].time, value: Number((sma - stdDevMultiplier * stdDev).toFixed(2)) });
+            } return { upper, middle, lower };
+        }
+
+        function calculateRSI(data, period) {
+            let result = [], gains = 0, losses = 0;
+            for (let i = 1; i < data.length; i++) {
+                let change = data[i].close - data[i-1].close, gain = change > 0 ? change : 0, loss = change < 0 ? -change : 0;
+                if (i <= period) {
+                    gains += gain; losses += loss;
+                    if (i === period) {
+                        let rs = (losses/period) === 0 ? 100 : (gains/period) / (losses/period);
+                        result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) });
+                    }
+                } else {
+                    gains = (gains * (period - 1) + gain) / period; losses = (losses * (period - 1) + loss) / period;
+                    let rs = losses === 0 ? 100 : gains / losses;
+                    result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) });
+                }
+            } return result;
+        }
+
+        function calculateMACD(data, fast, slow, sig) {
+            let fEma = calculateEMA(data, fast, 'close'), sEma = calculateEMA(data, slow, 'close'), macdLine = [];
+            for (let i = 0; i < data.length; i++) macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value });
+            let sigLine = calculateEMA(macdLine, sig, 'value'), histLine = [];
+            for(let i=0; i<data.length; i++) {
+                let hist = macdLine[i].value - sigLine[i].value;
+                histLine.push({ time: data[i].time, value: Number(hist.toFixed(2)), color: hist >= 0 ? '#26a69a' : '#ef5350' });
+            }
+            return {
+                macd: macdLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})),
+                signal: sigLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})),
+                hist: histLine
+            };
+        }
+
         function switchTab(tab) {
             currentTab = tab;
             const tSmc = document.getElementById('tabSmc');
