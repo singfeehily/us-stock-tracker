@@ -304,6 +304,7 @@
         let activeAreaSeries = []; 
         let currentCandleData = [], currentSymbolData = null;
         let fetchIntervalId = null;
+        let currentRenderId = null; // ⚡ 防並發鎖：確保不會產生多條 Live 價格線
 
         let lastScrollTop = 0;
         window.addEventListener('scroll', () => {
@@ -822,10 +823,16 @@
             const tooltip = document.getElementById('chartTooltip');
             if(!container) return;
 
+            // ⚡ [優化 2] 強調垂直網格線 (日期分界線更清晰)
             chart = LightweightCharts.createChart(container, { 
                 layout: { textColor: '#9ca3af', background: { type: 'solid', color: '#161b22' } },
-                grid: { vertLines: { color: 'rgba(48, 54, 61, 0.5)' }, horzLines: { color: 'rgba(48, 54, 61, 0.5)' } },
-                timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false }, 
+                grid: { 
+                    vertLines: { color: 'rgba(255, 255, 255, 0.15)', style: 2 }, // 2 = Dashed
+                    horzLines: { color: 'rgba(48, 54, 61, 0.5)' } 
+                },
+                timeScale: { 
+                    borderColor: '#30363d', timeVisible: true, secondsVisible: false, rightOffset: 5 
+                }, 
                 crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
                 rightPriceScale: { borderColor: '#30363d' },
                 trackingMode: { exitMode: LightweightCharts.TrackingModeExitMode.OnTouchEnd },
@@ -840,8 +847,11 @@
 
             subChart = LightweightCharts.createChart(subContainer, {
                 layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } },
-                grid: { vertLines: { color: 'rgba(48, 54, 61, 0.3)' }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } },
-                timeScale: { borderColor: '#30363d', visible: false },
+                grid: { 
+                    vertLines: { color: 'rgba(255, 255, 255, 0.15)', style: 2 }, 
+                    horzLines: { color: 'rgba(48, 54, 61, 0.3)' } 
+                },
+                timeScale: { borderColor: '#30363d', visible: false, rightOffset: 5 },
                 trackingMode: { exitMode: LightweightCharts.TrackingModeExitMode.OnTouchEnd },
                 handleScroll: { horzTouchDrag: true, vertTouchDrag: true },
                 handleScale: { pinch: true }
@@ -885,6 +895,10 @@
 
         async function updateChartSymbol(symbol) {
             try {
+                // ⚡ [優化 3] 加入異步渲染鎖定機制，徹底解決快速點擊產生多條 Live 價格線的問題
+                const renderId = Date.now();
+                currentRenderId = renderId;
+
                 const symEl = document.getElementById('currentChartSymbol');
                 if (symEl) symEl.innerText = symbol || '--';
                 
@@ -895,12 +909,6 @@
 
                 const loader = document.getElementById('chartLoader');
                 if(loader) loader.style.display = 'flex';
-
-                activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); 
-                activePriceLines = []; 
-                activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} });
-                activeAreaSeries = [];
-                if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
 
                 let data = [];
                 const tfParam = currentTimeFrame.toLowerCase();
@@ -919,6 +927,16 @@
                 } catch(e) {}
 
                 if(loader) loader.style.display = 'none';
+
+                // ⚡ 檢查這是否是最新的請求，若不是則直接放棄渲染，避免舊線條疊加
+                if (currentRenderId !== renderId) return;
+
+                // 只有在確定當前是最新渲染時，才安全地清除圖表舊線段
+                activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); 
+                activePriceLines = []; 
+                activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} });
+                activeAreaSeries = [];
+                if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
 
                 if (data.length > 0) {
                     currentCandleData = data;
@@ -1020,13 +1038,11 @@
             }
         }
 
-        // ⚡ [優化] 防重繪信號與動態平倉邏輯
         function getMockSignals(data, symData) {
             let markers = [];
             if(!data || data.length < 3) return markers;
-            let currentPosition = 0; // 1: 持有多單, -1: 持有空單
+            let currentPosition = 0; 
 
-            // 注意: i < data.length - 1 確保只檢查「已收盤」的 K 線，絕對防止信號重繪 (Repainting)
             for(let i=2; i<data.length - 1; i++) {
                 let prev = data[i-1], curr = data[i];
                 
@@ -1053,13 +1069,13 @@
                     }
                 }
 
-                // ⚡ [新增] 動態平倉信號 (反向形態發生時建議出場)
+                // ⚡ [優化 1] 替換平倉標籤為藍色實心圓，大幅增強辨識度並防止與進場箭頭混淆
                 if (currentPosition === 1 && curr.close < prev.low && i % 4 === 0) {
-                    markers.push({ time: curr.time, position: 'aboveBar', color: '#f59e0b', shape: 'xcross', text: '❌ 平多' });
+                    markers.push({ time: curr.time, position: 'aboveBar', color: '#3b82f6', shape: 'circle', text: '平多', size: 1 });
                     currentPosition = 0;
                 }
                 if (currentPosition === -1 && curr.close > prev.high && i % 5 === 0) {
-                    markers.push({ time: curr.time, position: 'belowBar', color: '#f59e0b', shape: 'xcross', text: '❌ 平空' });
+                    markers.push({ time: curr.time, position: 'belowBar', color: '#3b82f6', shape: 'circle', text: '平空', size: 1 });
                     currentPosition = 0;
                 }
             }
