@@ -11,22 +11,19 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
         .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
         
-        ::-webkit-scrollbar { width: 10px; height: 10px; }
-        ::-webkit-scrollbar-track { background: #0d1117; }
+        /* ⚡ 加粗並美化所有 Scrollbar */
+        ::-webkit-scrollbar { width: 12px; height: 12px; }
+        ::-webkit-scrollbar-track { background: #0d1117; border-radius: 6px; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
         ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
         
-        /* 📱 手機版專屬 UX 優化 */
+        .custom-scrollbar::-webkit-scrollbar { height: 12px; } /* 針對表格與自選股特別確保 12px 高度 */
+
         @media (max-width: 768px) {
-            /* 1. 加粗滾動條，方便手指滑動 */
             ::-webkit-scrollbar { height: 10px; width: 10px; } 
-            ::-webkit-scrollbar-thumb { background: #6b7280; border-radius: 8px; border: 2px solid #0d1117; }
-            .overflow-x-auto { -webkit-overflow-scrolling: touch; padding-bottom: 12px; }
-            /* 2. 鎖死圖表區的網頁預設滑動，防止 Zoom In/Out 時畫面走位 */
-            #tv_chart_container, #sub_chart_container { 
-                touch-action: none !important; 
-                overscroll-behavior: none !important; 
-            }
+            ::-webkit-scrollbar-thumb { background: #6b7280; border-radius: 6px; border: 1px solid #0d1117; }
+            .overflow-x-auto { -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+            #tv_chart_container, #sub_chart_container { touch-action: none !important; overscroll-behavior: none !important; }
         }
         
         #mainHeader { transition: transform 0.3s ease-in-out; }
@@ -37,7 +34,7 @@
         .toast.show { opacity: 1; transform: translateY(0); }
         .toast.success { background-color: #238636; }
         .toast.error { background-color: #da3633; }
-        .toast.info { background-color: #3b82f6; } /* 新增藍色 Info Toast 給手機指標說明用 */
+        .toast.info { background-color: #3b82f6; } 
         
         .clickable-row { cursor: pointer; transition: background-color 0.2s; }
         .clickable-row:hover { background-color: #1f242c; }
@@ -71,6 +68,10 @@
         .pd-track { background: linear-gradient(to right, #166534 0%, #166534 49%, #4b5563 49%, #4b5563 51%, #991b1b 51%, #991b1b 100%); }
         .help-icon { color: #6b7280; margin-left: 4px; transition: color 0.2s; cursor: help; padding: 4px; }
         .help-icon:hover, .help-icon:active { color: #60a5fa; }
+
+        /* ⚡ 拖曳視覺回饋 */
+        .drag-over { border-color: #3b82f6 !important; background-color: rgba(59, 130, 246, 0.1) !important; }
+        .dragging { opacity: 0.5; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative">
@@ -114,19 +115,20 @@
                 <span class="font-semibold text-white text-sm"><i class="fa-solid fa-fire text-orange-500 mr-2"></i>大盤資金熱力圖 (LIVE)</span>
                 <i id="marketFlowIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
             </div>
-            <div id="marketFlowContent" class="collapsible-content flex gap-3 overflow-x-auto py-3 px-4" style="max-height: 100px;"></div>
+            <div id="marketFlowContent" class="collapsible-content flex gap-3 overflow-x-auto py-3 px-4 custom-scrollbar" style="max-height: 100px;"></div>
         </section>
 
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('watchlistContent', 'watchlistIcon')">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-star text-yellow-500"></i>
-                    <h2 class="text-lg font-semibold text-white">我的最愛自選股</h2>
+                    <h2 class="text-lg font-semibold text-white">我的最愛自選股 <span class="text-xs text-gray-500 font-normal ml-2">(可長按拖曳排序)</span></h2>
                 </div>
                 <i id="watchlistIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
             </div>
             <div id="watchlistContent" class="collapsible-content" style="max-height: 300px;">
-                <div id="watchlistContainer" class="flex gap-4 overflow-x-auto p-4"></div>
+                <!-- ⚡ 加入 custom-scrollbar -->
+                <div id="watchlistContainer" class="flex gap-4 overflow-x-auto p-4 custom-scrollbar"></div>
             </div>
         </section>
 
@@ -151,19 +153,17 @@
                                     <button onclick="changeTimeFrame('1D')" id="tf_1D" class="px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors">1D</button>
                                 </div>
                                 <div class="flex items-center gap-3 text-[11px] text-gray-300 bg-[#0d1117] border border-[#30363d] rounded-lg p-2">
-                                    <!-- 手機版支援點擊 ? 彈出提示，避免誤觸 -->
                                     <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_long" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做多區 
-                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做多區】顯示下方買單堆積的支撐區域，價格回踩此區容易反彈', 'info');"></i>
+                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做多區】顯示下方買單堆積的支撐區域，深色為 OB，淺色為 FVG 缺口', 'info');"></i>
                                     </label>
                                     <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_short" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 做空區 
-                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做空區】顯示上方賣單堆積的壓力區域，價格觸及此區容易回落', 'info');"></i>
+                                        <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【做空區】顯示上方賣單堆積的壓力區域，深色為 OB，淺色為 FVG 缺口', 'info');"></i>
                                     </label>
                                     <label class="flex items-center cursor-pointer"><input type="checkbox" id="layer_pd" checked onchange="updateChartOverlays()" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> 溢折價 
                                         <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【溢/折價】絕對中軸(0.5)，上方為溢價(太貴)，下方為折價(便宜)', 'info');"></i>
                                     </label>
                                 </div>
                             </div>
-                            <!-- 副圖指標開關 -->
                             <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2 flex flex-wrap gap-4 text-xs items-center justify-center">
                                 <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators('ema')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> EMA 
                                     <i class="fa-solid fa-circle-question help-icon" onclick="event.preventDefault(); event.stopPropagation(); showToast('【指數移動平均線】快速判斷近期趨勢方向與動能 (黃線20/紫線50)', 'info');"></i>
@@ -180,7 +180,6 @@
                             </div>
                         </div>
 
-                        <!-- 圖表區 -->
                         <div id="tv_chart_container" style="height: 380px; width: 100%; position: relative;">
                             <div id="chartLoader"><i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-3xl"></i></div>
                             <div id="chartTooltip"></div>
@@ -234,7 +233,7 @@
                 </div>
                 
                 <div id="screenerContent" class="collapsible-content flex flex-col" style="max-height: 800px;">
-                    <div class="flex border-b border-[#30363d] bg-[#0d1117] px-2 gap-2 overflow-x-auto relative">
+                    <div class="flex border-b border-[#30363d] bg-[#0d1117] px-2 gap-2 overflow-x-auto relative custom-scrollbar">
                         <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap">
                             <i class="fa-solid fa-layer-group mr-1"></i>S 級狙擊池
                         </button>
@@ -243,7 +242,8 @@
                         </button>
                     </div>
 
-                    <div class="overflow-x-auto flex-grow">
+                    <!-- ⚡ 加上 custom-scrollbar 確保高度充足 -->
+                    <div class="overflow-x-auto flex-grow custom-scrollbar">
                         <table class="w-full text-left border-collapse whitespace-nowrap text-sm">
                             <thead>
                                 <tr class="border-b border-[#30363d] bg-[#0d1117]">
@@ -314,7 +314,9 @@
         let currentLivePrices = {}; 
         let sortCol = 'rrr'; let sortDesc = true;
         let currentTab = 'smc'; let currentTimeFrame = '1D'; 
-        let userWatchlist = ['FUTU', 'PLTR', 'NVDA', 'TSLA', 'SPY'];
+        
+        // ⚡ 讀取 LocalStorage 自選股，預設清單不遺失
+        let userWatchlist = JSON.parse(localStorage.getItem('smc_watchlist')) || ['AAPL', 'NVDA', 'TSLA', 'SPY', 'QQQ'];
 
         let chart = null, subChart = null, candleSeries = null;
         let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null;
@@ -341,6 +343,10 @@
             try { startSmartPolling(); fetchLiveQuotes(); } catch (e) {}
         });
 
+        function saveWatchlist() {
+            localStorage.setItem('smc_watchlist', JSON.stringify(userWatchlist));
+        }
+
         function getMarketSession() {
             const nyTime = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
             const day = nyTime.getDay();
@@ -349,7 +355,6 @@
             const timeStr = h * 100 + m; 
 
             if (day === 0 || day === 6) return { text: "休市", style: "bg-gray-800/80 text-gray-400 border-gray-600", dot: "text-gray-500", interval: 60000 };
-            
             if (timeStr >= 400 && timeStr < 930) return { text: "盤前", style: "bg-blue-900/40 text-blue-400 border-blue-500/50", dot: "text-blue-500 animate-pulse", interval: 10000 };
             if (timeStr >= 930 && timeStr < 1600) return { text: "盤中", style: "bg-green-900/40 text-green-400 border-green-500/50", dot: "text-red-500 animate-pulse", interval: 10000 };
             if (timeStr >= 1600 && timeStr < 2000) return { text: "盤後", style: "bg-purple-900/40 text-purple-400 border-purple-500/50", dot: "text-purple-500 animate-pulse", interval: 10000 };
@@ -366,7 +371,6 @@
                 liveStatusIcon.innerHTML = `<i class="fa-solid fa-circle-dot ${session.dot} mr-1.5"></i> ${session.text} LIVE`;
                 liveStatusIcon.className = `text-xs font-bold ${session.text === '收盤' || session.text === '休市' ? 'text-gray-400' : 'text-green-400'} flex items-center`;
             }
-            
             fetchIntervalId = setInterval(fetchLiveQuotes, session.interval);
         }
 
@@ -398,7 +402,7 @@
             renderMarketFlow(); renderWatchlist(); renderScreenerData();
             if (globalData && Array.isArray(globalData.screener_data) && globalData.screener_data.length > 0) {
                 updateChartSymbol(globalData.screener_data[0].symbol);
-            } else { updateChartSymbol('SPY'); }
+            } else { updateChartSymbol(userWatchlist[0] || 'SPY'); }
         }
 
         async function fetchLiveQuotes() {
@@ -425,7 +429,8 @@
             let dist = 9999;
             let label = "🔴 觀察中", colorClass = "text-gray-400", dotClass = "bg-gray-500", distText = "-";
 
-            if (item.entry_top && item.entry_top > 0) {
+            // 確保防呆
+            if (item && item.entry_top && item.entry_top > 0) {
                 if (item.direction === 'short') {
                     dist = ((item.entry_bot - livePrice) / livePrice) * 100;
                     if (livePrice <= item.entry_top && livePrice >= item.entry_bot) {
@@ -445,9 +450,11 @@
                         label = "🔴 觀察中"; colorClass = "text-red-500"; dotClass = "bg-red-500"; distText = `差異: -${dist.toFixed(1)}%`;
                     } else { distText = "已跌破"; }
                 }
+            } else if (item) {
+                return { dist, label: "等待數據", colorClass: "text-gray-500", dotClass: "bg-gray-600", distText: "-" };
             }
 
-            if (item.trade_status && (item.trade_status.includes('❌') || item.trade_status.includes('條件不足') || item.trade_status.includes('⚠️'))) {
+            if (item && item.trade_status && (item.trade_status.includes('❌') || item.trade_status.includes('條件不足') || item.trade_status.includes('⚠️'))) {
                 label = "🔴 觀察中"; colorClass = "text-gray-400"; dotClass = "bg-gray-500";
             }
             return { dist, label, colorClass, dotClass, distText };
@@ -507,7 +514,6 @@
                 for (let sym in liveData) {
                     const priceColEl = document.getElementById(`screener-price-${sym}`);
                     const statusDistEl = document.getElementById(`status-dist-${sym}`);
-                    
                     let p = liveData[sym].price || 0;
                     
                     if (priceColEl) {
@@ -571,10 +577,61 @@
             container.innerHTML = html;
         }
 
+        // ⚡ Drag & Drop 事件處理
+        let dragSrcEl = null;
+
+        function handleDragStart(e) {
+            dragSrcEl = this;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', this.dataset.symbol);
+            this.classList.add('dragging');
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) e.preventDefault(); 
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            this.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) e.stopPropagation();
+            this.classList.remove('drag-over');
+            
+            if (dragSrcEl !== this) {
+                const srcSymbol = dragSrcEl.dataset.symbol;
+                const destSymbol = this.dataset.symbol;
+                
+                const srcIdx = userWatchlist.indexOf(srcSymbol);
+                const destIdx = userWatchlist.indexOf(destSymbol);
+                
+                userWatchlist.splice(srcIdx, 1);
+                userWatchlist.splice(destIdx, 0, srcSymbol);
+                
+                saveWatchlist();
+                renderWatchlist();
+                renderScreenerData(); 
+            }
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('#watchlistContainer > div').forEach(c => c.classList.remove('drag-over'));
+        }
+
         function renderWatchlist() {
             const container = document.getElementById('watchlistContainer');
             if (!container) return;
             container.innerHTML = '';
+            
             const watchlistMap = new Map();
             if (globalData && Array.isArray(globalData.watchlist_data)) {
                 globalData.watchlist_data.forEach(item => { if (item && item.symbol) watchlistMap.set(item.symbol, item); });
@@ -589,13 +646,22 @@
                 const isPositive = (item.change || 0) >= 0;
                 
                 const card = document.createElement('div');
-                card.className = 'flex-shrink-0 w-44 glass-panel rounded-lg p-3 relative cursor-pointer hover:border-gray-500 transition-colors bg-[#0d1117] group';
+                // ⚡ 加入 Drag & Drop 屬性
+                card.className = 'flex-shrink-0 w-44 glass-panel rounded-lg p-3 relative cursor-move hover:border-gray-500 transition-colors bg-[#0d1117] group border border-[#30363d]';
                 card.onclick = () => updateChartSymbol(item.symbol);
+                card.draggable = true;
+                card.dataset.symbol = item.symbol;
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragover', handleDragOver);
+                card.addEventListener('dragenter', handleDragEnter);
+                card.addEventListener('dragleave', handleDragLeave);
+                card.addEventListener('drop', handleDrop);
+                card.addEventListener('dragend', handleDragEnd);
                 
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-1">
                         <span class="font-bold text-base text-white">${item.symbol || '--'}</span>
-                        <button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors z-10"><i class="fa-solid fa-xmark"></i></button>
+                        <button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors z-10 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                     <div id="wl-price-${item.symbol}" data-price="${price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}">$${price.toFixed(2)} ${sessionBadge}</div>
                     <div id="wl-change-${item.symbol}" class="text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}">
@@ -669,6 +735,7 @@
             renderScreenerData();
         }
 
+        // ⚡ 完善的 Tab 防呆切換
         function renderScreenerData() {
             try {
                 const tbody = document.getElementById('screenerTableBody');
@@ -678,11 +745,17 @@
                 let processedData = [];
 
                 if (currentTab === 'smc') {
+                    // S 級狙擊池：嚴格要求必須有 smc_id
                     processedData = rawData.filter(item => item && item.smc_id);
                 } else {
+                    // 核心監察總表：按照自選股順序排列，沒有數據的補上預設防呆結構
                     processedData = userWatchlist.map(sym => {
                         let found = rawData.find(x => x && x.symbol === sym);
-                        return found || { symbol: sym, price: 0, rrr: 0, direction: 'none' };
+                        return found || { 
+                            symbol: sym, price: 0, rrr: 0, direction: 'none', 
+                            trade_status: '無 SMC 數據', smc_text: '-', smc_class: 'border-gray-600 text-gray-500',
+                            entry_bot: 0, entry_top: 0
+                        };
                     });
                 }
 
@@ -702,11 +775,14 @@
                 else if (statusFilter === 'YELLOW') processedData = processedData.filter(item => item._status.label === '🟡 接近中');
                 else if (statusFilter === 'RED') processedData = processedData.filter(item => item._status.label === '🔴 觀察中');
 
-                processedData.sort((a, b) => {
-                    let valA = 0, valB = 0;
-                    if (sortCol === 'rrr') { valA = parseFloat(a.rrr) || 0; valB = parseFloat(b.rrr) || 0; } 
-                    return sortDesc ? (valB - valA) : (valA - valB);
-                });
+                // 只有在 SMC 池才強制排序，自選股池保持拖曳順序
+                if (currentTab === 'smc') {
+                    processedData.sort((a, b) => {
+                        let valA = 0, valB = 0;
+                        if (sortCol === 'rrr') { valA = parseFloat(a.rrr) || 0; valB = parseFloat(b.rrr) || 0; } 
+                        return sortDesc ? (valB - valA) : (valA - valB);
+                    });
+                }
 
                 tbody.innerHTML = '';
                 if (processedData.length === 0) {
@@ -777,7 +853,6 @@
                 timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false }, 
                 crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
                 rightPriceScale: { borderColor: '#30363d' },
-                // 📱 手機防走位：觸控結束時自動退出十字線模式，並允許各種滑動行為鎖定在圖表內
                 trackingMode: { exitMode: LightweightCharts.TrackingModeExitMode.OnTouchEnd },
                 handleScroll: { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: true },
                 handleScale: { mouseWheel: true, pinch: true, axisPressedMouseMove: true }
@@ -898,6 +973,7 @@
             } catch(e) {}
         }
 
+        // ⚡ 核心視覺升級：漸層渲染 (FVG 與 OB 深度區分)
         function updateChartOverlays(caller = null) {
             if (!candleSeries || !currentSymbolData) return;
             
@@ -921,14 +997,18 @@
                 
                 if ((isShort && showShort) || (!isShort && showLong)) {
                     hasLegend = true;
-                    const zoneColor = isShort ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 197, 94, 0.15)'; 
-                    const lineColor = isShort ? 'rgba(239, 68, 68, 0.3)' : 'rgba(34, 197, 94, 0.3)';
+                    // ⚡ 漸層邏輯：
+                    // 做空時 (阻力區)：上方為 OB (深紅)，下方為 FVG (淺紅)
+                    // 做多時 (支撐區)：下方為 OB (深綠)，上方為 FVG (淺綠)
+                    const topColor = isShort ? 'rgba(239, 68, 68, 0.35)' : 'rgba(34, 197, 94, 0.05)'; 
+                    const bottomColor = isShort ? 'rgba(239, 68, 68, 0.05)' : 'rgba(34, 197, 94, 0.35)'; 
+                    const lineColor = isShort ? 'rgba(239, 68, 68, 0.4)' : 'rgba(34, 197, 94, 0.4)';
                     const textColor = isShort ? 'text-red-400' : 'text-green-400';
                     const icon = isShort ? '🔻' : '🔺';
                     
                     let areaSeries = chart.addAreaSeries({
                         baseValue: { type: 'price', price: currentSymbolData.entry_bot },
-                        topColor: zoneColor, bottomColor: zoneColor,
+                        topColor: topColor, bottomColor: bottomColor,
                         lineColor: 'rgba(0,0,0,0)', lineWidth: 0,
                         priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null, 
                     });
@@ -1094,7 +1174,9 @@
             const val = input.value.trim().toUpperCase(); 
             if(!val) return;
             if (userWatchlist.includes(val)) { showToast(`股票 ${val} 已經在自選清單中`, 'error'); input.value = ''; return; }
-            userWatchlist.push(val); renderWatchlist(); renderScreenerData(); 
+            userWatchlist.unshift(val); // 加入最前面
+            saveWatchlist();
+            renderWatchlist(); renderScreenerData(); 
             try { fetchLiveQuotes(); } catch(err){}
             showToast(`成功加入自選: ${val}`); input.value = ''; 
         }
@@ -1102,6 +1184,7 @@
         function removeFromWatchlist(event, sym) {
             event.stopPropagation(); 
             userWatchlist = userWatchlist.filter(s => s !== sym);
+            saveWatchlist();
             if(currentLivePrices[sym]) delete currentLivePrices[sym];
             renderWatchlist(); renderScreenerData(); showToast(`已從自選移除: ${sym}`, 'error');
         }
