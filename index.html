@@ -11,16 +11,12 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
         .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
         
-        /* 表格與列表專用的加粗滾動條 */
         ::-webkit-scrollbar { width: 12px; height: 12px; }
         ::-webkit-scrollbar-track { background: #0d1117; border-radius: 6px; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
         ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+        
         .custom-scrollbar::-webkit-scrollbar { height: 12px; } 
-
-        /* 隱藏 Tab 選單的滾動條，避免擠壓版面 */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         @media (max-width: 768px) {
             ::-webkit-scrollbar { height: 10px; width: 10px; } 
@@ -217,8 +213,8 @@
                 
                 <div id="screenerContent" class="collapsible-content flex flex-col" style="max-height: 800px;">
                     
-                    <!-- ⚡ 修正: 加入 flex-shrink-0 和 min-h-[44px]，並使用 no-scrollbar，徹底解決 Tab 被裁切擠壓的問題 -->
-                    <div class="flex border-b border-[#30363d] bg-[#0d1117] px-2 gap-2 overflow-x-auto relative no-scrollbar flex-shrink-0 min-h-[44px] items-end">
+                    <!-- ⚡ 修正後的獨立 Tab 選單容器，絕不重疊 -->
+                    <div class="bg-[#161b22] border-b border-[#30363d] px-3 flex gap-2 flex-shrink-0">
                         <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2.5 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap">
                             <i class="fa-solid fa-layer-group mr-1"></i>S 級狙擊池
                         </button>
@@ -927,8 +923,8 @@
                     if (livePrice) {
                         let lastCandle = currentCandleData[currentCandleData.length - 1];
                         lastCandle.close = livePrice;
-                        if (livePrice > lastCandle.high) lastCandle.high = livePrice;
-                        if (livePrice < lastCandle.low) lastCandle.low = livePrice;
+                        if (newPrice > lastCandle.high) lastCandle.high = newPrice;
+                        if (newPrice < lastCandle.low) lastCandle.low = newPrice;
                     }
                     candleSeries.setData(currentCandleData);
                 }
@@ -938,7 +934,7 @@
                 if (currentSymbolData && currentCandleData.length > 0) {
                     currentPriceLine = candleSeries.createPriceLine({ 
                         price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, 
-                        lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '' 
+                        lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: 'Live Price' 
                     });
                     updateChartOverlays('init'); 
                 }
@@ -947,7 +943,7 @@
             } catch(e) {}
         }
 
-        // ⚡ 終極渲染：恢復高對比透明色塊
+        // ⚡ 結合：高辨識度染色塊 (FVG 淺色 + OB 深色) + 右側清晰軸標籤 (axisLabelVisible: true)
         function updateChartOverlays(caller = null) {
             if (!candleSeries || !currentSymbolData) return;
             
@@ -965,9 +961,7 @@
                 
                 if ((isShort && showShort) || (!isShort && showLong)) {
                     
-                    // FVG (缺口區) 使用 20% 透明度
                     const fvgColor = isShort ? 'rgba(239, 68, 68, 0.2)' : 'rgba(34, 197, 94, 0.2)'; 
-                    // OB (訂單防守區) 使用 40% 透明度，明顯區分
                     const obColor  = isShort ? 'rgba(239, 68, 68, 0.4)' : 'rgba(34, 197, 94, 0.4)'; 
                     
                     const lineColor = isShort ? 'rgba(239, 68, 68, 0.6)' : 'rgba(34, 197, 94, 0.6)';
@@ -995,22 +989,22 @@
                     obSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.sl })));
                     activeAreaSeries.push(obSeries);
 
-                    // 畫出水平實體線與標籤 (維持在線上方的無遮擋設計)
+                    // ⚡ 恢復右側 Y 軸標籤與線條名稱 (axisLabelVisible: true)
                     activePriceLines.push(candleSeries.createPriceLine({ 
                         price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, 
-                        axisLabelVisible: false, title: '⚡ FVG' 
+                        axisLabelVisible: true, title: '⚡ FVG' 
                     }));
                     activePriceLines.push(candleSeries.createPriceLine({ 
                         price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, 
-                        axisLabelVisible: false, title: '📦 OB' 
+                        axisLabelVisible: true, title: '📦 OB' 
                     }));
                     activePriceLines.push(candleSeries.createPriceLine({ 
                         price: currentSymbolData.sl, color: slLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, 
-                        axisLabelVisible: false, title: '🚨 SL' 
+                        axisLabelVisible: true, title: '🚨 SL' 
                     }));
                     activePriceLines.push(candleSeries.createPriceLine({ 
                         price: currentSymbolData.tp, color: tpLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dotted, 
-                        axisLabelVisible: false, title: '🎯 TP' 
+                        axisLabelVisible: true, title: '🎯 TP' 
                     }));
                 }
             }
@@ -1018,7 +1012,7 @@
             if (showPd && currentSymbolData.macro_eq) {
                 activePriceLines.push(candleSeries.createPriceLine({ 
                     price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, 
-                    axisLabelVisible: false, title: '➖ 0.5 均衡' 
+                    axisLabelVisible: true, title: '➖ 0.5 均衡' 
                 }));
             }
         }
