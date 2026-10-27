@@ -304,7 +304,7 @@
         let activeAreaSeries = []; 
         let currentCandleData = [], currentSymbolData = null;
         let fetchIntervalId = null;
-        let currentRenderId = null; // ⚡ 防並發鎖：確保不會產生多條 Live 價格線
+        let currentRenderId = null; 
 
         let lastScrollTop = 0;
         window.addEventListener('scroll', () => {
@@ -823,16 +823,13 @@
             const tooltip = document.getElementById('chartTooltip');
             if(!container) return;
 
-            // ⚡ [優化 2] 強調垂直網格線 (日期分界線更清晰)
             chart = LightweightCharts.createChart(container, { 
                 layout: { textColor: '#9ca3af', background: { type: 'solid', color: '#161b22' } },
                 grid: { 
-                    vertLines: { color: 'rgba(255, 255, 255, 0.15)', style: 2 }, // 2 = Dashed
+                    vertLines: { color: 'rgba(255, 255, 255, 0.15)', style: 2 }, 
                     horzLines: { color: 'rgba(48, 54, 61, 0.5)' } 
                 },
-                timeScale: { 
-                    borderColor: '#30363d', timeVisible: true, secondsVisible: false, rightOffset: 5 
-                }, 
+                timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false, rightOffset: 5 }, 
                 crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
                 rightPriceScale: { borderColor: '#30363d' },
                 trackingMode: { exitMode: LightweightCharts.TrackingModeExitMode.OnTouchEnd },
@@ -847,10 +844,7 @@
 
             subChart = LightweightCharts.createChart(subContainer, {
                 layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } },
-                grid: { 
-                    vertLines: { color: 'rgba(255, 255, 255, 0.15)', style: 2 }, 
-                    horzLines: { color: 'rgba(48, 54, 61, 0.3)' } 
-                },
+                grid: { vertLines: { color: 'rgba(255, 255, 255, 0.15)', style: 2 }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } },
                 timeScale: { borderColor: '#30363d', visible: false, rightOffset: 5 },
                 trackingMode: { exitMode: LightweightCharts.TrackingModeExitMode.OnTouchEnd },
                 handleScroll: { horzTouchDrag: true, vertTouchDrag: true },
@@ -882,12 +876,8 @@
 
             new ResizeObserver(entries => {
                 for (let entry of entries) {
-                    if (entry.target === container && container.clientWidth > 0) {
-                        chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
-                    }
-                    if (entry.target === subContainer && subContainer.clientWidth > 0 && subContainer.style.display !== 'none') {
-                        subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
-                    }
+                    if (entry.target === container && container.clientWidth > 0) chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+                    if (entry.target === subContainer && subContainer.clientWidth > 0 && subContainer.style.display !== 'none') subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
                 }
             }).observe(container);
             new ResizeObserver(() => { if(subContainer.clientWidth > 0 && subContainer.style.display !== 'none') subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight }); }).observe(subContainer);
@@ -895,7 +885,6 @@
 
         async function updateChartSymbol(symbol) {
             try {
-                // ⚡ [優化 3] 加入異步渲染鎖定機制，徹底解決快速點擊產生多條 Live 價格線的問題
                 const renderId = Date.now();
                 currentRenderId = renderId;
 
@@ -928,10 +917,8 @@
 
                 if(loader) loader.style.display = 'none';
 
-                // ⚡ 檢查這是否是最新的請求，若不是則直接放棄渲染，避免舊線條疊加
                 if (currentRenderId !== renderId) return;
 
-                // 只有在確定當前是最新渲染時，才安全地清除圖表舊線段
                 activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); 
                 activePriceLines = []; 
                 activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} });
@@ -961,7 +948,6 @@
                 }
                 
                 chart.timeScale().fitContent(); 
-
                 updateChartIndicators();
                 renderWatchlist();
 
@@ -984,18 +970,15 @@
                 const isShort = currentSymbolData.direction === 'short';
                 
                 if ((isShort && showShort) || (!isShort && showLong)) {
-                    
                     const fvgColor = isShort ? 'rgba(239, 68, 68, 0.2)' : 'rgba(34, 197, 94, 0.2)'; 
                     const obColor  = isShort ? 'rgba(239, 68, 68, 0.4)' : 'rgba(34, 197, 94, 0.4)'; 
-                    
                     const lineColor = isShort ? 'rgba(239, 68, 68, 0.6)' : 'rgba(34, 197, 94, 0.6)';
                     const slLineColor = '#ef4444';
                     const tpLineColor = '#10b981';
 
                     let fvgSeries = chart.addAreaSeries({
                         baseValue: { type: 'price', price: currentSymbolData.entry_bot },
-                        topColor: fvgColor, bottomColor: fvgColor,
-                        lineColor: 'rgba(0,0,0,0)', lineWidth: 0,
+                        topColor: fvgColor, bottomColor: fvgColor, lineColor: 'rgba(0,0,0,0)', lineWidth: 0,
                         priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null, 
                     });
                     fvgSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top })));
@@ -1004,79 +987,69 @@
                     let obBasePrice = isShort ? currentSymbolData.entry_top : currentSymbolData.entry_bot;
                     let obSeries = chart.addAreaSeries({
                         baseValue: { type: 'price', price: obBasePrice },
-                        topColor: obColor, bottomColor: obColor,
-                        lineColor: 'rgba(0,0,0,0)', lineWidth: 0,
+                        topColor: obColor, bottomColor: obColor, lineColor: 'rgba(0,0,0,0)', lineWidth: 0,
                         priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null, 
                     });
                     obSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.sl })));
                     activeAreaSeries.push(obSeries);
 
                     activePriceLines.push(candleSeries.createPriceLine({ 
-                        price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, 
-                        axisLabelVisible: true, title: '⚡ FVG' 
+                        price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ FVG' 
                     }));
                     activePriceLines.push(candleSeries.createPriceLine({ 
-                        price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, 
-                        axisLabelVisible: true, title: '📦 OB' 
+                        price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '📦 OB' 
                     }));
                     activePriceLines.push(candleSeries.createPriceLine({ 
-                        price: currentSymbolData.sl, color: slLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, 
-                        axisLabelVisible: true, title: '🚨 SL' 
+                        price: currentSymbolData.sl, color: slLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '🚨 SL' 
                     }));
                     activePriceLines.push(candleSeries.createPriceLine({ 
-                        price: currentSymbolData.tp, color: tpLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dotted, 
-                        axisLabelVisible: true, title: '🎯 TP' 
+                        price: currentSymbolData.tp, color: tpLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: '🎯 TP' 
                     }));
                 }
             }
 
             if (showPd && currentSymbolData.macro_eq) {
-                activePriceLines.push(candleSeries.createPriceLine({ 
-                    price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, 
-                    axisLabelVisible: true, title: '➖ 0.5 均衡' 
-                }));
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '➖ 0.5 均衡' }));
             }
         }
 
+        // ⚡ [V2 實戰版] 植入 Python 雙重過濾邏輯：EMA20 順勢 + RSI 動能防呆
         function getMockSignals(data, symData) {
             let markers = [];
-            if(!data || data.length < 3) return markers;
+            if(!data || data.length < 21) return markers;
+
+            let ema20 = calculateEMA(data, 20, 'close');
+            let rsi = calculateRSI(data, 14);
             let currentPosition = 0; 
 
-            for(let i=2; i<data.length - 1; i++) {
+            for(let i = 20; i < data.length - 1; i++) {
                 let prev = data[i-1], curr = data[i];
+                let currRsi = rsi[i] ? rsi[i].value : 50;
+                let currEma = ema20[i] ? ema20[i].value : curr.close;
                 
-                if (prev.close < prev.open && curr.close > curr.open && curr.close > prev.open) {
-                    if (symData && symData.entry_top > 0 && symData.direction !== 'short') {
-                        if (curr.low <= symData.entry_top && i % 3 === 0) {
-                            markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: '進場多' });
-                            currentPosition = 1;
-                        }
-                    } else if (i % 14 === 0) { 
+                let bullish_engulfing = (prev.close < prev.open) && (curr.close > curr.open) && (curr.close > prev.open);
+                let bearish_engulfing = (prev.close > prev.open) && (curr.close < curr.open) && (curr.close < prev.open);
+
+                if (currentPosition === 0) {
+                    // 做多 V2 邏輯：吞沒 + 站上 EMA + RSI<70 (不追極端超買)
+                    if (bullish_engulfing && curr.close > currEma && currRsi < 70) {
                         markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: '進場多' });
                         currentPosition = 1;
                     }
-                }
-                else if (prev.close > prev.open && curr.close < curr.open && curr.close < prev.open) {
-                    if (symData && symData.entry_top > 0 && symData.direction === 'short') {
-                         if (curr.high >= symData.entry_bot && i % 3 === 0) {
-                             markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: '進場空' });
-                             currentPosition = -1;
-                         }
-                    } else if (i % 17 === 0) {
+                    // 做空 V2 邏輯：吞沒 + 跌破 EMA + RSI>30 (不追極端超賣)
+                    else if (bearish_engulfing && curr.close < currEma && currRsi > 30) {
                         markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: '進場空' });
                         currentPosition = -1;
                     }
-                }
-
-                // ⚡ [優化 1] 替換平倉標籤為藍色實心圓，大幅增強辨識度並防止與進場箭頭混淆
-                if (currentPosition === 1 && curr.close < prev.low && i % 4 === 0) {
-                    markers.push({ time: curr.time, position: 'aboveBar', color: '#3b82f6', shape: 'circle', text: '平多', size: 1 });
-                    currentPosition = 0;
-                }
-                if (currentPosition === -1 && curr.close > prev.high && i % 5 === 0) {
-                    markers.push({ time: curr.time, position: 'belowBar', color: '#3b82f6', shape: 'circle', text: '平空', size: 1 });
-                    currentPosition = 0;
+                } else {
+                    if (currentPosition === 1 && curr.close < prev.low) {
+                        markers.push({ time: curr.time, position: 'aboveBar', color: '#3b82f6', shape: 'circle', text: '平多', size: 1 });
+                        currentPosition = 0;
+                    }
+                    if (currentPosition === -1 && curr.close > prev.high) {
+                        markers.push({ time: curr.time, position: 'belowBar', color: '#3b82f6', shape: 'circle', text: '平空', size: 1 });
+                        currentPosition = 0;
+                    }
                 }
             }
             return markers;
