@@ -10,6 +10,7 @@
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
         .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
+        
         ::-webkit-scrollbar { width: 12px; height: 12px; }
         ::-webkit-scrollbar-track { background: #0d1117; border-radius: 6px; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
@@ -22,6 +23,7 @@
         .toast.success { background-color: #238636; }
         .toast.error { background-color: #da3633; }
         .toast.info { background-color: #3b82f6; } 
+        
         .toast.signal-long { background-color: #14532d; border: 2px solid #22c55e; box-shadow: 0 0 15px rgba(34,197,94,0.4); font-size: 15px; padding: 16px 24px; }
         .toast.signal-short { background-color: #7f1d1d; border: 2px solid #ef4444; box-shadow: 0 0 15px rgba(239,68,68,0.4); font-size: 15px; padding: 16px 24px; }
 
@@ -278,7 +280,6 @@
             fetchIntervalId = setInterval(fetchLiveQuotes, session.interval);
         }
 
-        // 🚨 終極修復：強制攔截並清洗 NaN 污染，拯救 JSON 解析崩潰
         async function loadJSONData() {
             try {
                 let response = await fetch('data.json?t=' + new Date().getTime());
@@ -287,11 +288,8 @@
                     response = await fetch('https://raw.githubusercontent.com/singfeehily/us-stock-tracker/main/data.json?t=' + new Date().getTime());
                 }
                 if (!response.ok) throw new Error('Data file missing');
-
-                // 核心保護：不要直接解析，先轉字串清洗髒數據！
                 const rawText = await response.text();
                 const safeText = rawText.replace(/NaN/g, 'null').replace(/Infinity/g, 'null').replace(/-Infinity/g, 'null');
-                
                 globalData = JSON.parse(safeText);
                 document.getElementById('updateTimeText').innerHTML = `SMC 運算時間: <span class="text-green-400">${globalData.updated_at || '最新'} (HKT)</span>`;
                 
@@ -302,7 +300,6 @@
                 showToast('⚠️ 警告: 無法正確讀取 data.json，區間指標將隱藏！', 'error');
             }
             
-            // 防呆切換
             if (!globalData.screener_data || globalData.screener_data.length === 0) {
                 if (currentTab === 'smc') switchTab('watchlist');
             }
@@ -411,10 +408,34 @@
                         if (item && item.entry_top > 0) {
                             let st = getTradeStatus(item, p);
                             statusDistEl.innerHTML = `<div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold"><div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}</div><div class="text-[11px] text-gray-400 mt-1">建議差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>`;
+                            
                             let prevLabel = prevStatusMap[sym];
                             if (prevLabel && prevLabel !== '🟢 可執行' && st.label === '🟢 可執行') {
-                                const isShort = item.direction === 'short', actionText = isShort ? '做空' : '做多', toastType = isShort ? 'signal-short' : 'signal-long';
-                                showToast(`🚨 狙擊警報: ${sym} 已進入 ${actionText} 區間，請注意圖表信號！`, toastType); flashTitle(`🚨 ${sym} ${actionText}信號!`);
+                                const isShort = item.direction === 'short';
+                                const actionText = isShort ? '做空' : '做多';
+                                const toastType = isShort ? 'signal-short' : 'signal-long';
+                                
+                                // 1. 觸發視覺通知
+                                showToast(`🚨 狙擊警報: ${sym} 已進入 ${actionText} 區間，已自動記錄至日誌！`, toastType); 
+                                flashTitle(`🚨 ${sym} ${actionText}信號!`);
+                                
+                                // 2. 背景自動發送資料到 Google Sheets
+                                const webhookUrl = "https://script.google.com/macros/s/AKfycbwlkmQEaC6BRQBr3A925Kyp7snf-0iUu56Ly6ojUNNIOVxYEBioeI_fIKxG8SpiOQAR/exec"; 
+                                
+                                fetch(webhookUrl, {
+                                    method: 'POST',
+                                    mode: 'no-cors', // 繞過跨域限制，實現隱形發送
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        time: new Date().toLocaleString('zh-HK'),
+                                        symbol: sym,
+                                        direction: actionText,
+                                        entry_price: p, // 當前觸發價格
+                                        sl: item.sl || 0,
+                                        tp: item.tp || 0,
+                                        result: "OPEN"  // 標記為持倉中
+                                    })
+                                }).catch(err => console.error("日誌寫入失敗:", err));
                             }
                             prevStatusMap[sym] = st.label;
                         }
