@@ -280,33 +280,38 @@
             fetchIntervalId = setInterval(fetchLiveQuotes, session.interval);
         }
 
+        // 🚨 終極修復：加入雙引擎智慧抓取，自動繞過本地 CORS 阻擋
         async function loadJSONData() {
             try {
-                // 🚨 新增 JSON 載入防呆與錯誤捕捉
-                const response = await fetch('data.json?t=' + new Date().getTime());
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                // 優先嘗試本地讀取
+                let response = await fetch('data.json?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('Local fetch failed');
                 globalData = await response.json();
                 document.getElementById('updateTimeText').innerHTML = `SMC 運算時間: <span class="text-green-400">${globalData.updated_at || '最新'} (HKT)</span>`;
             } catch (err) {
-                console.error("JSON Fetch Error:", err);
-                globalData = { 
-                    updated_at: '⚠️ 無法讀取 data.json (請確認環境)', 
-                    watchlist_data: [], screener_data: [], chart_data: {} 
-                };
-                document.getElementById('updateTimeText').innerHTML = `<span class="text-red-500 font-bold">${globalData.updated_at}</span>`;
-                showToast('⚠️ 嚴重警告: 無法讀取 data.json，高級 SMC 區間將無法顯示！請確認是否已上傳或本地運行 Server。', 'error');
+                console.warn("本地讀取失敗，啟動 GitHub 雲端備援...");
+                try {
+                    // 自動轉向 GitHub Raw 強制讀取
+                    let response = await fetch('https://raw.githubusercontent.com/singfeehily/us-stock-tracker/main/data.json?t=' + new Date().getTime());
+                    if (!response.ok) throw new Error('GitHub fetch failed');
+                    globalData = await response.json();
+                    document.getElementById('updateTimeText').innerHTML = `SMC 運算時間: <span class="text-blue-400">${globalData.updated_at || '最新'} (雲端備援)</span>`;
+                } catch (err2) {
+                    console.error("雙引擎讀取皆失敗:", err2);
+                    globalData = { updated_at: '⚠️ 無法讀取 data.json', watchlist_data: [], screener_data: [], chart_data: {} };
+                    document.getElementById('updateTimeText').innerHTML = `<span class="text-red-500 font-bold">${globalData.updated_at}</span>`;
+                    showToast('⚠️ 嚴重警告: 無法讀取數據，SMC 區間將不會顯示！', 'error');
+                }
             }
             
-            // 🚨 如果完全沒有 SMC 數據，強制切換至 Watchlist 避免畫面空白
+            // 防呆切換
             if (!globalData.screener_data || globalData.screener_data.length === 0) {
                 if (currentTab === 'smc') switchTab('watchlist');
             }
 
-            try { renderMarketFlow(); renderWatchlist(); renderScreenerData(); } catch(e) { console.error(e); }
+            try { renderMarketFlow(); renderWatchlist(); renderScreenerData(); } catch(e) {}
             
-            const initSymbol = (globalData.screener_data && globalData.screener_data.length > 0) 
-                ? globalData.screener_data[0].symbol 
-                : (userWatchlist[0] || 'SPY');
+            const initSymbol = (globalData.screener_data && globalData.screener_data.length > 0) ? globalData.screener_data[0].symbol : (userWatchlist[0] || 'SPY');
             updateChartSymbol(initSymbol);
         }
 
@@ -487,17 +492,16 @@
                 const phaseEl = document.getElementById('panelPhase'), trendEl = document.getElementById('panelTrend'), smcEl = document.getElementById('panelSMC'), insightEl = document.getElementById('panelInsight');
                 if (!phaseEl || !trendEl || !smcEl || !insightEl) return;
                 
-                // 🚨 如果完全沒有 JSON 數據，顯示明確的環境警告
-                if (globalData.updated_at && globalData.updated_at.includes('無法讀取')) {
+                // 🚨 失去後端數據時的明確警告
+                if (!globalData.screener_data || globalData.screener_data.length === 0) {
                     phaseEl.innerHTML = `<span class="text-red-400 font-bold">⚠️ 系統異常</span>`;
-                    trendEl.innerHTML = `<span class="text-red-400 font-bold">⚠️ 本機限制</span>`;
-                    smcEl.innerHTML = `<span class="text-gray-400">無法讀取 data.json</span>`;
-                    insightEl.innerHTML = `<div class="p-2 rounded bg-red-900/20 border border-red-500/30 text-red-400 font-bold text-sm"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 請勿直接雙擊開啟 HTML，必須上傳至 GitHub 或本地 Server 才能讀取 SMC 分析結果。</div>`;
+                    trendEl.innerHTML = `<span class="text-red-400 font-bold">⚠️ 讀取失敗</span>`;
+                    smcEl.innerHTML = `<span class="text-gray-400">無法讀取 SMC 參數</span>`;
+                    insightEl.innerHTML = `<div class="p-2 rounded bg-red-900/20 border border-red-500/30 text-red-400 font-bold text-sm"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 未偵測到大數據 (data.json)。作戰區間已隱藏，請確保您有連接網路。</div>`;
                     return;
                 }
 
                 let livePrice = livePriceOverride || currentLivePrices[symbol] || (symbolData ? symbolData.price : 0);
-
                 if (symbolData) {
                     if (symbolData.macro_bsl) phaseEl.innerHTML = livePrice > symbolData.macro_eq ? `<span class="text-red-400 font-bold">昂貴溢價區 (Premium)</span>` : `<span class="text-green-400 font-bold">便宜折價區 (Discount)</span>`;
                     else phaseEl.innerHTML = `<span class="text-gray-400">等待更新宏觀數據...</span>`;
@@ -543,13 +547,13 @@
                 tbody.innerHTML = '';
                 
                 // 🚨 強化：如果讀取不到 JSON，顯示強烈警告
-                if (processedData.length === 0) { 
-                    if (globalData.updated_at && globalData.updated_at.includes('無法讀取')) {
-                        tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-red-400 font-bold"><i class="fa-solid fa-triangle-exclamation text-2xl mb-3 block"></i>系統無法讀取 data.json<br><span class="text-xs text-gray-400 font-normal">請確保檔案存在，且勿直接雙擊開啟 HTML (需透過伺服器或 GitHub Pages 運行)。</span></td></tr>`; 
-                    } else {
-                        tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-gray-500">目前無符合要求之數據</td></tr>`; 
-                    }
+                if (!globalData.screener_data || globalData.screener_data.length === 0) { 
+                    tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-red-400 font-bold"><i class="fa-solid fa-triangle-exclamation text-2xl mb-3 block"></i>系統無法讀取 data.json 數據檔<br><span class="text-xs text-gray-400 font-normal">SMC 演算法已進入休眠。請確認您的網路連線，或確保 GitHub 伺服器運作正常。</span></td></tr>`; 
                     return; 
+                }
+                if (processedData.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-gray-500">目前無符合過濾要求之股票</td></tr>`; 
+                    return;
                 }
 
                 const session = getMarketSession(), sessionBadge = `<span class="ml-1 text-[9px] px-1 py-0.5 rounded border ${session.style}">${session.text}</span>`;
@@ -623,7 +627,7 @@
             activePriceLines.forEach(line => candleSeries.removePriceLine(line)); activePriceLines = [];
             activeAreaSeries.forEach(s => chart.removeSeries(s)); activeAreaSeries = [];
             
-            // 🚨 空值保護：如果 data.json 缺失，安全退出避免報錯
+            // 🚨 空值極限保護：如果沒有後端資料，就只畫 K 線，保證圖表不會當機
             if (!currentSymbolData) return;
 
             const showLong = document.getElementById('layer_long').checked, showShort = document.getElementById('layer_short').checked, showPd = document.getElementById('layer_pd').checked;
@@ -646,7 +650,6 @@
             }
         }
 
-        // 🚨 修正索引錯位與加入強效防呆
         function getMockSignals(data, symData) {
             let markers = []; if(!data || data.length < 21) return markers;
             let ema20 = calculateEMA(data, 20, 'close'), rsi = calculateRSI(data, 14), atr = calculateATR(data, 14), currentPosition = 0; 
