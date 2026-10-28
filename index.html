@@ -10,6 +10,7 @@
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
         .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
+        
         ::-webkit-scrollbar { width: 12px; height: 12px; }
         ::-webkit-scrollbar-track { background: #0d1117; border-radius: 6px; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
@@ -22,6 +23,7 @@
         .toast.success { background-color: #238636; }
         .toast.error { background-color: #da3633; }
         .toast.info { background-color: #3b82f6; } 
+        
         .toast.signal-long { background-color: #14532d; border: 2px solid #22c55e; box-shadow: 0 0 15px rgba(34,197,94,0.4); font-size: 15px; padding: 16px 24px; }
         .toast.signal-short { background-color: #7f1d1d; border: 2px solid #ef4444; box-shadow: 0 0 15px rgba(239,68,68,0.4); font-size: 15px; padding: 16px 24px; }
 
@@ -280,28 +282,32 @@
 
         async function loadJSONData() {
             try {
+                // 🚨 新增 JSON 載入防呆與錯誤捕捉
                 const response = await fetch('data.json?t=' + new Date().getTime());
-                if (!response.ok) throw new Error('Data format error');
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 globalData = await response.json();
-                document.getElementById('updateTimeText').innerText = `SMC 運算時間: ${globalData.updated_at || '最新'} (HKT)`;
+                document.getElementById('updateTimeText').innerHTML = `SMC 運算時間: <span class="text-green-400">${globalData.updated_at || '最新'} (HKT)</span>`;
             } catch (err) {
-                console.warn("JSON Fallback");
-                globalData = { updated_at: '即時演算模式 (無後端資料)', watchlist_data: [], screener_data: [], chart_data: {} };
-                document.getElementById('updateTimeText').innerText = globalData.updated_at;
+                console.error("JSON Fetch Error:", err);
+                globalData = { 
+                    updated_at: '⚠️ 無法讀取 data.json (請確認環境)', 
+                    watchlist_data: [], screener_data: [], chart_data: {} 
+                };
+                document.getElementById('updateTimeText').innerHTML = `<span class="text-red-500 font-bold">${globalData.updated_at}</span>`;
+                showToast('⚠️ 嚴重警告: 無法讀取 data.json，高級 SMC 區間將無法顯示！請確認是否已上傳或本地運行 Server。', 'error');
             }
             
-            // 🚨 防呆機制：如果 data.json 沒有資料，自動切換至「核心監察總表」避免畫面空白
+            // 🚨 如果完全沒有 SMC 數據，強制切換至 Watchlist 避免畫面空白
             if (!globalData.screener_data || globalData.screener_data.length === 0) {
-                switchTab('watchlist');
+                if (currentTab === 'smc') switchTab('watchlist');
             }
 
-            try { renderMarketFlow(); renderWatchlist(); renderScreenerData(); } catch(e) {}
+            try { renderMarketFlow(); renderWatchlist(); renderScreenerData(); } catch(e) { console.error(e); }
             
-            if (globalData.screener_data && globalData.screener_data.length > 0) {
-                updateChartSymbol(globalData.screener_data[0].symbol);
-            } else {
-                updateChartSymbol(userWatchlist[0] || 'SPY');
-            }
+            const initSymbol = (globalData.screener_data && globalData.screener_data.length > 0) 
+                ? globalData.screener_data[0].symbol 
+                : (userWatchlist[0] || 'SPY');
+            updateChartSymbol(initSymbol);
         }
 
         async function fetchLiveQuotes() {
@@ -480,6 +486,16 @@
                 const badgeEl = document.getElementById('panelSymbolBadge'); if (badgeEl) badgeEl.innerText = symbol || '--';
                 const phaseEl = document.getElementById('panelPhase'), trendEl = document.getElementById('panelTrend'), smcEl = document.getElementById('panelSMC'), insightEl = document.getElementById('panelInsight');
                 if (!phaseEl || !trendEl || !smcEl || !insightEl) return;
+                
+                // 🚨 如果完全沒有 JSON 數據，顯示明確的環境警告
+                if (globalData.updated_at && globalData.updated_at.includes('無法讀取')) {
+                    phaseEl.innerHTML = `<span class="text-red-400 font-bold">⚠️ 系統異常</span>`;
+                    trendEl.innerHTML = `<span class="text-red-400 font-bold">⚠️ 本機限制</span>`;
+                    smcEl.innerHTML = `<span class="text-gray-400">無法讀取 data.json</span>`;
+                    insightEl.innerHTML = `<div class="p-2 rounded bg-red-900/20 border border-red-500/30 text-red-400 font-bold text-sm"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 請勿直接雙擊開啟 HTML，必須上傳至 GitHub 或本地 Server 才能讀取 SMC 分析結果。</div>`;
+                    return;
+                }
+
                 let livePrice = livePriceOverride || currentLivePrices[symbol] || (symbolData ? symbolData.price : 0);
 
                 if (symbolData) {
@@ -525,7 +541,16 @@
                 if (currentTab === 'smc') processedData.sort((a, b) => { let valA = parseFloat(a[sortCol]) || 0, valB = parseFloat(b[sortCol]) || 0; return sortDesc ? (valB - valA) : (valA - valB); });
 
                 tbody.innerHTML = '';
-                if (processedData.length === 0) { tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-gray-500">目前無符合要求之數據，請確認後端已生成 data.json</td></tr>`; return; }
+                
+                // 🚨 強化：如果讀取不到 JSON，顯示強烈警告
+                if (processedData.length === 0) { 
+                    if (globalData.updated_at && globalData.updated_at.includes('無法讀取')) {
+                        tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-red-400 font-bold"><i class="fa-solid fa-triangle-exclamation text-2xl mb-3 block"></i>系統無法讀取 data.json<br><span class="text-xs text-gray-400 font-normal">請確保檔案存在，且勿直接雙擊開啟 HTML (需透過伺服器或 GitHub Pages 運行)。</span></td></tr>`; 
+                    } else {
+                        tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-gray-500">目前無符合要求之數據</td></tr>`; 
+                    }
+                    return; 
+                }
 
                 const session = getMarketSession(), sessionBadge = `<span class="ml-1 text-[9px] px-1 py-0.5 rounded border ${session.style}">${session.text}</span>`;
 
@@ -585,18 +610,25 @@
                 }
                 
                 try { updateIntelligencePanel(symbol, currentSymbolData); } catch(e) {}
-                if (currentSymbolData && currentCandleData.length > 0) { currentPriceLine = candleSeries.createPriceLine({ price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: 'Live Price' }); updateChartOverlays('init'); }
+                if (currentSymbolData && currentCandleData.length > 0) { 
+                    currentPriceLine = candleSeries.createPriceLine({ price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: 'Live Price' }); 
+                    updateChartOverlays('init'); 
+                }
                 chart.timeScale().fitContent(); updateChartIndicators(); renderWatchlist();
             } catch(e) {}
         }
 
         function updateChartOverlays(caller = null) {
-            if (!candleSeries || !currentSymbolData) return;
+            if (!candleSeries) return;
             activePriceLines.forEach(line => candleSeries.removePriceLine(line)); activePriceLines = [];
             activeAreaSeries.forEach(s => chart.removeSeries(s)); activeAreaSeries = [];
+            
+            // 🚨 空值保護：如果 data.json 缺失，安全退出避免報錯
+            if (!currentSymbolData) return;
+
             const showLong = document.getElementById('layer_long').checked, showShort = document.getElementById('layer_short').checked, showPd = document.getElementById('layer_pd').checked;
 
-            if (currentSymbolData.entry_top > 0) {
+            if (currentSymbolData.entry_top && currentSymbolData.entry_top > 0) {
                 const isShort = currentSymbolData.direction === 'short';
                 if ((isShort && showShort) || (!isShort && showLong)) {
                     const fvgColor = isShort ? 'rgba(239, 68, 68, 0.2)' : 'rgba(34, 197, 94, 0.2)', obColor = isShort ? 'rgba(239, 68, 68, 0.4)' : 'rgba(34, 197, 94, 0.4)', lineColor = isShort ? 'rgba(239, 68, 68, 0.6)' : 'rgba(34, 197, 94, 0.6)', slLineColor = '#ef4444', tpLineColor = '#10b981';
@@ -609,10 +641,12 @@
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.tp, color: tpLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: '🎯 TP' }));
                 }
             }
-            if (showPd && currentSymbolData.macro_eq) activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '➖ 0.5 均衡' }));
+            if (showPd && currentSymbolData.macro_eq) {
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '➖ 0.5 均衡' }));
+            }
         }
 
-        // 🚨 終極修復：加入 ATR 實體判定，徹底濾除假信號，並對齊陣列索引
+        // 🚨 修正索引錯位與加入強效防呆
         function getMockSignals(data, symData) {
             let markers = []; if(!data || data.length < 21) return markers;
             let ema20 = calculateEMA(data, 20, 'close'), rsi = calculateRSI(data, 14), atr = calculateATR(data, 14), currentPosition = 0; 
@@ -622,7 +656,6 @@
                 let rsiItem = rsi[i-1], currRsi = rsiItem ? rsiItem.value : 50;
                 let atrItem = atr[i-1], currAtr = atrItem ? atrItem.value : (curr.high - curr.low);
                 
-                // 嚴格形態與動能雙重判定
                 let bodySize = Math.abs(curr.close - curr.open);
                 let isSignificant = bodySize > (currAtr * 0.4);
                 let bullish_engulfing = (prev.close < prev.open) && (curr.close > curr.open) && (curr.close > prev.open) && (curr.open <= prev.close);
@@ -675,7 +708,6 @@
         function calculateBOLL(data, period, stdDevMultiplier) { let upper = [], middle = [], lower = []; if(!data || data.length < period) return {upper, middle, lower}; for (let i = period - 1; i < data.length; i++) { let slice = data.slice(i - period + 1, i + 1), sma = slice.reduce((acc, val) => acc + val.close, 0) / period, stdDev = Math.sqrt(slice.reduce((acc, val) => acc + Math.pow(val.close - sma, 2), 0) / period); middle.push({ time: data[i].time, value: Number(sma.toFixed(2)) }); upper.push({ time: data[i].time, value: Number((sma + stdDevMultiplier * stdDev).toFixed(2)) }); lower.push({ time: data[i].time, value: Number((sma - stdDevMultiplier * stdDev).toFixed(2)) }); } return { upper, middle, lower }; }
         function calculateRSI(data, period) { let result = [], gains = 0, losses = 0; if(!data || data.length <= period) return result; for (let i = 1; i < data.length; i++) { let change = data[i].close - data[i-1].close, gain = change > 0 ? change : 0, loss = change < 0 ? -change : 0; if (i <= period) { gains += gain; losses += loss; if (i === period) { let rs = (losses/period) === 0 ? 100 : (gains/period) / (losses/period); result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) }); } } else { gains = (gains * (period - 1) + gain) / period; losses = (losses * (period - 1) + loss) / period; let rs = losses === 0 ? 100 : gains / losses; result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) }); } } return result; }
         function calculateMACD(data, fast, slow, sig) { let fEma = calculateEMA(data, fast, 'close'), sEma = calculateEMA(data, slow, 'close'), macdLine = []; if(!fEma.length || !sEma.length) return {macd:[], signal:[], hist:[]}; for (let i = 0; i < data.length; i++) macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value }); let sigLine = calculateEMA(macdLine, sig, 'value'), histLine = []; for(let i=0; i<data.length; i++) { let hist = macdLine[i].value - sigLine[i].value; histLine.push({ time: data[i].time, value: Number(hist.toFixed(2)), color: hist >= 0 ? '#26a69a' : '#ef5350' }); } return { macd: macdLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})), signal: sigLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})), hist: histLine } }
-        // 🚨 核心組件：自定義真實波幅 (ATR) 防震盪演算法
         function calculateATR(data, period) { let atr = []; if(!data || data.length <= period) return atr; let trs = []; for (let i = 1; i < data.length; i++) { let hl = data[i].high - data[i].low; let hc = Math.abs(data[i].high - data[i-1].close); let lc = Math.abs(data[i].low - data[i-1].close); let tr = Math.max(hl, hc, lc); trs.push(tr); if(i >= period) { let sum = 0; for(let j=i-period; j<i; j++) sum += trs[j]; atr.push({time: data[i].time, value: sum/period}); } else { atr.push({time: data[i].time, value: tr}); } } return atr; }
 
         function switchTab(tab) { currentTab = tab; const tSmc = document.getElementById('tabSmc'), tWl = document.getElementById('tabWatchlist'), activeClass = ["text-blue-400", "border-blue-500"], inactiveClass = ["text-gray-400", "border-transparent", "hover:text-white"]; if (tab === 'smc') { tSmc.classList.add(...activeClass); tSmc.classList.remove(...inactiveClass); tWl.classList.add(...inactiveClass); tWl.classList.remove(...activeClass); } else { tWl.classList.add(...activeClass); tWl.classList.remove(...inactiveClass); tSmc.classList.add(...inactiveClass); tSmc.classList.remove(...activeClass); } renderScreenerData(); }
