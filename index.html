@@ -24,7 +24,6 @@
         .toast.error { background-color: #da3633; }
         .toast.info { background-color: #3b82f6; } 
         
-        /* 🚨 新增：實戰專屬的信號提示框樣式 */
         .toast.signal-long { background-color: #14532d; border: 2px solid #22c55e; box-shadow: 0 0 15px rgba(34,197,94,0.4); font-size: 15px; padding: 16px 24px; }
         .toast.signal-short { background-color: #7f1d1d; border: 2px solid #ef4444; box-shadow: 0 0 15px rgba(239,68,68,0.4); font-size: 15px; padding: 16px 24px; }
 
@@ -50,6 +49,7 @@
 </head>
 <body class="min-h-screen flex flex-col relative">
 
+    <!-- 頂部導航列 -->
     <header id="mainHeader" class="glass-panel sticky top-0 z-40 px-4 md:px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
         <div class="flex items-center gap-4 flex-wrap w-full md:w-auto justify-between md:justify-start">
             <div class="flex items-center gap-2">
@@ -58,8 +58,12 @@
             </div>
             <div class="flex flex-col">
                 <div class="flex items-center gap-3">
-                    <span class="text-xs font-bold flex items-center" id="liveStatusIcon"><i class="fa-solid fa-spinner fa-spin text-gray-500 mr-1.5"></i> 偵測中</span>
-                    <a href="https://github.com/singfeehily/us-stock-tracker/actions" target="_blank" class="bg-[#21262d] hover:bg-[#30363d] text-gray-400 border border-[#30363d] px-2 py-1 rounded text-[10px] font-medium transition-colors"><i class="fa-solid fa-rotate"></i> 更新 SMC</a>
+                    <span class="text-xs font-bold flex items-center" id="liveStatusIcon">
+                        <i class="fa-solid fa-spinner fa-spin text-gray-500 mr-1.5"></i> 偵測中
+                    </span>
+                    <a href="https://github.com/singfeehily/us-stock-tracker/actions" target="_blank" class="bg-[#21262d] hover:bg-[#30363d] text-gray-400 border border-[#30363d] px-2 py-1 rounded text-[10px] font-medium transition-colors">
+                        <i class="fa-solid fa-rotate"></i> 更新 SMC
+                    </a>
                 </div>
                 <span id="updateTimeText" class="text-[10px] text-gray-500 mt-1.5">SMC 運算時間: 讀取中...</span>
                 <span id="liveTimeText" class="text-[10px] text-blue-400 mt-0.5">即時報價更新於: 連線中...</span>
@@ -71,11 +75,15 @@
                 <input type="text" id="searchInput" list="stock-suggestions" placeholder="輸入代號 (例: AAPL)" class="w-full bg-[#0d1117] border border-[#30363d] rounded-l-lg py-2 px-3 text-white text-sm focus:outline-none focus:border-blue-500 uppercase" autocomplete="off">
                 <datalist id="stock-suggestions"></datalist>
             </div>
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-r-lg text-xs font-medium whitespace-nowrap transition-colors border-l-0 flex items-center"><i class="fa-solid fa-plus mr-1"></i> 加入</button>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-r-lg text-xs font-medium whitespace-nowrap transition-colors border-l-0 flex items-center">
+                <i class="fa-solid fa-plus mr-1"></i> 加入
+            </button>
         </form>
     </header>
 
     <main class="flex-grow p-3 md:p-6 flex flex-col gap-6">
+        
+        <!-- 大盤熱力圖 -->
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-2 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('marketFlowContent', 'marketFlowIcon')">
                 <span class="font-semibold text-white text-sm"><i class="fa-solid fa-fire text-orange-500 mr-2"></i>大盤資金熱力圖 (LIVE)</span>
@@ -84,6 +92,7 @@
             <div id="marketFlowContent" class="collapsible-content flex gap-3 overflow-x-auto py-3 px-4 custom-scrollbar" style="max-height: 100px;"></div>
         </section>
 
+        <!-- 我的最愛 -->
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('watchlistContent', 'watchlistIcon')">
                 <div class="flex items-center gap-2">
@@ -124,7 +133,10 @@
                                 </div>
                             </div>
                             <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2 flex flex-wrap gap-4 text-xs items-center justify-center">
-                                <label class="flex items-center cursor-pointer text-yellow-400 font-bold bg-yellow-900/20 px-2 py-0.5 rounded border border-yellow-600/50 hover:bg-yellow-900/40 transition-colors"><input type="checkbox" id="ind_signals" checked onchange="updateChartIndicators('signals')" class="rounded bg-[#161b22] border-[#30363d] text-yellow-500 focus:ring-0 mr-1.5"> <i class="fa-solid fa-bolt mr-1"></i>AI 信號</label>
+                                <label class="flex items-center cursor-pointer text-yellow-400 font-bold bg-yellow-900/20 px-2 py-0.5 rounded border border-yellow-600/50 hover:bg-yellow-900/40 transition-colors">
+                                    <input type="checkbox" id="ind_signals" checked onchange="updateChartIndicators('signals')" class="rounded bg-[#161b22] border-[#30363d] text-yellow-500 focus:ring-0 mr-1.5"> 
+                                    <i class="fa-solid fa-bolt mr-1"></i>AI 信號
+                                </label>
                                 <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_ema" onchange="updateChartIndicators('ema')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> EMA</label>
                                 <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_boll" onchange="updateChartIndicators('boll')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> BOLL</label>
                                 <label class="flex items-center cursor-pointer text-gray-300 hover:text-white"><input type="checkbox" id="ind_rsi" onchange="updateChartIndicators('rsi')" class="rounded bg-[#161b22] border-[#30363d] text-blue-600 focus:ring-0 mr-1"> RSI</label>
@@ -140,6 +152,7 @@
                     </div>
                 </div>
 
+                <!-- AI 面板 -->
                 <div class="glass-panel rounded-xl flex flex-col relative overflow-hidden">
                     <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('aiPanelContent', 'aiPanelIcon')">
                         <div class="flex items-center gap-2">
@@ -175,7 +188,7 @@
                 </div>
             </div>
 
-            <!-- 篩選表格區 -->
+            <!-- 過濾池 -->
             <div class="xl:col-span-2 glass-panel rounded-xl flex flex-col overflow-hidden">
                 <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('screenerContent', 'screenerIcon')">
                     <span class="font-semibold text-white"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i>全方位 SMC 量化過濾池</span>
@@ -184,8 +197,12 @@
                 
                 <div id="screenerContent" class="collapsible-content flex flex-col" style="max-height: 800px;">
                     <div class="bg-[#161b22] border-b border-[#30363d] px-3 flex gap-2 flex-shrink-0">
-                        <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2.5 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap"><i class="fa-solid fa-layer-group mr-1"></i>S 級狙擊池</button>
-                        <button onclick="switchTab('watchlist')" id="tabWatchlist" class="px-4 py-2.5 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors whitespace-nowrap"><i class="fa-solid fa-star mr-1"></i>核心監察總表</button>
+                        <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2.5 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap">
+                            <i class="fa-solid fa-layer-group mr-1"></i>S 級狙擊池
+                        </button>
+                        <button onclick="switchTab('watchlist')" id="tabWatchlist" class="px-4 py-2.5 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors whitespace-nowrap">
+                            <i class="fa-solid fa-star mr-1"></i>核心監察總表
+                        </button>
                     </div>
 
                     <div class="overflow-x-auto flex-grow custom-scrollbar">
@@ -204,7 +221,9 @@
                                         </select>
                                     </th>
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center">形態</th>
-                                    <th class="px-4 py-3 font-medium text-gray-400 text-center cursor-pointer hover:text-white group" onclick="changeSort('rrr')">R:R <i class="fa-solid fa-sort text-gray-600 group-hover:text-blue-400 transition-colors ml-1"></i></th>
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center cursor-pointer hover:text-white group" onclick="changeSort('rrr')">
+                                        R:R <i class="fa-solid fa-sort text-gray-600 group-hover:text-blue-400 transition-colors ml-1"></i>
+                                    </th>
                                     <th class="px-4 py-3 font-medium text-blue-400 text-right">建議入場區</th>
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center">溢價/折價 (P/D Matrix)</th>
                                 </tr>
@@ -241,12 +260,11 @@
         let currentCandleData = [], currentSymbolData = null;
         let fetchIntervalId = null, currentRenderId = null; 
         
-        // 🚨 狀態追蹤器 (用於捕捉瞬間進入「🟢 可執行」的信號)
         let prevStatusMap = {};
-
-        // 🚨 網頁標題閃爍功能
         let titleInterval;
         let originalTitle = document.title;
+
+        // 標題閃爍功能
         function flashTitle(msg) {
             clearInterval(titleInterval);
             let showOriginal = false;
@@ -254,19 +272,19 @@
                 document.title = showOriginal ? originalTitle : msg;
                 showOriginal = !showOriginal;
             }, 1000);
-            
-            // 點擊網頁任何地方即停止閃爍
             const stopFlash = () => { clearInterval(titleInterval); document.title = originalTitle; document.removeEventListener('click', stopFlash); };
             document.addEventListener('click', stopFlash);
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
-            try { initCharts(); } catch (e) {}
-            try { await loadJSONData(); } catch (e) {}
-            try { startSmartPolling(); fetchLiveQuotes(); } catch (e) {}
+            try { initCharts(); } catch (e) { console.error("Chart Init Error:", e); }
+            try { await loadJSONData(); } catch (e) { console.error("Load JSON Error:", e); }
+            try { startSmartPolling(); fetchLiveQuotes(); } catch (e) { console.error("Polling Error:", e); }
         });
 
-        function saveWatchlist() { localStorage.setItem('smc_watchlist', JSON.stringify(userWatchlist)); }
+        function saveWatchlist() {
+            localStorage.setItem('smc_watchlist', JSON.stringify(userWatchlist));
+        }
 
         function getMarketSession() {
             const nyTime = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
@@ -292,14 +310,23 @@
         async function loadJSONData() {
             try {
                 const response = await fetch('data.json?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('Data format error');
                 globalData = await response.json();
                 document.getElementById('updateTimeText').innerText = `SMC 運算時間: ${globalData.updated_at || '最新'} (HKT)`;
             } catch (err) {
+                console.warn("Using offline mode fallback");
                 globalData = { updated_at: '離線模式', watchlist_data: [], screener_data: [], chart_data: {} };
             }
-            renderMarketFlow(); renderWatchlist(); renderScreenerData();
-            if (globalData.screener_data && globalData.screener_data.length > 0) updateChartSymbol(globalData.screener_data[0].symbol);
-            else updateChartSymbol(userWatchlist[0] || 'SPY');
+            
+            try { renderMarketFlow(); } catch(e) { console.error("MarketFlow Error:", e); }
+            try { renderWatchlist(); } catch(e) { console.error("Watchlist Error:", e); }
+            try { renderScreenerData(); } catch(e) { console.error("Screener Error:", e); }
+            
+            if (globalData.screener_data && globalData.screener_data.length > 0) {
+                updateChartSymbol(globalData.screener_data[0].symbol);
+            } else {
+                updateChartSymbol(userWatchlist[0] || 'SPY');
+            }
         }
 
         async function fetchLiveQuotes() {
@@ -317,7 +344,9 @@
                 const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
                 document.getElementById('liveTimeText').innerText = `即時報價更新於: ${timeStr} (HKT)`;
 
-                for(let sym in liveData) if (liveData[sym] && liveData[sym].price) currentLivePrices[sym] = liveData[sym].price;
+                for(let sym in liveData) {
+                    if (liveData[sym] && liveData[sym].price) currentLivePrices[sym] = liveData[sym].price;
+                }
                 updateLiveUI(liveData, curSym ? curSym.innerText : null); 
             } catch (err) {}
         }
@@ -344,9 +373,12 @@
                         label = "🔴 觀察中"; colorClass = "text-red-500"; dotClass = "bg-red-500"; distText = `差異: -${dist.toFixed(1)}%`;
                     } else distText = "已跌破";
                 }
-            } else if (item) return { dist, label: "等待數據", colorClass: "text-gray-500", dotClass: "bg-gray-600", distText: "-" };
+            } else if (item) {
+                return { dist, label: "等待數據", colorClass: "text-gray-500", dotClass: "bg-gray-600", distText: "-" };
+            }
 
-            if (item && item.trade_status && (item.trade_status.includes('❌') || item.trade_status.includes('條件不足'))) {
+            let ts = item.trade_status || '';
+            if (ts.includes('❌') || ts.includes('條件不足')) {
                 label = "🔴 觀察中"; colorClass = "text-gray-400"; dotClass = "bg-gray-500";
             }
             return { dist, label, colorClass, dotClass, distText };
@@ -401,26 +433,27 @@
                     const priceColEl = document.getElementById(`screener-price-${sym}`);
                     const statusDistEl = document.getElementById(`status-dist-${sym}`);
                     
-                    if (priceColEl) priceColEl.innerHTML = `$${p.toFixed(2)}<div class="mt-1">${sessionBadge}</div>`;
+                    if (priceColEl) {
+                        priceColEl.innerHTML = `$${p.toFixed(2)}<div class="mt-1">${sessionBadge}</div>`;
+                    }
 
                     if (statusDistEl) {
                         let item = screenerArr.find(x => x && x.symbol === sym);
                         if (item && item.entry_top > 0) {
                             let st = getTradeStatus(item, p);
                             statusDistEl.innerHTML = `
-                                <div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold"><div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}</div>
+                                <div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold">
+                                    <div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}
+                                </div>
                                 <div class="text-[11px] text-gray-400 mt-1">建議差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>
                             `;
 
-                            // 🚨 核心信號觸發邏輯：如果狀態從「非可執行」瞬間變成「🟢 可執行」，發動視覺警報！
                             let prevLabel = prevStatusMap[sym];
                             if (prevLabel && prevLabel !== '🟢 可執行' && st.label === '🟢 可執行') {
                                 const isShort = item.direction === 'short';
                                 const actionText = isShort ? '做空' : '做多';
                                 const toastType = isShort ? 'signal-short' : 'signal-long';
-                                // 發送巨型 Toast
-                                showToast(`🚨 狙擊警報: ${sym} 已跌入 ${actionText} 區間，信號觸發！`, toastType);
-                                // 閃爍分頁標題
+                                showToast(`🚨 狙擊警報: ${sym} 已進入 ${actionText} 區間，請注意圖表信號！`, toastType);
                                 flashTitle(`🚨 ${sym} ${actionText}信號!`);
                             }
                             prevStatusMap[sym] = st.label;
@@ -437,13 +470,15 @@
                     if (newPrice < lastCandle.low) lastCandle.low = newPrice;
                     candleSeries.update(lastCandle);
                 }
-            } catch (err) {}
+            } catch (err) {
+                console.error("updateLiveUI Error:", err);
+            }
         }
 
-        // --- (保留其他輔助函數如 drawSparkline, renderMarketFlow 等不變) ---
         function drawSparkline(canvasId, basePrice, isPositive) {
             try {
-                const canvas = document.getElementById(canvasId); if(!canvas) return;
+                const canvas = document.getElementById(canvasId); 
+                if(!canvas) return;
                 const ctx = canvas.getContext('2d'), w = canvas.width, h = canvas.height;
                 let pts = [basePrice || 100];
                 for(let i=0; i<15; i++) pts.unshift(pts[0] + (Math.random()-0.5)*(basePrice||100)*0.015);
@@ -451,15 +486,25 @@
                 const min = Math.min(...pts), max = Math.max(...pts), range = (max - min) || 1;
                 ctx.clearRect(0, 0, w, h); ctx.beginPath();
                 ctx.strokeStyle = isPositive ? '#22c55e' : '#ef4444'; ctx.lineWidth = 1.5;
-                pts.forEach((p, i) => { const x = (i / (pts.length - 1)) * w, y = h - ((p - min) / range) * (h - 4) - 2; if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
+                pts.forEach((p, i) => { 
+                    const x = (i / (pts.length - 1)) * w, y = h - ((p - min) / range) * (h - 4) - 2; 
+                    if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); 
+                });
                 ctx.stroke();
             } catch(e) {}
         }
 
         function renderMarketFlow() {
-            const container = document.getElementById('marketFlowContent'); if (!container) return;
+            const container = document.getElementById('marketFlowContent'); 
+            if (!container) return;
             let html = '';
-            TARGET_INDICES.forEach((sym) => { html += `<div id="flow-card-${sym}" class="flex items-center gap-2 whitespace-nowrap cursor-pointer px-3 py-1.5 rounded transition-all bg-[#1f242c] hover:bg-[#30363d]" onclick="updateChartSymbol('${sym}')"><span class="font-bold text-gray-300">${TARGET_INDICES_MAP[sym]} <span class="text-xs font-mono opacity-70">(${sym})</span></span><span id="flow-change-${sym}" class="text-gray-500 text-sm font-semibold"><i class="fa-solid fa-spinner fa-spin mr-1"></i>--</span></div>`; });
+            TARGET_INDICES.forEach((sym) => { 
+                html += `
+                    <div id="flow-card-${sym}" class="flex items-center gap-2 whitespace-nowrap cursor-pointer px-3 py-1.5 rounded transition-all bg-[#1f242c] hover:bg-[#30363d]" onclick="updateChartSymbol('${sym}')">
+                        <span class="font-bold text-gray-300">${TARGET_INDICES_MAP[sym]} <span class="text-xs font-mono opacity-70">(${sym})</span></span>
+                        <span id="flow-change-${sym}" class="text-gray-500 text-sm font-semibold"><i class="fa-solid fa-spinner fa-spin mr-1"></i>--</span>
+                    </div>`; 
+            });
             container.innerHTML = html;
         }
 
@@ -468,14 +513,33 @@
         function handleDragOver(e) { if (e.preventDefault) e.preventDefault(); e.dataTransfer.dropEffect = 'move'; return false; }
         function handleDragEnter(e) { this.classList.add('drag-over'); }
         function handleDragLeave(e) { this.classList.remove('drag-over'); }
-        function handleDrop(e) { if (e.stopPropagation) e.stopPropagation(); this.classList.remove('drag-over'); if (dragSrcEl !== this) { const srcSymbol = dragSrcEl.dataset.symbol, destSymbol = this.dataset.symbol; userWatchlist.splice(userWatchlist.indexOf(srcSymbol), 1); userWatchlist.splice(userWatchlist.indexOf(destSymbol), 0, srcSymbol); saveWatchlist(); renderWatchlist(); renderScreenerData(); } return false; }
-        function handleDragEnd(e) { this.classList.remove('dragging'); document.querySelectorAll('#watchlistContainer > div').forEach(c => c.classList.remove('drag-over')); }
+        function handleDrop(e) { 
+            if (e.stopPropagation) e.stopPropagation(); 
+            this.classList.remove('drag-over'); 
+            if (dragSrcEl !== this) { 
+                const srcSymbol = dragSrcEl.dataset.symbol, destSymbol = this.dataset.symbol; 
+                userWatchlist.splice(userWatchlist.indexOf(srcSymbol), 1); 
+                userWatchlist.splice(userWatchlist.indexOf(destSymbol), 0, srcSymbol); 
+                saveWatchlist(); renderWatchlist(); renderScreenerData(); 
+            } 
+            return false; 
+        }
+        function handleDragEnd(e) { 
+            this.classList.remove('dragging'); 
+            document.querySelectorAll('#watchlistContainer > div').forEach(c => c.classList.remove('drag-over')); 
+        }
 
         function renderWatchlist() {
-            const container = document.getElementById('watchlistContainer'); if (!container) return; container.innerHTML = '';
+            const container = document.getElementById('watchlistContainer'); 
+            if (!container) return; 
+            container.innerHTML = '';
+            
             const watchlistMap = new Map();
-            if (globalData && Array.isArray(globalData.watchlist_data)) globalData.watchlist_data.forEach(item => { if (item && item.symbol) watchlistMap.set(item.symbol, item); });
-            const session = getMarketSession(), sessionBadge = `<span class="ml-1 text-[10px] px-1 py-0.5 rounded border ${session.style}">${session.text}</span>`;
+            if (globalData && Array.isArray(globalData.watchlist_data)) {
+                globalData.watchlist_data.forEach(item => { if (item && item.symbol) watchlistMap.set(item.symbol, item); });
+            }
+            const session = getMarketSession();
+            const sessionBadge = `<span class="ml-1 text-[10px] px-1 py-0.5 rounded border ${session.style}">${session.text}</span>`;
             const activeSymbol = document.getElementById('currentChartSymbol') ? document.getElementById('currentChartSymbol').innerText : '';
 
             userWatchlist.forEach(sym => {
@@ -487,105 +551,277 @@
                 card.onclick = () => updateChartSymbol(item.symbol);
                 card.draggable = true; card.dataset.symbol = item.symbol;
                 card.addEventListener('dragstart', handleDragStart); card.addEventListener('dragover', handleDragOver); card.addEventListener('dragenter', handleDragEnter); card.addEventListener('dragleave', handleDragLeave); card.addEventListener('drop', handleDrop); card.addEventListener('dragend', handleDragEnd);
-                card.innerHTML = `<div class="flex justify-between items-start mb-1"><span class="font-bold text-base text-white">${item.symbol || '--'}</span><button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors z-10 cursor-pointer"><i class="fa-solid fa-xmark"></i></button></div><div id="wl-price-${item.symbol}" data-price="${price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}">$${price.toFixed(2)} ${sessionBadge}</div><div id="wl-change-${item.symbol}" class="text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}">${isPositive && item.change !== 0 ? '+' : ''}${item.change||0} (${isPositive && item.change_pct !== 0 ? '+' : ''}${item.change_pct||0}%)</div><canvas id="sparkline-${item.symbol}" width="150" height="32" class="sparkline pointer-events-none"></canvas>`;
-                container.appendChild(card); setTimeout(() => { drawSparkline(`sparkline-${item.symbol}`, price, isPositive); }, 50);
+                
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-1">
+                        <span class="font-bold text-base text-white">${item.symbol || '--'}</span>
+                        <button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors z-10 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div id="wl-price-${item.symbol}" data-price="${price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}">$${price.toFixed(2)} ${sessionBadge}</div>
+                    <div id="wl-change-${item.symbol}" class="text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}">
+                        ${isPositive && item.change !== 0 ? '+' : ''}${item.change||0} (${isPositive && item.change_pct !== 0 ? '+' : ''}${item.change_pct||0}%)
+                    </div>
+                    <canvas id="sparkline-${item.symbol}" width="150" height="32" class="sparkline pointer-events-none"></canvas>
+                `;
+                container.appendChild(card); 
+                setTimeout(() => { drawSparkline(`sparkline-${item.symbol}`, price, isPositive); }, 50);
             });
         }
 
         function updateIntelligencePanel(symbol, symbolData, livePriceOverride = null) {
             try {
-                const badgeEl = document.getElementById('panelSymbolBadge'); if (badgeEl) badgeEl.innerText = symbol || '--';
-                const phaseEl = document.getElementById('panelPhase'), trendEl = document.getElementById('panelTrend'), smcEl = document.getElementById('panelSMC'), insightEl = document.getElementById('panelInsight');
+                const badgeEl = document.getElementById('panelSymbolBadge'); 
+                if (badgeEl) badgeEl.innerText = symbol || '--';
+                
+                const phaseEl = document.getElementById('panelPhase');
+                const trendEl = document.getElementById('panelTrend');
+                const smcEl = document.getElementById('panelSMC');
+                const insightEl = document.getElementById('panelInsight');
                 if (!phaseEl || !trendEl || !smcEl || !insightEl) return;
 
                 let livePrice = livePriceOverride || currentLivePrices[symbol] || (symbolData ? symbolData.price : 0);
 
                 if (symbolData) {
-                    if (symbolData.macro_bsl) phaseEl.innerHTML = livePrice > symbolData.macro_eq ? `<span class="text-red-400 font-bold">昂貴溢價區 (Premium)</span>` : `<span class="text-green-400 font-bold">便宜折價區 (Discount)</span>`;
-                    else phaseEl.innerHTML = `<span class="text-gray-400">等待更新宏觀數據...</span>`;
+                    if (symbolData.macro_bsl) {
+                        phaseEl.innerHTML = livePrice > symbolData.macro_eq ? `<span class="text-red-400 font-bold">昂貴溢價區 (Premium)</span>` : `<span class="text-green-400 font-bold">便宜折價區 (Discount)</span>`;
+                    } else { 
+                        phaseEl.innerHTML = `<span class="text-gray-400">等待更新宏觀數據...</span>`; 
+                    }
 
                     const distMa = symbolData.dist_20ma || 0;
-                    trendEl.innerText = distMa > 0 ? `20MA 強勢多頭` : `20MA 弱勢空頭`; trendEl.className = distMa > 0 ? "font-bold text-green-400" : "font-bold text-red-400";
+                    trendEl.innerText = distMa > 0 ? `20MA 強勢多頭` : `20MA 弱勢空頭`; 
+                    trendEl.className = distMa > 0 ? "font-bold text-green-400" : "font-bold text-red-400";
 
                     if (symbolData.smc_id) {
                         const isShort = symbolData.direction === 'short';
-                        if (symbolData.confluence) { smcEl.innerHTML = `<i class="fa-solid fa-crown mr-1"></i>SS級 共振 (${isShort?'做空':'做多'})`; smcEl.className = "font-bold text-yellow-300 drop-shadow-md"; } 
-                        else { smcEl.innerText = symbolData.smc_text || '-'; smcEl.className = isShort ? "font-bold text-purple-400" : "font-bold text-yellow-400"; }
-                        let bgStyle = symbolData.trade_status.includes('⚠️') || symbolData.trade_status.includes('❌') ? "bg-red-900/20 border border-red-500/30 text-red-400" : "bg-blue-900/20 border border-blue-500/30 text-blue-300";
-                        insightEl.innerHTML = `<div class="mb-2 p-2 rounded border bg-[#1f242c] border-[#30363d] text-white">系統判定狀態：<span class="${symbolData.status_color || 'text-gray-400'}">${symbolData.trade_status || '-'}</span></div><div class="p-2 rounded ${bgStyle} font-bold text-sm">${symbolData.inv_text || '無失效提示'}</div>`;
+                        if (symbolData.confluence) { 
+                            smcEl.innerHTML = `<i class="fa-solid fa-crown mr-1"></i>SS級 共振 (${isShort?'做空':'做多'})`; 
+                            smcEl.className = "font-bold text-yellow-300 drop-shadow-md"; 
+                        } else { 
+                            smcEl.innerText = symbolData.smc_text || '-'; 
+                            smcEl.className = isShort ? "font-bold text-purple-400" : "font-bold text-yellow-400"; 
+                        }
+                        
+                        let tradeStatus = symbolData.trade_status || '';
+                        let bgStyle = tradeStatus.includes('⚠️') || tradeStatus.includes('❌') ? "bg-red-900/20 border border-red-500/30 text-red-400" : "bg-blue-900/20 border border-blue-500/30 text-blue-300";
+                        insightEl.innerHTML = `
+                            <div class="mb-2 p-2 rounded border bg-[#1f242c] border-[#30363d] text-white">
+                                系統判定狀態：<span class="${symbolData.status_color || 'text-gray-400'}">${tradeStatus || '-'}</span>
+                            </div>
+                            <div class="p-2 rounded ${bgStyle} font-bold text-sm">
+                                ${symbolData.inv_text || '無失效提示'}
+                            </div>
+                        `;
                     } else {
-                        smcEl.innerText = "未形成高勝率 SMC"; smcEl.className = "text-gray-400"; insightEl.innerHTML = `<span class="text-gray-500">該股目前未偵測到合格的 SMC 進場結構。</span>`;
+                        smcEl.innerText = "未形成高勝率 SMC"; 
+                        smcEl.className = "text-gray-400"; 
+                        insightEl.innerHTML = `<span class="text-gray-500">該股目前未偵測到合格的 SMC 進場結構。</span>`;
                     }
                 } else {
-                    trendEl.innerText = "即時監察"; phaseEl.innerText = "大盤指數"; smcEl.innerText = "無數據"; insightEl.innerHTML = `<span class="text-gray-500">大盤或未分析之標的。</span>`;
+                    trendEl.innerText = "即時監察"; 
+                    phaseEl.innerText = "大盤指數"; 
+                    smcEl.innerText = "無數據"; 
+                    insightEl.innerHTML = `<span class="text-gray-500">大盤或未分析之標的。</span>`;
                 }
-            } catch(e) {}
+            } catch(e) {
+                console.error("Intelligence Panel Error:", e);
+            }
         }
 
-        function changeSort(col) { if (sortCol === col) { sortDesc = !sortDesc; } else { sortCol = col; sortDesc = true; } renderScreenerData(); }
+        function changeSort(col) { 
+            if (sortCol === col) { sortDesc = !sortDesc; } 
+            else { sortCol = col; sortDesc = true; } 
+            renderScreenerData(); 
+        }
 
         function renderScreenerData() {
             try {
-                const tbody = document.getElementById('screenerTableBody'); if (!tbody) return;
-                const rawData = globalData.screener_data || []; let processedData = [];
-                if (currentTab === 'smc') processedData = rawData.filter(item => item && item.smc_id);
-                else processedData = userWatchlist.map(sym => rawData.find(x => x && x.symbol === sym) || { symbol: sym, price: 0, rrr: 0, direction: 'none', trade_status: '無 SMC 數據', smc_text: '-', smc_class: 'border-gray-600 text-gray-500', entry_bot: 0, entry_top: 0 });
+                const tbody = document.getElementById('screenerTableBody'); 
+                if (!tbody) return;
+                
+                const rawData = globalData.screener_data || []; 
+                let processedData = [];
+                
+                if (currentTab === 'smc') {
+                    processedData = rawData.filter(item => item && item.smc_id);
+                } else { 
+                    processedData = userWatchlist.map(sym => {
+                        let found = rawData.find(x => x && x.symbol === sym);
+                        return found || { symbol: sym, price: 0, rrr: 0, direction: 'none', trade_status: '無 SMC 數據', smc_text: '-', smc_class: 'border-gray-600 text-gray-500', entry_bot: 0, entry_top: 0 };
+                    });
+                }
 
-                processedData = processedData.map(item => { let livePrice = currentLivePrices[item.symbol] || item.price || 0; return { ...item, _livePrice: livePrice, _status: getTradeStatus(item, livePrice) }; });
+                processedData = processedData.map(item => { 
+                    let livePrice = currentLivePrices[item.symbol] || item.price || 0; 
+                    return { ...item, _livePrice: livePrice, _status: getTradeStatus(item, livePrice) }; 
+                });
 
                 const directionFilter = document.getElementById('filterDirection') ? document.getElementById('filterDirection').value : 'ALL';
-                if (directionFilter === 'LONG') processedData = processedData.filter(item => item.direction !== 'short'); else if (directionFilter === 'SHORT') processedData = processedData.filter(item => item.direction === 'short'); else if (directionFilter === 'SS') processedData = processedData.filter(item => item.confluence === true);
+                if (directionFilter === 'LONG') processedData = processedData.filter(item => item.direction !== 'short'); 
+                else if (directionFilter === 'SHORT') processedData = processedData.filter(item => item.direction === 'short'); 
+                else if (directionFilter === 'SS') processedData = processedData.filter(item => item.confluence === true);
 
                 const statusFilter = document.getElementById('filterStatus') ? document.getElementById('filterStatus').value : 'ALL';
-                if (statusFilter === 'GREEN') processedData = processedData.filter(item => item._status.label === '🟢 可執行'); else if (statusFilter === 'YELLOW') processedData = processedData.filter(item => item._status.label === '🟡 接近中'); else if (statusFilter === 'RED') processedData = processedData.filter(item => item._status.label === '🔴 觀察中');
+                if (statusFilter === 'GREEN') processedData = processedData.filter(item => item._status.label === '🟢 可執行'); 
+                else if (statusFilter === 'YELLOW') processedData = processedData.filter(item => item._status.label === '🟡 接近中'); 
+                else if (statusFilter === 'RED') processedData = processedData.filter(item => item._status.label === '🔴 觀察中');
 
-                if (currentTab === 'smc') processedData.sort((a, b) => { let valA = parseFloat(a[sortCol]) || 0, valB = parseFloat(b[sortCol]) || 0; return sortDesc ? (valB - valA) : (valA - valB); });
+                if (currentTab === 'smc') {
+                    processedData.sort((a, b) => { 
+                        let valA = parseFloat(a[sortCol]) || 0, valB = parseFloat(b[sortCol]) || 0; 
+                        return sortDesc ? (valB - valA) : (valA - valB); 
+                    });
+                }
 
                 tbody.innerHTML = '';
-                if (processedData.length === 0) { tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-8 text-center text-gray-500">目前無符合要求之數據</td></tr>`; return; }
+                if (processedData.length === 0) { 
+                    tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-8 text-center text-gray-500">目前無符合要求之數據</td></tr>`; 
+                    return; 
+                }
 
-                const session = getMarketSession(), sessionBadge = `<span class="ml-1 text-[9px] px-1 py-0.5 rounded border ${session.style}">${session.text}</span>`;
+                const session = getMarketSession();
+                const sessionBadge = `<span class="ml-1 text-[9px] px-1 py-0.5 rounded border ${session.style}">${session.text}</span>`;
 
                 processedData.forEach(item => {
-                    const tr = document.createElement('tr'); tr.className = 'border-b border-[#30363d] clickable-row'; tr.onclick = () => updateChartSymbol(item.symbol);
-                    const st = item._status;
+                    const tr = document.createElement('tr'); 
+                    tr.className = 'border-b border-[#30363d] clickable-row'; 
+                    tr.onclick = () => updateChartSymbol(item.symbol);
                     
-                    // Initial load into prevStatusMap so it doesn't alert on page refresh
-                    if (!prevStatusMap[item.symbol] && st.label) prevStatusMap[item.symbol] = st.label;
+                    const st = item._status;
+                    if (!prevStatusMap[item.symbol] && st.label) {
+                        prevStatusMap[item.symbol] = st.label;
+                    }
 
-                    let pdVal = item.pd_percent !== undefined ? item.pd_percent : 50, pdDotColor = pdVal > 50 ? '#ef4444' : '#22c55e';
-                    let smcHtml = item.confluence ? `<span class="px-2 py-1 rounded text-xs font-semibold border border-yellow-300 text-yellow-300 bg-yellow-900/30 flex items-center justify-center whitespace-nowrap"><i class="fa-solid fa-crown mr-1"></i>SS級 共振</span>` : `<span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class || 'border-gray-600 text-gray-400'} whitespace-nowrap">${item.smc_text || '-'}</span>`;
+                    let pdVal = item.pd_percent !== undefined ? item.pd_percent : 50;
+                    let pdDotColor = pdVal > 50 ? '#ef4444' : '#22c55e';
+                    
+                    let smcHtml = item.confluence 
+                        ? `<span class="px-2 py-1 rounded text-xs font-semibold border border-yellow-300 text-yellow-300 bg-yellow-900/30 flex items-center justify-center whitespace-nowrap"><i class="fa-solid fa-crown mr-1"></i>SS級 共振</span>` 
+                        : `<span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class || 'border-gray-600 text-gray-400'} whitespace-nowrap">${item.smc_text || '-'}</span>`;
 
-                    tr.innerHTML = `<td class="px-4 py-3"><div class="flex items-center gap-1.5 font-bold text-white">${item.symbol || '--'}</div></td><td class="px-4 py-3 text-right font-mono font-bold text-gray-200" id="screener-price-${item.symbol}">$${item._livePrice.toFixed(2)}<br><div class="mt-1">${sessionBadge}</div></td><td class="px-4 py-3"><div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold" id="status-dist-${item.symbol}"><div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}</div><div class="text-[11px] text-gray-400 mt-1">建議差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div></td><td class="px-4 py-3 text-center">${smcHtml}</td><td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td><td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot || 0} - $${item.entry_top || 0}</td><td class="px-4 py-3 align-middle"><div class="w-full max-w-[140px] mx-auto flex flex-col gap-1"><div class="flex justify-between text-[10px] text-gray-400"><span>Discount</span><span>0.5 均衡</span><span>Premium</span></div><div class="relative w-full h-1.5 rounded-full pd-track"><div class="absolute top-[-3px] w-3 h-3 rounded-full border border-white z-10 shadow-sm transition-all duration-300" style="left: calc(${pdVal}% - 6px); background-color: ${pdDotColor};"></div><div class="absolute left-1/2 top-[-2px] w-px h-2.5 bg-gray-300 z-0"></div></div></div></td>`;
+                    tr.innerHTML = `
+                        <td class="px-4 py-3"><div class="flex items-center gap-1.5 font-bold text-white">${item.symbol || '--'}</div></td>
+                        <td class="px-4 py-3 text-right font-mono font-bold text-gray-200" id="screener-price-${item.symbol}">$${item._livePrice.toFixed(2)}<br><div class="mt-1">${sessionBadge}</div></td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold" id="status-dist-${item.symbol}">
+                                <div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}
+                            </div>
+                            <div class="text-[11px] text-gray-400 mt-1">建議差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>
+                        </td>
+                        <td class="px-4 py-3 text-center">${smcHtml}</td>
+                        <td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td>
+                        <td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot || 0} - $${item.entry_top || 0}</td>
+                        <td class="px-4 py-3 align-middle">
+                            <div class="w-full max-w-[140px] mx-auto flex flex-col gap-1">
+                                <div class="flex justify-between text-[10px] text-gray-400"><span>Discount</span><span>0.5 均衡</span><span>Premium</span></div>
+                                <div class="relative w-full h-1.5 rounded-full pd-track">
+                                    <div class="absolute top-[-3px] w-3 h-3 rounded-full border border-white z-10 shadow-sm transition-all duration-300" style="left: calc(${pdVal}% - 6px); background-color: ${pdDotColor};"></div>
+                                    <div class="absolute left-1/2 top-[-2px] w-px h-2.5 bg-gray-300 z-0"></div>
+                                </div>
+                            </div>
+                        </td>
+                    `;
                     tbody.appendChild(tr);
                 });
-            } catch(e) {}
+            } catch(e) {
+                console.error("renderScreenerData Error:", e);
+            }
         }
 
         function initCharts() {
-            const container = document.getElementById('tv_chart_container'), subContainer = document.getElementById('sub_chart_container'), tooltip = document.getElementById('chartTooltip');
+            const container = document.getElementById('tv_chart_container');
+            const subContainer = document.getElementById('sub_chart_container');
+            const tooltip = document.getElementById('chartTooltip');
             if(!container) return;
-            chart = LightweightCharts.createChart(container, { layout: { textColor: '#9ca3af', background: { type: 'solid', color: '#161b22' } }, grid: { vertLines: { color: 'rgba(255, 255, 255, 0.15)', style: 2 }, horzLines: { color: 'rgba(48, 54, 61, 0.5)' } }, timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false, rightOffset: 5 }, crosshair: { mode: LightweightCharts.CrosshairMode.Normal }, rightPriceScale: { borderColor: '#30363d' }, trackingMode: { exitMode: LightweightCharts.TrackingModeExitMode.OnTouchEnd }, handleScroll: { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: true }, handleScale: { mouseWheel: true, pinch: true, axisPressedMouseMove: true } });
+
+            chart = LightweightCharts.createChart(container, { 
+                layout: { textColor: '#9ca3af', background: { type: 'solid', color: '#161b22' } }, 
+                grid: { vertLines: { color: 'rgba(255, 255, 255, 0.15)', style: 2 }, horzLines: { color: 'rgba(48, 54, 61, 0.5)' } }, 
+                timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false, rightOffset: 5 }, 
+                crosshair: { mode: LightweightCharts.CrosshairMode.Normal }, 
+                rightPriceScale: { borderColor: '#30363d' }, 
+                trackingMode: { exitMode: LightweightCharts.TrackingModeExitMode.OnTouchEnd }, 
+                handleScroll: { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: true }, 
+                handleScale: { mouseWheel: true, pinch: true, axisPressedMouseMove: true } 
+            });
             candleSeries = chart.addCandlestickSeries({ upColor: '#22c55e', downColor: '#ef4444', borderVisible: false, wickUpColor: '#22c55e', wickDownColor: '#ef4444' });
-            subChart = LightweightCharts.createChart(subContainer, { layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } }, grid: { vertLines: { color: 'rgba(255, 255, 255, 0.15)', style: 2 }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } }, timeScale: { borderColor: '#30363d', visible: false, rightOffset: 5 }, trackingMode: { exitMode: LightweightCharts.TrackingModeExitMode.OnTouchEnd }, handleScroll: { horzTouchDrag: true, vertTouchDrag: true }, handleScale: { pinch: true } });
-            chart.timeScale().subscribeVisibleTimeRangeChange(range => { if (subContainer.style.display !== 'none') subChart.timeScale().setVisibleRange(range); }); subChart.timeScale().subscribeVisibleTimeRangeChange(range => { if (subContainer.style.display !== 'none') chart.timeScale().setVisibleRange(range); });
-            chart.subscribeCrosshairMove(param => { if (!param.point || !param.time || param.point.x < 0 || param.point.x > container.clientWidth || param.point.y < 0 || param.point.y > container.clientHeight) { tooltip.style.display = 'none'; } else { const data = param.seriesData.get(candleSeries); if (data) { tooltip.style.display = 'block'; const color = data.close >= data.open ? '#22c55e' : '#ef4444'; tooltip.innerHTML = `<div style="color: #c9d1d9; margin-bottom: 4px; font-weight: bold;"><i class="fa-solid fa-crosshairs text-blue-400 mr-1"></i> K線</div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px;"><div>O: <span style="color:${color}">${data.open.toFixed(2)}</span></div><div>H: <span style="color:${color}">${data.high.toFixed(2)}</span></div><div>L: <span style="color:${color}">${data.low.toFixed(2)}</span></div><div>C: <span style="color:${color}">${data.close.toFixed(2)}</span></div></div>`; } } });
-            new ResizeObserver(entries => { for (let entry of entries) { if (entry.target === container && container.clientWidth > 0) chart.applyOptions({ width: container.clientWidth, height: container.clientHeight }); if (entry.target === subContainer && subContainer.clientWidth > 0 && subContainer.style.display !== 'none') subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight }); } }).observe(container);
-            new ResizeObserver(() => { if(subContainer.clientWidth > 0 && subContainer.style.display !== 'none') subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight }); }).observe(subContainer);
+            
+            subChart = LightweightCharts.createChart(subContainer, { 
+                layout: { textColor: '#c9d1d9', background: { type: 'solid', color: '#161b22' } }, 
+                grid: { vertLines: { color: 'rgba(255, 255, 255, 0.15)', style: 2 }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } }, 
+                timeScale: { borderColor: '#30363d', visible: false, rightOffset: 5 }, 
+                trackingMode: { exitMode: LightweightCharts.TrackingModeExitMode.OnTouchEnd }, 
+                handleScroll: { horzTouchDrag: true, vertTouchDrag: true }, 
+                handleScale: { pinch: true } 
+            });
+
+            chart.timeScale().subscribeVisibleTimeRangeChange(range => { if (subContainer.style.display !== 'none') subChart.timeScale().setVisibleRange(range); }); 
+            subChart.timeScale().subscribeVisibleTimeRangeChange(range => { if (subContainer.style.display !== 'none') chart.timeScale().setVisibleRange(range); });
+            
+            chart.subscribeCrosshairMove(param => { 
+                if (!param.point || !param.time || param.point.x < 0 || param.point.x > container.clientWidth || param.point.y < 0 || param.point.y > container.clientHeight) { 
+                    tooltip.style.display = 'none'; 
+                } else { 
+                    const data = param.seriesData.get(candleSeries); 
+                    if (data) { 
+                        tooltip.style.display = 'block'; 
+                        const color = data.close >= data.open ? '#22c55e' : '#ef4444'; 
+                        tooltip.innerHTML = `
+                            <div style="color: #c9d1d9; margin-bottom: 4px; font-weight: bold;"><i class="fa-solid fa-crosshairs text-blue-400 mr-1"></i> K線</div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px;">
+                                <div>O: <span style="color:${color}">${data.open.toFixed(2)}</span></div>
+                                <div>H: <span style="color:${color}">${data.high.toFixed(2)}</span></div>
+                                <div>L: <span style="color:${color}">${data.low.toFixed(2)}</span></div>
+                                <div>C: <span style="color:${color}">${data.close.toFixed(2)}</span></div>
+                            </div>
+                        `; 
+                    } 
+                } 
+            });
+            
+            new ResizeObserver(entries => { 
+                for (let entry of entries) { 
+                    if (entry.target === container && container.clientWidth > 0) chart.applyOptions({ width: container.clientWidth, height: container.clientHeight }); 
+                    if (entry.target === subContainer && subContainer.clientWidth > 0 && subContainer.style.display !== 'none') subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight }); 
+                } 
+            }).observe(container);
+            new ResizeObserver(() => { 
+                if(subContainer.clientWidth > 0 && subContainer.style.display !== 'none') subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight }); 
+            }).observe(subContainer);
         }
 
         async function updateChartSymbol(symbol) {
             try {
-                const renderId = Date.now(); currentRenderId = renderId;
-                const symEl = document.getElementById('currentChartSymbol'); if (symEl) symEl.innerText = symbol || '--';
+                const renderId = Date.now(); 
+                currentRenderId = renderId;
+                
+                const symEl = document.getElementById('currentChartSymbol'); 
+                if (symEl) symEl.innerText = symbol || '--';
+                
                 currentSymbolData = (globalData.screener_data || []).find(x => x && x.symbol === symbol);
                 if(!candleSeries) return;
-                const loader = document.getElementById('chartLoader'); if(loader) loader.style.display = 'flex';
+                
+                const loader = document.getElementById('chartLoader'); 
+                if(loader) loader.style.display = 'flex';
+                
                 let data = [];
                 try {
                     const res = await fetch(`${VERCEL_API_URL}?symbols=${symbol}&interval=${currentTimeFrame.toLowerCase()}&t=${Date.now()}`);
-                    if (res.ok) { const jsonRes = await res.json(); if (jsonRes[symbol] && jsonRes[symbol].chart) { let uniqueChart = []; let lastTime = 0; for (let c of jsonRes[symbol].chart) { if (c.time !== lastTime) { uniqueChart.push(c); lastTime = c.time; } } data = uniqueChart; } }
-                } catch(e) {}
+                    if (res.ok) { 
+                        const jsonRes = await res.json(); 
+                        if (jsonRes[symbol] && jsonRes[symbol].chart) { 
+                            // 🚨 強制時間去重與嚴格遞增排序，防止 LightweightCharts 崩潰
+                            let uniqueMap = new Map();
+                            for (let c of jsonRes[symbol].chart) {
+                                uniqueMap.set(c.time, c);
+                            }
+                            data = Array.from(uniqueMap.values()).sort((a, b) => a.time - b.time);
+                        } 
+                    }
+                } catch(e) {
+                    console.error("Fetch Chart Error:", e);
+                }
+                
                 if(loader) loader.style.display = 'none';
                 if (currentRenderId !== renderId) return;
 
@@ -594,16 +830,30 @@
                 if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
 
                 if (data.length > 0) {
-                    currentCandleData = data; let livePrice = currentLivePrices[symbol];
-                    if (livePrice) { let lastCandle = currentCandleData[currentCandleData.length - 1]; lastCandle.close = livePrice; if (livePrice > lastCandle.high) lastCandle.high = livePrice; if (livePrice < lastCandle.low) lastCandle.low = livePrice; }
+                    currentCandleData = data; 
+                    let livePrice = currentLivePrices[symbol];
+                    if (livePrice) { 
+                        let lastCandle = currentCandleData[currentCandleData.length - 1]; 
+                        lastCandle.close = livePrice; 
+                        if (livePrice > lastCandle.high) lastCandle.high = livePrice; 
+                        if (livePrice < lastCandle.low) lastCandle.low = livePrice; 
+                    }
                     candleSeries.setData(currentCandleData);
                 }
                 
                 try { updateIntelligencePanel(symbol, currentSymbolData); } catch(e) {}
-                if (currentSymbolData && currentCandleData.length > 0) { currentPriceLine = candleSeries.createPriceLine({ price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: 'Live Price' }); updateChartOverlays('init'); }
                 
-                chart.timeScale().fitContent(); updateChartIndicators(); renderWatchlist();
-            } catch(e) {}
+                if (currentSymbolData && currentCandleData.length > 0) { 
+                    currentPriceLine = candleSeries.createPriceLine({ price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: 'Live Price' }); 
+                    updateChartOverlays('init'); 
+                }
+                
+                chart.timeScale().fitContent(); 
+                updateChartIndicators(); 
+                renderWatchlist();
+            } catch(e) {
+                console.error("updateChartSymbol Error:", e);
+            }
         }
 
         function updateChartOverlays(caller = null) {
@@ -615,81 +865,267 @@
             if (currentSymbolData.entry_top > 0) {
                 const isShort = currentSymbolData.direction === 'short';
                 if ((isShort && showShort) || (!isShort && showLong)) {
-                    const fvgColor = isShort ? 'rgba(239, 68, 68, 0.2)' : 'rgba(34, 197, 94, 0.2)', obColor = isShort ? 'rgba(239, 68, 68, 0.4)' : 'rgba(34, 197, 94, 0.4)', lineColor = isShort ? 'rgba(239, 68, 68, 0.6)' : 'rgba(34, 197, 94, 0.6)', slLineColor = '#ef4444', tpLineColor = '#10b981';
-                    let fvgSeries = chart.addAreaSeries({ baseValue: { type: 'price', price: currentSymbolData.entry_bot }, topColor: fvgColor, bottomColor: fvgColor, lineColor: 'rgba(0,0,0,0)', lineWidth: 0, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null }); fvgSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top }))); activeAreaSeries.push(fvgSeries);
+                    const fvgColor = isShort ? 'rgba(239, 68, 68, 0.2)' : 'rgba(34, 197, 94, 0.2)';
+                    const obColor = isShort ? 'rgba(239, 68, 68, 0.4)' : 'rgba(34, 197, 94, 0.4)';
+                    const lineColor = isShort ? 'rgba(239, 68, 68, 0.6)' : 'rgba(34, 197, 94, 0.6)';
+                    const slLineColor = '#ef4444', tpLineColor = '#10b981';
+                    
+                    let fvgSeries = chart.addAreaSeries({ baseValue: { type: 'price', price: currentSymbolData.entry_bot }, topColor: fvgColor, bottomColor: fvgColor, lineColor: 'rgba(0,0,0,0)', lineWidth: 0, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null }); 
+                    fvgSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top }))); 
+                    activeAreaSeries.push(fvgSeries);
+                    
                     let obBasePrice = isShort ? currentSymbolData.entry_top : currentSymbolData.entry_bot;
-                    let obSeries = chart.addAreaSeries({ baseValue: { type: 'price', price: obBasePrice }, topColor: obColor, bottomColor: obColor, lineColor: 'rgba(0,0,0,0)', lineWidth: 0, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null }); obSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.sl }))); activeAreaSeries.push(obSeries);
+                    let obSeries = chart.addAreaSeries({ baseValue: { type: 'price', price: obBasePrice }, topColor: obColor, bottomColor: obColor, lineColor: 'rgba(0,0,0,0)', lineWidth: 0, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null }); 
+                    obSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.sl }))); 
+                    activeAreaSeries.push(obSeries);
+                    
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ FVG' }));
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '📦 OB' }));
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.sl, color: slLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '🚨 SL' }));
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.tp, color: tpLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: '🎯 TP' }));
                 }
             }
-            if (showPd && currentSymbolData.macro_eq) activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '➖ 0.5 均衡' }));
+            if (showPd && currentSymbolData.macro_eq) {
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '➖ 0.5 均衡' }));
+            }
         }
 
+        // 🚨 修復 RSI 讀取錯位邏輯
         function getMockSignals(data, symData) {
-            let markers = []; if(!data || data.length < 21) return markers;
-            let ema20 = calculateEMA(data, 20, 'close'), rsi = calculateRSI(data, 14), currentPosition = 0; 
+            let markers = []; 
+            if(!data || data.length < 21) return markers;
+            
+            let ema20 = calculateEMA(data, 20, 'close');
+            let rsi = calculateRSI(data, 14);
+            let currentPosition = 0; 
+            
             for(let i = 20; i < data.length - 1; i++) {
-                let prev = data[i-1], curr = data[i], currRsi = rsi[i] ? rsi[i].value : 50, currEma = ema20[i] ? ema20[i].value : curr.close;
-                let bullish_engulfing = (prev.close < prev.open) && (curr.close > curr.open) && (curr.close > prev.open), bearish_engulfing = (prev.close > prev.open) && (curr.close < curr.open) && (curr.close < prev.open);
+                let prev = data[i-1];
+                let curr = data[i];
+                
+                let currEma = ema20[i] ? ema20[i].value : curr.close;
+                
+                // rsi 陣列會比原始 data 短 14 根，所以 index 要平移 14
+                let rsiItem = rsi[i - 14];
+                let currRsi = rsiItem ? rsiItem.value : 50;
+                
+                let bullish_engulfing = (prev.close < prev.open) && (curr.close > curr.open) && (curr.close > prev.open);
+                let bearish_engulfing = (prev.close > prev.open) && (curr.close < curr.open) && (curr.close < prev.open);
+                
                 if (currentPosition === 0) {
-                    if (bullish_engulfing && curr.close > currEma && currRsi < 70) { markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: '進場多' }); currentPosition = 1; }
-                    else if (bearish_engulfing && curr.close < currEma && currRsi > 30) { markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: '進場空' }); currentPosition = -1; }
+                    if (bullish_engulfing && curr.close > currEma && currRsi < 70) { 
+                        markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: '進場多' }); 
+                        currentPosition = 1; 
+                    }
+                    else if (bearish_engulfing && curr.close < currEma && currRsi > 30) { 
+                        markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: '進場空' }); 
+                        currentPosition = -1; 
+                    }
                 } else {
-                    if (currentPosition === 1 && curr.close < prev.low) { markers.push({ time: curr.time, position: 'aboveBar', color: '#3b82f6', shape: 'circle', text: '平多', size: 1 }); currentPosition = 0; }
-                    if (currentPosition === -1 && curr.close > prev.high) { markers.push({ time: curr.time, position: 'belowBar', color: '#3b82f6', shape: 'circle', text: '平空', size: 1 }); currentPosition = 0; }
+                    if (currentPosition === 1 && curr.close < prev.low) { 
+                        markers.push({ time: curr.time, position: 'aboveBar', color: '#3b82f6', shape: 'circle', text: '平多', size: 1 }); 
+                        currentPosition = 0; 
+                    }
+                    if (currentPosition === -1 && curr.close > prev.high) { 
+                        markers.push({ time: curr.time, position: 'belowBar', color: '#3b82f6', shape: 'circle', text: '平空', size: 1 }); 
+                        currentPosition = 0; 
+                    }
                 }
-            } return markers;
+            } 
+            return markers;
         }
 
         function updateChartIndicators(clickedType = null) {
             try {
                 if (!currentCandleData || !currentCandleData.length || !chart) return;
-                const sigCheck = document.getElementById('ind_signals'), rsiCheck = document.getElementById('ind_rsi'), macdCheck = document.getElementById('ind_macd');
-                if(!rsiCheck || !macdCheck) return;
-                if (clickedType === 'rsi' && rsiCheck.checked) macdCheck.checked = false; if (clickedType === 'macd' && macdCheck.checked) rsiCheck.checked = false;
                 
-                if (sigCheck && sigCheck.checked) candleSeries.setMarkers(getMockSignals(currentCandleData, currentSymbolData)); else candleSeries.setMarkers([]);
+                const sigCheck = document.getElementById('ind_signals');
+                const rsiCheck = document.getElementById('ind_rsi');
+                const macdCheck = document.getElementById('ind_macd');
+                if(!rsiCheck || !macdCheck) return;
+                
+                if (clickedType === 'rsi' && rsiCheck.checked) macdCheck.checked = false; 
+                if (clickedType === 'macd' && macdCheck.checked) rsiCheck.checked = false;
+                
+                if (sigCheck && sigCheck.checked) {
+                    candleSeries.setMarkers(getMockSignals(currentCandleData, currentSymbolData)); 
+                } else {
+                    candleSeries.setMarkers([]);
+                }
 
+                // 安全渲染 EMA
                 if (document.getElementById('ind_ema').checked) {
-                    const ema20 = calculateEMA(currentCandleData, 20, 'close'), ema50 = calculateEMA(currentCandleData, 50, 'close');
-                    if (!ema20Series) ema20Series = chart.addLineSeries({ color: '#f59e0b', lineWidth: 1.5, title: 'EMA 20' }); if (!ema50Series) ema50Series = chart.addLineSeries({ color: '#8b5cf6', lineWidth: 1.5, title: 'EMA 50' });
+                    const ema20 = calculateEMA(currentCandleData, 20, 'close');
+                    const ema50 = calculateEMA(currentCandleData, 50, 'close');
+                    if (!ema20Series) ema20Series = chart.addLineSeries({ color: '#f59e0b', lineWidth: 1.5, title: 'EMA 20' }); 
+                    if (!ema50Series) ema50Series = chart.addLineSeries({ color: '#8b5cf6', lineWidth: 1.5, title: 'EMA 50' });
                     ema20Series.setData(ema20); ema50Series.setData(ema50);
-                } else { if (ema20Series) { chart.removeSeries(ema20Series); ema20Series = null; } if (ema50Series) { chart.removeSeries(ema50Series); ema50Series = null; } }
+                } else { 
+                    if (ema20Series) { chart.removeSeries(ema20Series); ema20Series = null; } 
+                    if (ema50Series) { chart.removeSeries(ema50Series); ema50Series = null; } 
+                }
 
+                // 安全渲染 BOLL
                 if (document.getElementById('ind_boll').checked) {
                     const boll = calculateBOLL(currentCandleData, 20, 2);
-                    if (!bollUpperSeries) bollUpperSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Upper' }); if (!bollMidSeries) bollMidSeries = chart.addLineSeries({ color: 'rgba(234, 179, 8, 0.8)', lineWidth: 1.5, title: 'Mid' }); if (!bollLowerSeries) bollLowerSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Lower' });
+                    if (!bollUpperSeries) bollUpperSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Upper' }); 
+                    if (!bollMidSeries) bollMidSeries = chart.addLineSeries({ color: 'rgba(234, 179, 8, 0.8)', lineWidth: 1.5, title: 'Mid' }); 
+                    if (!bollLowerSeries) bollLowerSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.6)', lineWidth: 1, title: 'Lower' });
                     bollUpperSeries.setData(boll.upper); bollMidSeries.setData(boll.middle); bollLowerSeries.setData(boll.lower);
-                } else { if (bollUpperSeries) { chart.removeSeries(bollUpperSeries); bollUpperSeries = null; } if (bollMidSeries) { chart.removeSeries(bollMidSeries); bollMidSeries = null; } if (bollLowerSeries) { chart.removeSeries(bollLowerSeries); bollLowerSeries = null; } }
+                } else { 
+                    if (bollUpperSeries) { chart.removeSeries(bollUpperSeries); bollUpperSeries = null; } 
+                    if (bollMidSeries) { chart.removeSeries(bollMidSeries); bollMidSeries = null; } 
+                    if (bollLowerSeries) { chart.removeSeries(bollLowerSeries); bollLowerSeries = null; } 
+                }
 
                 const subContainer = document.getElementById('sub_chart_container');
-                try { if (subIndicatorSeries && subChart) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; } } catch(e){} try { if (macdHistSeries && subChart) { subChart.removeSeries(macdHistSeries); macdHistSeries = null; } } catch(e){} try { if (macdLineSeries && subChart) { subChart.removeSeries(macdLineSeries); macdLineSeries = null; } } catch(e){} try { if (macdSignalSeries && subChart) { subChart.removeSeries(macdSignalSeries); macdSignalSeries = null; } } catch(e){}
+                try { if (subIndicatorSeries && subChart) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; } } catch(e){} 
+                try { if (macdHistSeries && subChart) { subChart.removeSeries(macdHistSeries); macdHistSeries = null; } } catch(e){} 
+                try { if (macdLineSeries && subChart) { subChart.removeSeries(macdLineSeries); macdLineSeries = null; } } catch(e){} 
+                try { if (macdSignalSeries && subChart) { subChart.removeSeries(macdSignalSeries); macdSignalSeries = null; } } catch(e){}
 
                 if (rsiCheck.checked || macdCheck.checked) {
-                    subContainer.style.display = 'block'; if (subChart) subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
-                    if (rsiCheck.checked) { subIndicatorSeries = subChart.addLineSeries({ color: '#06b6d4', lineWidth: 1.5, title: 'RSI (14)' }); subIndicatorSeries.setData(calculateRSI(currentCandleData, 14)); } 
-                    else if (macdCheck.checked) { const macdData = calculateMACD(currentCandleData, 12, 26, 9); macdHistSeries = subChart.addHistogramSeries({ color: '#26a69a', title: 'Hist' }); macdLineSeries = subChart.addLineSeries({ color: '#2962FF', lineWidth: 1.5, title: 'MACD' }); macdSignalSeries = subChart.addLineSeries({ color: '#FF6D00', lineWidth: 1.5, title: 'Signal' }); macdHistSeries.setData(macdData.hist); macdLineSeries.setData(macdData.macd); macdSignalSeries.setData(macdData.signal); }
+                    subContainer.style.display = 'block'; 
+                    if (subChart) subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
+                    
+                    if (rsiCheck.checked) { 
+                        subIndicatorSeries = subChart.addLineSeries({ color: '#06b6d4', lineWidth: 1.5, title: 'RSI (14)' }); 
+                        subIndicatorSeries.setData(calculateRSI(currentCandleData, 14)); 
+                    } 
+                    else if (macdCheck.checked) { 
+                        const macdData = calculateMACD(currentCandleData, 12, 26, 9); 
+                        macdHistSeries = subChart.addHistogramSeries({ color: '#26a69a', title: 'Hist' }); 
+                        macdLineSeries = subChart.addLineSeries({ color: '#2962FF', lineWidth: 1.5, title: 'MACD' }); 
+                        macdSignalSeries = subChart.addLineSeries({ color: '#FF6D00', lineWidth: 1.5, title: 'Signal' }); 
+                        macdHistSeries.setData(macdData.hist); macdLineSeries.setData(macdData.macd); macdSignalSeries.setData(macdData.signal); 
+                    }
                     if(subChart && clickedType !== null) subChart.timeScale().fitContent();
-                } else { subContainer.style.display = 'none'; }
-            } catch(e) {}
+                } else { 
+                    subContainer.style.display = 'none'; 
+                }
+            } catch(e) {
+                console.error("Indicator Render Error:", e);
+            }
         }
 
-        function calculateEMA(data, period, key = 'close') { if (!data || !data.length) return []; let result = [], multiplier = 2 / (period + 1), prevEMA = data[0][key] || 0; for (let i = 0; i < data.length; i++) { let val = data[i][key] || 0, ema = (i === 0) ? val : (val - prevEMA) * multiplier + prevEMA; prevEMA = ema; result.push({ time: data[i].time, value: Number(ema.toFixed(2)) }); } return result; }
-        function calculateBOLL(data, period, stdDevMultiplier) { let upper = [], middle = [], lower = []; for (let i = period - 1; i < data.length; i++) { let slice = data.slice(i - period + 1, i + 1), sma = slice.reduce((acc, val) => acc + val.close, 0) / period, stdDev = Math.sqrt(slice.reduce((acc, val) => acc + Math.pow(val.close - sma, 2), 0) / period); middle.push({ time: data[i].time, value: Number(sma.toFixed(2)) }); upper.push({ time: data[i].time, value: Number((sma + stdDevMultiplier * stdDev).toFixed(2)) }); lower.push({ time: data[i].time, value: Number((sma - stdDevMultiplier * stdDev).toFixed(2)) }); } return { upper, middle, lower }; }
-        function calculateRSI(data, period) { let result = [], gains = 0, losses = 0; for (let i = 1; i < data.length; i++) { let change = data[i].close - data[i-1].close, gain = change > 0 ? change : 0, loss = change < 0 ? -change : 0; if (i <= period) { gains += gain; losses += loss; if (i === period) { let rs = (losses/period) === 0 ? 100 : (gains/period) / (losses/period); result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) }); } } else { gains = (gains * (period - 1) + gain) / period; losses = (losses * (period - 1) + loss) / period; let rs = losses === 0 ? 100 : gains / losses; result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) }); } } return result; }
-        function calculateMACD(data, fast, slow, sig) { let fEma = calculateEMA(data, fast, 'close'), sEma = calculateEMA(data, slow, 'close'), macdLine = []; for (let i = 0; i < data.length; i++) macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value }); let sigLine = calculateEMA(macdLine, sig, 'value'), histLine = []; for(let i=0; i<data.length; i++) { let hist = macdLine[i].value - sigLine[i].value; histLine.push({ time: data[i].time, value: Number(hist.toFixed(2)), color: hist >= 0 ? '#26a69a' : '#ef5350' }); } return { macd: macdLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})), signal: sigLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})), hist: histLine } }
+        // 🚨 修復了資料太短時的防呆機制
+        function calculateEMA(data, period, key = 'close') { 
+            if (!data || data.length === 0) return []; 
+            let result = [], multiplier = 2 / (period + 1), prevEMA = data[0][key] || 0; 
+            for (let i = 0; i < data.length; i++) { 
+                let val = data[i][key] || 0, ema = (i === 0) ? val : (val - prevEMA) * multiplier + prevEMA; 
+                prevEMA = ema; 
+                result.push({ time: data[i].time, value: Number(ema.toFixed(2)) }); 
+            } 
+            return result; 
+        }
 
-        function switchTab(tab) { currentTab = tab; const tSmc = document.getElementById('tabSmc'), tWl = document.getElementById('tabWatchlist'), activeClass = ["text-blue-400", "border-blue-500"], inactiveClass = ["text-gray-400", "border-transparent", "hover:text-white"]; if (tab === 'smc') { tSmc.classList.add(...activeClass); tSmc.classList.remove(...inactiveClass); tWl.classList.add(...inactiveClass); tWl.classList.remove(...activeClass); } else { tWl.classList.add(...activeClass); tWl.classList.remove(...inactiveClass); tSmc.classList.add(...inactiveClass); tSmc.classList.remove(...activeClass); } renderScreenerData(); }
-        function addCustomStock(e) { e.preventDefault(); const input = document.getElementById('searchInput'); if(!input) return; const val = input.value.trim().toUpperCase(); if(!val) return; if (userWatchlist.includes(val)) { showToast(`股票 ${val} 已經在自選清單中`, 'error'); input.value = ''; return; } userWatchlist.unshift(val); saveWatchlist(); renderWatchlist(); renderScreenerData(); try { fetchLiveQuotes(); } catch(err){} showToast(`成功加入自選: ${val}`); input.value = ''; }
-        function removeFromWatchlist(event, sym) { event.stopPropagation(); userWatchlist = userWatchlist.filter(s => s !== sym); saveWatchlist(); if(currentLivePrices[sym]) delete currentLivePrices[sym]; renderWatchlist(); renderScreenerData(); showToast(`已從自選移除: ${sym}`, 'error'); }
-        function toggleSection(cId, iId) { const c = document.getElementById(cId), i = document.getElementById(iId); if(c) { c.classList.toggle('collapsed'); if (!c.classList.contains('collapsed') && cId === 'chartContent') { setTimeout(() => { if (chart) chart.timeScale().fitContent(); }, 350); } } if(i) i.classList.toggle('rotate-180'); }
+        function calculateBOLL(data, period, stdDevMultiplier) { 
+            let upper = [], middle = [], lower = []; 
+            if(!data || data.length < period) return {upper, middle, lower};
+            for (let i = period - 1; i < data.length; i++) { 
+                let slice = data.slice(i - period + 1, i + 1), sma = slice.reduce((acc, val) => acc + val.close, 0) / period, stdDev = Math.sqrt(slice.reduce((acc, val) => acc + Math.pow(val.close - sma, 2), 0) / period); 
+                middle.push({ time: data[i].time, value: Number(sma.toFixed(2)) }); 
+                upper.push({ time: data[i].time, value: Number((sma + stdDevMultiplier * stdDev).toFixed(2)) }); 
+                lower.push({ time: data[i].time, value: Number((sma - stdDevMultiplier * stdDev).toFixed(2)) }); 
+            } 
+            return { upper, middle, lower }; 
+        }
+
+        function calculateRSI(data, period) { 
+            let result = [], gains = 0, losses = 0; 
+            if(!data || data.length <= period) return result;
+            for (let i = 1; i < data.length; i++) { 
+                let change = data[i].close - data[i-1].close, gain = change > 0 ? change : 0, loss = change < 0 ? -change : 0; 
+                if (i <= period) { 
+                    gains += gain; losses += loss; 
+                    if (i === period) { 
+                        let rs = (losses/period) === 0 ? 100 : (gains/period) / (losses/period); 
+                        result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) }); 
+                    } 
+                } else { 
+                    gains = (gains * (period - 1) + gain) / period; 
+                    losses = (losses * (period - 1) + loss) / period; 
+                    let rs = losses === 0 ? 100 : gains / losses; 
+                    result.push({ time: data[i].time, value: Number((100 - (100 / (1 + rs))).toFixed(2)) }); 
+                } 
+            } 
+            return result; 
+        }
+
+        function calculateMACD(data, fast, slow, sig) { 
+            let fEma = calculateEMA(data, fast, 'close');
+            let sEma = calculateEMA(data, slow, 'close');
+            let macdLine = []; 
+            if(!fEma.length || !sEma.length) return {macd:[], signal:[], hist:[]};
+            for (let i = 0; i < data.length; i++) {
+                macdLine.push({ time: data[i].time, value: fEma[i].value - sEma[i].value }); 
+            }
+            let sigLine = calculateEMA(macdLine, sig, 'value');
+            let histLine = []; 
+            for(let i=0; i < data.length; i++) { 
+                let hist = macdLine[i].value - sigLine[i].value; 
+                histLine.push({ time: data[i].time, value: Number(hist.toFixed(2)), color: hist >= 0 ? '#26a69a' : '#ef5350' }); 
+            } 
+            return { 
+                macd: macdLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})), 
+                signal: sigLine.map(item => ({time: item.time, value: Number(item.value.toFixed(2))})), 
+                hist: histLine 
+            }; 
+        }
+
+        function switchTab(tab) { 
+            currentTab = tab; 
+            const tSmc = document.getElementById('tabSmc'), tWl = document.getElementById('tabWatchlist');
+            const activeClass = ["text-blue-400", "border-blue-500"], inactiveClass = ["text-gray-400", "border-transparent", "hover:text-white"]; 
+            if (tab === 'smc') { 
+                tSmc.classList.add(...activeClass); tSmc.classList.remove(...inactiveClass); 
+                tWl.classList.add(...inactiveClass); tWl.classList.remove(...activeClass); 
+            } else { 
+                tWl.classList.add(...activeClass); tWl.classList.remove(...inactiveClass); 
+                tSmc.classList.add(...inactiveClass); tSmc.classList.remove(...activeClass); 
+            } 
+            renderScreenerData(); 
+        }
+
+        function addCustomStock(e) { 
+            e.preventDefault(); 
+            const input = document.getElementById('searchInput'); 
+            if(!input) return; 
+            const val = input.value.trim().toUpperCase(); 
+            if(!val) return; 
+            if (userWatchlist.includes(val)) { showToast(`股票 ${val} 已經在自選清單中`, 'error'); input.value = ''; return; } 
+            userWatchlist.unshift(val); 
+            saveWatchlist(); 
+            renderWatchlist(); renderScreenerData(); 
+            try { fetchLiveQuotes(); } catch(err){} 
+            showToast(`成功加入自選: ${val}`); 
+            input.value = ''; 
+        }
+
+        function removeFromWatchlist(event, sym) { 
+            event.stopPropagation(); 
+            userWatchlist = userWatchlist.filter(s => s !== sym); 
+            saveWatchlist(); 
+            if(currentLivePrices[sym]) delete currentLivePrices[sym]; 
+            renderWatchlist(); renderScreenerData(); 
+            showToast(`已從自選移除: ${sym}`, 'error'); 
+        }
+
+        function toggleSection(cId, iId) { 
+            const c = document.getElementById(cId), i = document.getElementById(iId); 
+            if(c) { 
+                c.classList.toggle('collapsed'); 
+                if (!c.classList.contains('collapsed') && cId === 'chartContent') { 
+                    setTimeout(() => { if (chart) chart.timeScale().fitContent(); }, 350); 
+                } 
+            } 
+            if(i) i.classList.toggle('rotate-180'); 
+        }
         
-        // 🚨 擴充 showToast 支援自定義 class (signal-long, signal-short)
         function showToast(msg, type='success') { 
-            const c = document.getElementById('toast-container'); if(!c) return;
+            const c = document.getElementById('toast-container'); 
+            if(!c) return;
             const t = document.createElement('div'); 
             let typeClass = type;
             if (['error', 'info', 'success'].includes(type)) {
@@ -707,12 +1143,20 @@
             c.appendChild(t); 
             setTimeout(() => t.classList.add('show'), 10); 
             
-            // 如果是信號通知，讓它停留更久一點 (8秒) 以免錯過
             let duration = type.includes('signal') ? 8000 : (type === 'info' ? 4000 : 3000);
             setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, duration); 
         }
         
-        function changeTimeFrame(tf) { currentTimeFrame = tf; ['15m','4H','1D'].forEach(t => { const btn = document.getElementById('tf_'+t); if(btn) { btn.className = (t===tf) ? "px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors" : "px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors"; } }); const curSym = document.getElementById('currentChartSymbol'); if(curSym && curSym.innerText !== '--') updateChartSymbol(curSym.innerText); }
+        function changeTimeFrame(tf) { 
+            currentTimeFrame = tf; 
+            ['15m','4H','1D'].forEach(t => { 
+                const btn = document.getElementById('tf_'+t); 
+                if(btn) { btn.className = (t===tf) ? "px-3 py-1 font-medium rounded bg-[#30363d] text-white transition-colors" : "px-3 py-1 font-medium rounded text-gray-400 hover:text-white transition-colors"; } 
+            }); 
+            const curSym = document.getElementById('currentChartSymbol'); 
+            if(curSym && curSym.innerText !== '--') updateChartSymbol(curSym.innerText); 
+        }
+        
         function openSMCModal() { const m = document.getElementById('smcModal'); if(m) m.style.display = 'flex'; }
         function closeSMCModal() { const m = document.getElementById('smcModal'); if(m) m.style.display = 'none'; }
     </script>
