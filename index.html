@@ -10,7 +10,6 @@
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
         .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
-        
         ::-webkit-scrollbar { width: 12px; height: 12px; }
         ::-webkit-scrollbar-track { background: #0d1117; border-radius: 6px; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
@@ -23,7 +22,6 @@
         .toast.success { background-color: #238636; }
         .toast.error { background-color: #da3633; }
         .toast.info { background-color: #3b82f6; } 
-        
         .toast.signal-long { background-color: #14532d; border: 2px solid #22c55e; box-shadow: 0 0 15px rgba(34,197,94,0.4); font-size: 15px; padding: 16px 24px; }
         .toast.signal-short { background-color: #7f1d1d; border: 2px solid #ef4444; box-shadow: 0 0 15px rgba(239,68,68,0.4); font-size: 15px; padding: 16px 24px; }
 
@@ -280,28 +278,28 @@
             fetchIntervalId = setInterval(fetchLiveQuotes, session.interval);
         }
 
-        // 🚨 終極修復：加入雙引擎智慧抓取，自動繞過本地 CORS 阻擋
+        // 🚨 終極修復：強制攔截並清洗 NaN 污染，拯救 JSON 解析崩潰
         async function loadJSONData() {
             try {
-                // 優先嘗試本地讀取
                 let response = await fetch('data.json?t=' + new Date().getTime());
-                if (!response.ok) throw new Error('Local fetch failed');
-                globalData = await response.json();
-                document.getElementById('updateTimeText').innerHTML = `SMC 運算時間: <span class="text-green-400">${globalData.updated_at || '最新'} (HKT)</span>`;
-            } catch (err) {
-                console.warn("本地讀取失敗，啟動 GitHub 雲端備援...");
-                try {
-                    // 自動轉向 GitHub Raw 強制讀取
-                    let response = await fetch('https://raw.githubusercontent.com/singfeehily/us-stock-tracker/main/data.json?t=' + new Date().getTime());
-                    if (!response.ok) throw new Error('GitHub fetch failed');
-                    globalData = await response.json();
-                    document.getElementById('updateTimeText').innerHTML = `SMC 運算時間: <span class="text-blue-400">${globalData.updated_at || '最新'} (雲端備援)</span>`;
-                } catch (err2) {
-                    console.error("雙引擎讀取皆失敗:", err2);
-                    globalData = { updated_at: '⚠️ 無法讀取 data.json', watchlist_data: [], screener_data: [], chart_data: {} };
-                    document.getElementById('updateTimeText').innerHTML = `<span class="text-red-500 font-bold">${globalData.updated_at}</span>`;
-                    showToast('⚠️ 嚴重警告: 無法讀取數據，SMC 區間將不會顯示！', 'error');
+                if (!response.ok) {
+                    console.warn("本地讀取失敗，啟動 GitHub 雲端備援...");
+                    response = await fetch('https://raw.githubusercontent.com/singfeehily/us-stock-tracker/main/data.json?t=' + new Date().getTime());
                 }
+                if (!response.ok) throw new Error('Data file missing');
+
+                // 核心保護：不要直接解析，先轉字串清洗髒數據！
+                const rawText = await response.text();
+                const safeText = rawText.replace(/NaN/g, 'null').replace(/Infinity/g, 'null').replace(/-Infinity/g, 'null');
+                
+                globalData = JSON.parse(safeText);
+                document.getElementById('updateTimeText').innerHTML = `SMC 運算時間: <span class="text-green-400">${globalData.updated_at || '最新'} (HKT)</span>`;
+                
+            } catch (err) {
+                console.error("讀取或解析 JSON 崩潰:", err);
+                globalData = { updated_at: '⚠️ JSON 數據檔案遺失或損壞', watchlist_data: [], screener_data: [], chart_data: {} };
+                document.getElementById('updateTimeText').innerHTML = `<span class="text-red-500 font-bold">${globalData.updated_at}</span>`;
+                showToast('⚠️ 警告: 無法正確讀取 data.json，區間指標將隱藏！', 'error');
             }
             
             // 防呆切換
@@ -492,12 +490,11 @@
                 const phaseEl = document.getElementById('panelPhase'), trendEl = document.getElementById('panelTrend'), smcEl = document.getElementById('panelSMC'), insightEl = document.getElementById('panelInsight');
                 if (!phaseEl || !trendEl || !smcEl || !insightEl) return;
                 
-                // 🚨 失去後端數據時的明確警告
                 if (!globalData.screener_data || globalData.screener_data.length === 0) {
                     phaseEl.innerHTML = `<span class="text-red-400 font-bold">⚠️ 系統異常</span>`;
                     trendEl.innerHTML = `<span class="text-red-400 font-bold">⚠️ 讀取失敗</span>`;
                     smcEl.innerHTML = `<span class="text-gray-400">無法讀取 SMC 參數</span>`;
-                    insightEl.innerHTML = `<div class="p-2 rounded bg-red-900/20 border border-red-500/30 text-red-400 font-bold text-sm"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 未偵測到大數據 (data.json)。作戰區間已隱藏，請確保您有連接網路。</div>`;
+                    insightEl.innerHTML = `<div class="p-2 rounded bg-red-900/20 border border-red-500/30 text-red-400 font-bold text-sm"><i class="fa-solid fa-triangle-exclamation mr-1"></i> 未偵測到大數據，請確認後端已生成沒有 NaN 錯誤的 JSON。</div>`;
                     return;
                 }
 
@@ -546,9 +543,8 @@
 
                 tbody.innerHTML = '';
                 
-                // 🚨 強化：如果讀取不到 JSON，顯示強烈警告
                 if (!globalData.screener_data || globalData.screener_data.length === 0) { 
-                    tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-red-400 font-bold"><i class="fa-solid fa-triangle-exclamation text-2xl mb-3 block"></i>系統無法讀取 data.json 數據檔<br><span class="text-xs text-gray-400 font-normal">SMC 演算法已進入休眠。請確認您的網路連線，或確保 GitHub 伺服器運作正常。</span></td></tr>`; 
+                    tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-red-400 font-bold"><i class="fa-solid fa-triangle-exclamation text-2xl mb-3 block"></i>JSON 數據解析失敗或檔案遺失<br><span class="text-xs text-gray-400 font-normal">SMC 演算法已進入休眠。系統已嘗試強制清理 NaN 髒數據，若仍無法顯示，請檢查 GitHub 伺服器狀態。</span></td></tr>`; 
                     return; 
                 }
                 if (processedData.length === 0) {
@@ -627,7 +623,6 @@
             activePriceLines.forEach(line => candleSeries.removePriceLine(line)); activePriceLines = [];
             activeAreaSeries.forEach(s => chart.removeSeries(s)); activeAreaSeries = [];
             
-            // 🚨 空值極限保護：如果沒有後端資料，就只畫 K 線，保證圖表不會當機
             if (!currentSymbolData) return;
 
             const showLong = document.getElementById('layer_long').checked, showShort = document.getElementById('layer_short').checked, showPd = document.getElementById('layer_pd').checked;
