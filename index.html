@@ -39,7 +39,7 @@
         .flash-green { animation: flashGreen 0.8s ease-out; }
         .flash-red { animation: flashRed 0.8s ease-out; }
         
-        #smcModal { display: none; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
+        #smcModal { display: none; background: rgba(0,0,0,0.75); backdrop-filter: blur(5px); }
         canvas.sparkline { width: 100%; height: 32px; margin-top: 6px; opacity: 0.8; }
         #chartLoader { display: none; position: absolute; inset: 0; background: rgba(13,17,23,0.7); backdrop-filter: blur(2px); z-index: 20; align-items: center; justify-content: center; }
         .pd-track { background: linear-gradient(to right, #166534 0%, #166534 49%, #4b5563 49%, #4b5563 51%, #991b1b 51%, #991b1b 100%); }
@@ -216,6 +216,49 @@
             </div>
         </div>
     </main>
+
+    <!-- 系統說明 Modal (註解面板) -->
+    <div id="smcModal" class="fixed inset-0 z-[60] flex-col items-center justify-center p-4 sm:p-6" style="display: none; background: rgba(0,0,0,0.75); backdrop-filter: blur(5px);">
+        <div class="glass-panel w-full max-w-2xl max-h-[85vh] rounded-2xl flex flex-col shadow-2xl border border-[#30363d] overflow-hidden relative">
+            <div class="flex justify-between items-center px-4 py-3 sm:px-5 sm:py-4 border-b border-[#30363d] bg-[#161b22]">
+                <h3 class="text-base sm:text-lg font-bold text-white flex items-center"><i class="fa-solid fa-book-open text-blue-400 mr-2"></i>SMC 系統指標與實戰指南</h3>
+                <button onclick="closeSMCModal()" class="text-gray-400 hover:text-red-400 transition-colors text-xl p-1"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-4 sm:p-5 overflow-y-auto custom-scrollbar flex flex-col gap-4 text-[13px] sm:text-sm text-gray-300">
+                <div class="bg-[#0d1117] p-4 rounded-xl border border-[#30363d]">
+                    <h4 class="text-blue-400 font-bold mb-2 flex items-center text-sm sm:text-base"><i class="fa-solid fa-layer-group mr-2"></i>1. 核心 SMC 作戰區間 (OB / FVG)</h4>
+                    <p class="mb-2 text-gray-400">系統自動標示主力機構留下的足跡，作為最核心的進出場防線：</p>
+                    <ul class="list-disc pl-5 space-y-1.5">
+                        <li><span class="font-bold text-green-400">做多區 (Discount)</span>：低於 0.5 均衡價的折價區，尋找 <b>OB (訂單塊)</b> 或 <b>FVG (缺口)</b> 逢低買入。</li>
+                        <li><span class="font-bold text-red-400">做空區 (Premium)</span>：高於 0.5 均衡價的溢價區，主力派發籌碼，尋找機會做空。</li>
+                        <li><span class="text-white font-mono bg-gray-800 px-1 rounded text-xs">🎯 TP</span> 為系統建議止盈價，<span class="text-white font-mono bg-gray-800 px-1 rounded text-xs">🚨 SL</span> 為嚴格止損價。</li>
+                    </ul>
+                </div>
+                <div class="bg-[#0d1117] p-4 rounded-xl border border-[#30363d]">
+                    <h4 class="text-yellow-400 font-bold mb-2 flex items-center text-sm sm:text-base"><i class="fa-solid fa-bolt mr-2"></i>2. AI 智能信號 (扳機)</h4>
+                    <p class="mb-2 text-gray-400">內建 P/D 區間防呆鎖與動能過濾，只在正確的戰場發出信號：</p>
+                    <ul class="space-y-3 mt-3">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 mt-0.5 text-lg"><i class="fa-solid fa-arrow-up"></i></span>
+                            <div><span class="font-bold text-gray-200">普通 進多 / 進空：</span>確認價格站穩 20 EMA 且 RSI 處於健康水平的標準順勢信號。</div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-orange-500 mt-0.5 text-lg"><i class="fa-solid fa-fire"></i></span>
+                            <div><span class="font-bold text-orange-400">🔥 掃損多 / 空 (Sweep)：</span><span class="text-gray-200 font-bold">S 級高勝率信號！</span>代表剛完成「流動性掠奪」(假跌破/假突破掃掉散戶停損)，主力隨後強勢反轉的起爆點。</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-[#0d1117] p-4 rounded-xl border border-[#30363d]">
+                    <h4 class="text-purple-400 font-bold mb-2 flex items-center text-sm sm:text-base"><i class="fa-solid fa-chart-line mr-2"></i>3. 輔助技術指標</h4>
+                    <ul class="list-disc pl-5 space-y-1.5 text-gray-400">
+                        <li><b>EMA (20/50)</b>：判斷日內短線趨勢，價格在 20 EMA 之上偏多，之下偏空。</li>
+                        <li><b>RSI (14)</b>：動能指標。防止在超買區 (RSI>70) 追多，或在超賣區 (RSI<30) 殺跌。</li>
+                        <li><b>BOLL / MACD</b>：觀察動能背離與價格波動邊界，作為進場共振輔助。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="toast-container"></div>
     
@@ -666,12 +709,10 @@
             }
         }
 
-        // 🚨 終極升級：P/D 區間信號鎖 + 流動性掠奪 (Sweep) 雙重引擎
         function getMockSignals(data, symData) {
             let markers = []; if(!data || data.length < 21) return markers;
             let ema20 = calculateEMA(data, 20, 'close'), rsi = calculateRSI(data, 14), atr = calculateATR(data, 14), currentPosition = 0; 
             
-            // 讀取宏觀 0.5 均衡價，若無資料則預設放行
             let macroEq = (symData && symData.macro_eq) ? symData.macro_eq : null;
 
             for(let i = 20; i < data.length - 1; i++) {
@@ -679,34 +720,27 @@
                 let rsiItem = rsi[i-1], currRsi = rsiItem ? rsiItem.value : 50;
                 let atrItem = atr[i-1], currAtr = atrItem ? atrItem.value : (curr.high - curr.low);
                 
-                // 1. P/D 區間信號鎖定判定
-                let isDiscount = macroEq ? (curr.close < macroEq) : true; // 在折價區，只允許做多
-                let isPremium = macroEq ? (curr.close > macroEq) : true;  // 在溢價區，只允許做空
+                let isDiscount = macroEq ? (curr.close < macroEq) : true;
+                let isPremium = macroEq ? (curr.close > macroEq) : true;
 
-                // 2. 流動性掠奪 (Sweep) 引擎偵測 (過去 15 根 K 線)
                 let lookback = data.slice(Math.max(0, i-15), i);
                 let recentLow = Math.min(...lookback.map(d => d.low));
                 let recentHigh = Math.max(...lookback.map(d => d.high));
                 
-                // 向下刺穿前低但收盤收上 (掃損多)
                 let isSweepLow = (curr.low < recentLow) && (curr.close > recentLow);
-                // 向上刺穿前高但收盤收下 (掃損空)
                 let isSweepHigh = (curr.high > recentHigh) && (curr.close < recentHigh);
 
-                // 3. 形態學
                 let bodySize = Math.abs(curr.close - curr.open);
                 let isSignificant = bodySize > (currAtr * 0.4);
                 let bullish_engulfing = (prev.close < prev.open) && (curr.close > curr.open) && (curr.close > prev.open) && (curr.open <= prev.close);
                 let bearish_engulfing = (prev.close > prev.open) && (curr.close < curr.open) && (curr.close < prev.open) && (curr.open >= prev.close);
 
                 if (currentPosition === 0) {
-                    // P/D 過濾鎖：多頭信號必須在 Discount 區間
                     if (bullish_engulfing && isSignificant && curr.close > currEma && currRsi < 70 && isDiscount) { 
                         let text = isSweepLow ? '🔥掃損多' : '進多';
                         markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: text }); 
                         currentPosition = 1; 
                     }
-                    // P/D 過濾鎖：空頭信號必須在 Premium 區間
                     else if (bearish_engulfing && isSignificant && curr.close < currEma && currRsi > 30 && isPremium) { 
                         let text = isSweepHigh ? '🔥掃損空' : '進空';
                         markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: text }); 
