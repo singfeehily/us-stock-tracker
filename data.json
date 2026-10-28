@@ -1,852 +1,1116 @@
 {
-    "updated_at": "2026-10-28 08:50:46",
+    "updated_at": "2026-10-28 09:49:54",
     "watchlist_data": [
         {
             "symbol": "SPY",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 769.66,
+            "change": 4.29,
+            "change_pct": 0.56
         },
         {
             "symbol": "QQQ",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 721.25,
+            "change": 9.05,
+            "change_pct": 1.27
         },
         {
             "symbol": "DIA",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 523.28,
+            "change": 0.31,
+            "change_pct": 0.06
         },
         {
             "symbol": "IWM",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 280.18,
+            "change": 3.19,
+            "change_pct": 1.15
         },
         {
             "symbol": "VOO",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 707.52,
+            "change": 4.11,
+            "change_pct": 0.58
         },
         {
             "symbol": "QQQM",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 296.96,
+            "change": 3.7,
+            "change_pct": 1.26
         },
         {
             "symbol": "SPYM",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 90.6,
+            "change": 0.54,
+            "change_pct": 0.6
         },
         {
             "symbol": "SMH",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 557.98,
+            "change": 16.36,
+            "change_pct": 3.02
         },
         {
             "symbol": "SOXL",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 101.08,
+            "change": 10.58,
+            "change_pct": 11.69
         },
         {
             "symbol": "XLK",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 189.49,
+            "change": 3.17,
+            "change_pct": 1.7
         },
         {
             "symbol": "XLF",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 55.88,
+            "change": -0.14,
+            "change_pct": -0.25
         },
         {
             "symbol": "XLE",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 68.21,
+            "change": -1.43,
+            "change_pct": -2.05
         },
         {
             "symbol": "SPCX",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 148.58,
+            "change": 1.68,
+            "change_pct": 1.14
         },
         {
             "symbol": "DRAM",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 50.52,
+            "change": 2.19,
+            "change_pct": 4.53
         },
         {
             "symbol": "AAPL",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 347.1,
+            "change": 3.19,
+            "change_pct": 0.93
         },
         {
             "symbol": "MSFT",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 531.33,
+            "change": -1.27,
+            "change_pct": -0.24
         },
         {
             "symbol": "NVDA",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 217.94,
+            "change": 1.94,
+            "change_pct": 0.9
         },
         {
             "symbol": "TSLA",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 407.46,
+            "change": 15.84,
+            "change_pct": 4.04
         },
         {
             "symbol": "AMZN",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 253.1,
+            "change": 4.01,
+            "change_pct": 1.61
         },
         {
             "symbol": "META",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 620.19,
+            "change": -10.37,
+            "change_pct": -1.64
         },
         {
             "symbol": "GOOG",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 316.83,
+            "change": 2.64,
+            "change_pct": 0.84
         },
         {
             "symbol": "GOOGL",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 320.58,
+            "change": 3.78,
+            "change_pct": 1.19
         },
         {
             "symbol": "AMD",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 560.26,
+            "change": 28.98,
+            "change_pct": 5.45
         },
         {
             "symbol": "TSM",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 436.87,
+            "change": 12.5,
+            "change_pct": 2.95
         },
         {
             "symbol": "AVGO",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 342.33,
+            "change": 13.16,
+            "change_pct": 4.0
         },
         {
             "symbol": "ASML",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 1635.57,
+            "change": 46.78,
+            "change_pct": 2.94
         },
         {
             "symbol": "QCOM",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 184.17,
+            "change": 4.57,
+            "change_pct": 2.54
         },
         {
             "symbol": "TXN",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 308.91,
+            "change": 10.79,
+            "change_pct": 3.62
         },
         {
             "symbol": "INTC",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 93.74,
+            "change": 3.27,
+            "change_pct": 3.61
         },
         {
             "symbol": "MU",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 928.76,
+            "change": 25.06,
+            "change_pct": 2.77
         },
         {
             "symbol": "SNDK",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 1304.84,
+            "change": 49.26,
+            "change_pct": 3.92
         },
         {
             "symbol": "ARM",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 226.6,
+            "change": 3.25,
+            "change_pct": 1.46
         },
         {
             "symbol": "SMCI",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 35.09,
+            "change": 2.4,
+            "change_pct": 7.34
         },
         {
             "symbol": "WDC",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 380.88,
+            "change": 24.75,
+            "change_pct": 6.95
         },
         {
             "symbol": "LITE",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 866.18,
+            "change": 48.08,
+            "change_pct": 5.88
         },
         {
             "symbol": "AAOI",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 76.95,
+            "change": 5.01,
+            "change_pct": 6.96
         },
         {
             "symbol": "POET",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 5.69,
+            "change": 0.32,
+            "change_pct": 5.96
         },
         {
             "symbol": "PLTR",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 198.73,
+            "change": -0.11,
+            "change_pct": -0.06
         },
         {
             "symbol": "SNOW",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 337.42,
+            "change": 2.47,
+            "change_pct": 0.74
         },
         {
             "symbol": "APP",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 262.82,
+            "change": 2.08,
+            "change_pct": 0.8
         },
         {
             "symbol": "CRM",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 240.89,
+            "change": -6.72,
+            "change_pct": -2.71
         },
         {
             "symbol": "ADBE",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 248.36,
+            "change": -10.26,
+            "change_pct": -3.97
         },
         {
             "symbol": "NOW",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 154.78,
+            "change": -3.4,
+            "change_pct": -2.15
         },
         {
             "symbol": "CRWD",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 268.02,
+            "change": 6.19,
+            "change_pct": 2.36
         },
         {
             "symbol": "PANW",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 401.7,
+            "change": 11.24,
+            "change_pct": 2.88
         },
         {
             "symbol": "NFLX",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 62.52,
+            "change": -1.38,
+            "change_pct": -2.16
         },
         {
             "symbol": "UBER",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 65.78,
+            "change": -0.35,
+            "change_pct": -0.53
         },
         {
             "symbol": "COIN",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 161.09,
+            "change": 1.49,
+            "change_pct": 0.93
         },
         {
             "symbol": "MSTR",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 141.4,
+            "change": 1.58,
+            "change_pct": 1.13
         },
         {
             "symbol": "MARA",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 7.09,
+            "change": 0.25,
+            "change_pct": 3.65
         },
         {
             "symbol": "RIOT",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 13.56,
+            "change": 0.97,
+            "change_pct": 7.7
         },
         {
             "symbol": "HOOD",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 94.56,
+            "change": 1.72,
+            "change_pct": 1.85
         },
         {
             "symbol": "PYPL",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 56.09,
+            "change": 1.1,
+            "change_pct": 2.0
         },
         {
             "symbol": "SOFI",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 16.4,
+            "change": 1.94,
+            "change_pct": 13.42
         },
         {
             "symbol": "FUTU",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 102.36,
+            "change": 1.02,
+            "change_pct": 1.01
         },
         {
             "symbol": "V",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 401.86,
+            "change": -2.3,
+            "change_pct": -0.57
         },
         {
             "symbol": "JPM",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 335.79,
+            "change": 1.75,
+            "change_pct": 0.52
         },
         {
             "symbol": "GS",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 911.77,
+            "change": 18.49,
+            "change_pct": 2.07
         },
         {
             "symbol": "BAC",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 50.68,
+            "change": 0.16,
+            "change_pct": 0.32
         },
         {
             "symbol": "RKLB",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 58.31,
+            "change": 4.49,
+            "change_pct": 8.34
         },
         {
             "symbol": "XOM",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 179.91,
+            "change": -4.63,
+            "change_pct": -2.51
         },
         {
             "symbol": "BE",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 218.5,
+            "change": 14.58,
+            "change_pct": 7.15
         },
         {
             "symbol": "VST",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 146.66,
+            "change": 4.93,
+            "change_pct": 3.48
         },
         {
             "symbol": "NOK",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 8.89,
+            "change": 0.25,
+            "change_pct": 2.89
         },
         {
             "symbol": "ONDS",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 6.65,
+            "change": 0.49,
+            "change_pct": 7.95
         },
         {
             "symbol": "NBIS",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 170.47,
+            "change": 17.2,
+            "change_pct": 11.22
         },
         {
             "symbol": "WMT",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 119.32,
+            "change": -0.97,
+            "change_pct": -0.81
         },
         {
             "symbol": "COST",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 992.13,
+            "change": -13.03,
+            "change_pct": -1.3
         },
         {
             "symbol": "PG",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 159.23,
+            "change": -0.69,
+            "change_pct": -0.43
         },
         {
             "symbol": "KO",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 91.18,
+            "change": -1.52,
+            "change_pct": -1.64
         },
         {
             "symbol": "PEP",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 133.5,
+            "change": -1.96,
+            "change_pct": -1.45
         },
         {
             "symbol": "DIS",
-            "price": NaN,
-            "change": NaN,
-            "change_pct": NaN
+            "price": 110.23,
+            "change": -0.17,
+            "change_pct": -0.15
         }
     ],
     "screener_data": [
         {
+            "symbol": "TXN",
+            "price": 308.91,
+            "smc_id": "fvg_sweep",
+            "smc_text": "🔥 掃損+OB (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 254.57,
+            "entry_top": 256.46,
+            "sl": 246.89,
+            "tp": 298.95,
+            "rrr": 5.0,
+            "direction": "long",
+            "macro_bsl": 332.33,
+            "macro_ssl": 248.13,
+            "macro_eq": 290.23,
+            "pd_percent": 72.2,
+            "stars": 4,
+            "trade_status": "🟢 可執行",
+            "status_color": "text-green-400 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $246.89，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "SOFI",
+            "price": 16.4,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 14.71,
+            "entry_top": 15.67,
+            "sl": 13.79,
+            "tp": 18.71,
+            "rrr": 2.5,
+            "direction": "long",
+            "macro_bsl": 19.74,
+            "macro_ssl": 13.86,
+            "macro_eq": 16.8,
+            "pd_percent": 43.2,
+            "stars": 4,
+            "trade_status": "🟢 可執行",
+            "status_color": "text-green-400 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $13.79，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "IWM",
+            "price": 280.18,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 276.24,
+            "entry_top": 276.89,
+            "sl": 268.53,
+            "tp": 295.41,
+            "rrr": 2.3,
+            "direction": "long",
+            "macro_bsl": 304.39,
+            "macro_ssl": 269.02,
+            "macro_eq": 286.7,
+            "pd_percent": 31.6,
+            "stars": 4,
+            "trade_status": "🟢 可執行",
+            "status_color": "text-green-400 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $268.53，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "GS",
+            "price": 911.77,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 886.75,
+            "entry_top": 906.59,
+            "sl": 854.73,
+            "tp": 988.28,
+            "rrr": 2.2,
+            "direction": "long",
+            "macro_bsl": 1148.37,
+            "macro_ssl": 859.03,
+            "macro_eq": 1003.7,
+            "pd_percent": 18.2,
+            "stars": 4,
+            "trade_status": "🟢 可執行",
+            "status_color": "text-green-400 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $854.73，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "DIA",
+            "price": 523.28,
+            "smc_id": "fvg_sweep",
+            "smc_text": "🔥 掃損+OB (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 493.19,
+            "entry_top": 494.06,
+            "sl": 487.01,
+            "tp": 529.05,
+            "rrr": 5.4,
+            "direction": "long",
+            "macro_bsl": 544.92,
+            "macro_ssl": 483.65,
+            "macro_eq": 514.28,
+            "pd_percent": 64.7,
+            "stars": 3,
+            "trade_status": "🔴 觀察中 (⭐ 3星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $487.01，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
             "symbol": "SPY",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
+            "price": 769.66,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 776.35,
+            "entry_top": 777.05,
+            "sl": 785.53,
+            "tp": 747.74,
+            "rrr": 3.3,
             "direction": "short",
             "macro_bsl": 781.62,
             "macro_ssl": 704.8,
             "macro_eq": 743.21,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "QQQ",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 762.86,
-            "macro_ssl": 652.41,
-            "macro_eq": 707.64,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "DIA",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 544.92,
-            "macro_ssl": 483.65,
-            "macro_eq": 514.28,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "IWM",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 304.39,
-            "macro_ssl": 269.02,
-            "macro_eq": 286.7,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "VOO",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 718.47,
-            "macro_ssl": 647.7,
-            "macro_eq": 683.08,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "QQQM",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 314.11,
-            "macro_ssl": 268.61,
-            "macro_eq": 291.36,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
+            "pd_percent": 84.4,
+            "stars": 3,
+            "trade_status": "🔴 觀察中 (⭐ 3星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $785.53，看跌結構即刻失效，必須無條件平倉。",
             "confluence": false
         },
         {
             "symbol": "SPYM",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
+            "price": 90.6,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 91.37,
+            "entry_top": 91.45,
+            "sl": 92.46,
+            "tp": 88.0,
+            "rrr": 3.2,
             "direction": "short",
             "macro_bsl": 92.0,
             "macro_ssl": 82.93,
             "macro_eq": 87.46,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
+            "pd_percent": 84.6,
+            "stars": 3,
+            "trade_status": "🔴 觀察中 (⭐ 3星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $92.46，看跌結構即刻失效，必須無條件平倉。",
             "confluence": false
         },
         {
-            "symbol": "SMH",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
+            "symbol": "VOO",
+            "price": 707.52,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 710.4,
+            "entry_top": 713.27,
+            "sl": 722.06,
+            "tp": 687.27,
+            "rrr": 2.4,
             "direction": "short",
-            "macro_bsl": 671.83,
-            "macro_ssl": 483.29,
-            "macro_eq": 577.56,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
+            "macro_bsl": 718.47,
+            "macro_ssl": 647.7,
+            "macro_eq": 683.08,
+            "pd_percent": 84.5,
+            "stars": 3,
+            "trade_status": "🔴 觀察中 (⭐ 3星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $722.06，看跌結構即刻失效，必須無條件平倉。",
             "confluence": false
         },
         {
-            "symbol": "SOXL",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 301.8,
-            "macro_ssl": 80.22,
-            "macro_eq": 191.01,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
+            "symbol": "SNOW",
+            "price": 337.42,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 325.62,
+            "entry_top": 331.57,
+            "sl": 300.73,
+            "tp": 384.56,
+            "rrr": 2.0,
+            "direction": "long",
+            "macro_bsl": 384.56,
+            "macro_ssl": 133.02,
+            "macro_eq": 258.79,
+            "pd_percent": 81.3,
+            "stars": 3,
+            "trade_status": "🔴 觀察中 (⭐ 3星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $300.73，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "ADBE",
+            "price": 248.36,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 205.6,
+            "entry_top": 213.74,
+            "sl": 189.17,
+            "tp": 275.91,
+            "rrr": 3.2,
+            "direction": "long",
+            "macro_bsl": 294.53,
+            "macro_ssl": 190.12,
+            "macro_eq": 242.32,
+            "pd_percent": 55.8,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (⭐ 2星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $189.17，看漲結構即刻失效，必須無條件平倉。",
             "confluence": false
+        },
+        {
+            "symbol": "POET",
+            "price": 5.69,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 7.26,
+            "entry_top": 7.64,
+            "sl": 8.24,
+            "tp": 5.22,
+            "rrr": 2.8,
+            "direction": "short",
+            "macro_bsl": 20.81,
+            "macro_ssl": 5.22,
+            "macro_eq": 13.01,
+            "pd_percent": 3.0,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (⭐ 2星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $8.24，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "CRM",
+            "price": 240.89,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 230.71,
+            "entry_top": 234.7,
+            "sl": 219.19,
+            "tp": 267.8,
+            "rrr": 2.6,
+            "direction": "long",
+            "macro_bsl": 267.8,
+            "macro_ssl": 146.06,
+            "macro_eq": 206.93,
+            "pd_percent": 77.9,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (⭐ 2星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $219.19，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "FUTU",
+            "price": 102.36,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 110.04,
+            "entry_top": 111.11,
+            "sl": 115.75,
+            "tp": 97.82,
+            "rrr": 2.5,
+            "direction": "short",
+            "macro_bsl": 168.65,
+            "macro_ssl": 80.5,
+            "macro_eq": 124.58,
+            "pd_percent": 24.8,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (⭐ 2星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $115.75，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "BE",
+            "price": 218.5,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 264.14,
+            "entry_top": 271.0,
+            "sl": 303.87,
+            "tp": 189.0,
+            "rrr": 2.2,
+            "direction": "short",
+            "macro_bsl": 351.28,
+            "macro_ssl": 157.33,
+            "macro_eq": 254.3,
+            "pd_percent": 31.5,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (⭐ 2星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $303.87，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "PLTR",
+            "price": 198.73,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 177.75,
+            "entry_top": 182.03,
+            "sl": 163.73,
+            "tp": 212.94,
+            "rrr": 2.0,
+            "direction": "long",
+            "macro_bsl": 212.94,
+            "macro_ssl": 106.37,
+            "macro_eq": 159.66,
+            "pd_percent": 86.7,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (⭐ 2星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $163.73，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "PYPL",
+            "price": 56.09,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 53.4,
+            "entry_top": 54.0,
+            "sl": 51.55,
+            "tp": 57.95,
+            "rrr": 2.0,
+            "direction": "long",
+            "macro_bsl": 62.58,
+            "macro_ssl": 40.1,
+            "macro_eq": 51.34,
+            "pd_percent": 71.1,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (⭐ 2星 條件不足)",
+            "status_color": "text-gray-400",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $51.55，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "QCOM",
+            "price": 184.17,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 176.98,
+            "entry_top": 179.29,
+            "sl": 168.0,
+            "tp": 190.03,
+            "rrr": 1.2,
+            "direction": "long",
+            "macro_bsl": 257.56,
+            "macro_ssl": 142.12,
+            "macro_eq": 199.84,
+            "pd_percent": 36.4,
+            "stars": 3,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.2 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $168.0，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "AAPL",
+            "price": 347.1,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 319.15,
+            "entry_top": 326.3,
+            "sl": 307.26,
+            "tp": 351.73,
+            "rrr": 1.9,
+            "direction": "long",
+            "macro_bsl": 351.73,
+            "macro_ssl": 266.56,
+            "macro_eq": 309.14,
+            "pd_percent": 94.6,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.9 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $307.26，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
         },
         {
             "symbol": "XLK",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
+            "price": 189.49,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 194.66,
+            "entry_top": 195.82,
+            "sl": 204.27,
+            "tp": 181.5,
+            "rrr": 1.5,
             "direction": "short",
             "macro_bsl": 203.25,
             "macro_ssl": 155.79,
             "macro_eq": 179.52,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
+            "pd_percent": 71.0,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.5 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $204.27，看跌結構即刻失效，必須無條件平倉。",
             "confluence": false
         },
         {
-            "symbol": "XLF",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
+            "symbol": "PANW",
+            "price": 401.7,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 366.23,
+            "entry_top": 379.48,
+            "sl": 333.08,
+            "tp": 432.33,
+            "rrr": 1.5,
+            "direction": "long",
+            "macro_bsl": 432.33,
+            "macro_ssl": 173.11,
+            "macro_eq": 302.72,
+            "pd_percent": 88.2,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.5 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $333.08，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "AMD",
+            "price": 560.26,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 568.62,
+            "entry_top": 570.6,
+            "sl": 661.81,
+            "tp": 440.5,
+            "rrr": 1.4,
             "direction": "short",
-            "macro_bsl": 58.39,
-            "macro_ssl": 50.17,
-            "macro_eq": 54.28,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
+            "macro_bsl": 658.52,
+            "macro_ssl": 310.0,
+            "macro_eq": 484.26,
+            "pd_percent": 71.8,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.4 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $661.81，看跌結構即刻失效，必須無條件平倉。",
             "confluence": false
         },
         {
-            "symbol": "XLE",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 69.86,
-            "macro_ssl": 52.31,
-            "macro_eq": 61.08,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "SPCX",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 225.64,
-            "macro_ssl": 104.83,
-            "macro_eq": 165.24,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "DRAM",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 81.34,
-            "macro_ssl": 36.51,
-            "macro_eq": 58.92,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "AAPL",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 351.73,
-            "macro_ssl": 266.56,
-            "macro_eq": 309.14,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "MSFT",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 551.15,
-            "macro_ssl": 348.54,
-            "macro_eq": 449.84,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
+            "symbol": "JPM",
+            "price": 335.79,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 318.27,
+            "entry_top": 320.97,
+            "sl": 291.02,
+            "tp": 361.06,
+            "rrr": 1.4,
+            "direction": "long",
+            "macro_bsl": 364.68,
+            "macro_ssl": 290.9,
+            "macro_eq": 327.79,
+            "pd_percent": 60.8,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.4 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $291.02，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
         },
         {
             "symbol": "NVDA",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
+            "price": 217.94,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 228.64,
+            "entry_top": 229.11,
+            "sl": 244.59,
+            "tp": 208.93,
+            "rrr": 1.3,
             "direction": "short",
             "macro_bsl": 243.37,
             "macro_ssl": 189.59,
             "macro_eq": 216.48,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
+            "pd_percent": 52.7,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.3 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $244.59，看跌結構即刻失效，必須無條件平倉。",
             "confluence": false
+        },
+        {
+            "symbol": "DIS",
+            "price": 110.23,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 105.21,
+            "entry_top": 107.14,
+            "sl": 100.64,
+            "tp": 113.38,
+            "rrr": 1.3,
+            "direction": "long",
+            "macro_bsl": 113.38,
+            "macro_ssl": 92.49,
+            "macro_eq": 102.94,
+            "pd_percent": 84.9,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.3 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $100.64，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "CRWD",
+            "price": 268.02,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 246.36,
+            "entry_top": 254.06,
+            "sl": 220.25,
+            "tp": 286.99,
+            "rrr": 1.2,
+            "direction": "long",
+            "macro_bsl": 286.99,
+            "macro_ssl": 108.14,
+            "macro_eq": 197.56,
+            "pd_percent": 89.4,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.2 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $220.25，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "QQQ",
+            "price": 721.25,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 729.43,
+            "entry_top": 738.83,
+            "sl": 766.67,
+            "tp": 699.27,
+            "rrr": 1.1,
+            "direction": "short",
+            "macro_bsl": 762.86,
+            "macro_ssl": 652.41,
+            "macro_eq": 707.64,
+            "pd_percent": 62.3,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.1 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $766.67，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "QQQM",
+            "price": 296.96,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 300.34,
+            "entry_top": 304.27,
+            "sl": 315.69,
+            "tp": 287.93,
+            "rrr": 1.1,
+            "direction": "short",
+            "macro_bsl": 314.11,
+            "macro_ssl": 268.61,
+            "macro_eq": 291.36,
+            "pd_percent": 62.3,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.1 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $315.69，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "MU",
+            "price": 928.76,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 953.45,
+            "entry_top": 1016.84,
+            "sl": 1113.36,
+            "tp": 849.25,
+            "rrr": 1.1,
+            "direction": "short",
+            "macro_bsl": 1254.61,
+            "macro_ssl": 488.08,
+            "macro_eq": 871.34,
+            "pd_percent": 57.5,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.1 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $1113.36，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "TSM",
+            "price": 436.87,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 445.5,
+            "entry_top": 449.75,
+            "sl": 489.91,
+            "tp": 406.73,
+            "rrr": 1.0,
+            "direction": "short",
+            "macro_bsl": 487.47,
+            "macro_ssl": 371.72,
+            "macro_eq": 429.6,
+            "pd_percent": 56.3,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.0 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $489.91，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "NFLX",
+            "price": 62.52,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 67.12,
+            "entry_top": 69.02,
+            "sl": 73.44,
+            "tp": 62.86,
+            "rrr": 1.0,
+            "direction": "short",
+            "macro_bsl": 94.7,
+            "macro_ssl": 62.48,
+            "macro_eq": 78.59,
+            "pd_percent": 0.1,
+            "stars": 2,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.0 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $73.44，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": true
         },
         {
             "symbol": "TSLA",
-            "price": NaN,
+            "price": 407.46,
             "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 377.32,
+            "entry_top": 395.25,
+            "sl": 347.58,
+            "tp": 397.27,
+            "rrr": 0.3,
+            "direction": "long",
             "macro_bsl": 453.4,
             "macro_ssl": 297.38,
             "macro_eq": 375.39,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "AMZN",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 287.2,
-            "macro_ssl": 225.55,
-            "macro_eq": 256.38,
-            "pd_percent": 100,
+            "pd_percent": 70.6,
             "stars": 0,
             "trade_status": "無效",
             "status_color": "text-gray-500",
@@ -855,702 +1119,20 @@
         },
         {
             "symbol": "META",
-            "price": NaN,
+            "price": 620.19,
             "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 648.04,
+            "entry_top": 689.68,
+            "sl": 775.13,
+            "tp": 604.79,
+            "rrr": 0.6,
             "direction": "short",
             "macro_bsl": 779.82,
             "macro_ssl": 524.08,
             "macro_eq": 651.95,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "GOOG",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 403.96,
-            "macro_ssl": 313.51,
-            "macro_eq": 358.74,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "GOOGL",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 408.1,
-            "macro_ssl": 314.7,
-            "macro_eq": 361.4,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "AMD",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 658.52,
-            "macro_ssl": 310.0,
-            "macro_eq": 484.26,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "TSM",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 487.47,
-            "macro_ssl": 371.72,
-            "macro_eq": 429.6,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "AVGO",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 493.32,
-            "macro_ssl": 320.23,
-            "macro_eq": 406.78,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "ASML",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 1997.38,
-            "macro_ssl": 1363.05,
-            "macro_eq": 1680.22,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "QCOM",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 257.56,
-            "macro_ssl": 142.12,
-            "macro_eq": 199.84,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "TXN",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 332.33,
-            "macro_ssl": 248.13,
-            "macro_eq": 290.23,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "INTC",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 142.35,
-            "macro_ssl": 80.8,
-            "macro_eq": 111.57,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "MU",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 1254.61,
-            "macro_ssl": 488.08,
-            "macro_eq": 871.34,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "SNDK",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 2354.39,
-            "macro_ssl": 980.28,
-            "macro_eq": 1667.34,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "ARM",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 452.7,
-            "macro_ssl": 193.91,
-            "macro_eq": 323.3,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "SMCI",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 51.4,
-            "macro_ssl": 23.38,
-            "macro_eq": 37.39,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "WDC",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 799.61,
-            "macro_ssl": 331.81,
-            "macro_eq": 565.71,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "LITE",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 1143.0,
-            "macro_ssl": 594.84,
-            "macro_eq": 868.92,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "AAOI",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 233.67,
-            "macro_ssl": 66.28,
-            "macro_eq": 149.98,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "POET",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 20.81,
-            "macro_ssl": 5.22,
-            "macro_eq": 13.01,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "PLTR",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 212.94,
-            "macro_ssl": 106.37,
-            "macro_eq": 159.66,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "SNOW",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 384.56,
-            "macro_ssl": 133.02,
-            "macro_eq": 258.79,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "APP",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 622.0,
-            "macro_ssl": 255.46,
-            "macro_eq": 438.73,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "CRM",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 267.8,
-            "macro_ssl": 146.06,
-            "macro_eq": 206.93,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "ADBE",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 294.53,
-            "macro_ssl": 190.12,
-            "macro_eq": 242.32,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "NOW",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 159.5,
-            "macro_ssl": 85.44,
-            "macro_eq": 122.47,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "CRWD",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 286.99,
-            "macro_ssl": 108.14,
-            "macro_eq": 197.56,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "PANW",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 432.33,
-            "macro_ssl": 173.11,
-            "macro_eq": 302.72,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "NFLX",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 94.7,
-            "macro_ssl": 62.86,
-            "macro_eq": 78.78,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "UBER",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 82.36,
-            "macro_ssl": 65.41,
-            "macro_eq": 73.88,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "COIN",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 222.35,
-            "macro_ssl": 139.11,
-            "macro_eq": 180.73,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "MSTR",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 197.0,
-            "macro_ssl": 81.81,
-            "macro_eq": 139.4,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "MARA",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 16.43,
-            "macro_ssl": 6.62,
-            "macro_eq": 11.52,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "RIOT",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 30.32,
-            "macro_ssl": 11.79,
-            "macro_eq": 21.06,
-            "pd_percent": 100,
+            "pd_percent": 37.6,
             "stars": 0,
             "trade_status": "無效",
             "status_color": "text-gray-500",
@@ -1559,240 +1141,20 @@
         },
         {
             "symbol": "HOOD",
-            "price": NaN,
+            "price": 94.56,
             "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 104.34,
+            "entry_top": 108.5,
+            "sl": 124.11,
+            "tp": 91.63,
+            "rrr": 0.8,
             "direction": "short",
             "macro_bsl": 126.74,
             "macro_ssl": 69.93,
             "macro_eq": 98.34,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "PYPL",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 62.58,
-            "macro_ssl": 40.1,
-            "macro_eq": 51.34,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "SOFI",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 19.74,
-            "macro_ssl": 13.86,
-            "macro_eq": 16.8,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "FUTU",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 168.65,
-            "macro_ssl": 80.5,
-            "macro_eq": 124.58,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "V",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 414.6,
-            "macro_ssl": 307.53,
-            "macro_eq": 361.06,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "JPM",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 364.68,
-            "macro_ssl": 290.9,
-            "macro_eq": 327.79,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "GS",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 1148.37,
-            "macro_ssl": 859.03,
-            "macro_eq": 1003.7,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "BAC",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 64.9,
-            "macro_ssl": 48.8,
-            "macro_eq": 56.85,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "RKLB",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 151.0,
-            "macro_ssl": 49.25,
-            "macro_eq": 100.12,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "XOM",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 184.59,
-            "macro_ssl": 134.08,
-            "macro_eq": 159.34,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "BE",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 351.28,
-            "macro_ssl": 157.33,
-            "macro_eq": 254.3,
-            "pd_percent": 100,
+            "pd_percent": 43.4,
             "stars": 0,
             "trade_status": "無效",
             "status_color": "text-gray-500",
@@ -1801,7 +1163,7 @@
         },
         {
             "symbol": "VST",
-            "price": NaN,
+            "price": 146.66,
             "smc_id": null,
             "smc_text": "-",
             "smc_class": "border-gray-600 text-gray-400",
@@ -1814,29 +1176,7 @@
             "macro_bsl": 171.07,
             "macro_ssl": 132.26,
             "macro_eq": 151.66,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "NOK",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 17.45,
-            "macro_ssl": 7.78,
-            "macro_eq": 12.62,
-            "pd_percent": 100,
+            "pd_percent": 37.1,
             "stars": 0,
             "trade_status": "無效",
             "status_color": "text-gray-500",
@@ -1845,7 +1185,7 @@
         },
         {
             "symbol": "ONDS",
-            "price": NaN,
+            "price": 6.65,
             "smc_id": null,
             "smc_text": "-",
             "smc_class": "border-gray-600 text-gray-400",
@@ -1854,121 +1194,11 @@
             "sl": 0,
             "tp": 0,
             "rrr": 0,
-            "direction": "short",
+            "direction": "long",
             "macro_bsl": 14.16,
             "macro_ssl": 5.8,
             "macro_eq": 9.98,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "NBIS",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 299.86,
-            "macro_ssl": 132.7,
-            "macro_eq": 216.28,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "WMT",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 134.84,
-            "macro_ssl": 102.15,
-            "macro_eq": 118.5,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "COST",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 1094.76,
-            "macro_ssl": 883.1,
-            "macro_eq": 988.93,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "PG",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 165.75,
-            "macro_ssl": 136.92,
-            "macro_eq": 151.33,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
-            "confluence": false
-        },
-        {
-            "symbol": "KO",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
-            "macro_bsl": 95.37,
-            "macro_ssl": 75.86,
-            "macro_eq": 85.62,
-            "pd_percent": 100,
+            "pd_percent": 10.2,
             "stars": 0,
             "trade_status": "無效",
             "status_color": "text-gray-500",
@@ -1977,20 +1207,20 @@
         },
         {
             "symbol": "PEP",
-            "price": NaN,
+            "price": 133.5,
             "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
-            "direction": "short",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 131.59,
+            "entry_top": 133.4,
+            "sl": 122.85,
+            "tp": 140.21,
+            "rrr": 0.8,
+            "direction": "long",
             "macro_bsl": 156.66,
             "macro_ssl": 123.47,
             "macro_eq": 140.06,
-            "pd_percent": 100,
+            "pd_percent": 30.2,
             "stars": 0,
             "trade_status": "無效",
             "status_color": "text-gray-500",
@@ -1998,25 +1228,795 @@
             "confluence": false
         },
         {
-            "symbol": "DIS",
-            "price": NaN,
-            "smc_id": null,
-            "smc_text": "-",
-            "smc_class": "border-gray-600 text-gray-400",
-            "entry_bot": 0,
-            "entry_top": 0,
-            "sl": 0,
-            "tp": 0,
-            "rrr": 0,
+            "symbol": "AVGO",
+            "price": 342.33,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 359.25,
+            "entry_top": 361.1,
+            "sl": 382.74,
+            "tp": 320.23,
+            "rrr": 1.8,
             "direction": "short",
-            "macro_bsl": 113.38,
-            "macro_ssl": 92.49,
-            "macro_eq": 102.94,
-            "pd_percent": 100,
-            "stars": 0,
-            "trade_status": "無效",
-            "status_color": "text-gray-500",
-            "inv_text": "無形態",
+            "macro_bsl": 493.32,
+            "macro_ssl": 320.23,
+            "macro_eq": 406.78,
+            "pd_percent": 12.8,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.8 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $382.74，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "NOK",
+            "price": 8.89,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 9.77,
+            "entry_top": 9.89,
+            "sl": 11.04,
+            "tp": 7.78,
+            "rrr": 1.7,
+            "direction": "short",
+            "macro_bsl": 17.45,
+            "macro_ssl": 7.78,
+            "macro_eq": 12.62,
+            "pd_percent": 11.5,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.7 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $11.04，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "WDC",
+            "price": 380.88,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 409.39,
+            "entry_top": 429.44,
+            "sl": 478.04,
+            "tp": 331.81,
+            "rrr": 1.5,
+            "direction": "short",
+            "macro_bsl": 799.61,
+            "macro_ssl": 331.81,
+            "macro_eq": 565.71,
+            "pd_percent": 10.5,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.5 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $478.04，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "SOXL",
+            "price": 101.08,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 127.92,
+            "entry_top": 137.71,
+            "sl": 170.68,
+            "tp": 80.22,
+            "rrr": 1.4,
+            "direction": "short",
+            "macro_bsl": 301.8,
+            "macro_ssl": 80.22,
+            "macro_eq": 191.01,
+            "pd_percent": 9.4,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.4 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $170.68，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "ASML",
+            "price": 1635.57,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 1732.2,
+            "entry_top": 1747.7,
+            "sl": 1880.37,
+            "tp": 1547.95,
+            "rrr": 1.4,
+            "direction": "short",
+            "macro_bsl": 1994.73,
+            "macro_ssl": 1361.24,
+            "macro_eq": 1677.98,
+            "pd_percent": 43.3,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.4 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $1880.37，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "LITE",
+            "price": 866.18,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 973.7,
+            "entry_top": 980.0,
+            "sl": 1148.71,
+            "tp": 736.01,
+            "rrr": 1.4,
+            "direction": "short",
+            "macro_bsl": 1143.0,
+            "macro_ssl": 594.84,
+            "macro_eq": 868.92,
+            "pd_percent": 49.5,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.4 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $1148.71，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "AAOI",
+            "price": 76.95,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 99.77,
+            "entry_top": 108.62,
+            "sl": 131.81,
+            "tp": 66.28,
+            "rrr": 1.4,
+            "direction": "short",
+            "macro_bsl": 233.67,
+            "macro_ssl": 66.28,
+            "macro_eq": 149.98,
+            "pd_percent": 6.4,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.4 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $131.81，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "BAC",
+            "price": 50.68,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 52.06,
+            "entry_top": 53.64,
+            "sl": 55.39,
+            "tp": 49.26,
+            "rrr": 1.4,
+            "direction": "short",
+            "macro_bsl": 64.9,
+            "macro_ssl": 48.8,
+            "macro_eq": 56.85,
+            "pd_percent": 11.7,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.4 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $55.39，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "KO",
+            "price": 91.18,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 88.48,
+            "entry_top": 89.67,
+            "sl": 84.7,
+            "tp": 95.37,
+            "rrr": 1.4,
+            "direction": "long",
+            "macro_bsl": 95.37,
+            "macro_ssl": 75.86,
+            "macro_eq": 85.62,
+            "pd_percent": 78.5,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.4 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $84.7，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "XLE",
+            "price": 68.21,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 64.51,
+            "entry_top": 64.88,
+            "sl": 60.65,
+            "tp": 69.86,
+            "rrr": 1.3,
+            "direction": "long",
+            "macro_bsl": 69.86,
+            "macro_ssl": 52.31,
+            "macro_eq": 61.08,
+            "pd_percent": 90.6,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.3 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $60.65，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "UBER",
+            "price": 65.78,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 69.23,
+            "entry_top": 69.77,
+            "sl": 72.44,
+            "tp": 65.68,
+            "rrr": 1.3,
+            "direction": "short",
+            "macro_bsl": 82.36,
+            "macro_ssl": 65.41,
+            "macro_eq": 73.88,
+            "pd_percent": 2.2,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.3 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $72.44，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "COST",
+            "price": 992.13,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 951.29,
+            "entry_top": 953.78,
+            "sl": 899.26,
+            "tp": 1021.45,
+            "rrr": 1.3,
+            "direction": "long",
+            "macro_bsl": 1094.76,
+            "macro_ssl": 883.1,
+            "macro_eq": 988.93,
+            "pd_percent": 51.5,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.3 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $899.26，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "XLF",
+            "price": 55.88,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 54.52,
+            "entry_top": 55.19,
+            "sl": 52.55,
+            "tp": 57.62,
+            "rrr": 1.2,
+            "direction": "long",
+            "macro_bsl": 58.39,
+            "macro_ssl": 50.17,
+            "macro_eq": 54.28,
+            "pd_percent": 69.5,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.2 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $52.55，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "DRAM",
+            "price": 50.52,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 52.89,
+            "entry_top": 56.78,
+            "sl": 62.82,
+            "tp": 45.3,
+            "rrr": 1.2,
+            "direction": "short",
+            "macro_bsl": 81.34,
+            "macro_ssl": 36.51,
+            "macro_eq": 58.92,
+            "pd_percent": 31.3,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.2 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $62.82，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "V",
+            "price": 401.86,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 379.99,
+            "entry_top": 384.65,
+            "sl": 354.97,
+            "tp": 414.6,
+            "rrr": 1.2,
+            "direction": "long",
+            "macro_bsl": 414.6,
+            "macro_ssl": 307.53,
+            "macro_eq": 361.06,
+            "pd_percent": 88.1,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.2 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $354.97，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "WMT",
+            "price": 119.32,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 111.51,
+            "entry_top": 112.21,
+            "sl": 102.87,
+            "tp": 122.4,
+            "rrr": 1.2,
+            "direction": "long",
+            "macro_bsl": 134.84,
+            "macro_ssl": 102.15,
+            "macro_eq": 118.5,
+            "pd_percent": 52.5,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.2 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $102.87，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "PG",
+            "price": 159.23,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 152.24,
+            "entry_top": 153.28,
+            "sl": 141.74,
+            "tp": 165.75,
+            "rrr": 1.2,
+            "direction": "long",
+            "macro_bsl": 165.75,
+            "macro_ssl": 136.92,
+            "macro_eq": 151.33,
+            "pd_percent": 77.4,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.2 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $141.74，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "SMH",
+            "price": 557.98,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 580.08,
+            "entry_top": 589.22,
+            "sl": 642.67,
+            "tp": 520.53,
+            "rrr": 1.1,
+            "direction": "short",
+            "macro_bsl": 671.83,
+            "macro_ssl": 483.29,
+            "macro_eq": 577.56,
+            "pd_percent": 39.6,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.1 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $642.67，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "APP",
+            "price": 262.82,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 291.55,
+            "entry_top": 304.84,
+            "sl": 338.62,
+            "tp": 255.46,
+            "rrr": 1.1,
+            "direction": "short",
+            "macro_bsl": 622.0,
+            "macro_ssl": 255.46,
+            "macro_eq": 438.73,
+            "pd_percent": 2.0,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.1 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $338.62，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "RKLB",
+            "price": 58.31,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 63.56,
+            "entry_top": 65.11,
+            "sl": 78.67,
+            "tp": 49.25,
+            "rrr": 1.1,
+            "direction": "short",
+            "macro_bsl": 151.0,
+            "macro_ssl": 49.25,
+            "macro_eq": 100.12,
+            "pd_percent": 8.9,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.1 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $78.67，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "SPCX",
+            "price": 148.58,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 149.75,
+            "entry_top": 156.93,
+            "sl": 168.44,
+            "tp": 138.17,
+            "rrr": 1.0,
+            "direction": "short",
+            "macro_bsl": 225.64,
+            "macro_ssl": 104.83,
+            "macro_eq": 165.24,
+            "pd_percent": 36.2,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.0 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $168.44，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "ARM",
+            "price": 226.6,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 260.15,
+            "entry_top": 265.6,
+            "sl": 319.95,
+            "tp": 208.3,
+            "rrr": 1.0,
+            "direction": "short",
+            "macro_bsl": 452.7,
+            "macro_ssl": 193.91,
+            "macro_eq": 323.3,
+            "pd_percent": 12.6,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.0 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $319.95，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "SMCI",
+            "price": 35.09,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 38.02,
+            "entry_top": 39.24,
+            "sl": 46.0,
+            "tp": 30.92,
+            "rrr": 1.0,
+            "direction": "short",
+            "macro_bsl": 51.4,
+            "macro_ssl": 23.38,
+            "macro_eq": 37.39,
+            "pd_percent": 41.8,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.0 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $46.0，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "MARA",
+            "price": 7.09,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 10.09,
+            "entry_top": 10.16,
+            "sl": 13.71,
+            "tp": 6.62,
+            "rrr": 1.0,
+            "direction": "short",
+            "macro_bsl": 16.43,
+            "macro_ssl": 6.62,
+            "macro_eq": 11.52,
+            "pd_percent": 4.8,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.0 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $13.71，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "RIOT",
+            "price": 13.56,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 18.2,
+            "entry_top": 18.9,
+            "sl": 25.4,
+            "tp": 11.79,
+            "rrr": 1.0,
+            "direction": "short",
+            "macro_bsl": 30.32,
+            "macro_ssl": 11.79,
+            "macro_eq": 21.06,
+            "pd_percent": 9.6,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.0 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $25.4，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "NBIS",
+            "price": 170.47,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 198.6,
+            "entry_top": 206.9,
+            "sl": 256.38,
+            "tp": 149.48,
+            "rrr": 1.0,
+            "direction": "short",
+            "macro_bsl": 299.86,
+            "macro_ssl": 132.7,
+            "macro_eq": 216.28,
+            "pd_percent": 22.6,
+            "stars": 1,
+            "trade_status": "🔴 觀察中 (❌ RRR 1.0 不佳)",
+            "status_color": "text-red-500",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $256.38，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "AMZN",
+            "price": 253.1,
+            "smc_id": "fvg_sweep",
+            "smc_text": "🩸 掃損+OB (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 258.41,
+            "entry_top": 260.42,
+            "sl": 266.67,
+            "tp": 244.3,
+            "rrr": 2.1,
+            "direction": "short",
+            "macro_bsl": 287.2,
+            "macro_ssl": 225.55,
+            "macro_eq": 256.38,
+            "pd_percent": 44.7,
+            "stars": 3,
+            "trade_status": "⚠️ 財報將至 (暫停交易)",
+            "status_color": "text-yellow-500 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $266.67，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "MSFT",
+            "price": 531.33,
+            "smc_id": "fvg_sweep",
+            "smc_text": "🔥 掃損+OB (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 525.77,
+            "entry_top": 528.33,
+            "sl": 513.12,
+            "tp": 551.15,
+            "rrr": 1.7,
+            "direction": "long",
+            "macro_bsl": 551.15,
+            "macro_ssl": 348.54,
+            "macro_eq": 449.84,
+            "pd_percent": 90.2,
+            "stars": 3,
+            "trade_status": "⚠️ 財報將至 (暫停交易)",
+            "status_color": "text-yellow-500 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $513.12，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "MSTR",
+            "price": 141.4,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 142.0,
+            "entry_top": 144.21,
+            "sl": 159.19,
+            "tp": 121.38,
+            "rrr": 1.4,
+            "direction": "short",
+            "macro_bsl": 197.0,
+            "macro_ssl": 81.81,
+            "macro_eq": 139.4,
+            "pd_percent": 51.7,
+            "stars": 3,
+            "trade_status": "⚠️ 財報將至 (暫停交易)",
+            "status_color": "text-yellow-500 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $159.19，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "COIN",
+            "price": 161.09,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 169.84,
+            "entry_top": 172.04,
+            "sl": 186.42,
+            "tp": 155.31,
+            "rrr": 1.0,
+            "direction": "short",
+            "macro_bsl": 222.35,
+            "macro_ssl": 139.11,
+            "macro_eq": 180.73,
+            "pd_percent": 26.4,
+            "stars": 2,
+            "trade_status": "⚠️ 財報將至 (暫停交易)",
+            "status_color": "text-yellow-500 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $186.42，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": true
+        },
+        {
+            "symbol": "INTC",
+            "price": 93.74,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 108.38,
+            "entry_top": 111.14,
+            "sl": 128.08,
+            "tp": 84.65,
+            "rrr": 1.4,
+            "direction": "short",
+            "macro_bsl": 142.35,
+            "macro_ssl": 80.8,
+            "macro_eq": 111.57,
+            "pd_percent": 21.0,
+            "stars": 1,
+            "trade_status": "⚠️ 財報將至 (暫停交易)",
+            "status_color": "text-yellow-500 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $128.08，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "GOOG",
+            "price": 316.83,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 333.8,
+            "entry_top": 338.25,
+            "sl": 357.03,
+            "tp": 313.51,
+            "rrr": 1.1,
+            "direction": "short",
+            "macro_bsl": 403.96,
+            "macro_ssl": 313.51,
+            "macro_eq": 358.74,
+            "pd_percent": 3.7,
+            "stars": 1,
+            "trade_status": "⚠️ 財報將至 (暫停交易)",
+            "status_color": "text-yellow-500 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $357.03，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "GOOGL",
+            "price": 320.58,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 337.27,
+            "entry_top": 341.85,
+            "sl": 361.2,
+            "tp": 316.6,
+            "rrr": 1.1,
+            "direction": "short",
+            "macro_bsl": 408.1,
+            "macro_ssl": 314.7,
+            "macro_eq": 361.4,
+            "pd_percent": 6.3,
+            "stars": 1,
+            "trade_status": "⚠️ 財報將至 (暫停交易)",
+            "status_color": "text-yellow-500 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $361.2，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "SNDK",
+            "price": 1304.84,
+            "smc_id": "fvg",
+            "smc_text": "📉 1D FVG (空)",
+            "smc_class": "border-red-500 text-red-400",
+            "entry_bot": 1484.0,
+            "entry_top": 1575.69,
+            "sl": 1811.01,
+            "tp": 1228.89,
+            "rrr": 1.1,
+            "direction": "short",
+            "macro_bsl": 2354.39,
+            "macro_ssl": 980.28,
+            "macro_eq": 1667.34,
+            "pd_percent": 23.6,
+            "stars": 1,
+            "trade_status": "⚠️ 財報將至 (暫停交易)",
+            "status_color": "text-yellow-500 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收高於 $1811.01，看跌結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "NOW",
+            "price": 154.78,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 145.48,
+            "entry_top": 148.4,
+            "sl": 134.9,
+            "tp": 159.5,
+            "rrr": 1.0,
+            "direction": "long",
+            "macro_bsl": 159.5,
+            "macro_ssl": 85.44,
+            "macro_eq": 122.47,
+            "pd_percent": 93.6,
+            "stars": 1,
+            "trade_status": "⚠️ 財報將至 (暫停交易)",
+            "status_color": "text-yellow-500 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $134.9，看漲結構即刻失效，必須無條件平倉。",
+            "confluence": false
+        },
+        {
+            "symbol": "XOM",
+            "price": 179.91,
+            "smc_id": "fvg",
+            "smc_text": "⚡ 1D FVG (多)",
+            "smc_class": "border-green-500 text-green-400",
+            "entry_bot": 170.29,
+            "entry_top": 172.65,
+            "sl": 158.47,
+            "tp": 184.59,
+            "rrr": 1.0,
+            "direction": "long",
+            "macro_bsl": 184.88,
+            "macro_ssl": 134.08,
+            "macro_eq": 159.48,
+            "pd_percent": 90.2,
+            "stars": 1,
+            "trade_status": "⚠️ 財報將至 (暫停交易)",
+            "status_color": "text-yellow-500 font-bold",
+            "inv_text": "🚨 紀律底線：若日線實體收低於 $158.47，看漲結構即刻失效，必須無條件平倉。",
             "confluence": false
         }
     ],
@@ -2906,10 +2906,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 767.34,
+                "high": 771.14,
+                "low": 765.21,
+                "close": 769.66
             }
         ],
         "QQQ": [
@@ -3797,10 +3797,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 715.12,
+                "high": 722.87,
+                "low": 713.59,
+                "close": 721.25
             }
         ],
         "DIA": [
@@ -4688,10 +4688,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 523.14,
+                "high": 524.26,
+                "low": 521.72,
+                "close": 523.28
             }
         ],
         "IWM": [
@@ -5579,10 +5579,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 277.96,
+                "high": 280.4,
+                "low": 276.89,
+                "close": 280.18
             }
         ],
         "VOO": [
@@ -6470,10 +6470,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 705.4,
+                "high": 708.81,
+                "low": 703.38,
+                "close": 707.52
             }
         ],
         "QQQM": [
@@ -7361,10 +7361,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 294.51,
+                "high": 297.65,
+                "low": 293.88,
+                "close": 296.96
             }
         ],
         "SPYM": [
@@ -8252,10 +8252,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 90.32,
+                "high": 90.76,
+                "low": 90.07,
+                "close": 90.6
             }
         ],
         "SMH": [
@@ -9143,10 +9143,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 549.17,
+                "high": 559.81,
+                "low": 546.67,
+                "close": 557.98
             }
         ],
         "SOXL": [
@@ -10034,10 +10034,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 95.04,
+                "high": 102.2,
+                "low": 94.1,
+                "close": 101.08
             }
         ],
         "XLK": [
@@ -10925,10 +10925,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 187.57,
+                "high": 190.1,
+                "low": 187.1,
+                "close": 189.49
             }
         ],
         "XLF": [
@@ -11816,10 +11816,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 56.27,
+                "high": 56.32,
+                "low": 55.75,
+                "close": 55.88
             }
         ],
         "XLE": [
@@ -12707,10 +12707,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 69.28,
+                "high": 69.7,
+                "low": 68.05,
+                "close": 68.21
             }
         ],
         "SPCX": [
@@ -13374,10 +13374,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 147.41,
+                "high": 151.36,
+                "low": 146.61,
+                "close": 148.58
             }
         ],
         "DRAM": [
@@ -14265,10 +14265,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 49.58,
+                "high": 50.73,
+                "low": 49.12,
+                "close": 50.52
             }
         ],
         "AAPL": [
@@ -15156,10 +15156,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 343.17,
+                "high": 347.78,
+                "low": 342.39,
+                "close": 347.1
             }
         ],
         "MSFT": [
@@ -16047,10 +16047,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 532.35,
+                "high": 534.7,
+                "low": 528.33,
+                "close": 531.33
             }
         ],
         "NVDA": [
@@ -16938,10 +16938,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 218.31,
+                "high": 219.19,
+                "low": 215.53,
+                "close": 217.94
             }
         ],
         "TSLA": [
@@ -17829,10 +17829,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 397.76,
+                "high": 408.45,
+                "low": 395.25,
+                "close": 407.46
             }
         ],
         "AMZN": [
@@ -18720,10 +18720,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 250.43,
+                "high": 254.68,
+                "low": 248.71,
+                "close": 253.1
             }
         ],
         "META": [
@@ -19611,10 +19611,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 627.07,
+                "high": 628.46,
+                "low": 619.21,
+                "close": 620.19
             }
         ],
         "GOOG": [
@@ -20502,10 +20502,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 314.4,
+                "high": 320.07,
+                "low": 313.58,
+                "close": 316.83
             }
         ],
         "GOOGL": [
@@ -21393,10 +21393,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 317.0,
+                "high": 323.88,
+                "low": 316.86,
+                "close": 320.58
             }
         ],
         "AMD": [
@@ -22284,10 +22284,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 539.49,
+                "high": 563.92,
+                "low": 538.5,
+                "close": 560.26
             }
         ],
         "TSM": [
@@ -23175,10 +23175,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 427.16,
+                "high": 438.58,
+                "low": 426.0,
+                "close": 436.87
             }
         ],
         "AVGO": [
@@ -24066,10 +24066,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 339.87,
+                "high": 345.67,
+                "low": 336.87,
+                "close": 342.33
             }
         ],
         "ASML": [
@@ -24082,892 +24082,892 @@
             },
             {
                 "time": "2026-04-28",
-                "open": 1387.93,
-                "high": 1396.82,
-                "low": 1363.05,
-                "close": 1382.77
+                "open": 1386.1,
+                "high": 1394.97,
+                "low": 1361.24,
+                "close": 1380.94
             },
             {
                 "time": "2026-04-29",
-                "open": 1384.92,
-                "high": 1397.89,
-                "low": 1373.14,
-                "close": 1392.28
+                "open": 1383.08,
+                "high": 1396.04,
+                "low": 1371.32,
+                "close": 1390.43
             },
             {
                 "time": "2026-04-30",
-                "open": 1412.51,
-                "high": 1444.78,
-                "low": 1393.2,
-                "close": 1437.13
+                "open": 1410.64,
+                "high": 1442.87,
+                "low": 1391.35,
+                "close": 1435.23
             },
             {
                 "time": "2026-05-01",
-                "open": 1426.45,
-                "high": 1442.28,
-                "low": 1412.17,
-                "close": 1425.18
+                "open": 1424.56,
+                "high": 1440.37,
+                "low": 1410.3,
+                "close": 1423.29
             },
             {
                 "time": "2026-05-04",
-                "open": 1399.96,
-                "high": 1415.24,
-                "low": 1365.02,
-                "close": 1384.42
+                "open": 1398.1,
+                "high": 1413.36,
+                "low": 1363.22,
+                "close": 1382.59
             },
             {
                 "time": "2026-05-05",
-                "open": 1430.57,
-                "high": 1452.92,
-                "low": 1412.56,
-                "close": 1441.06
+                "open": 1428.67,
+                "high": 1451.0,
+                "low": 1410.69,
+                "close": 1439.15
             },
             {
                 "time": "2026-05-06",
-                "open": 1501.15,
-                "high": 1543.52,
-                "low": 1494.07,
-                "close": 1542.74
+                "open": 1499.16,
+                "high": 1541.48,
+                "low": 1492.09,
+                "close": 1540.7
             },
             {
                 "time": "2026-05-07",
-                "open": 1546.74,
-                "high": 1548.0,
-                "low": 1495.88,
-                "close": 1514.64
+                "open": 1544.69,
+                "high": 1545.95,
+                "low": 1493.89,
+                "close": 1512.63
             },
             {
                 "time": "2026-05-08",
-                "open": 1536.54,
-                "high": 1593.25,
-                "low": 1529.18,
-                "close": 1589.96
+                "open": 1534.51,
+                "high": 1591.14,
+                "low": 1527.16,
+                "close": 1587.86
             },
             {
                 "time": "2026-05-11",
-                "open": 1557.29,
-                "high": 1565.96,
-                "low": 1519.39,
-                "close": 1563.79
+                "open": 1555.22,
+                "high": 1563.89,
+                "low": 1517.38,
+                "close": 1561.72
             },
             {
                 "time": "2026-05-12",
-                "open": 1524.17,
-                "high": 1533.13,
-                "low": 1473.09,
-                "close": 1518.98
+                "open": 1522.15,
+                "high": 1531.1,
+                "low": 1471.14,
+                "close": 1516.96
             },
             {
                 "time": "2026-05-13",
-                "open": 1537.4,
-                "high": 1600.53,
-                "low": 1519.12,
-                "close": 1579.54
+                "open": 1535.36,
+                "high": 1598.41,
+                "low": 1517.1,
+                "close": 1577.44
             },
             {
                 "time": "2026-05-14",
-                "open": 1571.71,
-                "high": 1601.42,
-                "low": 1561.26,
-                "close": 1582.46
+                "open": 1569.62,
+                "high": 1599.3,
+                "low": 1559.19,
+                "close": 1580.37
             },
             {
                 "time": "2026-05-15",
-                "open": 1509.79,
-                "high": 1525.28,
-                "low": 1484.72,
-                "close": 1499.87
+                "open": 1507.79,
+                "high": 1523.26,
+                "low": 1482.75,
+                "close": 1497.88
             },
             {
                 "time": "2026-05-18",
-                "open": 1519.29,
-                "high": 1520.52,
-                "low": 1451.46,
-                "close": 1470.49
+                "open": 1517.27,
+                "high": 1518.51,
+                "low": 1449.54,
+                "close": 1468.54
             },
             {
                 "time": "2026-05-19",
-                "open": 1448.06,
-                "high": 1483.84,
-                "low": 1439.45,
-                "close": 1457.55
+                "open": 1446.14,
+                "high": 1481.87,
+                "low": 1437.54,
+                "close": 1455.62
             },
             {
                 "time": "2026-05-20",
-                "open": 1500.44,
-                "high": 1553.79,
-                "low": 1490.39,
-                "close": 1548.13
+                "open": 1498.45,
+                "high": 1551.73,
+                "low": 1488.42,
+                "close": 1546.08
             },
             {
                 "time": "2026-05-21",
-                "open": 1546.68,
-                "high": 1599.72,
-                "low": 1543.94,
-                "close": 1589.94
+                "open": 1544.63,
+                "high": 1597.6,
+                "low": 1541.9,
+                "close": 1587.84
             },
             {
                 "time": "2026-05-22",
-                "open": 1617.94,
-                "high": 1651.39,
-                "low": 1613.76,
-                "close": 1630.79
+                "open": 1615.79,
+                "high": 1649.21,
+                "low": 1611.62,
+                "close": 1628.63
             },
             {
                 "time": "2026-05-26",
-                "open": 1639.73,
-                "high": 1645.88,
-                "low": 1602.18,
-                "close": 1629.92
+                "open": 1637.56,
+                "high": 1643.7,
+                "low": 1600.05,
+                "close": 1627.76
             },
             {
                 "time": "2026-05-27",
-                "open": 1635.24,
-                "high": 1637.01,
-                "low": 1580.96,
-                "close": 1595.81
+                "open": 1633.07,
+                "high": 1634.84,
+                "low": 1578.86,
+                "close": 1593.69
             },
             {
                 "time": "2026-05-28",
-                "open": 1615.0,
-                "high": 1625.43,
-                "low": 1577.96,
-                "close": 1603.7
+                "open": 1612.86,
+                "high": 1623.27,
+                "low": 1575.87,
+                "close": 1601.57
             },
             {
                 "time": "2026-05-29",
-                "open": 1631.36,
-                "high": 1652.06,
-                "low": 1602.79,
-                "close": 1610.68
+                "open": 1629.2,
+                "high": 1649.87,
+                "low": 1600.66,
+                "close": 1608.54
             },
             {
                 "time": "2026-06-01",
-                "open": 1592.41,
-                "high": 1644.4,
-                "low": 1583.56,
-                "close": 1626.47
+                "open": 1590.3,
+                "high": 1642.22,
+                "low": 1581.46,
+                "close": 1624.31
             },
             {
                 "time": "2026-06-02",
-                "open": 1657.55,
-                "high": 1706.11,
-                "low": 1645.46,
-                "close": 1703.17
+                "open": 1655.35,
+                "high": 1703.85,
+                "low": 1643.28,
+                "close": 1700.91
             },
             {
                 "time": "2026-06-03",
-                "open": 1707.1,
-                "high": 1741.02,
-                "low": 1687.82,
-                "close": 1724.13
+                "open": 1704.84,
+                "high": 1738.71,
+                "low": 1685.58,
+                "close": 1721.85
             },
             {
                 "time": "2026-06-04",
-                "open": 1677.63,
-                "high": 1776.99,
-                "low": 1670.27,
-                "close": 1755.2
+                "open": 1675.41,
+                "high": 1774.64,
+                "low": 1668.06,
+                "close": 1752.87
             },
             {
                 "time": "2026-06-05",
-                "open": 1683.18,
-                "high": 1703.28,
-                "low": 1636.26,
-                "close": 1639.62
+                "open": 1680.95,
+                "high": 1701.02,
+                "low": 1634.1,
+                "close": 1637.45
             },
             {
                 "time": "2026-06-08",
-                "open": 1730.55,
-                "high": 1767.2,
-                "low": 1716.8,
-                "close": 1746.78
+                "open": 1728.26,
+                "high": 1764.86,
+                "low": 1714.52,
+                "close": 1744.47
             },
             {
                 "time": "2026-06-09",
-                "open": 1774.33,
-                "high": 1828.74,
-                "low": 1674.11,
-                "close": 1775.47
+                "open": 1771.97,
+                "high": 1826.32,
+                "low": 1671.9,
+                "close": 1773.12
             },
             {
                 "time": "2026-06-10",
-                "open": 1744.2,
-                "high": 1809.66,
-                "low": 1720.98,
-                "close": 1731.95
+                "open": 1741.89,
+                "high": 1807.26,
+                "low": 1718.7,
+                "close": 1729.66
             },
             {
                 "time": "2026-06-11",
-                "open": 1777.7,
-                "high": 1901.04,
-                "low": 1772.81,
-                "close": 1897.03
+                "open": 1775.35,
+                "high": 1898.52,
+                "low": 1770.46,
+                "close": 1894.51
             },
             {
                 "time": "2026-06-12",
-                "open": 1845.23,
-                "high": 1890.36,
-                "low": 1836.62,
-                "close": 1861.14
+                "open": 1842.79,
+                "high": 1887.85,
+                "low": 1834.19,
+                "close": 1858.68
             },
             {
                 "time": "2026-06-15",
-                "open": 1892.09,
-                "high": 1911.23,
-                "low": 1862.59,
-                "close": 1890.22
+                "open": 1889.59,
+                "high": 1908.7,
+                "low": 1860.12,
+                "close": 1887.71
             },
             {
                 "time": "2026-06-16",
-                "open": 1869.59,
-                "high": 1878.73,
-                "low": 1800.28,
-                "close": 1801.56
+                "open": 1867.11,
+                "high": 1876.24,
+                "low": 1797.9,
+                "close": 1799.17
             },
             {
                 "time": "2026-06-17",
-                "open": 1894.75,
-                "high": 1935.99,
-                "low": 1862.91,
-                "close": 1865.42
+                "open": 1892.24,
+                "high": 1933.42,
+                "low": 1860.44,
+                "close": 1862.95
             },
             {
                 "time": "2026-06-18",
-                "open": 1921.69,
-                "high": 1940.36,
-                "low": 1907.06,
-                "close": 1927.19
+                "open": 1919.15,
+                "high": 1937.79,
+                "low": 1904.54,
+                "close": 1924.63
             },
             {
                 "time": "2026-06-22",
-                "open": 1951.0,
-                "high": 1956.51,
-                "low": 1884.0,
-                "close": 1926.76
+                "open": 1948.41,
+                "high": 1953.92,
+                "low": 1881.51,
+                "close": 1924.21
             },
             {
                 "time": "2026-06-23",
-                "open": 1775.4,
-                "high": 1810.61,
-                "low": 1753.7,
-                "close": 1776.16
+                "open": 1773.05,
+                "high": 1808.21,
+                "low": 1751.38,
+                "close": 1773.81
             },
             {
                 "time": "2026-06-24",
-                "open": 1748.16,
-                "high": 1777.35,
-                "low": 1728.06,
-                "close": 1760.49
+                "open": 1745.84,
+                "high": 1775.0,
+                "low": 1725.77,
+                "close": 1758.16
             },
             {
                 "time": "2026-06-25",
-                "open": 1853.1,
-                "high": 1853.51,
-                "low": 1774.74,
-                "close": 1838.8
+                "open": 1850.65,
+                "high": 1851.06,
+                "low": 1772.39,
+                "close": 1836.37
             },
             {
                 "time": "2026-06-26",
-                "open": 1779.36,
-                "high": 1806.66,
-                "low": 1765.36,
-                "close": 1792.3
+                "open": 1777.0,
+                "high": 1804.27,
+                "low": 1763.02,
+                "close": 1789.93
             },
             {
                 "time": "2026-06-29",
-                "open": 1796.63,
-                "high": 1883.68,
-                "low": 1770.23,
-                "close": 1880.68
+                "open": 1794.25,
+                "high": 1881.19,
+                "low": 1767.89,
+                "close": 1878.19
             },
             {
                 "time": "2026-06-30",
-                "open": 1913.03,
-                "high": 1997.38,
-                "low": 1911.41,
-                "close": 1986.87
+                "open": 1910.49,
+                "high": 1994.73,
+                "low": 1908.88,
+                "close": 1984.24
             },
             {
                 "time": "2026-07-01",
-                "open": 1913.8,
-                "high": 1940.49,
-                "low": 1830.26,
-                "close": 1840.66
+                "open": 1911.27,
+                "high": 1937.92,
+                "low": 1827.84,
+                "close": 1838.22
             },
             {
                 "time": "2026-07-02",
-                "open": 1841.6,
-                "high": 1856.0,
-                "low": 1745.76,
-                "close": 1767.03
+                "open": 1839.16,
+                "high": 1853.54,
+                "low": 1743.45,
+                "close": 1764.69
             },
             {
                 "time": "2026-07-06",
-                "open": 1827.64,
-                "high": 1866.19,
-                "low": 1810.99,
-                "close": 1822.71
+                "open": 1825.21,
+                "high": 1863.71,
+                "low": 1808.59,
+                "close": 1820.3
             },
             {
                 "time": "2026-07-07",
-                "open": 1734.89,
-                "high": 1758.77,
-                "low": 1715.09,
-                "close": 1745.02
+                "open": 1732.59,
+                "high": 1756.43,
+                "low": 1712.82,
+                "close": 1742.71
             },
             {
                 "time": "2026-07-08",
-                "open": 1731.44,
-                "high": 1778.36,
-                "low": 1727.15,
-                "close": 1766.37
+                "open": 1729.15,
+                "high": 1776.0,
+                "low": 1724.86,
+                "close": 1764.03
             },
             {
                 "time": "2026-07-09",
-                "open": 1833.09,
-                "high": 1856.33,
-                "low": 1794.44,
-                "close": 1801.92
-            },
-            {
-                "time": "2026-07-10",
-                "open": 1781.58,
-                "high": 1812.84,
-                "low": 1764.38,
-                "close": 1795.0
-            },
-            {
-                "time": "2026-07-13",
-                "open": 1771.25,
-                "high": 1773.5,
-                "low": 1715.86,
-                "close": 1723.81
-            },
-            {
-                "time": "2026-07-14",
-                "open": 1785.14,
-                "high": 1795.95,
-                "low": 1747.6,
-                "close": 1773.35
-            },
-            {
-                "time": "2026-07-15",
-                "open": 1822.7,
-                "high": 1827.64,
-                "low": 1733.41,
-                "close": 1812.93
-            },
-            {
-                "time": "2026-07-16",
-                "open": 1794.59,
-                "high": 1851.06,
-                "low": 1776.82,
-                "close": 1782.56
-            },
-            {
-                "time": "2026-07-17",
-                "open": 1731.54,
-                "high": 1788.6,
-                "low": 1701.2,
-                "close": 1745.32
-            },
-            {
-                "time": "2026-07-20",
-                "open": 1776.39,
-                "high": 1796.02,
-                "low": 1726.37,
-                "close": 1736.77
-            },
-            {
-                "time": "2026-07-21",
-                "open": 1798.87,
-                "high": 1821.52,
-                "low": 1783.23,
-                "close": 1799.18
-            },
-            {
-                "time": "2026-07-22",
-                "open": 1765.37,
-                "high": 1814.85,
-                "low": 1764.76,
+                "open": 1830.66,
+                "high": 1853.87,
+                "low": 1792.06,
                 "close": 1799.53
             },
             {
+                "time": "2026-07-10",
+                "open": 1779.22,
+                "high": 1810.43,
+                "low": 1762.04,
+                "close": 1792.62
+            },
+            {
+                "time": "2026-07-13",
+                "open": 1768.9,
+                "high": 1771.15,
+                "low": 1713.59,
+                "close": 1721.53
+            },
+            {
+                "time": "2026-07-14",
+                "open": 1782.78,
+                "high": 1793.57,
+                "low": 1745.28,
+                "close": 1771.0
+            },
+            {
+                "time": "2026-07-15",
+                "open": 1820.29,
+                "high": 1825.21,
+                "low": 1731.11,
+                "close": 1810.52
+            },
+            {
+                "time": "2026-07-16",
+                "open": 1792.21,
+                "high": 1848.6,
+                "low": 1774.47,
+                "close": 1780.2
+            },
+            {
+                "time": "2026-07-17",
+                "open": 1729.25,
+                "high": 1786.23,
+                "low": 1698.95,
+                "close": 1743.01
+            },
+            {
+                "time": "2026-07-20",
+                "open": 1774.04,
+                "high": 1793.64,
+                "low": 1724.08,
+                "close": 1734.47
+            },
+            {
+                "time": "2026-07-21",
+                "open": 1796.49,
+                "high": 1819.11,
+                "low": 1780.87,
+                "close": 1796.8
+            },
+            {
+                "time": "2026-07-22",
+                "open": 1763.03,
+                "high": 1812.45,
+                "low": 1762.42,
+                "close": 1797.15
+            },
+            {
                 "time": "2026-07-23",
-                "open": 1779.82,
-                "high": 1821.22,
-                "low": 1777.94,
-                "close": 1800.67
+                "open": 1777.46,
+                "high": 1818.81,
+                "low": 1775.58,
+                "close": 1798.29
             },
             {
                 "time": "2026-07-24",
-                "open": 1787.57,
-                "high": 1795.55,
-                "low": 1737.63,
-                "close": 1754.82
+                "open": 1785.2,
+                "high": 1793.17,
+                "low": 1735.33,
+                "close": 1752.5
             },
             {
                 "time": "2026-07-27",
-                "open": 1736.94,
-                "high": 1744.44,
-                "low": 1611.26,
-                "close": 1653.12
+                "open": 1734.64,
+                "high": 1742.13,
+                "low": 1609.12,
+                "close": 1650.93
             },
             {
                 "time": "2026-07-28",
-                "open": 1580.5,
-                "high": 1599.88,
-                "low": 1553.58,
-                "close": 1582.95
+                "open": 1578.41,
+                "high": 1597.76,
+                "low": 1551.52,
+                "close": 1580.85
             },
             {
                 "time": "2026-07-29",
-                "open": 1569.39,
-                "high": 1621.46,
-                "low": 1530.64,
-                "close": 1550.69
+                "open": 1567.31,
+                "high": 1619.31,
+                "low": 1528.61,
+                "close": 1548.64
             },
             {
                 "time": "2026-07-30",
-                "open": 1645.07,
-                "high": 1676.78,
-                "low": 1626.44,
-                "close": 1651.44
+                "open": 1642.89,
+                "high": 1674.56,
+                "low": 1624.28,
+                "close": 1649.25
             },
             {
                 "time": "2026-07-31",
-                "open": 1683.38,
-                "high": 1692.15,
-                "low": 1624.71,
-                "close": 1629.0
+                "open": 1681.15,
+                "high": 1689.91,
+                "low": 1622.56,
+                "close": 1626.84
             },
             {
                 "time": "2026-08-03",
-                "open": 1609.69,
-                "high": 1655.2,
-                "low": 1582.0,
-                "close": 1642.52
+                "open": 1607.56,
+                "high": 1653.01,
+                "low": 1579.9,
+                "close": 1640.34
             },
             {
                 "time": "2026-08-04",
-                "open": 1700.04,
-                "high": 1717.56,
-                "low": 1686.01,
-                "close": 1711.89
+                "open": 1697.79,
+                "high": 1715.28,
+                "low": 1683.78,
+                "close": 1709.62
             },
             {
                 "time": "2026-08-05",
-                "open": 1700.42,
-                "high": 1729.06,
-                "low": 1671.75,
-                "close": 1678.22
+                "open": 1698.17,
+                "high": 1726.77,
+                "low": 1669.53,
+                "close": 1676.0
             },
             {
                 "time": "2026-08-06",
-                "open": 1695.39,
-                "high": 1735.53,
-                "low": 1672.11,
-                "close": 1704.37
+                "open": 1693.14,
+                "high": 1733.23,
+                "low": 1669.89,
+                "close": 1702.11
             },
             {
                 "time": "2026-08-07",
-                "open": 1759.71,
-                "high": 1761.31,
-                "low": 1720.11,
-                "close": 1740.99
+                "open": 1757.38,
+                "high": 1758.98,
+                "low": 1717.83,
+                "close": 1738.68
             },
             {
                 "time": "2026-08-10",
-                "open": 1793.01,
-                "high": 1794.47,
-                "low": 1732.81,
-                "close": 1733.48
+                "open": 1790.63,
+                "high": 1792.09,
+                "low": 1730.51,
+                "close": 1731.18
             },
             {
                 "time": "2026-08-11",
-                "open": 1793.93,
-                "high": 1819.59,
-                "low": 1778.32,
-                "close": 1799.38
+                "open": 1791.55,
+                "high": 1817.18,
+                "low": 1775.96,
+                "close": 1797.0
             },
             {
                 "time": "2026-08-12",
-                "open": 1832.63,
-                "high": 1845.0,
-                "low": 1807.38,
-                "close": 1810.07
+                "open": 1830.2,
+                "high": 1842.56,
+                "low": 1804.99,
+                "close": 1807.67
             },
             {
                 "time": "2026-08-13",
-                "open": 1819.07,
-                "high": 1873.69,
-                "low": 1813.3,
-                "close": 1847.9
+                "open": 1816.66,
+                "high": 1871.21,
+                "low": 1810.9,
+                "close": 1845.45
             },
             {
                 "time": "2026-08-14",
-                "open": 1839.19,
-                "high": 1853.32,
-                "low": 1820.41,
-                "close": 1844.08
+                "open": 1836.75,
+                "high": 1850.86,
+                "low": 1818.0,
+                "close": 1841.64
             },
             {
                 "time": "2026-08-17",
-                "open": 1871.68,
-                "high": 1896.35,
-                "low": 1860.12,
-                "close": 1883.12
+                "open": 1869.2,
+                "high": 1893.84,
+                "low": 1857.66,
+                "close": 1880.62
             },
             {
                 "time": "2026-08-18",
-                "open": 1809.0,
-                "high": 1820.41,
-                "low": 1775.7,
-                "close": 1802.98
+                "open": 1806.6,
+                "high": 1818.0,
+                "low": 1773.35,
+                "close": 1800.59
             },
             {
                 "time": "2026-08-19",
-                "open": 1797.72,
-                "high": 1804.28,
-                "low": 1748.85,
-                "close": 1751.73
+                "open": 1795.34,
+                "high": 1801.89,
+                "low": 1746.53,
+                "close": 1749.41
             },
             {
                 "time": "2026-08-20",
-                "open": 1743.76,
-                "high": 1775.82,
-                "low": 1741.02,
-                "close": 1750.31
+                "open": 1741.45,
+                "high": 1773.47,
+                "low": 1738.71,
+                "close": 1747.99
             },
             {
                 "time": "2026-08-21",
-                "open": 1763.51,
-                "high": 1771.0,
-                "low": 1741.0,
-                "close": 1763.76
+                "open": 1761.17,
+                "high": 1768.65,
+                "low": 1738.69,
+                "close": 1761.42
             },
             {
                 "time": "2026-08-24",
-                "open": 1761.56,
-                "high": 1761.98,
-                "low": 1727.57,
-                "close": 1740.13
+                "open": 1759.23,
+                "high": 1759.65,
+                "low": 1725.28,
+                "close": 1737.82
             },
             {
                 "time": "2026-08-25",
-                "open": 1759.15,
-                "high": 1769.99,
-                "low": 1735.87,
-                "close": 1744.16
+                "open": 1756.82,
+                "high": 1767.64,
+                "low": 1733.57,
+                "close": 1741.85
             },
             {
                 "time": "2026-08-26",
-                "open": 1746.33,
-                "high": 1761.71,
-                "low": 1732.35,
-                "close": 1745.64
+                "open": 1744.02,
+                "high": 1759.38,
+                "low": 1730.05,
+                "close": 1743.33
             },
             {
                 "time": "2026-08-27",
-                "open": 1746.53,
-                "high": 1751.78,
-                "low": 1719.11,
-                "close": 1735.01
+                "open": 1744.22,
+                "high": 1749.46,
+                "low": 1716.83,
+                "close": 1732.71
             },
             {
                 "time": "2026-08-28",
-                "open": 1734.75,
-                "high": 1740.0,
-                "low": 1692.88,
-                "close": 1696.16
+                "open": 1732.45,
+                "high": 1737.69,
+                "low": 1690.64,
+                "close": 1693.91
             },
             {
                 "time": "2026-08-31",
-                "open": 1708.68,
-                "high": 1716.9,
-                "low": 1679.33,
-                "close": 1696.01
+                "open": 1706.42,
+                "high": 1714.63,
+                "low": 1677.1,
+                "close": 1693.76
             },
             {
                 "time": "2026-09-01",
-                "open": 1680.74,
-                "high": 1684.0,
-                "low": 1651.21,
-                "close": 1665.14
+                "open": 1678.51,
+                "high": 1681.77,
+                "low": 1649.02,
+                "close": 1662.93
             },
             {
                 "time": "2026-09-02",
-                "open": 1672.21,
-                "high": 1688.66,
-                "low": 1650.2,
-                "close": 1682.3
+                "open": 1669.99,
+                "high": 1686.42,
+                "low": 1648.01,
+                "close": 1680.07
             },
             {
                 "time": "2026-09-03",
-                "open": 1642.39,
-                "high": 1656.31,
-                "low": 1619.34,
-                "close": 1646.19
+                "open": 1640.21,
+                "high": 1654.12,
+                "low": 1617.19,
+                "close": 1644.01
             },
             {
                 "time": "2026-09-04",
-                "open": 1678.74,
-                "high": 1721.66,
-                "low": 1675.93,
-                "close": 1714.88
+                "open": 1676.52,
+                "high": 1719.38,
+                "low": 1673.71,
+                "close": 1712.61
             },
             {
                 "time": "2026-09-08",
-                "open": 1774.35,
-                "high": 1790.0,
-                "low": 1743.09,
-                "close": 1764.85
+                "open": 1772.0,
+                "high": 1787.63,
+                "low": 1740.78,
+                "close": 1762.51
             },
             {
                 "time": "2026-09-09",
-                "open": 1727.72,
-                "high": 1750.89,
-                "low": 1722.92,
-                "close": 1729.52
+                "open": 1725.43,
+                "high": 1748.57,
+                "low": 1720.64,
+                "close": 1727.23
             },
             {
                 "time": "2026-09-10",
-                "open": 1688.51,
-                "high": 1716.63,
-                "low": 1681.58,
-                "close": 1687.43
+                "open": 1686.27,
+                "high": 1714.36,
+                "low": 1679.35,
+                "close": 1685.19
             },
             {
                 "time": "2026-09-11",
-                "open": 1726.87,
-                "high": 1727.31,
-                "low": 1696.21,
-                "close": 1698.3
+                "open": 1724.58,
+                "high": 1725.02,
+                "low": 1693.96,
+                "close": 1696.05
             },
             {
                 "time": "2026-09-14",
-                "open": 1594.21,
-                "high": 1610.41,
-                "low": 1572.84,
-                "close": 1575.15
+                "open": 1592.1,
+                "high": 1608.28,
+                "low": 1570.76,
+                "close": 1573.06
             },
             {
                 "time": "2026-09-15",
-                "open": 1615.61,
-                "high": 1616.55,
-                "low": 1575.78,
-                "close": 1591.48
+                "open": 1613.47,
+                "high": 1614.41,
+                "low": 1573.69,
+                "close": 1589.37
             },
             {
                 "time": "2026-09-16",
-                "open": 1629.85,
-                "high": 1629.85,
-                "low": 1584.54,
-                "close": 1602.22
+                "open": 1627.69,
+                "high": 1627.69,
+                "low": 1582.44,
+                "close": 1600.1
             },
             {
                 "time": "2026-09-17",
-                "open": 1637.07,
-                "high": 1638.7,
-                "low": 1614.02,
-                "close": 1629.67
+                "open": 1634.9,
+                "high": 1636.53,
+                "low": 1611.88,
+                "close": 1627.51
             },
             {
                 "time": "2026-09-18",
-                "open": 1630.0,
-                "high": 1681.61,
-                "low": 1628.27,
-                "close": 1679.92
+                "open": 1627.84,
+                "high": 1679.38,
+                "low": 1626.11,
+                "close": 1677.69
             },
             {
                 "time": "2026-09-21",
-                "open": 1693.07,
-                "high": 1722.33,
-                "low": 1677.09,
-                "close": 1711.32
+                "open": 1690.83,
+                "high": 1720.05,
+                "low": 1674.87,
+                "close": 1709.05
             },
             {
                 "time": "2026-09-22",
-                "open": 1696.0,
-                "high": 1749.7,
-                "low": 1694.29,
-                "close": 1747.9
+                "open": 1693.75,
+                "high": 1747.38,
+                "low": 1692.05,
+                "close": 1745.58
             },
             {
                 "time": "2026-09-23",
-                "open": 1731.2,
-                "high": 1746.61,
-                "low": 1704.3,
-                "close": 1744.61
+                "open": 1728.91,
+                "high": 1744.3,
+                "low": 1702.04,
+                "close": 1742.3
             },
             {
                 "time": "2026-09-24",
-                "open": 1708.85,
-                "high": 1736.84,
-                "low": 1700.88,
-                "close": 1722.5
+                "open": 1706.59,
+                "high": 1734.54,
+                "low": 1698.63,
+                "close": 1720.22
             },
             {
                 "time": "2026-09-25",
-                "open": 1741.25,
-                "high": 1759.25,
-                "low": 1728.11,
-                "close": 1743.94
+                "open": 1738.94,
+                "high": 1756.92,
+                "low": 1725.82,
+                "close": 1741.63
             },
             {
                 "time": "2026-09-28",
-                "open": 1748.82,
-                "high": 1784.56,
-                "low": 1735.5,
-                "close": 1771.41
+                "open": 1746.5,
+                "high": 1782.2,
+                "low": 1733.2,
+                "close": 1769.06
             },
             {
                 "time": "2026-09-29",
-                "open": 1811.51,
-                "high": 1841.77,
-                "low": 1800.4,
-                "close": 1834.39
+                "open": 1809.11,
+                "high": 1839.33,
+                "low": 1798.01,
+                "close": 1831.96
             },
             {
                 "time": "2026-09-30",
-                "open": 1828.6,
-                "high": 1830.0,
-                "low": 1808.96,
-                "close": 1811.67
+                "open": 1826.18,
+                "high": 1827.58,
+                "low": 1806.56,
+                "close": 1809.27
             },
             {
                 "time": "2026-10-01",
-                "open": 1799.1,
-                "high": 1822.2,
-                "low": 1791.25,
-                "close": 1808.49
+                "open": 1796.72,
+                "high": 1819.79,
+                "low": 1788.88,
+                "close": 1806.09
             },
             {
                 "time": "2026-10-02",
-                "open": 1849.74,
-                "high": 1873.5,
-                "low": 1842.45,
-                "close": 1867.31
+                "open": 1847.29,
+                "high": 1871.02,
+                "low": 1840.01,
+                "close": 1864.84
             },
             {
                 "time": "2026-10-05",
-                "open": 1852.53,
-                "high": 1869.67,
-                "low": 1841.8,
-                "close": 1859.86
+                "open": 1850.08,
+                "high": 1867.19,
+                "low": 1839.36,
+                "close": 1857.4
             },
             {
                 "time": "2026-10-06",
-                "open": 1870.0,
-                "high": 1870.0,
-                "low": 1819.09,
-                "close": 1834.1
+                "open": 1867.52,
+                "high": 1867.52,
+                "low": 1816.68,
+                "close": 1831.67
             },
             {
                 "time": "2026-10-07",
-                "open": 1788.92,
-                "high": 1811.71,
-                "low": 1785.74,
-                "close": 1804.96
+                "open": 1786.55,
+                "high": 1809.31,
+                "low": 1783.37,
+                "close": 1802.57
             },
             {
                 "time": "2026-10-08",
-                "open": 1791.8,
-                "high": 1842.53,
-                "low": 1763.23,
-                "close": 1769.79
+                "open": 1789.43,
+                "high": 1840.09,
+                "low": 1760.89,
+                "close": 1767.45
             },
             {
                 "time": "2026-10-09",
-                "open": 1819.14,
-                "high": 1825.57,
-                "low": 1778.0,
-                "close": 1780.34
+                "open": 1816.73,
+                "high": 1823.15,
+                "low": 1775.64,
+                "close": 1777.98
             },
             {
                 "time": "2026-10-12",
-                "open": 1784.36,
-                "high": 1784.81,
-                "low": 1750.02,
-                "close": 1750.24
+                "open": 1782.0,
+                "high": 1782.45,
+                "low": 1747.7,
+                "close": 1747.92
             },
             {
                 "time": "2026-10-13",
-                "open": 1707.0,
-                "high": 1725.27,
-                "low": 1682.02,
-                "close": 1717.76
+                "open": 1704.74,
+                "high": 1722.98,
+                "low": 1679.79,
+                "close": 1715.48
             },
             {
                 "time": "2026-10-14",
-                "open": 1676.8,
-                "high": 1734.5,
-                "low": 1648.8,
-                "close": 1650.0
+                "open": 1674.58,
+                "high": 1732.2,
+                "low": 1646.62,
+                "close": 1647.81
             },
             {
                 "time": "2026-10-15",
-                "open": 1616.14,
-                "high": 1661.14,
-                "low": 1594.03,
-                "close": 1657.44
+                "open": 1614.0,
+                "high": 1658.94,
+                "low": 1591.92,
+                "close": 1655.24
             },
             {
                 "time": "2026-10-16",
-                "open": 1659.01,
-                "high": 1686.32,
-                "low": 1639.43,
-                "close": 1641.52
+                "open": 1656.81,
+                "high": 1684.09,
+                "low": 1637.26,
+                "close": 1639.34
             },
             {
                 "time": "2026-10-19",
-                "open": 1678.75,
-                "high": 1681.78,
-                "low": 1646.02,
-                "close": 1647.12
+                "open": 1676.53,
+                "high": 1679.55,
+                "low": 1643.84,
+                "close": 1644.94
             },
             {
                 "time": "2026-10-20",
-                "open": 1633.66,
-                "high": 1654.21,
-                "low": 1613.54,
-                "close": 1630.84
+                "open": 1631.5,
+                "high": 1652.02,
+                "low": 1611.4,
+                "close": 1628.68
             },
             {
                 "time": "2026-10-21",
-                "open": 1680.53,
-                "high": 1687.81,
-                "low": 1661.62,
-                "close": 1676.69
+                "open": 1678.3,
+                "high": 1685.57,
+                "low": 1659.42,
+                "close": 1674.47
             },
             {
                 "time": "2026-10-22",
-                "open": 1622.94,
-                "high": 1628.29,
-                "low": 1555.94,
-                "close": 1560.54
+                "open": 1620.79,
+                "high": 1626.13,
+                "low": 1553.88,
+                "close": 1558.47
             },
             {
                 "time": "2026-10-23",
-                "open": 1550.49,
-                "high": 1581.64,
-                "low": 1550.0,
-                "close": 1571.8
+                "open": 1548.44,
+                "high": 1579.54,
+                "low": 1547.95,
+                "close": 1569.72
             },
             {
                 "time": "2026-10-26",
-                "open": 1588.02,
-                "high": 1612.0,
-                "low": 1582.88,
-                "close": 1590.9
+                "open": 1585.92,
+                "high": 1609.86,
+                "low": 1580.78,
+                "close": 1588.79
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 1617.74,
+                "high": 1643.67,
+                "low": 1598.66,
+                "close": 1635.57
             }
         ],
         "QCOM": [
@@ -25855,10 +25855,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 180.97,
+                "high": 184.42,
+                "low": 179.29,
+                "close": 184.17
             }
         ],
         "TXN": [
@@ -26746,10 +26746,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 300.87,
+                "high": 309.47,
+                "low": 299.35,
+                "close": 308.91
             }
         ],
         "INTC": [
@@ -27637,10 +27637,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 92.47,
+                "high": 94.98,
+                "low": 91.86,
+                "close": 93.74
             }
         ],
         "MU": [
@@ -28528,10 +28528,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 920.99,
+                "high": 935.87,
+                "low": 910.67,
+                "close": 928.76
             }
         ],
         "SNDK": [
@@ -29419,10 +29419,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 1267.9,
+                "high": 1315.98,
+                "low": 1259.0,
+                "close": 1304.84
             }
         ],
         "ARM": [
@@ -30310,10 +30310,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 223.98,
+                "high": 227.83,
+                "low": 222.0,
+                "close": 226.6
             }
         ],
         "SMCI": [
@@ -31201,10 +31201,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 33.34,
+                "high": 35.21,
+                "low": 33.23,
+                "close": 35.09
             }
         ],
         "WDC": [
@@ -32092,10 +32092,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 359.95,
+                "high": 388.08,
+                "low": 358.24,
+                "close": 380.88
             }
         ],
         "LITE": [
@@ -32983,10 +32983,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 846.38,
+                "high": 892.99,
+                "low": 820.3,
+                "close": 866.18
             }
         ],
         "AAOI": [
@@ -33874,10 +33874,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 73.27,
+                "high": 77.28,
+                "low": 71.08,
+                "close": 76.95
             }
         ],
         "POET": [
@@ -34765,10 +34765,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 5.52,
+                "high": 5.73,
+                "low": 5.42,
+                "close": 5.69
             }
         ],
         "PLTR": [
@@ -35656,10 +35656,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 198.12,
+                "high": 201.83,
+                "low": 196.79,
+                "close": 198.73
             }
         ],
         "SNOW": [
@@ -36547,10 +36547,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 332.93,
+                "high": 341.24,
+                "low": 331.57,
+                "close": 337.42
             }
         ],
         "APP": [
@@ -37438,10 +37438,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 262.5,
+                "high": 264.05,
+                "low": 257.5,
+                "close": 262.82
             }
         ],
         "CRM": [
@@ -38329,10 +38329,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 245.2,
+                "high": 248.08,
+                "low": 240.63,
+                "close": 240.89
             }
         ],
         "ADBE": [
@@ -39220,10 +39220,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 255.1,
+                "high": 256.84,
+                "low": 247.79,
+                "close": 248.36
             }
         ],
         "NOW": [
@@ -40111,10 +40111,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 156.1,
+                "high": 157.13,
+                "low": 152.88,
+                "close": 154.78
             }
         ],
         "CRWD": [
@@ -41002,10 +41002,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 260.34,
+                "high": 271.06,
+                "low": 260.25,
+                "close": 268.02
             }
         ],
         "PANW": [
@@ -41893,10 +41893,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 390.99,
+                "high": 404.77,
+                "low": 388.25,
+                "close": 401.7
             }
         ],
         "NFLX": [
@@ -42784,10 +42784,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 63.4,
+                "high": 63.87,
+                "low": 62.48,
+                "close": 62.52
             }
         ],
         "UBER": [
@@ -43675,10 +43675,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 66.4,
+                "high": 66.5,
+                "low": 65.47,
+                "close": 65.78
             }
         ],
         "COIN": [
@@ -44566,10 +44566,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 160.33,
+                "high": 161.87,
+                "low": 157.75,
+                "close": 161.09
             }
         ],
         "MSTR": [
@@ -45457,10 +45457,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 140.08,
+                "high": 142.0,
+                "low": 138.69,
+                "close": 141.4
             }
         ],
         "MARA": [
@@ -46348,10 +46348,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 6.96,
+                "high": 7.32,
+                "low": 6.86,
+                "close": 7.09
             }
         ],
         "RIOT": [
@@ -47239,10 +47239,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 12.8,
+                "high": 13.63,
+                "low": 12.56,
+                "close": 13.56
             }
         ],
         "HOOD": [
@@ -48130,10 +48130,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 95.19,
+                "high": 96.71,
+                "low": 94.02,
+                "close": 94.56
             }
         ],
         "PYPL": [
@@ -49021,10 +49021,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 55.41,
+                "high": 56.63,
+                "low": 54.34,
+                "close": 56.09
             }
         ],
         "SOFI": [
@@ -49912,10 +49912,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 15.98,
+                "high": 16.76,
+                "low": 15.67,
+                "close": 16.4
             }
         ],
         "FUTU": [
@@ -50803,10 +50803,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 101.5,
+                "high": 102.57,
+                "low": 101.11,
+                "close": 102.36
             }
         ],
         "V": [
@@ -51694,10 +51694,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 402.07,
+                "high": 403.51,
+                "low": 397.36,
+                "close": 401.86
             }
         ],
         "JPM": [
@@ -52585,10 +52585,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 337.04,
+                "high": 337.51,
+                "low": 334.5,
+                "close": 335.79
             }
         ],
         "GS": [
@@ -53476,10 +53476,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 912.0,
+                "high": 915.43,
+                "low": 906.59,
+                "close": 911.77
             }
         ],
         "BAC": [
@@ -54367,10 +54367,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 50.94,
+                "high": 51.1,
+                "low": 50.49,
+                "close": 50.68
             }
         ],
         "RKLB": [
@@ -55258,10 +55258,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 54.1,
+                "high": 59.18,
+                "low": 53.57,
+                "close": 58.31
             }
         ],
         "XOM": [
@@ -56149,10 +56149,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 183.63,
+                "high": 184.88,
+                "low": 179.77,
+                "close": 179.91
             }
         ],
         "BE": [
@@ -57040,10 +57040,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 214.12,
+                "high": 224.17,
+                "low": 211.29,
+                "close": 218.5
             }
         ],
         "VST": [
@@ -57931,10 +57931,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 143.95,
+                "high": 147.45,
+                "low": 143.4,
+                "close": 146.66
             }
         ],
         "NOK": [
@@ -58822,10 +58822,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 8.74,
+                "high": 8.96,
+                "low": 8.65,
+                "close": 8.89
             }
         ],
         "ONDS": [
@@ -59713,10 +59713,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 6.21,
+                "high": 6.69,
+                "low": 6.16,
+                "close": 6.65
             }
         ],
         "NBIS": [
@@ -60604,10 +60604,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 159.0,
+                "high": 171.53,
+                "low": 158.3,
+                "close": 170.47
             }
         ],
         "WMT": [
@@ -61495,10 +61495,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 119.66,
+                "high": 120.06,
+                "low": 118.76,
+                "close": 119.32
             }
         ],
         "COST": [
@@ -62386,10 +62386,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 1002.1,
+                "high": 1002.82,
+                "low": 989.04,
+                "close": 992.13
             }
         ],
         "PG": [
@@ -63277,10 +63277,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 158.71,
+                "high": 159.53,
+                "low": 158.42,
+                "close": 159.23
             }
         ],
         "KO": [
@@ -64168,10 +64168,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 90.82,
+                "high": 92.95,
+                "low": 90.81,
+                "close": 91.18
             }
         ],
         "PEP": [
@@ -65059,10 +65059,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 134.11,
+                "high": 134.72,
+                "low": 132.5,
+                "close": 133.5
             }
         ],
         "DIS": [
@@ -65950,10 +65950,10 @@
             },
             {
                 "time": "2026-10-27",
-                "open": NaN,
-                "high": NaN,
-                "low": NaN,
-                "close": NaN
+                "open": 110.24,
+                "high": 110.44,
+                "low": 109.43,
+                "close": 110.23
             }
         ]
     }
