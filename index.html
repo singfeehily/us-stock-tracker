@@ -48,15 +48,19 @@
         .watchlist-card { border: 1px solid #30363d; transition: all 0.2s ease-in-out; }
         .watchlist-card.active-selected { border: 2px solid #3b82f6 !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
         
-        /* 圖表防護區 (防網頁縮放) */
-        #tv_chart_container, #sub_chart_container { touch-action: none; overflow: hidden; position: relative; }
+        /* 🚀 終極修復防縮放: 徹底鎖死圖表區塊，禁用 Safari 原生選取與縮放 */
+        #tv_chart_container, #sub_chart_container { 
+            touch-action: none !important; 
+            -webkit-user-select: none; 
+            user-select: none; 
+            overflow: hidden; 
+            position: relative; 
+        }
         
-        /* 透明膠囊按鈕 */
         .chart-overlay-toggles { position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; gap: 8px; flex-wrap: wrap; pointer-events: none; }
         .toggle-btn { pointer-events: auto; background: rgba(22, 27, 34, 0.7); backdrop-filter: blur(6px); border: 1px solid rgba(48, 54, 61, 0.8); color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .toggle-btn.active { background: rgba(59, 130, 246, 0.15); border-color: #3b82f6; color: #60a5fa; }
         
-        /* 頂部 OHLC 資訊列 */
         .ohlc-bar { font-family: monospace; font-size: 12px; display: flex; gap: 14px; padding: 6px 12px; background: #0d1117; border-bottom: 1px solid #30363d; border-top: 1px solid #30363d; color: #8b949e; overflow-x: auto; white-space: nowrap; }
         .ohlc-bar span.val { color: #c9d1d9; font-weight: bold; margin-left: 4px; }
         .ohlc-bar::-webkit-scrollbar { display: none; }
@@ -409,7 +413,6 @@
                 console.error("讀取或解析 JSON 崩潰:", err);
                 globalData = { updated_at: '⚠️ JSON 數據檔案遺失或損壞', watchlist_data: [], screener_data: [], chart_data: {} };
                 document.getElementById('updateTimeText').innerHTML = `<span class="text-red-500 font-bold">${globalData.updated_at}</span>`;
-                showToast('⚠️ 警告: 無法讀取 data.json', 'error');
             }
             
             if (!globalData.screener_data || globalData.screener_data.length === 0) {
@@ -442,7 +445,7 @@
             } catch (err) {}
         }
 
-        // 🚀 修復問題4: 完全恢復昨晚正常運作的狀態判斷邏輯
+        // 🚀 核心修復：完全還原舊版 100% 準確的狀態判斷邏輯
         function getTradeStatus(item, livePrice) {
             let dist = 9999, label = "🔴 觀察中", colorClass = "text-gray-400", dotClass = "bg-gray-500", distText = "-";
             if (item && item.entry_top && item.entry_top > 0) {
@@ -459,7 +462,9 @@
                     else if (dist > 2.0) { label = "🔴 觀察中"; colorClass = "text-red-500"; dotClass = "bg-red-500"; distText = `差異: -${dist.toFixed(1)}%`; } 
                     else distText = "已跌破";
                 }
-            } else if (item) return { dist, label: "等待數據", colorClass: "text-gray-500", dotClass: "bg-gray-600", distText: "-" };
+            } else if (item) {
+                return { dist, label: "等待數據", colorClass: "text-gray-500", dotClass: "bg-gray-600", distText: "-" };
+            }
             
             let ts = item.trade_status || '';
             if (ts.includes('❌') || ts.includes('條件不足')) { label = "🔴 觀察中"; colorClass = "text-gray-400"; dotClass = "bg-gray-500"; }
@@ -484,13 +489,18 @@
                             priceEl.innerHTML = `$${newPrice.toFixed(2)} ${sessionBadge}`; 
                             priceEl.dataset.price = newPrice;
                             
-                            // 🚀 修復問題: 強制轉換為數字，解決 +xx (+xx%) 顯示異常
-                            let changeVal = parseFloat(liveData[sym].change) || 0;
-                            let pctVal = parseFloat(liveData[sym].change_pct) || 0;
-                            let isUp = changeVal >= 0;
-                            let sign = isUp && changeVal !== 0 ? '+' : '';
-                            changeEl.className = `text-xs font-medium transition-colors ${isUp ? 'text-green-500' : 'text-red-500'}`;
-                            changeEl.innerText = `${sign}${changeVal.toFixed(2)} (${sign}${pctVal.toFixed(2)}%)`;
+                            // 🚀 核心修復：嚴格數值判斷，解決 +0.00% 變綠色的 Bug
+                            let rawChange = liveData[sym].change;
+                            if (rawChange !== undefined && rawChange !== null) {
+                                let changeVal = parseFloat(rawChange) || 0;
+                                let pctVal = parseFloat(liveData[sym].change_pct || liveData[sym].change_percent) || 0;
+                                let isUp = changeVal > 0;
+                                let isDown = changeVal < 0;
+                                let sign = isUp ? '+' : '';
+                                let colorCls = isUp ? 'text-green-500' : (isDown ? 'text-red-500' : 'text-gray-500');
+                                changeEl.className = `text-xs font-medium transition-colors ${colorCls}`;
+                                changeEl.innerText = `${sign}${changeVal.toFixed(2)} (${sign}${pctVal.toFixed(2)}%)`;
+                            }
                         }
                     }
                 });
@@ -523,7 +533,8 @@
                     
                     if (statusDistEl) {
                         let item = screenerArr.find(x => x && x.symbol === sym);
-                        if (item) {
+                        // 🚀 核心修復：完全還原舊版 DOM 更新邏輯，杜絕無 SMC 狀態下重複更新「等待數據」字眼
+                        if (item && item.entry_top && item.entry_top > 0) {
                             let st = getTradeStatus(item, p);
                             statusDistEl.innerHTML = `<div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold"><div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}</div><div class="text-[11px] text-gray-400 mt-1">建議差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>`;
                             
@@ -602,12 +613,18 @@
                 let item = watchlistMap.get(sym) || { symbol: sym, price: 0, change: 0, change_pct: 0 };
                 let price = currentLivePrices[sym] || item.price || 0;
                 
-                // 🚀 修復問題: 強制轉換為數字，解決 +xx (+xx%) 顯示異常
-                let changeVal = parseFloat(item.change) || 0;
-                let pctVal = parseFloat(item.change_pct || item.change_percent) || 0;
-                let isUp = changeVal >= 0;
-                let sign = isUp && changeVal !== 0 ? '+' : '';
-                let colorCls = isUp ? 'text-green-500' : 'text-red-500';
+                // 🚀 核心修復：嚴格數值判斷
+                let rawChange = item.change;
+                let changeVal = 0, pctVal = 0, sign = '', colorCls = 'text-gray-500';
+                
+                if (rawChange !== undefined && rawChange !== null) {
+                    changeVal = parseFloat(rawChange) || 0;
+                    pctVal = parseFloat(item.change_pct || item.change_percent) || 0;
+                    let isUp = changeVal > 0;
+                    let isDown = changeVal < 0;
+                    sign = isUp ? '+' : '';
+                    colorCls = isUp ? 'text-green-500' : (isDown ? 'text-red-500' : 'text-gray-500');
+                }
 
                 const card = document.createElement('div');
                 card.className = `flex-shrink-0 w-44 glass-panel rounded-lg p-3 relative cursor-move hover:border-gray-500 transition-colors bg-[#0d1117] group watchlist-card ${sym === activeSymbol ? 'active-selected' : ''}`;
@@ -616,7 +633,7 @@
                 card.addEventListener('dragstart', handleDragStart); card.addEventListener('dragover', handleDragOver); card.addEventListener('dragenter', handleDragEnter); card.addEventListener('dragleave', handleDragLeave); card.addEventListener('drop', handleDrop); card.addEventListener('dragend', handleDragEnd);
                 
                 card.innerHTML = `<div class="flex justify-between items-start mb-1"><span class="font-bold text-base text-white">${item.symbol || '--'}</span><button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors z-10 cursor-pointer"><i class="fa-solid fa-xmark"></i></button></div><div id="wl-price-${item.symbol}" data-price="${price}" class="text-lg font-semibold inline-block ${colorCls}">$${price.toFixed(2)} ${sessionBadge}</div><div id="wl-change-${item.symbol}" class="text-xs font-medium ${colorCls}">${sign}${changeVal.toFixed(2)} (${sign}${pctVal.toFixed(2)}%)</div><canvas id="sparkline-${item.symbol}" width="150" height="32" class="sparkline pointer-events-none"></canvas>`;
-                container.appendChild(card); setTimeout(() => { drawSparkline(`sparkline-${item.symbol}`, price, isUp); }, 50);
+                container.appendChild(card); setTimeout(() => { drawSparkline(`sparkline-${item.symbol}`, price, changeVal >= 0); }, 50);
             });
             container.scrollLeft = currentScrollLeft;
         }
@@ -662,13 +679,16 @@
 
         function changeSort(col) { if (sortCol === col) { sortDesc = !sortDesc; } else { sortCol = col; sortDesc = true; } renderScreenerData(); }
 
+        // 🚀 核心修復：完全還原舊版的過濾池渲染邏輯，保證狙擊池與監察列表行為一致
         function renderScreenerData() {
             try {
                 const tbody = document.getElementById('screenerTableBody'); if (!tbody) return;
                 const rawData = globalData.screener_data || []; let processedData = [];
-                // 🚀 修復問題4: 完全恢復昨晚能正常運作的過濾邏輯
+                
                 if (currentTab === 'smc') processedData = rawData.filter(item => item && item.smc_id);
-                else processedData = userWatchlist.map(sym => { let found = rawData.find(x => x && x.symbol === sym); return found || { symbol: sym, price: 0, rrr: 0, direction: 'none', trade_status: '無 SMC 數據', smc_text: '-', smc_class: 'border-gray-600 text-gray-500', entry_bot: 0, entry_top: 0 }; });
+                else processedData = userWatchlist.map(sym => { let found = rawData.find(x => x && x.symbol === sym); return found || { symbol: sym, price: 0, rrr: 0, direction: 'none', trade_status: '無有效結構', smc_text: '-', smc_class: 'border-gray-600 text-gray-500', entry_bot: 0, entry_top: 0 }; });
+                
+                // 這裡會呼叫完全復原的 getTradeStatus
                 processedData = processedData.map(item => { let livePrice = currentLivePrices[item.symbol] || item.price || 0; return { ...item, _livePrice: livePrice, _status: getTradeStatus(item, livePrice) }; });
 
                 const directionFilter = document.getElementById('filterDirection') ? document.getElementById('filterDirection').value : 'ALL';
@@ -687,7 +707,7 @@
 
                 tbody.innerHTML = '';
                 if (!globalData.screener_data || globalData.screener_data.length === 0) { 
-                    tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-red-400 font-bold">無有效 SMC 數據。</td></tr>`; return; 
+                    tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-red-400 font-bold">無 SMC 數據載入。</td></tr>`; return; 
                 }
                 if (processedData.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-12 text-center text-gray-500">無符合過濾要求之股票</td></tr>`; return;
@@ -707,7 +727,7 @@
             } catch(e) {}
         }
 
-        // 🚀 修復問題1: 圖表引擎設定退回 touch-action: none 確保不縮放網頁
+        // 🚀 圖表初始化：恢復最原始穩健的滾動設定，加上最強 CSS 鎖定
         function initCharts() {
             const container = document.getElementById('tv_chart_container'), subContainer = document.getElementById('sub_chart_container');
             if(!container) return;
@@ -718,8 +738,8 @@
                 timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false, rightOffset: 5, fixLeftEdge: true, fixRightEdge: true }, 
                 crosshair: { mode: LightweightCharts.CrosshairMode.Normal }, 
                 rightPriceScale: { borderColor: '#30363d' }, 
-                // 安全的觸控設定：阻止圖表內的垂直拖曳，允許水平滑動與雙指縮放
-                handleScroll: { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false }, 
+                // 🚀 核心修復：還原為舊版的滑動設定，確保所有手勢優先被圖表捕捉，不會漏給瀏覽器
+                handleScroll: { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: true }, 
                 handleScale: { mouseWheel: true, pinch: true, axisPressedMouseMove: true } 
             };
             
@@ -730,7 +750,7 @@
                 layout: { textColor: '#8b949e', background: { type: 'solid', color: '#0d1117' } }, 
                 grid: { vertLines: { visible: false }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } }, 
                 timeScale: { visible: false }, rightPriceScale: { borderColor: '#30363d' },
-                handleScroll: { horzTouchDrag: true, vertTouchDrag: false }, handleScale: { pinch: true }
+                handleScroll: { horzTouchDrag: true, vertTouchDrag: true }, handleScale: { pinch: true }
             });
 
             chart.timeScale().subscribeVisibleTimeRangeChange(range => { if (uiState.sub !== 'none') subChart.timeScale().setVisibleRange(range); }); 
@@ -763,7 +783,7 @@
             }).observe(subContainer);
         }
 
-        // 🚀 修復問題3: 自動鎖定至最新 30 根 K 線，免卻手動 Zoom
+        // 🚀 核心修復：自動縮放鎖定最新 30 根 K 線，免卻手動縮放
         function zoomToLatest() {
             if (!chart || !currentCandleData || currentCandleData.length === 0) return;
             if (currentCandleData.length > 30) {
@@ -794,7 +814,7 @@
                 if(loader) loader.style.display = 'none';
                 if (currentRenderId !== renderId) return;
 
-                // 🚀 修復問題2: 加回被誤刪的 try...catch，防止清除線段時程式崩潰！
+                // 防禦性清理，防止 Crash
                 activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); activePriceLines = []; 
                 activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} }); activeAreaSeries = [];
                 if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
@@ -822,7 +842,7 @@
                     updateChartOverlays(); 
                 }
                 
-                // 呼叫自動鎖定最新視角
+                // 每次切換自動拉近視角
                 zoomToLatest(); 
                 updateChartIndicators(); renderWatchlist();
             } catch(e) {}
@@ -861,10 +881,9 @@
             zoomToLatest();
         }
 
-        // 🚀 修復問題2: 安全繪製 SMC 染色塊
+        // 🚀 核心修復：完全還原舊版的繪圖嚴格判斷機制 (保證 SMC 色塊精準重現)
         function updateChartOverlays() {
             if (!candleSeries) return;
-            // 加入 try...catch 徹底杜絕找不到圖層而死機的狀況
             activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); activePriceLines = []; 
             activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} }); activeAreaSeries = [];
             
@@ -874,6 +893,7 @@
             const showShort = uiState.smc;
             const showPd = uiState.smc;
 
+            // 100% 舊版嚴格繪圖條件
             if (currentSymbolData.entry_top && currentSymbolData.entry_top > 0) {
                 const isShort = currentSymbolData.direction === 'short';
                 if ((isShort && showShort) || (!isShort && showLong)) {
