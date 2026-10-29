@@ -48,7 +48,6 @@
         .watchlist-card { border: 1px solid #30363d; transition: all 0.2s ease-in-out; }
         .watchlist-card.active-selected { border: 2px solid #3b82f6 !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
         
-        /* 🚀 圖表防護區：禁用原生縮放 */
         #tv_chart_container, #sub_chart_container { 
             touch-action: none !important; 
             -webkit-user-select: none; 
@@ -57,12 +56,10 @@
             position: relative; 
         }
         
-        /* 透明膠囊按鈕 */
         .chart-overlay-toggles { position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; gap: 8px; flex-wrap: wrap; pointer-events: none; }
         .toggle-btn { pointer-events: auto; background: rgba(22, 27, 34, 0.7); backdrop-filter: blur(6px); border: 1px solid rgba(48, 54, 61, 0.8); color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .toggle-btn.active { background: rgba(59, 130, 246, 0.15); border-color: #3b82f6; color: #60a5fa; }
         
-        /* 頂部 OHLC 資訊列 */
         .ohlc-bar { font-family: monospace; font-size: 12px; display: flex; gap: 14px; padding: 6px 12px; background: #0d1117; border-bottom: 1px solid #30363d; border-top: 1px solid #30363d; color: #8b949e; overflow-x: auto; white-space: nowrap; }
         .ohlc-bar span.val { color: #c9d1d9; font-weight: bold; margin-left: 4px; }
         .ohlc-bar::-webkit-scrollbar { display: none; }
@@ -321,7 +318,11 @@
     </div>
 
     <script>
-        const VERCEL_API_URL = "http://127.0.0.1:5000/api/quote";
+        // 🚀 智慧雙模切換：在家本機自動用富途(0延遲)，上傳到 GitHub 或出門在外自動用雲端 API
+        const VERCEL_API_URL = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+            ? "http://127.0.0.1:5000/api/quote"
+            : "https://stock-live-api.vercel.app/api/quote";
+        
         const TARGET_INDICES_MAP = { 'SPY': '標普 500', 'QQQ': '納斯達克', 'DIA': '道瓊斯', 'IWM': '羅素 2000', 'SMH': '半導體', 'XLK': '科技板塊' };
         const TARGET_INDICES = Object.keys(TARGET_INDICES_MAP);
 
@@ -401,16 +402,14 @@
 
         async function loadJSONData() {
             try {
-                let response = await fetch('data.json?t=' + new Date().getTime());
-                if (!response.ok) {
-                    response = await fetch('https://raw.githubusercontent.com/singfeehily/us-stock-tracker/main/data.json?t=' + new Date().getTime());
-                }
+                const response = await fetch('https://raw.githubusercontent.com/singfeehily/us-stock-tracker/main/data.json?t=' + new Date().getTime());
                 if (!response.ok) throw new Error('Data file missing');
                 const rawText = await response.text();
                 const safeText = rawText.replace(/NaN/g, 'null').replace(/Infinity/g, 'null').replace(/-Infinity/g, 'null');
                 globalData = JSON.parse(safeText);
                 document.getElementById('updateTimeText').innerHTML = `SMC 運算時間: <span class="text-green-400">${globalData.updated_at || '最新'} (HKT)</span>`;
             } catch (err) {
+                console.error("抓取 SMC 數據失敗:", err);
                 globalData = { updated_at: '⚠️ JSON 數據檔案遺失或損壞', watchlist_data: [], screener_data: [], chart_data: {} };
                 document.getElementById('updateTimeText').innerHTML = `<span class="text-red-500 font-bold">${globalData.updated_at}</span>`;
             }
@@ -729,14 +728,12 @@
                 layout: { textColor: '#8b949e', background: { type: 'solid', color: '#0d1117' } }, 
                 grid: { vertLines: { visible: false }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } }, 
                 
-                // 🚀 美東時區設定
                 localization: {
                     timeFormatter: (time) => {
                         return new Date(time * 1000).toLocaleString('zh-HK', { timeZone: 'America/New_York', hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
                     }
                 },
                 
-                // 🚀 富途智慧刻度邏輯
                 timeScale: { 
                     borderColor: '#30363d', 
                     timeVisible: currentTimeFrame !== '1D', 
@@ -1020,7 +1017,6 @@
                 const btn = document.getElementById('tf_'+t); 
                 if(btn) { btn.className = (t===tf) ? "px-3 py-0.5 text-xs font-bold rounded bg-[#30363d] text-white shadow-sm transition-colors" : "px-3 py-0.5 text-xs font-bold rounded text-gray-400 hover:text-white transition-colors"; } 
             }); 
-            // 🚀 動態切換日線時間刻度的顯示
             if (chart) { chart.timeScale().applyOptions({ timeVisible: tf !== '1D' }); }
             const curSym = document.getElementById('currentChartSymbol'); 
             if(curSym && curSym.innerText !== '--') updateChartSymbol(curSym.innerText); 
