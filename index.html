@@ -48,8 +48,8 @@
         .watchlist-card { border: 1px solid #30363d; transition: all 0.2s ease-in-out; }
         .watchlist-card.active-selected { border: 2px solid #3b82f6 !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
         
-        /* 🚀 修正：允許上下滑動網頁 (pan-y)，攔截水平滑動，防止雙指縮放破版 */
-        #tv_chart_container, #sub_chart_container { touch-action: pan-y; overflow: hidden; position: relative; }
+        /* 🚀 修復問題1: 退回 touch-action: none 確保圖表能捕捉雙指縮放，不放大整個網頁 */
+        #tv_chart_container, #sub_chart_container { touch-action: none; overflow: hidden; position: relative; }
         
         /* 富途風格：透明膠囊按鈕 */
         .chart-overlay-toggles { position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; gap: 8px; flex-wrap: wrap; pointer-events: none; }
@@ -114,7 +114,6 @@
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
             <div class="xl:col-span-1 flex flex-col gap-6">
                 
-                <!-- 🚀 富途風格：大改版圖表區 -->
                 <div class="glass-panel rounded-xl flex flex-col relative overflow-hidden">
                     <div class="px-4 py-3 bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('chartContent', 'chartIcon')">
                         <span class="font-semibold text-white flex items-center"><i class="fa-solid fa-display text-purple-400 mr-2"></i>SMC 作戰區間圖</span>
@@ -125,8 +124,6 @@
                     </div>
                     
                     <div id="chartContent" class="collapsible-content flex flex-col" style="max-height: 800px;">
-                        
-                        <!-- 扁平化時間週期切換列 -->
                         <div class="flex justify-between items-center px-3 py-2 bg-[#0d1117] border-t border-[#30363d]">
                             <div class="flex bg-[#161b22] rounded p-1 border border-[#30363d]">
                                 <button onclick="changeTimeFrame('15m')" id="tf_15m" class="px-3 py-0.5 text-xs font-bold rounded text-gray-400 hover:text-white transition-colors">15m</button>
@@ -135,7 +132,6 @@
                             </div>
                         </div>
 
-                        <!-- 🚀 中文化 OHLC 資訊列 -->
                         <div class="ohlc-bar" id="ohlcBar">
                             <div>開<span class="val" id="valO">--</span></div>
                             <div>高<span class="val" id="valH">--</span></div>
@@ -145,10 +141,8 @@
                             <div class="ml-auto text-blue-500/80 font-bold text-[10px] mt-0.5"><i class="fa-solid fa-arrows-left-right mr-1"></i>滑動看歷史</div>
                         </div>
 
-                        <!-- 🚀 主圖表與內嵌透明按鈕 -->
                         <div id="tv_chart_container" style="height: 380px; width: 100%;">
                             <div id="chartLoader"><i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-3xl"></i></div>
-                            <!-- 透明按鈕群 -->
                             <div class="chart-overlay-toggles">
                                 <button class="toggle-btn active" id="btn_smc" onclick="toggleOverlay('smc')"><i class="fa-solid fa-layer-group mr-1"></i>SMC 區間</button>
                                 <button class="toggle-btn active" id="btn_signal" onclick="toggleOverlay('signal')"><i class="fa-solid fa-fire text-orange-500 mr-1"></i>AI 信號</button>
@@ -157,14 +151,12 @@
                             </div>
                         </div>
 
-                        <!-- 副圖表頂部控制列 -->
                         <div class="px-2 py-1.5 bg-[#161b22] border-t border-b border-[#30363d] flex gap-2 overflow-x-auto custom-scrollbar">
                             <button class="text-[11px] font-bold px-3 py-1 rounded text-gray-400 bg-[#0d1117] border border-[#30363d] whitespace-nowrap transition-colors" id="btn_rsi" onclick="toggleSubChart('rsi')">RSI</button>
                             <button class="text-[11px] font-bold px-3 py-1 rounded text-gray-400 bg-[#0d1117] border border-[#30363d] whitespace-nowrap transition-colors" id="btn_macd" onclick="toggleSubChart('macd')">MACD</button>
                             <button class="text-[11px] font-bold px-3 py-1 rounded text-red-400 bg-red-900/20 border border-red-900/50 whitespace-nowrap transition-colors ml-auto" id="btn_hide_sub" onclick="toggleSubChart('none')" style="display:none;">隱藏副圖</button>
                         </div>
 
-                        <!-- 副圖表容器 -->
                         <div id="sub_chart_container" style="height: 120px; width: 100%; display: none;"></div>
                     </div>
                 </div>
@@ -322,8 +314,6 @@
         </div>
     </div>
 
-    <div id="toast-container"></div>
-    
     <script>
         const VERCEL_API_URL = "https://stock-live-api.vercel.app/api/quote";
         const TARGET_INDICES_MAP = { 'SPY': '標普 500', 'QQQ': '納斯達克', 'DIA': '道瓊斯', 'IWM': '羅素 2000', 'SMH': '半導體', 'XLK': '科技板塊' };
@@ -340,7 +330,7 @@
         let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null;
         let subIndicatorSeries = null, macdLineSeries = null, macdSignalSeries = null, macdHistSeries = null;
         
-        // 🚀 富途 UI 狀態控制
+        // 富途 UI 狀態控制
         let uiState = { smc: true, signal: true, ema: false, boll: false, sub: 'none' };
 
         let activePriceLines = [], currentPriceLine = null, activeAreaSeries = []; 
@@ -351,7 +341,6 @@
         let titleInterval;
         let originalTitle = document.title;
 
-        // 導航列滑動隱藏
         let lastScrollY = window.scrollY;
         window.addEventListener('scroll', () => {
             const header = document.getElementById('mainHeader');
@@ -409,6 +398,7 @@
             try {
                 let response = await fetch('data.json?t=' + new Date().getTime());
                 if (!response.ok) {
+                    console.warn("本地讀取失敗，啟動 GitHub 雲端備援...");
                     response = await fetch('https://raw.githubusercontent.com/singfeehily/us-stock-tracker/main/data.json?t=' + new Date().getTime());
                 }
                 if (!response.ok) throw new Error('Data file missing');
@@ -416,8 +406,8 @@
                 const safeText = rawText.replace(/NaN/g, 'null').replace(/Infinity/g, 'null').replace(/-Infinity/g, 'null');
                 globalData = JSON.parse(safeText);
                 document.getElementById('updateTimeText').innerHTML = `SMC 運算時間: <span class="text-green-400">${globalData.updated_at || '最新'} (HKT)</span>`;
-                
             } catch (err) {
+                console.error("讀取或解析 JSON 崩潰:", err);
                 globalData = { updated_at: '⚠️ JSON 數據檔案遺失或損壞', watchlist_data: [], screener_data: [], chart_data: {} };
                 document.getElementById('updateTimeText').innerHTML = `<span class="text-red-500 font-bold">${globalData.updated_at}</span>`;
                 showToast('⚠️ 警告: 無法讀取 data.json', 'error');
@@ -705,7 +695,7 @@
             } catch(e) {}
         }
 
-        // 🚀 圖表核心設定：結合富途觸控體驗
+        // 🚀 圖表初始化 (包含縮放控制修復)
         function initCharts() {
             const container = document.getElementById('tv_chart_container'), subContainer = document.getElementById('sub_chart_container');
             if(!container) return;
@@ -716,9 +706,8 @@
                 timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false, rightOffset: 5, fixLeftEdge: true, fixRightEdge: true }, 
                 crosshair: { mode: LightweightCharts.CrosshairMode.Normal }, 
                 rightPriceScale: { borderColor: '#30363d' }, 
-                // 🚀 解鎖單指導航：關閉垂直觸控拖曳 (讓瀏覽器接管上下滑動)，允許水平拖曳與滑鼠操作
+                // 🚀 修復問題1: 恢復標準觸控行為，確保能完美擷取雙指縮放
                 handleScroll: { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false }, 
-                // 🚀 保留雙指縮放
                 handleScale: { mouseWheel: true, pinch: true, axisPressedMouseMove: true } 
             };
             
@@ -735,14 +724,11 @@
             chart.timeScale().subscribeVisibleTimeRangeChange(range => { if (uiState.sub !== 'none') subChart.timeScale().setVisibleRange(range); }); 
             subChart.timeScale().subscribeVisibleTimeRangeChange(range => { if (uiState.sub !== 'none') chart.timeScale().setVisibleRange(range); });
             
-            // 🚀 連動中文化 OHLC 資訊列 (含漲跌幅計算)
             chart.subscribeCrosshairMove(param => { 
                 if (!param.time || !param.seriesData.get(candleSeries)) return;
                 const data = param.seriesData.get(candleSeries);
                 const isUp = data.close >= data.open;
                 const color = isUp ? '#4ade80' : '#f87171';
-                
-                // 計算單根 K 線實體漲跌幅
                 const pct = (((data.close - data.open) / data.open) * 100).toFixed(2);
                 const sign = pct > 0 ? '+' : '';
 
@@ -754,12 +740,25 @@
             });
 
             new ResizeObserver(entries => { 
-                if (container.clientWidth > 0) chart.applyOptions({ width: container.clientWidth, height: container.clientHeight }); 
+                if (container.clientWidth > 0) {
+                    chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+                    zoomToLatest();
+                }
                 if (subContainer.clientWidth > 0 && uiState.sub !== 'none') subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight }); 
             }).observe(container);
             new ResizeObserver(() => { 
                 if(subContainer.clientWidth > 0 && uiState.sub !== 'none') subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight }); 
             }).observe(subContainer);
+        }
+
+        // 🚀 修復問題3: 自動鎖定至最新 50 根 K 線的視角函數
+        function zoomToLatest() {
+            if (!chart || !currentCandleData || currentCandleData.length === 0) return;
+            if (currentCandleData.length > 50) {
+                chart.timeScale().setVisibleLogicalRange({ from: currentCandleData.length - 50, to: currentCandleData.length + 3 });
+            } else {
+                chart.timeScale().fitContent();
+            }
         }
 
         async function updateChartSymbol(symbol) {
@@ -792,7 +791,6 @@
                     if (livePrice) { let lastCandle = currentCandleData[currentCandleData.length - 1]; lastCandle.close = livePrice; if (livePrice > lastCandle.high) lastCandle.high = livePrice; if (livePrice < lastCandle.low) lastCandle.low = livePrice; }
                     candleSeries.setData(currentCandleData);
                     
-                    // 初始化最新 K 線到頂部資訊列
                     const last = currentCandleData[currentCandleData.length - 1];
                     const isUp = last.close >= last.open;
                     const color = isUp ? '#4ade80' : '#f87171';
@@ -810,11 +808,13 @@
                     currentPriceLine = candleSeries.createPriceLine({ price: currentSymbolData.price || 0, color: '#ffffff', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: 'Live Price' }); 
                     updateChartOverlays(); 
                 }
-                chart.timeScale().fitContent(); updateChartIndicators(); renderWatchlist();
+                
+                // 🚀 修復問題3: 自動鎖定至最新數據，不再強制全部展開
+                zoomToLatest(); 
+                updateChartIndicators(); renderWatchlist();
             } catch(e) {}
         }
 
-        // 🚀 透明膠囊按鈕邏輯切換
         function toggleOverlay(type) {
             uiState[type] = !uiState[type];
             const btn = document.getElementById(`btn_${type}`);
@@ -845,27 +845,36 @@
                 subChart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
             }
             updateChartIndicators();
+            zoomToLatest();
         }
 
+        // 🚀 修復問題2: 安全地讀取 uiState.smc 來決定是否畫出 FVG/OB 染色塊
         function updateChartOverlays() {
             if (!candleSeries) return;
             activePriceLines.forEach(line => candleSeries.removePriceLine(line)); activePriceLines = [];
             activeAreaSeries.forEach(s => chart.removeSeries(s)); activeAreaSeries = [];
             
-            if (!currentSymbolData || !uiState.smc) return;
+            if (!currentSymbolData) return;
+
+            // 完全改用 uiState，移除對舊版 checkbox HTML 元素的依賴
+            const showLong = uiState.smc;
+            const showShort = uiState.smc;
+            const showPd = uiState.smc;
 
             if (currentSymbolData.entry_top && currentSymbolData.entry_top > 0) {
                 const isShort = currentSymbolData.direction === 'short';
-                const fvgColor = isShort ? 'rgba(239, 68, 68, 0.2)' : 'rgba(34, 197, 94, 0.2)', obColor = isShort ? 'rgba(239, 68, 68, 0.4)' : 'rgba(34, 197, 94, 0.4)', lineColor = isShort ? 'rgba(239, 68, 68, 0.6)' : 'rgba(34, 197, 94, 0.6)', slLineColor = '#ef4444', tpLineColor = '#10b981';
-                let fvgSeries = chart.addAreaSeries({ baseValue: { type: 'price', price: currentSymbolData.entry_bot }, topColor: fvgColor, bottomColor: fvgColor, lineColor: 'rgba(0,0,0,0)', lineWidth: 0, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null }); fvgSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top }))); activeAreaSeries.push(fvgSeries);
-                let obBasePrice = isShort ? currentSymbolData.entry_top : currentSymbolData.entry_bot;
-                let obSeries = chart.addAreaSeries({ baseValue: { type: 'price', price: obBasePrice }, topColor: obColor, bottomColor: obColor, lineColor: 'rgba(0,0,0,0)', lineWidth: 0, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null }); obSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.sl }))); activeAreaSeries.push(obSeries);
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ FVG' }));
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '📦 OB' }));
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.sl, color: slLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '🚨 SL' }));
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.tp, color: tpLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: '🎯 TP' }));
+                if ((isShort && showShort) || (!isShort && showLong)) {
+                    const fvgColor = isShort ? 'rgba(239, 68, 68, 0.2)' : 'rgba(34, 197, 94, 0.2)', obColor = isShort ? 'rgba(239, 68, 68, 0.4)' : 'rgba(34, 197, 94, 0.4)', lineColor = isShort ? 'rgba(239, 68, 68, 0.6)' : 'rgba(34, 197, 94, 0.6)', slLineColor = '#ef4444', tpLineColor = '#10b981';
+                    let fvgSeries = chart.addAreaSeries({ baseValue: { type: 'price', price: currentSymbolData.entry_bot }, topColor: fvgColor, bottomColor: fvgColor, lineColor: 'rgba(0,0,0,0)', lineWidth: 0, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null }); fvgSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top }))); activeAreaSeries.push(fvgSeries);
+                    let obBasePrice = isShort ? currentSymbolData.entry_top : currentSymbolData.entry_bot;
+                    let obSeries = chart.addAreaSeries({ baseValue: { type: 'price', price: obBasePrice }, topColor: obColor, bottomColor: obColor, lineColor: 'rgba(0,0,0,0)', lineWidth: 0, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false, autoscaleInfoProvider: () => null }); obSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.sl }))); activeAreaSeries.push(obSeries);
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: lineColor, lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ FVG' }));
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: lineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '📦 OB' }));
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.sl, color: slLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '🚨 SL' }));
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.tp, color: tpLineColor, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: '🎯 TP' }));
+                }
             }
-            if (currentSymbolData.macro_eq) {
+            if (showPd && currentSymbolData.macro_eq) {
                 activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '➖ 0.5 均衡' }));
             }
         }
@@ -945,17 +954,6 @@
         function addCustomStock(e) { e.preventDefault(); const input = document.getElementById('searchInput'); if(!input) return; const val = input.value.trim().toUpperCase(); if(!val) return; if (userWatchlist.includes(val)) { showToast(`股票 ${val} 已經在自選清單中`, 'error'); input.value = ''; return; } userWatchlist.unshift(val); saveWatchlist(); renderWatchlist(); renderScreenerData(); try { fetchLiveQuotes(); } catch(err){} showToast(`成功加入自選: ${val}`); input.value = ''; }
         function removeFromWatchlist(event, sym) { event.stopPropagation(); userWatchlist = userWatchlist.filter(s => s !== sym); saveWatchlist(); if(currentLivePrices[sym]) delete currentLivePrices[sym]; renderWatchlist(); renderScreenerData(); showToast(`已從自選移除: ${sym}`, 'error'); }
         function toggleSection(cId, iId) { const c = document.getElementById(cId), i = document.getElementById(iId); if(c) { c.classList.toggle('collapsed'); if (!c.classList.contains('collapsed') && cId === 'chartContent') { setTimeout(() => { if (chart) chart.timeScale().fitContent(); }, 350); } } if(i) i.classList.toggle('rotate-180'); }
-        
-        function showToast(msg, type='success') { 
-            const c = document.getElementById('toast-container'); if(!c) return;
-            const t = document.createElement('div'); 
-            let typeClass = type; if (['error', 'info', 'success'].includes(type)) typeClass = type === 'error' ? 'error' : (type === 'info' ? 'info' : 'success');
-            t.className = `toast ${typeClass}`; 
-            let iconClass = 'fa-check-circle'; if(type === 'error') iconClass = 'fa-trash'; else if(type === 'info') iconClass = 'fa-circle-info'; else if(type === 'signal-long') iconClass = 'fa-rocket'; else if(type === 'signal-short') iconClass = 'fa-arrow-trend-down';
-            t.innerHTML = `<i class="fa-solid ${iconClass} mr-2"></i> ${msg}`; 
-            c.appendChild(t); setTimeout(() => t.classList.add('show'), 10); 
-            let duration = type.includes('signal') ? 8000 : (type === 'info' ? 4000 : 3000); setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, duration); 
-        }
         
         function changeTimeFrame(tf) { currentTimeFrame = tf; ['15m','4H','1D'].forEach(t => { const btn = document.getElementById('tf_'+t); if(btn) { btn.className = (t===tf) ? "px-3 py-0.5 text-xs font-bold rounded bg-[#30363d] text-white shadow-sm transition-colors" : "px-3 py-0.5 text-xs font-bold rounded text-gray-400 hover:text-white transition-colors"; } }); const curSym = document.getElementById('currentChartSymbol'); if(curSym && curSym.innerText !== '--') updateChartSymbol(curSym.innerText); }
         function openSMCModal() { const m = document.getElementById('smcModal'); if(m) m.style.display = 'flex'; }
