@@ -48,15 +48,12 @@
         .watchlist-card { border: 1px solid #30363d; transition: all 0.2s ease-in-out; }
         .watchlist-card.active-selected { border: 2px solid #3b82f6 !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
         
-        /* 🚀 修復問題1: 退回 touch-action: none 確保圖表能捕捉雙指縮放，不放大整個網頁 */
         #tv_chart_container, #sub_chart_container { touch-action: none; overflow: hidden; position: relative; }
         
-        /* 富途風格：透明膠囊按鈕 */
         .chart-overlay-toggles { position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; gap: 8px; flex-wrap: wrap; pointer-events: none; }
         .toggle-btn { pointer-events: auto; background: rgba(22, 27, 34, 0.7); backdrop-filter: blur(6px); border: 1px solid rgba(48, 54, 61, 0.8); color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .toggle-btn.active { background: rgba(59, 130, 246, 0.15); border-color: #3b82f6; color: #60a5fa; }
         
-        /* 富途風格：頂部 OHLC 資訊列 */
         .ohlc-bar { font-family: monospace; font-size: 12px; display: flex; gap: 14px; padding: 6px 12px; background: #0d1117; border-bottom: 1px solid #30363d; border-top: 1px solid #30363d; color: #8b949e; overflow-x: auto; white-space: nowrap; }
         .ohlc-bar span.val { color: #c9d1d9; font-weight: bold; margin-left: 4px; }
         .ohlc-bar::-webkit-scrollbar { display: none; }
@@ -443,6 +440,7 @@
             } catch (err) {}
         }
 
+        // 🚀 修復問題：正確處理「無 SMC 區間」的狀態，不再誤導為「等待數據」
         function getTradeStatus(item, livePrice) {
             let dist = 9999, label = "🔴 觀察中", colorClass = "text-gray-400", dotClass = "bg-gray-500", distText = "-";
             if (item && item.entry_top && item.entry_top > 0) {
@@ -459,11 +457,15 @@
                     else if (dist > 2.0) { label = "🔴 觀察中"; colorClass = "text-red-500"; dotClass = "bg-red-500"; distText = `差異: -${dist.toFixed(1)}%`; } 
                     else distText = "已跌破";
                 }
-            } else if (item) return { dist, label: "等待數據", colorClass: "text-gray-500", dotClass: "bg-gray-600", distText: "-" };
+                return { dist, label, colorClass, dotClass, distText };
+            } 
             
-            let ts = item.trade_status || '';
-            if (ts.includes('❌') || ts.includes('條件不足')) { label = "🔴 觀察中"; colorClass = "text-gray-400"; dotClass = "bg-gray-500"; }
-            return { dist, label, colorClass, dotClass, distText };
+            // 如果 item 不存在，才是真正的等待數據
+            if (!item) return { dist, label: "等待數據", colorClass: "text-gray-500", dotClass: "bg-gray-600", distText: "載入中" };
+            
+            // 如果存在但沒有 entry_top (即沒有找到 SMC 機會)，直接顯示後端判斷的結果
+            let ts = item.trade_status || '無有效結構';
+            return { dist, label: "🔴 觀察中", colorClass: "text-gray-500", dotClass: "bg-gray-600", distText: ts };
         }
 
         function updateLiveUI(liveData, currentSymbol) {
@@ -519,7 +521,7 @@
                     
                     if (statusDistEl) {
                         let item = screenerArr.find(x => x && x.symbol === sym);
-                        if (item && item.entry_top > 0) {
+                        if (item) {
                             let st = getTradeStatus(item, p);
                             statusDistEl.innerHTML = `<div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold"><div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}</div><div class="text-[11px] text-gray-400 mt-1">建議差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>`;
                             
@@ -656,7 +658,7 @@
                 const tbody = document.getElementById('screenerTableBody'); if (!tbody) return;
                 const rawData = globalData.screener_data || []; let processedData = [];
                 if (currentTab === 'smc') processedData = rawData.filter(item => item && item.smc_id);
-                else processedData = userWatchlist.map(sym => { let found = rawData.find(x => x && x.symbol === sym); return found || { symbol: sym, price: 0, rrr: 0, direction: 'none', trade_status: '無 SMC 數據', smc_text: '-', smc_class: 'border-gray-600 text-gray-500', entry_bot: 0, entry_top: 0 }; });
+                else processedData = userWatchlist.map(sym => { let found = rawData.find(x => x && x.symbol === sym); return found || { symbol: sym, price: 0, rrr: 0, direction: 'none', trade_status: '今日無SMC信號', smc_text: '-', smc_class: 'border-gray-600 text-gray-500', entry_bot: 0, entry_top: 0 }; });
                 processedData = processedData.map(item => { let livePrice = currentLivePrices[item.symbol] || item.price || 0; return { ...item, _livePrice: livePrice, _status: getTradeStatus(item, livePrice) }; });
 
                 const directionFilter = document.getElementById('filterDirection') ? document.getElementById('filterDirection').value : 'ALL';
@@ -695,7 +697,7 @@
             } catch(e) {}
         }
 
-        // 🚀 圖表初始化 (包含縮放控制修復)
+        // 🚀 圖表初始化：鎖定整網頁放大，並正確載入視角
         function initCharts() {
             const container = document.getElementById('tv_chart_container'), subContainer = document.getElementById('sub_chart_container');
             if(!container) return;
@@ -706,7 +708,7 @@
                 timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false, rightOffset: 5, fixLeftEdge: true, fixRightEdge: true }, 
                 crosshair: { mode: LightweightCharts.CrosshairMode.Normal }, 
                 rightPriceScale: { borderColor: '#30363d' }, 
-                // 🚀 修復問題1: 恢復標準觸控行為，確保能完美擷取雙指縮放
+                // 恢復標準觸控行為，防止觸發瀏覽器原生的全網頁縮放
                 handleScroll: { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false }, 
                 handleScale: { mouseWheel: true, pinch: true, axisPressedMouseMove: true } 
             };
@@ -751,7 +753,7 @@
             }).observe(subContainer);
         }
 
-        // 🚀 修復問題3: 自動鎖定至最新 50 根 K 線的視角函數
+        // 🚀 修復問題3: 自動鎖定至最新視角
         function zoomToLatest() {
             if (!chart || !currentCandleData || currentCandleData.length === 0) return;
             if (currentCandleData.length > 50) {
@@ -809,7 +811,6 @@
                     updateChartOverlays(); 
                 }
                 
-                // 🚀 修復問題3: 自動鎖定至最新數據，不再強制全部展開
                 zoomToLatest(); 
                 updateChartIndicators(); renderWatchlist();
             } catch(e) {}
@@ -848,7 +849,7 @@
             zoomToLatest();
         }
 
-        // 🚀 修復問題2: 安全地讀取 uiState.smc 來決定是否畫出 FVG/OB 染色塊
+        // 🚀 修復問題2: 安全地呼叫 uiState.smc 來渲染圖表染色塊
         function updateChartOverlays() {
             if (!candleSeries) return;
             activePriceLines.forEach(line => candleSeries.removePriceLine(line)); activePriceLines = [];
@@ -856,7 +857,6 @@
             
             if (!currentSymbolData) return;
 
-            // 完全改用 uiState，移除對舊版 checkbox HTML 元素的依賴
             const showLong = uiState.smc;
             const showShort = uiState.smc;
             const showPd = uiState.smc;
