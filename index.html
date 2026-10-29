@@ -48,12 +48,15 @@
         .watchlist-card { border: 1px solid #30363d; transition: all 0.2s ease-in-out; }
         .watchlist-card.active-selected { border: 2px solid #3b82f6 !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
         
+        /* 圖表防護區 (防網頁縮放) */
         #tv_chart_container, #sub_chart_container { touch-action: none; overflow: hidden; position: relative; }
         
+        /* 透明膠囊按鈕 */
         .chart-overlay-toggles { position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; gap: 8px; flex-wrap: wrap; pointer-events: none; }
         .toggle-btn { pointer-events: auto; background: rgba(22, 27, 34, 0.7); backdrop-filter: blur(6px); border: 1px solid rgba(48, 54, 61, 0.8); color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .toggle-btn.active { background: rgba(59, 130, 246, 0.15); border-color: #3b82f6; color: #60a5fa; }
         
+        /* 頂部 OHLC 資訊列 */
         .ohlc-bar { font-family: monospace; font-size: 12px; display: flex; gap: 14px; padding: 6px 12px; background: #0d1117; border-bottom: 1px solid #30363d; border-top: 1px solid #30363d; color: #8b949e; overflow-x: auto; white-space: nowrap; }
         .ohlc-bar span.val { color: #c9d1d9; font-weight: bold; margin-left: 4px; }
         .ohlc-bar::-webkit-scrollbar { display: none; }
@@ -327,7 +330,6 @@
         let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null;
         let subIndicatorSeries = null, macdLineSeries = null, macdSignalSeries = null, macdHistSeries = null;
         
-        // 富途 UI 狀態控制
         let uiState = { smc: true, signal: true, ema: false, boll: false, sub: 'none' };
 
         let activePriceLines = [], currentPriceLine = null, activeAreaSeries = []; 
@@ -440,7 +442,7 @@
             } catch (err) {}
         }
 
-        // 🚀 修復問題：正確處理「無 SMC 區間」的狀態，不再誤導為「等待數據」
+        // 🚀 修復問題4: 完全恢復昨晚正常運作的狀態判斷邏輯
         function getTradeStatus(item, livePrice) {
             let dist = 9999, label = "🔴 觀察中", colorClass = "text-gray-400", dotClass = "bg-gray-500", distText = "-";
             if (item && item.entry_top && item.entry_top > 0) {
@@ -457,15 +459,11 @@
                     else if (dist > 2.0) { label = "🔴 觀察中"; colorClass = "text-red-500"; dotClass = "bg-red-500"; distText = `差異: -${dist.toFixed(1)}%`; } 
                     else distText = "已跌破";
                 }
-                return { dist, label, colorClass, dotClass, distText };
-            } 
+            } else if (item) return { dist, label: "等待數據", colorClass: "text-gray-500", dotClass: "bg-gray-600", distText: "-" };
             
-            // 如果 item 不存在，才是真正的等待數據
-            if (!item) return { dist, label: "等待數據", colorClass: "text-gray-500", dotClass: "bg-gray-600", distText: "載入中" };
-            
-            // 如果存在但沒有 entry_top (即沒有找到 SMC 機會)，直接顯示後端判斷的結果
-            let ts = item.trade_status || '無有效結構';
-            return { dist, label: "🔴 觀察中", colorClass: "text-gray-500", dotClass: "bg-gray-600", distText: ts };
+            let ts = item.trade_status || '';
+            if (ts.includes('❌') || ts.includes('條件不足')) { label = "🔴 觀察中"; colorClass = "text-gray-400"; dotClass = "bg-gray-500"; }
+            return { dist, label, colorClass, dotClass, distText };
         }
 
         function updateLiveUI(liveData, currentSymbol) {
@@ -486,9 +484,13 @@
                             priceEl.innerHTML = `$${newPrice.toFixed(2)} ${sessionBadge}`; 
                             priceEl.dataset.price = newPrice;
                             
-                            const isUp = (liveData[sym].change || 0) >= 0;
+                            // 🚀 修復問題: 強制轉換為數字，解決 +xx (+xx%) 顯示異常
+                            let changeVal = parseFloat(liveData[sym].change) || 0;
+                            let pctVal = parseFloat(liveData[sym].change_pct) || 0;
+                            let isUp = changeVal >= 0;
+                            let sign = isUp && changeVal !== 0 ? '+' : '';
                             changeEl.className = `text-xs font-medium transition-colors ${isUp ? 'text-green-500' : 'text-red-500'}`;
-                            changeEl.innerText = `${isUp ? '+' : ''}${(liveData[sym].change||0)} (${isUp ? '+' : ''}${(liveData[sym].change_pct||0)}%)`;
+                            changeEl.innerText = `${sign}${changeVal.toFixed(2)} (${sign}${pctVal.toFixed(2)}%)`;
                         }
                     }
                 });
@@ -599,15 +601,22 @@
             userWatchlist.forEach(sym => {
                 let item = watchlistMap.get(sym) || { symbol: sym, price: 0, change: 0, change_pct: 0 };
                 let price = currentLivePrices[sym] || item.price || 0;
-                const isPositive = (item.change || 0) >= 0;
+                
+                // 🚀 修復問題: 強制轉換為數字，解決 +xx (+xx%) 顯示異常
+                let changeVal = parseFloat(item.change) || 0;
+                let pctVal = parseFloat(item.change_pct || item.change_percent) || 0;
+                let isUp = changeVal >= 0;
+                let sign = isUp && changeVal !== 0 ? '+' : '';
+                let colorCls = isUp ? 'text-green-500' : 'text-red-500';
+
                 const card = document.createElement('div');
                 card.className = `flex-shrink-0 w-44 glass-panel rounded-lg p-3 relative cursor-move hover:border-gray-500 transition-colors bg-[#0d1117] group watchlist-card ${sym === activeSymbol ? 'active-selected' : ''}`;
                 card.onclick = () => updateChartSymbol(item.symbol);
                 card.draggable = true; card.dataset.symbol = item.symbol;
                 card.addEventListener('dragstart', handleDragStart); card.addEventListener('dragover', handleDragOver); card.addEventListener('dragenter', handleDragEnter); card.addEventListener('dragleave', handleDragLeave); card.addEventListener('drop', handleDrop); card.addEventListener('dragend', handleDragEnd);
                 
-                card.innerHTML = `<div class="flex justify-between items-start mb-1"><span class="font-bold text-base text-white">${item.symbol || '--'}</span><button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors z-10 cursor-pointer"><i class="fa-solid fa-xmark"></i></button></div><div id="wl-price-${item.symbol}" data-price="${price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}">$${price.toFixed(2)} ${sessionBadge}</div><div id="wl-change-${item.symbol}" class="text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}">${isPositive && item.change !== 0 ? '+' : ''}${item.change||0} (${isPositive && item.change_pct !== 0 ? '+' : ''}${item.change_pct||0}%)</div><canvas id="sparkline-${item.symbol}" width="150" height="32" class="sparkline pointer-events-none"></canvas>`;
-                container.appendChild(card); setTimeout(() => { drawSparkline(`sparkline-${item.symbol}`, price, isPositive); }, 50);
+                card.innerHTML = `<div class="flex justify-between items-start mb-1"><span class="font-bold text-base text-white">${item.symbol || '--'}</span><button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors z-10 cursor-pointer"><i class="fa-solid fa-xmark"></i></button></div><div id="wl-price-${item.symbol}" data-price="${price}" class="text-lg font-semibold inline-block ${colorCls}">$${price.toFixed(2)} ${sessionBadge}</div><div id="wl-change-${item.symbol}" class="text-xs font-medium ${colorCls}">${sign}${changeVal.toFixed(2)} (${sign}${pctVal.toFixed(2)}%)</div><canvas id="sparkline-${item.symbol}" width="150" height="32" class="sparkline pointer-events-none"></canvas>`;
+                container.appendChild(card); setTimeout(() => { drawSparkline(`sparkline-${item.symbol}`, price, isUp); }, 50);
             });
             container.scrollLeft = currentScrollLeft;
         }
@@ -657,8 +666,9 @@
             try {
                 const tbody = document.getElementById('screenerTableBody'); if (!tbody) return;
                 const rawData = globalData.screener_data || []; let processedData = [];
+                // 🚀 修復問題4: 完全恢復昨晚能正常運作的過濾邏輯
                 if (currentTab === 'smc') processedData = rawData.filter(item => item && item.smc_id);
-                else processedData = userWatchlist.map(sym => { let found = rawData.find(x => x && x.symbol === sym); return found || { symbol: sym, price: 0, rrr: 0, direction: 'none', trade_status: '今日無SMC信號', smc_text: '-', smc_class: 'border-gray-600 text-gray-500', entry_bot: 0, entry_top: 0 }; });
+                else processedData = userWatchlist.map(sym => { let found = rawData.find(x => x && x.symbol === sym); return found || { symbol: sym, price: 0, rrr: 0, direction: 'none', trade_status: '無 SMC 數據', smc_text: '-', smc_class: 'border-gray-600 text-gray-500', entry_bot: 0, entry_top: 0 }; });
                 processedData = processedData.map(item => { let livePrice = currentLivePrices[item.symbol] || item.price || 0; return { ...item, _livePrice: livePrice, _status: getTradeStatus(item, livePrice) }; });
 
                 const directionFilter = document.getElementById('filterDirection') ? document.getElementById('filterDirection').value : 'ALL';
@@ -697,7 +707,7 @@
             } catch(e) {}
         }
 
-        // 🚀 圖表初始化：鎖定整網頁放大，並正確載入視角
+        // 🚀 修復問題1: 圖表引擎設定退回 touch-action: none 確保不縮放網頁
         function initCharts() {
             const container = document.getElementById('tv_chart_container'), subContainer = document.getElementById('sub_chart_container');
             if(!container) return;
@@ -708,7 +718,7 @@
                 timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false, rightOffset: 5, fixLeftEdge: true, fixRightEdge: true }, 
                 crosshair: { mode: LightweightCharts.CrosshairMode.Normal }, 
                 rightPriceScale: { borderColor: '#30363d' }, 
-                // 恢復標準觸控行為，防止觸發瀏覽器原生的全網頁縮放
+                // 安全的觸控設定：阻止圖表內的垂直拖曳，允許水平滑動與雙指縮放
                 handleScroll: { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: false }, 
                 handleScale: { mouseWheel: true, pinch: true, axisPressedMouseMove: true } 
             };
@@ -753,11 +763,11 @@
             }).observe(subContainer);
         }
 
-        // 🚀 修復問題3: 自動鎖定至最新視角
+        // 🚀 修復問題3: 自動鎖定至最新 30 根 K 線，免卻手動 Zoom
         function zoomToLatest() {
             if (!chart || !currentCandleData || currentCandleData.length === 0) return;
-            if (currentCandleData.length > 50) {
-                chart.timeScale().setVisibleLogicalRange({ from: currentCandleData.length - 50, to: currentCandleData.length + 3 });
+            if (currentCandleData.length > 30) {
+                chart.timeScale().setVisibleLogicalRange({ from: currentCandleData.length - 30, to: currentCandleData.length + 2 });
             } else {
                 chart.timeScale().fitContent();
             }
@@ -784,6 +794,7 @@
                 if(loader) loader.style.display = 'none';
                 if (currentRenderId !== renderId) return;
 
+                // 🚀 修復問題2: 加回被誤刪的 try...catch，防止清除線段時程式崩潰！
                 activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); activePriceLines = []; 
                 activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} }); activeAreaSeries = [];
                 if(currentPriceLine) { try{ candleSeries.removePriceLine(currentPriceLine); } catch(e){} currentPriceLine = null; }
@@ -811,6 +822,7 @@
                     updateChartOverlays(); 
                 }
                 
+                // 呼叫自動鎖定最新視角
                 zoomToLatest(); 
                 updateChartIndicators(); renderWatchlist();
             } catch(e) {}
@@ -849,11 +861,12 @@
             zoomToLatest();
         }
 
-        // 🚀 修復問題2: 安全地呼叫 uiState.smc 來渲染圖表染色塊
+        // 🚀 修復問題2: 安全繪製 SMC 染色塊
         function updateChartOverlays() {
             if (!candleSeries) return;
-            activePriceLines.forEach(line => candleSeries.removePriceLine(line)); activePriceLines = [];
-            activeAreaSeries.forEach(s => chart.removeSeries(s)); activeAreaSeries = [];
+            // 加入 try...catch 徹底杜絕找不到圖層而死機的狀況
+            activePriceLines.forEach(line => { try{ candleSeries.removePriceLine(line); } catch(e){} }); activePriceLines = []; 
+            activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} }); activeAreaSeries = [];
             
             if (!currentSymbolData) return;
 
