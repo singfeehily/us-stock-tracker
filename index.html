@@ -2,20 +2,28 @@
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 修正問題4: 鎖死整個網頁的雙指縮放，確保只縮放圖表 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>美股狙擊器 (PRO LIVE)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
-        .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); }
+        .glass-panel { background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; backdrop-filter: blur(10px); isolation: isolate; }
+        
+        /* 修正問題1: 導航列滑動隱藏動畫 */
+        #mainHeader { transition: transform 0.3s ease-in-out; }
         
         ::-webkit-scrollbar { width: 12px; height: 12px; }
         ::-webkit-scrollbar-track { background: #0d1117; border-radius: 6px; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 6px; border: 2px solid #0d1117; }
         ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
-        .custom-scrollbar::-webkit-scrollbar { height: 12px; } 
+        
+        /* 修正問題5: 加粗並增強底部表格滑動條對比度 */
+        .custom-scrollbar::-webkit-scrollbar { height: 16px; width: 16px; } 
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #6b7280; border: 3px solid #0d1117; border-radius: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:active { background: #9ca3af; }
 
         #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 50; display: flex; flex-direction: column; gap: 10px; }
         .toast { padding: 12px 20px; border-radius: 8px; color: white; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.5); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
@@ -45,6 +53,9 @@
         .pd-track { background: linear-gradient(to right, #166534 0%, #166534 49%, #4b5563 49%, #4b5563 51%, #991b1b 51%, #991b1b 100%); }
         .watchlist-card { border: 1px solid #30363d; transition: all 0.2s ease-in-out; }
         .watchlist-card.active-selected { border: 2px solid #3b82f6 !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
+        
+        /* 修正問題4 & 6: 限制觸控動作，並裁剪邊界防止綠色染色塊溢出 */
+        #tv_chart_container, #sub_chart_container { touch-action: none; overflow: hidden; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative">
@@ -201,7 +212,17 @@
                                             <option value="RED">🔴 觀察中</option>
                                         </select>
                                     </th>
-                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">形態</th>
+                                    <!-- 修正問題8: 加回形態 Filter -->
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">
+                                        形態
+                                        <select id="filterStructure" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none focus:border-blue-500">
+                                            <option value="ALL">全部</option>
+                                            <option value="SS">SS級共振</option>
+                                            <option value="SWEEP">Sweep (掃損)</option>
+                                            <option value="CHOCH">CHoCH</option>
+                                            <option value="BOS">BOS</option>
+                                        </select>
+                                    </th>
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center cursor-pointer hover:text-white group" onclick="changeSort('rrr')">R:R <i class="fa-solid fa-sort text-gray-600 group-hover:text-blue-400 transition-colors ml-1"></i></th>
                                     <th class="px-4 py-3 font-medium text-blue-400 text-right">建議入場區</th>
                                     <th class="px-4 py-3 font-medium text-gray-400 text-center">溢價/折價 (P/D Matrix)</th>
@@ -282,8 +303,6 @@
         </div>
     </div>
 
-    <div id="toast-container"></div>
-    
     <script>
         const VERCEL_API_URL = "https://stock-live-api.vercel.app/api/quote";
         const TARGET_INDICES_MAP = { 'SPY': '標普 500', 'QQQ': '納斯達克', 'DIA': '道瓊斯', 'IWM': '羅素 2000', 'SMH': '半導體', 'XLK': '科技板塊' };
@@ -308,6 +327,19 @@
         let titleInterval;
         let originalTitle = document.title;
 
+        // 修正問題1: 監聽滑動事件以隱藏/顯示導航列
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (!header) return;
+            if (window.scrollY > lastScrollY && window.scrollY > 80) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            lastScrollY = window.scrollY;
+        }, { passive: true });
+
         function flashTitle(msg) {
             clearInterval(titleInterval);
             let showOriginal = false;
@@ -316,7 +348,21 @@
             document.addEventListener('click', stopFlash);
         }
 
+        // 修正問題2: 初始化 Search Bar 的自動完成建議清單
+        function initSearchSuggestions() {
+            const stockList = ['AAPL', 'MSFT', 'NVDA', 'GOOGL', 'AMZN', 'META', 'TSLA', 'SPY', 'QQQ', 'AMD', 'NFLX', 'BABA', 'PLTR', 'SMCI', 'AVGO'];
+            const datalist = document.getElementById('stock-suggestions');
+            if(datalist) {
+                stockList.forEach(sym => {
+                    const opt = document.createElement('option');
+                    opt.value = sym;
+                    datalist.appendChild(opt);
+                });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
+            initSearchSuggestions();
             try { initCharts(); } catch (e) { console.error("Chart Error", e); }
             try { await loadJSONData(); } catch (e) { console.error("Data Error", e); }
             try { startSmartPolling(); fetchLiveQuotes(); } catch (e) { console.error("Live Error", e); }
@@ -464,14 +510,16 @@
                 const screenerArr = globalData.screener_data || [];
                 for (let sym in liveData) {
                     let p = liveData[sym].price || 0;
-                    const priceColEl = document.getElementById(`screener-price-${sym}`);
                     const statusDistEl = document.getElementById(`status-dist-${sym}`);
+                    const priceColEl = document.getElementById(`screener-price-${sym}`);
                     
                     if (priceColEl) { priceColEl.innerHTML = `$${p.toFixed(2)}<div class="mt-1">${sessionBadge}</div>`; }
+                    
                     if (statusDistEl) {
                         let item = screenerArr.find(x => x && x.symbol === sym);
                         if (item && item.entry_top > 0) {
                             let st = getTradeStatus(item, p);
+                            // 修正問題7: 將 id 置於父節點 <td>，避免疊字
                             statusDistEl.innerHTML = `<div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold"><div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}</div><div class="text-[11px] text-gray-400 mt-1">建議差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div>`;
                             
                             let prevLabel = prevStatusMap[sym];
@@ -480,11 +528,9 @@
                                 const actionText = isShort ? '做空' : '做多';
                                 const toastType = isShort ? 'signal-short' : 'signal-long';
                                 
-                                // 1. 觸發視覺通知
                                 showToast(`🚨 狙擊警報: ${sym} 已進入 ${actionText} 區間，已自動記錄至日誌！`, toastType); 
                                 flashTitle(`🚨 ${sym} ${actionText}信號!`);
                                 
-                                // 2. 背景自動發送資料到 Google Sheets
                                 const webhookUrl = "https://script.google.com/macros/s/AKfycbwlkmQEaC6BRQBr3A925Kyp7snf-0iUu56Ly6ojUNNIOVxYEBioeI_fIKxG8SpiOQAR/exec"; 
                                 
                                 fetch(webhookUrl, {
@@ -549,7 +595,12 @@
         function handleDragEnd(e) { this.classList.remove('dragging'); document.querySelectorAll('#watchlistContainer > div').forEach(c => c.classList.remove('drag-over')); }
 
         function renderWatchlist() {
-            const container = document.getElementById('watchlistContainer'); if (!container) return; container.innerHTML = '';
+            const container = document.getElementById('watchlistContainer'); if (!container) return; 
+            
+            // 修正問題3: 儲存當前的橫向捲動位置
+            const currentScrollLeft = container.scrollLeft;
+            container.innerHTML = '';
+            
             const watchlistMap = new Map();
             if (globalData && Array.isArray(globalData.watchlist_data)) globalData.watchlist_data.forEach(item => { if (item && item.symbol) watchlistMap.set(item.symbol, item); });
             const session = getMarketSession(), sessionBadge = `<span class="ml-1 text-[10px] px-1 py-0.5 rounded border ${session.style}">${session.text}</span>`;
@@ -568,6 +619,9 @@
                 card.innerHTML = `<div class="flex justify-between items-start mb-1"><span class="font-bold text-base text-white">${item.symbol || '--'}</span><button type="button" onclick="removeFromWatchlist(event, '${item.symbol}')" class="text-gray-400 hover:text-red-400 text-sm p-1 transition-colors z-10 cursor-pointer"><i class="fa-solid fa-xmark"></i></button></div><div id="wl-price-${item.symbol}" data-price="${price}" class="text-lg font-semibold inline-block ${isPositive ? 'text-green-500' : 'text-red-500'}">$${price.toFixed(2)} ${sessionBadge}</div><div id="wl-change-${item.symbol}" class="text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}">${isPositive && item.change !== 0 ? '+' : ''}${item.change||0} (${isPositive && item.change_pct !== 0 ? '+' : ''}${item.change_pct||0}%)</div><canvas id="sparkline-${item.symbol}" width="150" height="32" class="sparkline pointer-events-none"></canvas>`;
                 container.appendChild(card); setTimeout(() => { drawSparkline(`sparkline-${item.symbol}`, price, isPositive); }, 50);
             });
+            
+            // 修正問題3: 渲染完畢後，恢復先前的橫向捲動位置
+            container.scrollLeft = currentScrollLeft;
         }
 
         function updateIntelligencePanel(symbol, symbolData, livePriceOverride = null) {
@@ -625,6 +679,13 @@
                 const statusFilter = document.getElementById('filterStatus') ? document.getElementById('filterStatus').value : 'ALL';
                 if (statusFilter === 'GREEN') processedData = processedData.filter(item => item._status.label === '🟢 可執行'); else if (statusFilter === 'YELLOW') processedData = processedData.filter(item => item._status.label === '🟡 接近中'); else if (statusFilter === 'RED') processedData = processedData.filter(item => item._status.label === '🔴 觀察中');
 
+                // 修正問題8: 實作「形態」下拉選單的過濾邏輯
+                const structFilter = document.getElementById('filterStructure') ? document.getElementById('filterStructure').value : 'ALL';
+                if (structFilter === 'SS') processedData = processedData.filter(item => item.confluence === true);
+                else if (structFilter === 'SWEEP') processedData = processedData.filter(item => item.smc_text && item.smc_text.toLowerCase().includes('sweep'));
+                else if (structFilter === 'CHOCH') processedData = processedData.filter(item => item.smc_text && item.smc_text.toLowerCase().includes('choch'));
+                else if (structFilter === 'BOS') processedData = processedData.filter(item => item.smc_text && item.smc_text.toLowerCase().includes('bos'));
+
                 if (currentTab === 'smc') processedData.sort((a, b) => { let valA = parseFloat(a[sortCol]) || 0, valB = parseFloat(b[sortCol]) || 0; return sortDesc ? (valB - valA) : (valA - valB); });
 
                 tbody.innerHTML = '';
@@ -646,7 +707,8 @@
                     if (!prevStatusMap[item.symbol] && st.label) prevStatusMap[item.symbol] = st.label;
                     let pdVal = item.pd_percent !== undefined ? item.pd_percent : 50, pdDotColor = pdVal > 50 ? '#ef4444' : '#22c55e';
                     let smcHtml = item.confluence ? `<span class="px-2 py-1 rounded text-xs font-semibold border border-yellow-300 text-yellow-300 bg-yellow-900/30 flex items-center justify-center whitespace-nowrap"><i class="fa-solid fa-crown mr-1"></i>SS級 共振</span>` : `<span class="px-2 py-1 rounded text-xs font-semibold border ${item.smc_class || 'border-gray-600 text-gray-400'} whitespace-nowrap">${item.smc_text || '-'}</span>`;
-                    tr.innerHTML = `<td class="px-4 py-3"><div class="flex items-center gap-1.5 font-bold text-white">${item.symbol || '--'}</div></td><td class="px-4 py-3 text-right font-mono font-bold text-gray-200" id="screener-price-${item.symbol}">$${item._livePrice.toFixed(2)}<br><div class="mt-1">${sessionBadge}</div></td><td class="px-4 py-3"><div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold" id="status-dist-${item.symbol}"><div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}</div><div class="text-[11px] text-gray-400 mt-1">建議差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div></td><td class="px-4 py-3 text-center">${smcHtml}</td><td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td><td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot || 0} - $${item.entry_top || 0}</td><td class="px-4 py-3 align-middle"><div class="w-full max-w-[140px] mx-auto flex flex-col gap-1"><div class="flex justify-between text-[10px] text-gray-400"><span>Discount</span><span>0.5 均衡</span><span>Premium</span></div><div class="relative w-full h-1.5 rounded-full pd-track"><div class="absolute top-[-3px] w-3 h-3 rounded-full border border-white z-10 shadow-sm transition-all duration-300" style="left: calc(${pdVal}% - 6px); background-color: ${pdDotColor};"></div><div class="absolute left-1/2 top-[-2px] w-px h-2.5 bg-gray-300 z-0"></div></div></div></td>`;
+                    // 修正問題7: 將 id="status-dist-..." 放在 td 層級，防止自動更新時疊字
+                    tr.innerHTML = `<td class="px-4 py-3"><div class="flex items-center gap-1.5 font-bold text-white">${item.symbol || '--'}</div></td><td class="px-4 py-3 text-right font-mono font-bold text-gray-200" id="screener-price-${item.symbol}">$${item._livePrice.toFixed(2)}<br><div class="mt-1">${sessionBadge}</div></td><td class="px-4 py-3" id="status-dist-${item.symbol}"><div class="flex items-center gap-1.5 ${st.colorClass} text-sm font-semibold"><div class="w-2 h-2 rounded-full ${st.dotClass}"></div> ${st.label}</div><div class="text-[11px] text-gray-400 mt-1">建議差異: <span class="${st.distText.includes('-')?'text-red-400':''}">${st.distText}</span></div></td><td class="px-4 py-3 text-center">${smcHtml}</td><td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td><td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot || 0} - $${item.entry_top || 0}</td><td class="px-4 py-3 align-middle"><div class="w-full max-w-[140px] mx-auto flex flex-col gap-1"><div class="flex justify-between text-[10px] text-gray-400"><span>Discount</span><span>0.5 均衡</span><span>Premium</span></div><div class="relative w-full h-1.5 rounded-full pd-track"><div class="absolute top-[-3px] w-3 h-3 rounded-full border border-white z-10 shadow-sm transition-all duration-300" style="left: calc(${pdVal}% - 6px); background-color: ${pdDotColor};"></div><div class="absolute left-1/2 top-[-2px] w-px h-2.5 bg-gray-300 z-0"></div></div></div></td>`;
                     tbody.appendChild(tr);
                 });
             } catch(e) {}
