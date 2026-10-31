@@ -6,24 +6,21 @@ import yfinance as yf
 from datetime import datetime
 
 # ==========================================
-# 動態讀取監控名單 (支援註解與空行過濾)
+# 動態讀取 tickers.txt 核心監測名單
 # ==========================================
 def load_symbols(filename="tickers.txt"):
     symbols = []
     if not os.path.exists(filename):
         print(f"⚠️ 找不到 {filename}，使用預設名單。")
-        return ["SPY", "QQQ", "AAPL", "NVDA"]
+        return ["SPY", "QQQ", "AAPL", "NVDA", "TSLA"]
         
     with open(filename, "r", encoding="utf-8") as f:
         for line in f:
-            # 提取 '#' 之前的文字，去除首尾空白並轉大寫
             clean_line = line.split('#')[0].strip().upper()
             if clean_line:
                 symbols.append(clean_line)
                 
-    # 移除重複代號，保留原始排列順序
-    unique_symbols = list(dict.fromkeys(symbols))
-    return unique_symbols
+    return list(dict.fromkeys(symbols))
 
 SYMBOLS = load_symbols()
 
@@ -32,14 +29,16 @@ def get_market_data(symbol: str):
         ticker = yf.Ticker(symbol)
         df_1d = ticker.history(period="3mo", interval="1d")
         df_1h = ticker.history(period="1mo", interval="1h")
+        df_15m = ticker.history(period="5d", interval="15m")
+        df_4h = ticker.history(period="2mo", interval="1h") # 可近似模擬或以1h聚合
         if df_1d.empty or len(df_1d) < 20:
-            return None, None
-        return df_1d, df_1h
+            return None, None, None, None
+        return df_1d, df_1h, df_15m, df_4h
     except Exception as e:
         print(f"[{symbol}] 數據抓取失敗: {e}")
-        return None, None
+        return None, None, None, None
 
-def calculate_smc(symbol: str, df_1d: pd.DataFrame, df_1h: pd.DataFrame):
+def calculate_smc(symbol: str, df_1d: pd.DataFrame, df_1h: pd.DataFrame, df_15m: pd.DataFrame, df_4h: pd.DataFrame):
     try:
         current_price = round(float(df_1d['Close'].iloc[-1]), 2)
         prev_close = round(float(df_1d['Close'].iloc[-2]), 2)
@@ -100,6 +99,7 @@ def calculate_smc(symbol: str, df_1d: pd.DataFrame, df_1h: pd.DataFrame):
         status_color = "text-green-400 font-bold" if in_zone else ("text-yellow-400" if near_zone else "text-gray-400")
         inv_text = f"區間 ${entry_bot} - ${entry_top}，嚴格防守 ${sl}。" if in_zone else "等待價格進入戰略區間。"
 
+        # 打包各週期 K 線 (支援 1D, 1H, 15m, 4H 靜態基底精算)
         kline_1d = []
         for idx, row in df_1d.tail(60).iterrows():
             kline_1d.append({"time": idx.strftime("%Y-%m-%d"), "open": round(row['Open'],2), "high": round(row['High'],2), "low": round(row['Low'],2), "close": round(row['Close'],2)})
@@ -109,6 +109,16 @@ def calculate_smc(symbol: str, df_1d: pd.DataFrame, df_1h: pd.DataFrame):
             for idx, row in df_1h.tail(120).iterrows():
                 kline_1h.append({"time": int(idx.timestamp()), "open": round(row['Open'],2), "high": round(row['High'],2), "low": round(row['Low'],2), "close": round(row['Close'],2)})
 
+        kline_15m = []
+        if df_15m is not None and not df_15m.empty:
+            for idx, row in df_15m.tail(150).iterrows():
+                kline_15m.append({"time": int(idx.timestamp()), "open": round(row['Open'],2), "high": round(row['High'],2), "low": round(row['Low'],2), "close": round(row['Close'],2)})
+
+        kline_4h = []
+        if df_4h is not None and not df_4h.empty:
+            for idx, row in df_4h.tail(100).iterrows():
+                kline_4h.append({"time": int(idx.timestamp()), "open": round(row['Open'],2), "high": round(row['High'],2), "low": round(row['Low'],2), "close": round(row['Close'],2)})
+
         summary = {
             "symbol": symbol, "price": current_price, "change": change, "change_pct": change_pct,
             "dist_20ma": dist_20ma, "macro_bsl": macro_bsl, "macro_ssl": macro_ssl, "macro_eq": macro_eq,
@@ -117,13 +127,13 @@ def calculate_smc(symbol: str, df_1d: pd.DataFrame, df_1h: pd.DataFrame):
             "smc_text": smc_text, "smc_class": smc_class, "trade_status": trade_status, 
             "status_color": status_color, "inv_text": inv_text
         }
-        return summary, kline_1d, kline_1h
+        return summary, kline_1d, kline_1h, kline_15m, kline_4h
     except Exception as e:
         print(f"[{symbol}] SMC 計算出錯: {e}")
-        return None, [], []
+        return None, [], [], [], []
 
 def main():
-    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 開始執行終極量化掃描 (共 {len(SYMBOLS)} 檔標的)...")
+    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 開始執行 70 檔標的精算掃描...")
     
     screener_list = []
     watchlist_list = []
@@ -131,16 +141,22 @@ def main():
 
     for sym in SYMBOLS:
         print(f"-> 分析 {sym}...", end="", flush=True)
-        df_1d, df_1h = get_market_data(sym)
+        df_1d, df_1h, df_15m, df_4h = get_market_data(sym)
         if df_1d is None:
             print(" [無數據跳過]")
             continue
             
-        data, k1d, k1h = calculate_smc(sym, df_1d, df_1h)
+        data, k1d, k1h, k15m, k4h = calculate_smc(sym, df_1d, df_1h, df_15m, df_4h)
         if data:
             screener_list.append(data)
             watchlist_list.append({"symbol": sym, "price": data["price"], "change": data["change"], "change_pct": data["change_pct"]})
-            stocks_dict[sym] = {"summary": data, "kline": k1d, "kline_1h": k1h}
+            stocks_dict[sym] = {
+                "summary": data, 
+                "kline": k1d, 
+                "kline_1h": k1h, 
+                "kline_15m": k15m, 
+                "kline_4h": k4h
+            }
             print(f" [完成: ${data['price']}]")
         else:
             print(" [計算失敗]")
@@ -155,7 +171,7 @@ def main():
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
 
-    print(f"\n✅ 掃描完成！數據已寫入 data.json")
+    print(f"\n✅ 掃描完成！70 檔數據已成功寫入 data.json")
 
 if __name__ == "__main__":
     main()
