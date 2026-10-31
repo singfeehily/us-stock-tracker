@@ -90,7 +90,7 @@
     </header>
 
     <main class="flex-grow p-3 md:p-6 flex flex-col gap-5">
-        <!-- 頂部 OpenStock 板塊熱力圖 (升級亮點 1) -->
+        <!-- 頂部 OpenStock 板塊熱力圖 -->
         <section class="glass-panel rounded-xl overflow-hidden">
             <div class="px-4 py-2.5 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('heatmapContent', 'heatmapIcon')">
                 <div class="flex items-center gap-2">
@@ -110,7 +110,7 @@
             <div class="px-4 py-2.5 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('watchlistContent', 'watchlistIcon')">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-star text-yellow-500"></i>
-                    <h2 class="text-sm font-semibold text-white">自選監察隊列 <span class="text-xs text-gray-500 font-normal ml-2">(可長按拖曳排序)</span></h2>
+                    <h2 class="text-sm font-semibold text-white">自選監察隊列 <span class="text-xs text-gray-500 font-normal ml-2">(點擊卡片切換圖表)</span></h2>
                 </div>
                 <i id="watchlistIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
             </div>
@@ -133,7 +133,7 @@
                     </div>
                     
                     <div id="chartContent" class="collapsible-content flex flex-col">
-                        <!-- 週期切換列 (包含 1H 升級) -->
+                        <!-- 週期切換列 (含 1H) -->
                         <div class="flex justify-between items-center px-3 py-2 bg-[#0d1117] border-t border-[#30363d]">
                             <div class="flex bg-[#161b22] rounded p-1 border border-[#30363d] gap-1">
                                 <button onclick="changeTimeFrame('15m')" id="tf_15m" class="px-2.5 py-0.5 text-xs font-bold rounded text-gray-400 hover:text-white transition-colors">15m</button>
@@ -153,7 +153,7 @@
                         </div>
 
                         <div id="tv_chart_container" style="height: 380px; width: 100%;">
-                            <div id="chartLoader" class="hidden absolute inset-0 bg-[#0d1117]/80 backdrop-blur-sm z-20 items-center justify-center">
+                            <div id="chartLoader" class="hidden absolute inset-0 bg-[#0d1117]/80 backdrop-blur-sm z-20 flex items-center justify-center">
                                 <i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-3xl"></i>
                             </div>
                             <div class="chart-overlay-toggles">
@@ -322,12 +322,13 @@
             
             container.innerHTML = SECTORS_CONFIG.map(item => {
                 const sData = (globalData.screener_data || []).find(x => x && x.symbol === item.sym);
-                const pct = sData ? sData.change_pct : (currentLivePrices[item.sym] ? currentLivePrices[item.sym].change_pct : 0);
+                const pct = (currentLivePrices[item.sym] && currentLivePrices[item.sym].change_pct !== undefined)
+                    ? parseFloat(currentLivePrices[item.sym].change_pct)
+                    : (sData ? parseFloat(sData.change_pct) : 0);
                 const isUp = pct >= 0;
-                // 嚴格美股標準：綠漲紅跌
                 const bgColor = isUp 
-                    ? (pct > 2 ? 'rgba(34, 197, 94, 0.4)' : 'rgba(34, 197, 94, 0.2)') 
-                    : (pct < -2 ? 'rgba(239, 68, 68, 0.4)' : 'rgba(239, 68, 68, 0.2)');
+                    ? (pct > 2 ? 'rgba(34, 197, 94, 0.45)' : 'rgba(34, 197, 94, 0.22)') 
+                    : (pct < -2 ? 'rgba(239, 68, 68, 0.45)' : 'rgba(239, 68, 68, 0.22)');
                 const textColor = isUp ? 'text-green-400' : 'text-red-400';
                 const sign = isUp ? '+' : '';
                 const isActive = item.sym === curSym ? 'active' : '';
@@ -352,18 +353,19 @@
             const curSym = document.getElementById('currentChartSymbol') ? document.getElementById('currentChartSymbol').innerText : '';
             container.innerHTML = userWatchlist.map(sym => {
                 const sData = (globalData.screener_data || []).find(x => x && x.symbol === sym) || { price: 0, change: 0, change_pct: 0 };
-                const p = currentLivePrices[sym] ? currentLivePrices[sym].price : sData.price;
-                const isUp = (sData.change_pct || 0) >= 0;
+                const p = (currentLivePrices[sym] && currentLivePrices[sym].price) ? currentLivePrices[sym].price : sData.price;
+                const pct = (currentLivePrices[sym] && currentLivePrices[sym].change_pct !== undefined) ? parseFloat(currentLivePrices[sym].change_pct) : (sData.change_pct || 0);
+                const isUp = pct >= 0;
                 const color = isUp ? 'text-green-400' : 'text-red-400';
                 const sign = isUp ? '+' : '';
                 return `
                     <div class="flex-shrink-0 w-36 glass-panel rounded-lg p-3 cursor-pointer watchlist-card ${sym === curSym ? 'active-selected' : ''}" onclick="updateChartSymbol('${sym}')">
                         <div class="flex justify-between text-xs text-gray-400 mb-1">
                             <span class="font-bold text-white text-sm">${sym}</span>
-                            <button onclick="removeFromWatchlist(event, '${sym}')" class="hover:text-red-400">×</button>
+                            <button onclick="removeFromWatchlist(event, '${sym}')" class="hover:text-red-400 text-sm">×</button>
                         </div>
                         <div class="text-base font-bold font-mono text-white">$${(p || 0).toFixed(2)}</div>
-                        <div class="text-xs font-mono ${color}">${sign}${(sData.change_pct || 0).toFixed(2)}%</div>
+                        <div class="text-xs font-mono ${color}">${sign}${(pct || 0).toFixed(2)}%</div>
                     </div>
                 `;
             }).join('');
@@ -377,8 +379,18 @@
                 list = userWatchlist.map(sym => list.find(x => x && x.symbol === sym) || { symbol: sym, price: 0, rrr: 0, trade_status: '觀察中', status_color: 'text-gray-400', entry_bot: 0, entry_top: 0 });
             }
             
+            const filterSt = document.getElementById('filterStatus') ? document.getElementById('filterStatus').value : 'ALL';
+            if (filterSt === 'GREEN') list = list.filter(x => (x.trade_status || '').includes('可執行'));
+            else if (filterSt === 'YELLOW') list = list.filter(x => (x.trade_status || '').includes('接近'));
+            else if (filterSt === 'RED') list = list.filter(x => (x.trade_status || '').includes('觀察'));
+
+            list.sort((a, b) => {
+                let va = parseFloat(a[sortCol]) || 0, vb = parseFloat(b[sortCol]) || 0;
+                return sortDesc ? (vb - va) : (va - vb);
+            });
+
             tbody.innerHTML = list.map(item => {
-                const p = currentLivePrices[item.symbol] ? currentLivePrices[item.symbol].price : item.price;
+                const p = (currentLivePrices[item.symbol] && currentLivePrices[item.symbol].price) ? currentLivePrices[item.symbol].price : item.price;
                 const pdVal = item.pd_percent !== undefined ? item.pd_percent : 50;
                 const pdColor = pdVal > 50 ? '#ef4444' : '#22c55e';
                 return `
@@ -399,6 +411,12 @@
                     </tr>
                 `;
             }).join('');
+        }
+
+        function changeSort(col) {
+            if (sortCol === col) sortDesc = !sortDesc;
+            else { sortCol = col; sortDesc = true; }
+            renderScreenerData();
         }
 
         function initCharts() {
@@ -443,36 +461,167 @@
             }).observe(container);
         }
 
-        // 戰術 HUD 幾何標記系統 (升級亮點 3：精確釘死 Bar)
+        // 戰術幾何 HUD：精確波段識別 + 冷卻期防重疊 + 繁體中文
         function getTacticalHudMarkers(data, symData) {
             let markers = [];
-            if (!data || data.length < 15) return markers;
+            if (!data || data.length < 20) return markers;
+            let lastSignalIdx = -99;
             const macroEq = symData ? symData.macro_eq : null;
 
-            for (let i = 10; i < data.length; i++) {
-                const curr = data[i];
-                const prev = data[i-1];
+            for (let i = 12; i < data.length; i++) {
+                // 冷卻防重疊機制：相隔至少 4 根 Bar
+                if (i - lastSignalIdx < 4) continue;
+
+                const curr = data[i], prev = data[i-1];
                 const isDiscount = macroEq ? curr.close < macroEq : true;
                 const isPremium = macroEq ? curr.close > macroEq : true;
+                const lookback = data.slice(Math.max(0, i-10), i);
+                const lowest = Math.min(...lookback.map(d => d.low));
+                const highest = Math.max(...lookback.map(d => d.high));
 
-                // 1. ▲ [L-SWEEP] 流動性刺穿反轉
-                if (curr.low < prev.low && curr.close > prev.close && isDiscount) {
-                    markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: '▲ [L-SWEEP]' });
+                // 1. ▲ [掃損買入]：刺穿前期局部低點後強勢收回
+                if (curr.low < lowest && curr.close > lowest && isDiscount) {
+                    markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: '▲ [掃損買入]' });
+                    lastSignalIdx = i;
                 }
-                // 2. ▲▲ [QUANT-SYNC] SS 級共振起爆
-                else if (symData && symData.confluence && curr.close > curr.open && isDiscount) {
-                    markers.push({ time: curr.time, position: 'belowBar', color: '#eab308', shape: 'arrowUp', text: '▲▲ [QUANT-SYNC]' });
+                // 2. ▲▲ [共振起爆]：回踩訂單塊並收長陽吞沒
+                else if (symData && symData.confluence && symData.entry_top && curr.low <= symData.entry_top && curr.close > prev.high && isDiscount) {
+                    markers.push({ time: curr.time, position: 'belowBar', color: '#eab308', shape: 'arrowUp', text: '▲▲ [共振起爆]' });
+                    lastSignalIdx = i;
                 }
-                // 3. ▼ [S-EXPUL] 溢價區派發
-                else if (curr.high > prev.high && curr.close < prev.close && isPremium) {
-                    markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: '▼ [S-EXPUL]' });
+                // 3. ▼ [派發減倉]：假突破前高後失守
+                else if (curr.high > highest && curr.close < highest && isPremium) {
+                    markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: '▼ [派發減倉]' });
+                    lastSignalIdx = i;
                 }
-                // 4. ▼▼ [PREM-LOCK] 溢價防守鎖
-                else if (curr.high > (symData ? symData.macro_bsl : curr.high * 1.02) && curr.close < curr.open) {
-                    markers.push({ time: curr.time, position: 'aboveBar', color: '#a855f7', shape: 'arrowDown', text: '▼▼ [PREM-LOCK]' });
+                // 4. ▼▼ [溢價防守]：大陽受阻於溢價極值頂
+                else if (symData && symData.macro_bsl && curr.high >= symData.macro_bsl * 0.995 && curr.close < curr.open && isPremium) {
+                    markers.push({ time: curr.time, position: 'aboveBar', color: '#a855f7', shape: 'arrowDown', text: '▼▼ [溢價防守]' });
+                    lastSignalIdx = i;
                 }
             }
             return markers;
+        }
+
+        // 計算技術指標
+        function calculateEMA(data, period) {
+            if(!data || data.length === 0) return [];
+            let result = [], k = 2 / (period + 1), ema = data[0].close;
+            for (let i = 0; i < data.length; i++) {
+                ema = (data[i].close - ema) * k + ema;
+                result.push({ time: data[i].time, value: parseFloat(ema.toFixed(2)) });
+            }
+            return result;
+        }
+
+        function calculateBOLL(data, period = 20, multiplier = 2) {
+            let upper = [], middle = [], lower = [];
+            if(!data || data.length < period) return { upper, middle, lower };
+            for(let i = period - 1; i < data.length; i++) {
+                const slice = data.slice(i - period + 1, i + 1);
+                const mean = slice.reduce((acc, c) => acc + c.close, 0) / period;
+                const variance = slice.reduce((acc, c) => acc + Math.pow(c.close - mean, 2), 0) / period;
+                const std = Math.sqrt(variance);
+                middle.push({ time: data[i].time, value: parseFloat(mean.toFixed(2)) });
+                upper.push({ time: data[i].time, value: parseFloat((mean + multiplier * std).toFixed(2)) });
+                lower.push({ time: data[i].time, value: parseFloat((mean - multiplier * std).toFixed(2)) });
+            }
+            return { upper, middle, lower };
+        }
+
+        function calculateRSI(data, period = 14) {
+            let result = [], gains = 0, losses = 0;
+            if(!data || data.length <= period) return result;
+            for(let i = 1; i < data.length; i++) {
+                let diff = data[i].close - data[i-1].close;
+                let g = diff > 0 ? diff : 0, l = diff < 0 ? -diff : 0;
+                if(i <= period) {
+                    gains += g; losses += l;
+                    if(i === period) {
+                        let rs = losses === 0 ? 100 : gains / losses;
+                        result.push({ time: data[i].time, value: parseFloat((100 - (100 / (1 + rs))).toFixed(2)) });
+                    }
+                } else {
+                    gains = (gains * (period - 1) + g) / period;
+                    losses = (losses * (period - 1) + l) / period;
+                    let rs = losses === 0 ? 100 : gains / losses;
+                    result.push({ time: data[i].time, value: parseFloat((100 - (100 / (1 + rs))).toFixed(2)) });
+                }
+            }
+            return result;
+        }
+
+        function calculateMACD(data) {
+            let ema12 = calculateEMA(data, 12), ema26 = calculateEMA(data, 26);
+            let macdLine = [];
+            for(let i = 0; i < data.length; i++) {
+                if(ema12[i] && ema26[i]) {
+                    macdLine.push({ time: data[i].time, value: parseFloat((ema12[i].value - ema26[i].value).toFixed(2)) });
+                }
+            }
+            let signalLine = calculateEMA(macdLine.map(m => ({ time: m.time, close: m.value })), 9);
+            let hist = [];
+            for(let i = 0; i < macdLine.length; i++) {
+                if(signalLine[i]) {
+                    let val = parseFloat((macdLine[i].value - signalLine[i].value).toFixed(2));
+                    hist.push({ time: macdLine[i].time, value: val, color: val >= 0 ? '#26a69a' : '#ef5350' });
+                }
+            }
+            return { macd: macdLine, signal: signalLine, hist };
+        }
+
+        // 更新圖表指標覆蓋層 (EMA / BOLL / 副圖)
+        function updateChartIndicators() {
+            if(!currentCandleData || currentCandleData.length === 0 || !chart) return;
+
+            // EMA (20/50)
+            if (uiState.ema) {
+                const ema20 = calculateEMA(currentCandleData, 20);
+                const ema50 = calculateEMA(currentCandleData, 50);
+                if (!ema20Series) ema20Series = chart.addLineSeries({ color: '#f59e0b', lineWidth: 1.5, title: 'EMA 20' });
+                if (!ema50Series) ema50Series = chart.addLineSeries({ color: '#8b5cf6', lineWidth: 1.5, title: 'EMA 50' });
+                ema20Series.setData(ema20);
+                ema50Series.setData(ema50);
+            } else {
+                if (ema20Series) { chart.removeSeries(ema20Series); ema20Series = null; }
+                if (ema50Series) { chart.removeSeries(ema50Series); ema50Series = null; }
+            }
+
+            // BOLL
+            if (uiState.boll) {
+                const boll = calculateBOLL(currentCandleData, 20, 2);
+                if (!bollUpperSeries) bollUpperSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.7)', lineWidth: 1, title: 'Upper' });
+                if (!bollMidSeries) bollMidSeries = chart.addLineSeries({ color: 'rgba(234, 179, 8, 0.8)', lineWidth: 1.5, title: 'Mid' });
+                if (!bollLowerSeries) bollLowerSeries = chart.addLineSeries({ color: 'rgba(59, 130, 246, 0.7)', lineWidth: 1, title: 'Lower' });
+                bollUpperSeries.setData(boll.upper);
+                bollMidSeries.setData(boll.middle);
+                bollLowerSeries.setData(boll.lower);
+            } else {
+                if (bollUpperSeries) { chart.removeSeries(bollUpperSeries); bollUpperSeries = null; }
+                if (bollMidSeries) { chart.removeSeries(bollMidSeries); bollMidSeries = null; }
+                if (bollLowerSeries) { chart.removeSeries(bollLowerSeries); bollLowerSeries = null; }
+            }
+
+            // 副圖 (RSI / MACD)
+            try {
+                if (subIndicatorSeries && subChart) { subChart.removeSeries(subIndicatorSeries); subIndicatorSeries = null; }
+                if (macdHistSeries && subChart) { subChart.removeSeries(macdHistSeries); macdHistSeries = null; }
+                if (macdLineSeries && subChart) { subChart.removeSeries(macdLineSeries); macdLineSeries = null; }
+                if (macdSignalSeries && subChart) { subChart.removeSeries(macdSignalSeries); macdSignalSeries = null; }
+            } catch(e){}
+
+            if (uiState.sub === 'rsi' && subChart) {
+                subIndicatorSeries = subChart.addLineSeries({ color: '#06b6d4', lineWidth: 1.5, title: 'RSI (14)' });
+                subIndicatorSeries.setData(calculateRSI(currentCandleData, 14));
+            } else if (uiState.sub === 'macd' && subChart) {
+                const m = calculateMACD(currentCandleData);
+                macdHistSeries = subChart.addHistogramSeries({ color: '#26a69a', title: 'Hist' });
+                macdLineSeries = subChart.addLineSeries({ color: '#2962FF', lineWidth: 1.5, title: 'MACD' });
+                macdSignalSeries = subChart.addLineSeries({ color: '#FF6D00', lineWidth: 1.5, title: 'Signal' });
+                macdHistSeries.setData(m.hist);
+                macdLineSeries.setData(m.macd);
+                macdSignalSeries.setData(m.signal);
+            }
         }
 
         async function updateChartSymbol(symbol) {
@@ -485,17 +634,31 @@
             if(loader) loader.classList.remove('hidden');
 
             let candles = [];
+            // Yahoo API 週期參數校準：1H 轉為 60m 或 1h
+            let apiInterval = currentTimeFrame.toLowerCase();
+            if (apiInterval === '1h') apiInterval = '60m';
+
             try {
-                const res = await fetch(`${VERCEL_API_URL}?symbols=${symbol}&interval=${currentTimeFrame.toLowerCase()}&t=${Date.now()}`);
+                const res = await fetch(`${VERCEL_API_URL}?symbols=${symbol}&interval=${apiInterval}&t=${Date.now()}`);
                 if (res.ok) {
                     const json = await res.json();
-                    if (json[symbol] && json[symbol].chart) candles = json[symbol].chart;
+                    if (json[symbol] && json[symbol].chart && json[symbol].chart.length > 0) {
+                        let uniqueMap = new Map();
+                        json[symbol].chart.forEach(c => uniqueMap.set(c.time, c));
+                        candles = Array.from(uniqueMap.values()).sort((a, b) => a.time - b.time);
+                    }
                 }
             } catch(e) {}
+            
+            // 雲端降級備份：若 API 無即時 K 線則嘗試使用本地數據
+            if (candles.length === 0 && globalData.stocks && globalData.stocks[symbol] && globalData.stocks[symbol].kline) {
+                candles = globalData.stocks[symbol].kline;
+            }
+
             if(loader) loader.classList.add('hidden');
             if(currentRenderId !== renderId) return;
 
-            // 清理舊畫線
+            // 清理舊標記線與著色塊
             activePriceLines.forEach(l => { try{ candleSeries.removePriceLine(l); } catch(e){} }); activePriceLines = [];
             activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} }); activeAreaSeries = [];
 
@@ -507,24 +670,50 @@
                 document.getElementById('valH').innerText = last.high.toFixed(2);
                 document.getElementById('valL').innerText = last.low.toFixed(2);
                 document.getElementById('valC').innerText = last.close.toFixed(2);
-                document.getElementById('valPct').innerText = (((last.close - last.open)/last.open)*100).toFixed(2) + '%';
+                const pct = (((last.close - last.open)/last.open)*100).toFixed(2);
+                document.getElementById('valPct').innerText = (pct > 0 ? '+' : '') + pct + '%';
             }
 
-            // 渲染戰術幾何標記
+            // 1. 渲染戰術幾何標記 (乾淨不疊影)
             if (uiState.signal && currentCandleData.length > 0) {
                 candleSeries.setMarkers(getTacticalHudMarkers(currentCandleData, currentSymbolData));
+            } else {
+                candleSeries.setMarkers([]);
             }
 
-            // 繪製 SMC 區間
-            if (currentSymbolData && uiState.smc) {
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: 'rgba(59, 130, 246, 0.8)', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ FVG' }));
-                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: 'rgba(34, 197, 94, 0.9)', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '📦 OB' }));
+            // 2. 渲染 SMC 作戰區間與半透明半滿色塊 (Demand / Supply Box)
+            if (currentSymbolData && uiState.smc && currentSymbolData.entry_top > 0) {
+                const isShort = currentSymbolData.direction === 'short';
+                const obColor = isShort ? 'rgba(239, 68, 68, 0.28)' : 'rgba(34, 197, 94, 0.28)';
+                const fvgColor = isShort ? 'rgba(239, 68, 68, 0.12)' : 'rgba(34, 197, 94, 0.12)';
+
+                // OB 著色區塊
+                let obSeries = chart.addAreaSeries({
+                    baseValue: { type: 'price', price: currentSymbolData.entry_bot },
+                    topColor: obColor,
+                    bottomColor: obColor,
+                    lineColor: 'rgba(0,0,0,0)',
+                    lineWidth: 0,
+                    priceLineVisible: false,
+                    lastValueVisible: false,
+                    crosshairMarkerVisible: false,
+                    autoscaleInfoProvider: () => null
+                });
+                obSeries.setData(currentCandleData.map(d => ({ time: d.time, value: currentSymbolData.entry_top })));
+                activeAreaSeries.push(obSeries);
+
+                // 標記關鍵水平防線
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: isShort ? '#ef4444' : '#22c55e', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ FVG' }));
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: isShort ? '#ef4444' : '#22c55e', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '📦 OB' }));
                 activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.sl, color: '#ef4444', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '🚨 SL' }));
                 activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.tp, color: '#10b981', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: '🎯 TP' }));
                 if(currentSymbolData.macro_eq) {
                     activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '➖ 0.5 均衡' }));
                 }
             }
+
+            // 3. 更新指標 (EMA / BOLL / RSI / MACD)
+            updateChartIndicators();
 
             updateIntelligencePanel(symbol, currentSymbolData);
             renderHeatmap();
@@ -559,6 +748,7 @@
                 const btn = document.getElementById('tf_' + t);
                 if(btn) btn.className = (t === tf) ? "px-2.5 py-0.5 text-xs font-bold rounded bg-[#30363d] text-white shadow-sm transition-colors" : "px-2.5 py-0.5 text-xs font-bold rounded text-gray-400 hover:text-white transition-colors";
             });
+            if(chart) chart.timeScale().applyOptions({ timeVisible: tf !== '1D' });
             const curSym = document.getElementById('currentChartSymbol').innerText;
             if(curSym !== '--') updateChartSymbol(curSym);
         }
@@ -574,6 +764,12 @@
         function toggleSubChart(type) {
             const container = document.getElementById('sub_chart_container');
             const btnHide = document.getElementById('btn_hide_sub');
+            const btnRsi = document.getElementById('btn_rsi');
+            const btnMacd = document.getElementById('btn_macd');
+
+            btnRsi.className = "text-[11px] font-bold px-3 py-1 rounded text-gray-400 bg-[#0d1117] border border-[#30363d] whitespace-nowrap transition-colors";
+            btnMacd.className = "text-[11px] font-bold px-3 py-1 rounded text-gray-400 bg-[#0d1117] border border-[#30363d] whitespace-nowrap transition-colors";
+
             uiState.sub = type;
             if(type === 'none') {
                 container.style.display = 'none';
@@ -581,8 +777,10 @@
             } else {
                 container.style.display = 'block';
                 btnHide.classList.remove('hidden');
+                document.getElementById(`btn_${type}`).className = "text-[11px] font-bold px-3 py-1 rounded text-blue-400 bg-blue-900/20 border border-blue-500 whitespace-nowrap transition-colors";
                 subChart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
             }
+            updateChartIndicators();
         }
 
         function switchTab(t) {
@@ -597,7 +795,12 @@
         function toggleSection(cId, iId) {
             const c = document.getElementById(cId);
             const i = document.getElementById(iId);
-            if(c) c.classList.toggle('collapsed');
+            if(c) {
+                c.classList.toggle('collapsed');
+                if(!c.classList.contains('collapsed') && cId === 'chartContent' && chart) {
+                    setTimeout(() => chart.timeScale().fitContent(), 300);
+                }
+            }
             if(i) i.classList.toggle('rotate-180');
         }
 
@@ -624,13 +827,13 @@
         function startPolling() {
             setInterval(async () => {
                 try {
-                    const syms = Array.from(new Set([...userWatchlist, 'SPY', 'QQQ', 'NVDA', 'AAPL', 'TSLA']));
+                    const syms = Array.from(new Set([...userWatchlist, 'SPY', 'QQQ', 'NVDA', 'AAPL', 'TSLA', 'SMH', 'DIA', 'MSFT', 'AMZN', 'GOOGL', 'META']));
                     const res = await fetch(`${VERCEL_API_URL}?symbols=${syms.join(',')}&t=${Date.now()}`);
                     if(res.ok) {
                         const json = await res.json();
                         currentLivePrices = json;
                         const now = new Date();
-                        document.getElementById('liveTimeText').innerText = `即時報價更新於: ${now.toLocaleTimeString()} (HKT)`;
+                        document.getElementById('liveTimeText').innerText = `即時報價更新於: ${now.toLocaleTimeString('zh-HK')} (HKT)`;
                         renderHeatmap();
                         renderWatchlist();
                     }
