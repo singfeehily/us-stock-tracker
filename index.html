@@ -152,11 +152,14 @@
                 </div>
 
                 <div class="glass-panel rounded-xl flex flex-col relative overflow-hidden">
-                    <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('aiPanelContent', 'aiPanelIcon')">
-                        <div class="flex items-center gap-2">
-                            <span class="font-semibold text-white text-sm"><i class="fa-solid fa-robot text-blue-400 mr-2"></i>AI 操盤手艙 (即時動態計算)</span>
-                        </div>
-                        <i id="aiPanelIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+                    <!-- 修正後包含 symbol badge 的標題 -->
+<div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('aiPanelContent', 'aiPanelIcon')">
+    <div class="flex items-center gap-2">
+        <span class="font-semibold text-white text-sm"><i class="fa-solid fa-robot text-blue-400 mr-2"></i>AI 操盤手艙 (即時動態計算)</span>
+        <span id="panelSymbolBadge" class="bg-blue-900/50 text-blue-400 px-2 py-0.5 rounded text-xs font-bold">--</span>
+    </div>
+    <i id="aiPanelIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+</div>
                     </div>
                     <div id="aiPanelContent" class="collapsible-content p-4 flex flex-col gap-3">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
