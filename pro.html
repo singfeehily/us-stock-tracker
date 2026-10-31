@@ -291,7 +291,7 @@
 
         async function loadJSONData() {
             try {
-                const res = await fetch('data.json?t=' + Date.now());
+                const res = await fetch('https://raw.githubusercontent.com/singfeehily/us-stock-tracker/main/data.json?t=' + Date.now());
                 if (res.ok) {
                     const rawText = await res.text();
                     globalData = JSON.parse(rawText.replace(/NaN/g, 'null'));
@@ -370,10 +370,11 @@
                 const p = (currentLivePrices[sym] && currentLivePrices[sym].price) ? currentLivePrices[sym].price : sData.price;
                 const pct = (currentLivePrices[sym] && currentLivePrices[sym].change_pct !== undefined) ? parseFloat(currentLivePrices[sym].change_pct) : (sData.change_pct || 0);
                 const color = pct >= 0 ? 'text-green-400' : 'text-red-400';
+                const sign = pct >= 0 ? '+' : '';
                 return `<div class="flex-shrink-0 w-36 glass-panel rounded-lg p-3 cursor-pointer watchlist-card ${sym === curSym ? 'active-selected' : ''}" onclick="updateChartSymbol('${sym}')">
                             <div class="flex justify-between text-xs text-gray-400 mb-1"><span class="font-bold text-white text-sm">${sym}</span><button onclick="removeFromWatchlist(event, '${sym}')" class="hover:text-red-400 text-sm">×</button></div>
                             <div class="text-base font-bold font-mono text-white">$${(p || 0).toFixed(2)}</div>
-                            <div class="text-xs font-mono ${color}">${pct>=0?'+':''}${(pct || 0).toFixed(2)}%</div>
+                            <div class="text-xs font-mono ${color}">${sign}${(pct || 0).toFixed(2)}%</div>
                         </div>`;
             }).join('');
         }
@@ -639,11 +640,20 @@
         async function updateChartSymbol(symbol) {
             const renderId = Date.now();
             currentRenderId = renderId;
-            document.getElementById('currentChartSymbol').innerText = symbol;
             
+            // 取得即時現價與漲跌幅，並更新標題名稱（加入價格及 +/- 數值 / %）
+            let liveInfo = currentLivePrices[symbol] || {};
             let sData = (globalData.screener_data || []).find(x => x && x.symbol === symbol);
+            let p = liveInfo.price !== undefined ? liveInfo.price : (sData ? sData.price : 0);
+            let pct = liveInfo.change_pct !== undefined ? liveInfo.change_pct : (sData ? sData.change_pct : 0);
+            const isUp = pct >= 0;
+            const priceColor = isUp ? 'text-green-400' : 'text-red-400';
+            const sign = isUp ? '+' : '';
+
+            document.getElementById('currentChartSymbol').innerHTML = `${symbol} <span class="font-mono text-sm ${priceColor}">$${p.toFixed(2)} (${sign}${pct.toFixed(2)}%)</span>`;
+
             if (!sData) {
-                sData = { symbol: symbol, price: currentLivePrices[symbol] ? currentLivePrices[symbol].price : 0, smc_text: '純量價模式', trade_status: '非監控名單', status_color: 'text-gray-500', entry_top: 0 };
+                sData = { symbol: symbol, price: p, change_pct: pct, smc_text: '純量價模式', trade_status: '非監控名單', status_color: 'text-gray-500', entry_top: 0 };
             }
             currentSymbolData = sData;
 
@@ -651,6 +661,7 @@
             if(loader) loader.classList.remove('hidden');
 
             let candles = [];
+            // 修正 1H 對應至 60m 參數
             let apiInterval = currentTimeFrame.toLowerCase() === '1h' ? '60m' : currentTimeFrame.toLowerCase();
 
             try {
@@ -665,11 +676,16 @@
                 }
             } catch(e) {}
             
+            // 1H 及多週期精算數據保底機制
             if (candles.length === 0 && globalData.stocks && globalData.stocks[symbol]) {
                 if (apiInterval === '60m' && globalData.stocks[symbol].kline_1h && globalData.stocks[symbol].kline_1h.length > 0) {
                     candles = globalData.stocks[symbol].kline_1h;
+                } else if (apiInterval === '15m' && globalData.stocks[symbol].kline_15m && globalData.stocks[symbol].kline_15m.length > 0) {
+                    candles = globalData.stocks[symbol].kline_15m;
+                } else if (apiInterval === '4h' && globalData.stocks[symbol].kline_4h && globalData.stocks[symbol].kline_4h.length > 0) {
+                    candles = globalData.stocks[symbol].kline_4h;
                 } else if (globalData.stocks[symbol].kline) {
-                    candles = globalData.stocks[symbol].kline;
+                    candles = globalData.stocks[symbol].kline; // 1D 日線保底
                 }
             }
 
@@ -687,8 +703,8 @@
                 document.getElementById('valH').innerText = last.high.toFixed(2);
                 document.getElementById('valL').innerText = last.low.toFixed(2);
                 document.getElementById('valC').innerText = last.close.toFixed(2);
-                const pct = (((last.close - last.open)/last.open)*100).toFixed(2);
-                document.getElementById('valPct').innerText = (pct > 0 ? '+' : '') + pct + '%';
+                const candlePct = (((last.close - last.open)/last.open)*100).toFixed(2);
+                document.getElementById('valPct').innerText = (candlePct > 0 ? '+' : '') + candlePct + '%';
             } else {
                 currentCandleData = [];
                 candleSeries.setData([]);
@@ -753,16 +769,18 @@
                 if(btn) btn.className = (t === tf) ? "px-2.5 py-0.5 text-xs font-bold rounded bg-[#30363d] text-white shadow-sm transition-colors" : "px-2.5 py-0.5 text-xs font-bold rounded text-gray-400 hover:text-white transition-colors";
             });
             if(chart) chart.timeScale().applyOptions({ timeVisible: tf !== '1D' });
-            const curSym = document.getElementById('currentChartSymbol').innerText;
-            if(curSym !== '--') updateChartSymbol(curSym);
+            const curSymText = document.getElementById('currentChartSymbol').innerText;
+            const curSym = curSymText.split(' ')[0]; // 提取股票代號
+            if(curSym && curSym !== '--') updateChartSymbol(curSym);
         }
 
         function toggleOverlay(type) {
             uiState[type] = !uiState[type];
             const btn = document.getElementById(`btn_${type}`);
             if(btn) btn.classList.toggle('active', uiState[type]);
-            const curSym = document.getElementById('currentChartSymbol').innerText;
-            if(curSym !== '--') updateChartSymbol(curSym);
+            const curSymText = document.getElementById('currentChartSymbol').innerText;
+            const curSym = curSymText.split(' ')[0];
+            if(curSym && curSym !== '--') updateChartSymbol(curSym);
         }
 
         function toggleSubChart(type) {
@@ -808,16 +826,6 @@
             if(i) i.classList.toggle('rotate-180');
         }
 
-        function openSMCModal() {
-            const m = document.getElementById('smcModal');
-            if(m) m.style.display = 'flex';
-        }
-
-        function closeSMCModal() {
-            const m = document.getElementById('smcModal');
-            if(m) m.style.display = 'none';
-        }
-
         function addCustomStock(e) {
             e.preventDefault();
             const val = document.getElementById('searchInput').value.trim().toUpperCase();
@@ -854,8 +862,9 @@
                         renderWatchlist();
                         renderScreenerData();
                         
-                        const curSym = document.getElementById('currentChartSymbol').innerText;
-                        if (curSym !== '--' && currentSymbolData && globalData.screener_data) {
+                        const curSymText = document.getElementById('currentChartSymbol').innerText;
+                        const curSym = curSymText.split(' ')[0];
+                        if (curSym && curSym !== '--' && currentSymbolData && globalData.screener_data) {
                             updateIntelligencePanel(curSym, currentSymbolData);
                         }
                     }
