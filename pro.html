@@ -155,6 +155,7 @@
                     <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('aiPanelContent', 'aiPanelIcon')">
                         <div class="flex items-center gap-2">
                             <span class="font-semibold text-white text-sm"><i class="fa-solid fa-robot text-blue-400 mr-2"></i>AI 操盤手艙 (即時動態計算)</span>
+                            <span id="panelSymbolBadge" class="bg-blue-900/50 text-blue-400 px-2 py-0.5 rounded text-xs font-bold">--</span>
                         </div>
                         <i id="aiPanelIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
                     </div>
@@ -346,7 +347,8 @@
         function renderHeatmap() {
             const container = document.getElementById('heatmapGrid');
             if(!container) return;
-            const curSym = document.getElementById('currentChartSymbol') ? document.getElementById('currentChartSymbol').innerText : '';
+            const curSymText = document.getElementById('currentChartSymbol') ? document.getElementById('currentChartSymbol').innerText : '';
+            const curSym = curSymText.split(' ')[0];
             container.innerHTML = SECTORS_CONFIG.map(item => {
                 const sData = (globalData.screener_data || []).find(x => x && x.symbol === item.sym);
                 const pct = (currentLivePrices[item.sym] && currentLivePrices[item.sym].change_pct !== undefined)
@@ -364,7 +366,8 @@
         function renderWatchlist() {
             const container = document.getElementById('watchlistContainer');
             if(!container) return;
-            const curSym = document.getElementById('currentChartSymbol') ? document.getElementById('currentChartSymbol').innerText : '';
+            const curSymText = document.getElementById('currentChartSymbol') ? document.getElementById('currentChartSymbol').innerText : '';
+            const curSym = curSymText.split(' ')[0];
             container.innerHTML = userWatchlist.map(sym => {
                 const sData = (globalData.screener_data || []).find(x => x && x.symbol === sym) || { price: 0, change_pct: 0 };
                 const p = (currentLivePrices[sym] && currentLivePrices[sym].price) ? currentLivePrices[sym].price : sData.price;
@@ -405,7 +408,7 @@
                 return { ...item, _livePrice: livePrice, _status: dynStatus, _dynRRR: dynRRR, _dynPdVal: dynPdVal };
             });
 
-            const filterSt = document.getElementById('filterStatus') ? document.getElementById('filterStatus').value : 'ALL';
+            const filterSt = document.getElementById('filterStatus') ? document.getElementById('filterStatus'].value : 'ALL';
             if (filterSt === 'GREEN') list = list.filter(x => x._status.label === '🟢 可執行');
             else if (filterSt === 'YELLOW') list = list.filter(x => x._status.label === '🟡 接近中');
             else if (filterSt === 'RED') list = list.filter(x => x._status.label === '🔴 觀察中');
@@ -641,7 +644,6 @@
             const renderId = Date.now();
             currentRenderId = renderId;
             
-            // 取得即時現價與漲跌幅，並更新標題名稱（加入價格及 +/- 數值 / %）
             let liveInfo = currentLivePrices[symbol] || {};
             let sData = (globalData.screener_data || []).find(x => x && x.symbol === symbol);
             let p = liveInfo.price !== undefined ? liveInfo.price : (sData ? sData.price : 0);
@@ -661,7 +663,6 @@
             if(loader) loader.classList.remove('hidden');
 
             let candles = [];
-            // 修正 1H 對應至 60m 參數
             let apiInterval = currentTimeFrame.toLowerCase() === '1h' ? '60m' : currentTimeFrame.toLowerCase();
 
             try {
@@ -676,7 +677,6 @@
                 }
             } catch(e) {}
             
-            // 1H 及多週期精算數據保底機制
             if (candles.length === 0 && globalData.stocks && globalData.stocks[symbol]) {
                 if (apiInterval === '60m' && globalData.stocks[symbol].kline_1h && globalData.stocks[symbol].kline_1h.length > 0) {
                     candles = globalData.stocks[symbol].kline_1h;
@@ -685,7 +685,7 @@
                 } else if (apiInterval === '4h' && globalData.stocks[symbol].kline_4h && globalData.stocks[symbol].kline_4h.length > 0) {
                     candles = globalData.stocks[symbol].kline_4h;
                 } else if (globalData.stocks[symbol].kline) {
-                    candles = globalData.stocks[symbol].kline; // 1D 日線保底
+                    candles = globalData.stocks[symbol].kline;
                 }
             }
 
@@ -739,27 +739,29 @@
         }
 
         function updateIntelligencePanel(symbol, data) {
-            document.getElementById('panelSymbolBadge').innerText = symbol;
+            const badge = document.getElementById('panelSymbolBadge');
+            if(badge) badge.innerText = symbol;
+            
             const phaseEl = document.getElementById('panelPhase');
             const trendEl = document.getElementById('panelTrend');
             const smcEl = document.getElementById('panelSMC');
             const insightEl = document.getElementById('panelInsight');
 
             if (!data || !data.entry_top) {
-                phaseEl.innerHTML = '<span class="text-gray-500">純量價模式</span>';
-                trendEl.innerHTML = '<span class="text-gray-500">無 SMC 數據支援</span>';
-                smcEl.innerHTML = `<span class="text-gray-500">未納入後端運算池</span>`;
-                insightEl.innerHTML = `<div class="p-2.5 rounded bg-[#1f242c] border border-[#30363d] text-gray-400">此股票未在量化掃描名單內，僅提供基礎即時報價與技術圖表。</div>`;
+                if(phaseEl) phaseEl.innerHTML = '<span class="text-gray-500">純量價模式</span>';
+                if(trendEl) trendEl.innerHTML = '<span class="text-gray-500">無 SMC 數據支援</span>';
+                if(smcEl) smcEl.innerHTML = `<span class="text-gray-500">未納入後端運算池</span>`;
+                if(insightEl) insightEl.innerHTML = `<div class="p-2.5 rounded bg-[#1f242c] border border-[#30363d] text-gray-400">此股票未在量化掃描名單內，僅提供基礎即時報價與技術圖表。</div>`;
                 return;
             }
 
             let livePrice = (currentLivePrices[symbol] && currentLivePrices[symbol].price) ? currentLivePrices[symbol].price : data.price;
             let dynStatus = getDynamicStatus(data, livePrice);
 
-            phaseEl.innerHTML = livePrice > data.macro_eq ? '<span class="text-red-400 font-bold">昂貴溢價區 (Premium)</span>' : '<span class="text-green-400 font-bold">便宜折價區 (Discount)</span>';
-            trendEl.innerHTML = `<span class="${dynStatus.colorClass}">${dynStatus.label}</span> <span class="text-gray-400 text-xs ml-1">(${dynStatus.distText})</span>`;
-            smcEl.innerHTML = `<span class="${data.status_color || 'text-yellow-400'}">${data.smc_text || '-'} | 區間: $${data.entry_bot} - $${data.entry_top}</span>`;
-            insightEl.innerHTML = `<div class="p-2.5 rounded bg-[#1f242c] border border-[#30363d] text-gray-200">現價 $${livePrice.toFixed(2)}。${dynStatus.label === '🟢 可執行' ? `已進入作戰區間，嚴格防守 $${data.sl}。` : `建議等待價格觸碰 $${data.entry_top} 附近再行評估。`}</div>`;
+            if(phaseEl) phaseEl.innerHTML = livePrice > data.macro_eq ? '<span class="text-red-400 font-bold">昂貴溢價區 (Premium)</span>' : '<span class="text-green-400 font-bold">便宜折價區 (Discount)</span>';
+            if(trendEl) trendEl.innerHTML = `<span class="${dynStatus.colorClass}">${dynStatus.label}</span> <span class="text-gray-400 text-xs ml-1">(${dynStatus.distText})</span>`;
+            if(smcEl) smcEl.innerHTML = `<span class="${data.status_color || 'text-yellow-400'}">${data.smc_text || '-'} | 區間: $${data.entry_bot} - $${data.entry_top}</span>`;
+            if(insightEl) insightEl.innerHTML = `<div class="p-2.5 rounded bg-[#1f242c] border border-[#30363d] text-gray-200">現價 $${livePrice.toFixed(2)}。${dynStatus.label === '🟢 可執行' ? `已進入作戰區間，嚴格防守 $${data.sl}。` : `建議等待價格觸碰 $${data.entry_top} 附近再行評估。`}</div>`;
         }
 
         function changeTimeFrame(tf) {
@@ -770,7 +772,7 @@
             });
             if(chart) chart.timeScale().applyOptions({ timeVisible: tf !== '1D' });
             const curSymText = document.getElementById('currentChartSymbol').innerText;
-            const curSym = curSymText.split(' ')[0]; // 提取股票代號
+            const curSym = curSymText.split(' ')[0];
             if(curSym && curSym !== '--') updateChartSymbol(curSym);
         }
 
