@@ -570,19 +570,19 @@
                 const highest = Math.max(...lookback.map(d => d.high));
 
                 if (curr.low < lowest && curr.close > lowest && isDiscount) {
-                    markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: '▲ [掃損買入]' });
+                    markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: '▲ [誘空反彈]' });
                     lastSignalIdx = i;
                 }
                 else if (symData && symData.confluence && symData.entry_top && curr.low <= symData.entry_top && curr.close > prev.high && isDiscount) {
-                    markers.push({ time: curr.time, position: 'belowBar', color: '#eab308', shape: 'arrowUp', text: '▲▲ [共振起爆]' });
+                    markers.push({ time: curr.time, position: 'belowBar', color: '#eab308', shape: 'arrowUp', text: '▲▲ [強勢做多]' });
                     lastSignalIdx = i;
                 }
                 else if (curr.high > highest && curr.close < highest && isPremium) {
-                    markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: '▼ [派發減倉]' });
+                    markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: '▼ [衝高獲利]' });
                     lastSignalIdx = i;
                 }
                 else if (symData && symData.macro_bsl && curr.high >= symData.macro_bsl * 0.995 && curr.close < curr.open && isPremium) {
-                    markers.push({ time: curr.time, position: 'aboveBar', color: '#a855f7', shape: 'arrowDown', text: '▼▼ [溢價防守]' });
+                    markers.push({ time: curr.time, position: 'aboveBar', color: '#a855f7', shape: 'arrowDown', text: '▼▼ [嚴禁追高]' });
                     lastSignalIdx = i;
                 }
             }
