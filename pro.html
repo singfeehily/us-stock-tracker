@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>美股狙擊器 (PRO LIVE v2.0)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #0d1117; color: #c9d1d9; }
+        .glass-panel { background: rgba(22, 27, 34, 0.85); border: 1px solid #30363d; backdrop-filter: blur(10px); isolation: isolate; }
+        
+        #mainHeader { transition: transform 0.3s ease-in-out; }
+        
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: #0d1117; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; border: 2px solid #0d1117; }
+        ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+        
+        .custom-scrollbar::-webkit-scrollbar { height: 12px; width: 12px; } 
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #6b7280; border: 2px solid #0d1117; border-radius: 6px; }
+
+        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 50; display: flex; flex-direction: column; gap: 10px; }
+        .toast { padding: 12px 20px; border-radius: 8px; color: white; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.5); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background-color: #238636; }
+        .toast.error { background-color: #da3633; }
+        .toast.signal-long { background-color: #14532d; border: 2px solid #22c55e; box-shadow: 0 0 15px rgba(34,197,94,0.4); font-size: 15px; padding: 16px 24px; }
+        .toast.signal-short { background-color: #7f1d1d; border: 2px solid #ef4444; box-shadow: 0 0 15px rgba(239,68,68,0.4); font-size: 15px; padding: 16px 24px; }
+
+        .clickable-row { cursor: pointer; transition: background-color 0.2s; }
+        .clickable-row:hover { background-color: #1f242c; }
+        .collapsible-content { transition: max-height 0.3s ease-out, opacity 0.3s ease-out; overflow: hidden; }
+        .collapsed { max-height: 0 !important; opacity: 0; padding-top: 0 !important; padding-bottom: 0 !important; border: none !important; }
+        
+        .heatmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+        .heatmap-cell { border-radius: 6px; padding: 10px 12px; cursor: pointer; transition: all 0.2s ease; border: 1px solid rgba(255,255,255,0.08); position: relative; overflow: hidden; }
+        .heatmap-cell:hover { transform: translateY(-2px); filter: brightness(1.2); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+        .heatmap-cell.active { border: 2px solid #3b82f6 !important; box-shadow: 0 0 12px rgba(59, 130, 246, 0.6); }
+
+        .watchlist-card { border: 1px solid #30363d; transition: all 0.2s ease-in-out; }
+        .watchlist-card.active-selected { border: 2px solid #3b82f6 !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
+        
+        #tv_chart_container, #sub_chart_container { 
+            touch-action: none !important; 
+            -webkit-user-select: none; 
+            user-select: none; 
+            overflow: hidden; 
+            position: relative; 
+        }
+        
+        .chart-overlay-toggles { position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; gap: 8px; flex-wrap: wrap; pointer-events: none; }
+        .toggle-btn { pointer-events: auto; background: rgba(22, 27, 34, 0.75); backdrop-filter: blur(6px); border: 1px solid rgba(48, 54, 61, 0.8); color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .toggle-btn.active { background: rgba(59, 130, 246, 0.2); border-color: #3b82f6; color: #60a5fa; }
+        
+        .ohlc-bar { font-family: monospace; font-size: 12px; display: flex; gap: 14px; padding: 6px 12px; background: #0d1117; border-bottom: 1px solid #30363d; border-top: 1px solid #30363d; color: #8b949e; overflow-x: auto; white-space: nowrap; }
+        .ohlc-bar span.val { color: #c9d1d9; font-weight: bold; margin-left: 4px; }
+        .ohlc-bar::-webkit-scrollbar { display: none; }
+        .pd-track { background: linear-gradient(to right, #166534 0%, #166534 49%, #4b5563 49%, #4b5563 51%, #991b1b 51%, #991b1b 100%); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative">
+
+    <div id="toast-container"></div>
+
+    <header id="mainHeader" class="glass-panel sticky top-0 z-40 px-4 md:px-6 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-4 flex-wrap w-full md:w-auto justify-between md:justify-start">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-crosshairs text-blue-500 text-xl md:text-2xl"></i>
+                <h1 class="text-lg md:text-xl font-bold text-white tracking-wider">美股狙擊器 <span class="text-xs bg-blue-600 text-white font-mono px-2 py-0.5 rounded ml-1">PRO v2.0</span></h1>
+            </div>
+            <div class="flex flex-col">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-bold flex items-center" id="liveStatusIcon"><i class="fa-solid fa-spinner fa-spin text-gray-500 mr-1.5"></i> 偵測中</span>
+                    <a href="https://github.com/singfeehily/us-stock-tracker/actions" target="_blank" class="bg-[#21262d] hover:bg-[#30363d] text-gray-400 border border-[#30363d] px-2 py-1 rounded text-[10px] font-medium transition-colors"><i class="fa-solid fa-rotate"></i> 更新 SMC</a>
+                </div>
+                <span id="updateTimeText" class="text-[10px] text-gray-500 mt-1">SMC 運算時間: 讀取中...</span>
+                <span id="liveTimeText" class="text-[10px] text-blue-400 mt-0.5">即時報價更新於: 連線中...</span>
+            </div>
+        </div>
+        
+        <form id="searchForm" onsubmit="addCustomStock(event)" class="flex w-full md:w-1/3 relative">
+            <div class="relative w-full flex">
+                <input type="text" id="searchInput" list="stock-suggestions" placeholder="輸入美股代號 (例: AAPL)" class="w-full bg-[#0d1117] border border-[#30363d] rounded-l-lg py-2 px-3 text-white text-sm focus:outline-none focus:border-blue-500 uppercase" autocomplete="off">
+                <datalist id="stock-suggestions"></datalist>
+            </div>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r-lg text-xs font-medium whitespace-nowrap transition-colors border-l-0 flex items-center"><i class="fa-solid fa-plus mr-1"></i> 加入</button>
+        </form>
+    </header>
+
+    <main class="flex-grow p-3 md:p-6 flex flex-col gap-5">
+        <!-- 頂部 OpenStock 板塊熱力圖 (升級亮點 1) -->
+        <section class="glass-panel rounded-xl overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('heatmapContent', 'heatmapIcon')">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-chart-pie text-emerald-400"></i>
+                    <span class="font-semibold text-white text-sm">全市場核心熱力圖 (OpenStock Sector Matrix)</span>
+                    <span class="text-[11px] text-gray-400 font-normal ml-2">嚴格遵循美股標準 (綠漲 / 紅跌)</span>
+                </div>
+                <i id="heatmapIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+            </div>
+            <div id="heatmapContent" class="collapsible-content p-3.5">
+                <div id="heatmapGrid" class="heatmap-grid"></div>
+            </div>
+        </section>
+
+        <!-- 自選股橫向卷軸 -->
+        <section class="glass-panel rounded-xl overflow-hidden">
+            <div class="px-4 py-2.5 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('watchlistContent', 'watchlistIcon')">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-star text-yellow-500"></i>
+                    <h2 class="text-sm font-semibold text-white">自選監察隊列 <span class="text-xs text-gray-500 font-normal ml-2">(可長按拖曳排序)</span></h2>
+                </div>
+                <i id="watchlistIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+            </div>
+            <div id="watchlistContent" class="collapsible-content">
+                <div id="watchlistContainer" class="flex gap-3.5 overflow-x-auto p-3.5 custom-scrollbar"></div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+            <!-- 左側：SMC 作戰區間圖 + AI 操盤手 -->
+            <div class="xl:col-span-1 flex flex-col gap-5">
+                
+                <div class="glass-panel rounded-xl flex flex-col relative overflow-hidden">
+                    <div class="px-4 py-3 bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('chartContent', 'chartIcon')">
+                        <span class="font-semibold text-white flex items-center text-sm"><i class="fa-solid fa-display text-purple-400 mr-2"></i>SMC 作戰區間圖</span>
+                        <div class="flex items-center gap-3">
+                            <span id="currentChartSymbol" class="bg-blue-900/50 text-blue-400 px-2 py-0.5 rounded text-xs font-bold shadow-sm">--</span>
+                            <i id="chartIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+                        </div>
+                    </div>
+                    
+                    <div id="chartContent" class="collapsible-content flex flex-col">
+                        <!-- 週期切換列 (包含 1H 升級) -->
+                        <div class="flex justify-between items-center px-3 py-2 bg-[#0d1117] border-t border-[#30363d]">
+                            <div class="flex bg-[#161b22] rounded p-1 border border-[#30363d] gap-1">
+                                <button onclick="changeTimeFrame('15m')" id="tf_15m" class="px-2.5 py-0.5 text-xs font-bold rounded text-gray-400 hover:text-white transition-colors">15m</button>
+                                <button onclick="changeTimeFrame('1H')" id="tf_1H" class="px-2.5 py-0.5 text-xs font-bold rounded text-gray-400 hover:text-white transition-colors">1H</button>
+                                <button onclick="changeTimeFrame('4H')" id="tf_4H" class="px-2.5 py-0.5 text-xs font-bold rounded text-gray-400 hover:text-white transition-colors">4H</button>
+                                <button onclick="changeTimeFrame('1D')" id="tf_1D" class="px-2.5 py-0.5 text-xs font-bold rounded bg-[#30363d] text-white shadow-sm transition-colors">1D</button>
+                            </div>
+                            <span class="text-[10px] text-gray-500 font-mono">幾何戰術標記已啟用</span>
+                        </div>
+
+                        <div class="ohlc-bar" id="ohlcBar">
+                            <div>開<span class="val" id="valO">--</span></div>
+                            <div>高<span class="val" id="valH">--</span></div>
+                            <div>低<span class="val" id="valL">--</span></div>
+                            <div>收<span class="val" id="valC">--</span></div>
+                            <div>漲跌幅<span class="val" id="valPct">--</span></div>
+                        </div>
+
+                        <div id="tv_chart_container" style="height: 380px; width: 100%;">
+                            <div id="chartLoader" class="hidden absolute inset-0 bg-[#0d1117]/80 backdrop-blur-sm z-20 items-center justify-center">
+                                <i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-3xl"></i>
+                            </div>
+                            <div class="chart-overlay-toggles">
+                                <button class="toggle-btn active" id="btn_smc" onclick="toggleOverlay('smc')"><i class="fa-solid fa-layer-group mr-1"></i>SMC 區間</button>
+                                <button class="toggle-btn active" id="btn_signal" onclick="toggleOverlay('signal')"><i class="fa-solid fa-bolt text-yellow-400 mr-1"></i>戰術 HUD</button>
+                                <button class="toggle-btn" id="btn_ema" onclick="toggleOverlay('ema')">EMA</button>
+                                <button class="toggle-btn" id="btn_boll" onclick="toggleOverlay('boll')">BOLL</button>
+                            </div>
+                        </div>
+
+                        <div class="px-2 py-1.5 bg-[#161b22] border-t border-b border-[#30363d] flex gap-2 overflow-x-auto custom-scrollbar">
+                            <button class="text-[11px] font-bold px-3 py-1 rounded text-gray-400 bg-[#0d1117] border border-[#30363d] whitespace-nowrap transition-colors" id="btn_rsi" onclick="toggleSubChart('rsi')">RSI</button>
+                            <button class="text-[11px] font-bold px-3 py-1 rounded text-gray-400 bg-[#0d1117] border border-[#30363d] whitespace-nowrap transition-colors" id="btn_macd" onclick="toggleSubChart('macd')">MACD</button>
+                            <button class="text-[11px] font-bold px-3 py-1 rounded text-red-400 bg-red-900/20 border border-red-900/50 whitespace-nowrap transition-colors ml-auto hidden" id="btn_hide_sub" onclick="toggleSubChart('none')">隱藏副圖</button>
+                        </div>
+
+                        <div id="sub_chart_container" style="height: 120px; width: 100%; display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- AI 智能面板 -->
+                <div class="glass-panel rounded-xl flex flex-col relative overflow-hidden">
+                    <div class="px-4 py-3 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] cursor-pointer" onclick="toggleSection('aiPanelContent', 'aiPanelIcon')">
+                        <div class="flex items-center gap-2">
+                            <span class="font-semibold text-white text-sm"><i class="fa-solid fa-robot text-blue-400 mr-2"></i>AI 操盤手艙 (LIVE)</span>
+                            <span id="panelSymbolBadge" class="bg-blue-900/50 text-blue-400 px-2 py-0.5 rounded text-xs font-bold">--</span>
+                        </div>
+                        <i id="aiPanelIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+                    </div>
+                    <div id="aiPanelContent" class="collapsible-content p-4 flex flex-col gap-3">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                            <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5">
+                                <span class="text-gray-400 block mb-1">宏觀結構 (Macro Structure)</span>
+                                <span id="panelPhase" class="font-bold text-gray-200">請選擇股票</span>
+                            </div>
+                            <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5">
+                                <span class="text-gray-400 block mb-1">趨勢與動能 (Trend & Momentum)</span>
+                                <span id="panelTrend" class="font-bold text-gray-200">--</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-xs">
+                            <span class="text-gray-400 block mb-1 flex items-center justify-between">
+                                <span>SMC 戰術與 OB 入場區 (SMC & OB)</span>
+                            </span>
+                            <span id="panelSMC" class="font-bold text-yellow-400">--</span>
+                        </div>
+                        <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-2.5 text-[13px]">
+                            <span class="text-gray-400 block mb-1 text-xs">操盤手深度總結 (Actionable Insight)</span>
+                            <div id="panelInsight" class="text-gray-300 leading-relaxed font-medium">點選任一股票，AI 操盤手將即時為您拆解勝率評估...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側：全方位 SMC 量化過濾池 -->
+            <div class="xl:col-span-2 glass-panel rounded-xl flex flex-col overflow-hidden">
+                <div class="px-4 py-3 border-b border-[#30363d] bg-[#161b22] flex justify-between items-center cursor-pointer" onclick="toggleSection('screenerContent', 'screenerIcon')">
+                    <span class="font-semibold text-white text-sm"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i>全方位 SMC 量化過濾池</span>
+                    <i id="screenerIcon" class="fa-solid fa-chevron-up text-gray-500 transition-transform duration-300"></i>
+                </div>
+                
+                <div id="screenerContent" class="collapsible-content flex flex-col">
+                    <div class="bg-[#161b22] border-b border-[#30363d] px-3 flex gap-2 flex-shrink-0">
+                        <button onclick="switchTab('smc')" id="tabSmc" class="px-4 py-2.5 text-sm font-medium text-blue-400 border-b-2 border-blue-500 transition-colors whitespace-nowrap"><i class="fa-solid fa-layer-group mr-1"></i>S 級狙擊池</button>
+                        <button onclick="switchTab('watchlist')" id="tabWatchlist" class="px-4 py-2.5 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white transition-colors whitespace-nowrap"><i class="fa-solid fa-star mr-1"></i>核心監察總表</button>
+                    </div>
+
+                    <div class="overflow-x-auto flex-grow custom-scrollbar">
+                        <table class="w-full text-left border-collapse whitespace-nowrap text-sm">
+                            <thead>
+                                <tr class="border-b border-[#30363d] bg-[#0d1117]">
+                                    <th class="px-4 py-3 font-medium text-gray-400">股票</th>
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-right">即時現價</th>
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-left">
+                                        交易狀態 
+                                        <select id="filterStatus" onchange="renderScreenerData()" class="ml-1 bg-[#161b22] text-white border border-[#30363d] rounded px-1 py-0.5 text-xs outline-none">
+                                            <option value="ALL">全部</option>
+                                            <option value="GREEN">🟢 可執行</option>
+                                            <option value="YELLOW">🟡 接近中</option>
+                                            <option value="RED">🔴 觀察中</option>
+                                        </select>
+                                    </th>
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">形態</th>
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center cursor-pointer hover:text-white" onclick="changeSort('rrr')">R:R <i class="fa-solid fa-sort text-gray-600 ml-1"></i></th>
+                                    <th class="px-4 py-3 font-medium text-blue-400 text-right">建議入場區</th>
+                                    <th class="px-4 py-3 font-medium text-gray-400 text-center">溢價/折價 (P/D Matrix)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="screenerTableBody">
+                                <tr><td colspan="7" class="px-4 py-8 text-center text-gray-500">初始化中...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const VERCEL_API_URL = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+            ? "http://127.0.0.1:5000/api/quote"
+            : "https://stock-live-api.vercel.app/api/quote";
+        
+        const SECTORS_CONFIG = [
+            { sym: 'SPY', name: '標普 500', cap: 500 },
+            { sym: 'QQQ', name: '納指科技', cap: 350 },
+            { sym: 'DIA', name: '道瓊斯', cap: 220 },
+            { sym: 'SMH', name: '半導體', cap: 180 },
+            { sym: 'NVDA', name: '英偉達', cap: 320 },
+            { sym: 'AAPL', name: '蘋果', cap: 340 },
+            { sym: 'MSFT', name: '微軟', cap: 310 },
+            { sym: 'TSLA', name: '特斯拉', cap: 210 },
+            { sym: 'AMZN', name: '亞馬遜', cap: 200 },
+            { sym: 'GOOGL', name: '谷歌', cap: 190 },
+            { sym: 'META', name: 'Meta', cap: 170 }
+        ];
+
+        let globalData = { updated_at: '載入中...', screener_data: [], watchlist_data: [] };
+        let currentLivePrices = {};
+        let sortCol = 'rrr'; let sortDesc = true;
+        let currentTab = 'smc'; let currentTimeFrame = '1D';
+        let userWatchlist = JSON.parse(localStorage.getItem('smc_watchlist')) || ['AAPL', 'NVDA', 'TSLA', 'SPY', 'QQQ'];
+
+        let chart = null, subChart = null, candleSeries = null;
+        let ema20Series = null, ema50Series = null, bollUpperSeries = null, bollMidSeries = null, bollLowerSeries = null;
+        let subIndicatorSeries = null, macdLineSeries = null, macdSignalSeries = null, macdHistSeries = null;
+        let activePriceLines = [], currentPriceLine = null, activeAreaSeries = [];
+        let currentCandleData = [], currentSymbolData = null;
+        let uiState = { smc: true, signal: true, ema: false, boll: false, sub: 'none' };
+        let currentRenderId = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            initSearchSuggestions();
+            initCharts();
+            await loadJSONData();
+            startPolling();
+        });
+
+        function initSearchSuggestions() {
+            const list = ['AAPL', 'MSFT', 'NVDA', 'GOOGL', 'AMZN', 'META', 'TSLA', 'SPY', 'QQQ', 'SMH', 'IWM', 'SOXL'];
+            const datalist = document.getElementById('stock-suggestions');
+            if(datalist) list.forEach(s => { const opt = document.createElement('option'); opt.value = s; datalist.appendChild(opt); });
+        }
+
+        async function loadJSONData() {
+            try {
+                const res = await fetch('data.json?t=' + Date.now());
+                if (!res.ok) throw new Error('Data file missing');
+                const rawText = await res.text();
+                globalData = JSON.parse(rawText.replace(/NaN/g, 'null'));
+                document.getElementById('updateTimeText').innerHTML = `SMC 運算時間: <span class="text-green-400 font-mono">${globalData.updated_at || '最新'}</span>`;
+            } catch (err) {
+                console.error("載入 JSON 失敗:", err);
+            }
+            renderHeatmap();
+            renderWatchlist();
+            renderScreenerData();
+            const initSym = (globalData.screener_data && globalData.screener_data.length > 0) ? globalData.screener_data[0].symbol : 'SPY';
+            updateChartSymbol(initSym);
+        }
+
+        function renderHeatmap() {
+            const container = document.getElementById('heatmapGrid');
+            if(!container) return;
+            const curSym = document.getElementById('currentChartSymbol') ? document.getElementById('currentChartSymbol').innerText : '';
+            
+            container.innerHTML = SECTORS_CONFIG.map(item => {
+                const sData = (globalData.screener_data || []).find(x => x && x.symbol === item.sym);
+                const pct = sData ? sData.change_pct : (currentLivePrices[item.sym] ? currentLivePrices[item.sym].change_pct : 0);
+                const isUp = pct >= 0;
+                // 嚴格美股標準：綠漲紅跌
+                const bgColor = isUp 
+                    ? (pct > 2 ? 'rgba(34, 197, 94, 0.4)' : 'rgba(34, 197, 94, 0.2)') 
+                    : (pct < -2 ? 'rgba(239, 68, 68, 0.4)' : 'rgba(239, 68, 68, 0.2)');
+                const textColor = isUp ? 'text-green-400' : 'text-red-400';
+                const sign = isUp ? '+' : '';
+                const isActive = item.sym === curSym ? 'active' : '';
+
+                return `
+                    <div class="heatmap-cell ${isActive}" style="background: ${bgColor}" onclick="updateChartSymbol('${item.sym}')">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <span class="font-bold text-white text-sm">${item.sym}</span>
+                            <span class="text-[10px] text-gray-300 opacity-70">${item.name}</span>
+                        </div>
+                        <div class="text-base font-bold font-mono ${textColor}">
+                            ${sign}${(pct || 0).toFixed(2)}%
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderWatchlist() {
+            const container = document.getElementById('watchlistContainer');
+            if(!container) return;
+            const curSym = document.getElementById('currentChartSymbol') ? document.getElementById('currentChartSymbol').innerText : '';
+            container.innerHTML = userWatchlist.map(sym => {
+                const sData = (globalData.screener_data || []).find(x => x && x.symbol === sym) || { price: 0, change: 0, change_pct: 0 };
+                const p = currentLivePrices[sym] ? currentLivePrices[sym].price : sData.price;
+                const isUp = (sData.change_pct || 0) >= 0;
+                const color = isUp ? 'text-green-400' : 'text-red-400';
+                const sign = isUp ? '+' : '';
+                return `
+                    <div class="flex-shrink-0 w-36 glass-panel rounded-lg p-3 cursor-pointer watchlist-card ${sym === curSym ? 'active-selected' : ''}" onclick="updateChartSymbol('${sym}')">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span class="font-bold text-white text-sm">${sym}</span>
+                            <button onclick="removeFromWatchlist(event, '${sym}')" class="hover:text-red-400">×</button>
+                        </div>
+                        <div class="text-base font-bold font-mono text-white">$${(p || 0).toFixed(2)}</div>
+                        <div class="text-xs font-mono ${color}">${sign}${(sData.change_pct || 0).toFixed(2)}%</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderScreenerData() {
+            const tbody = document.getElementById('screenerTableBody');
+            if (!tbody) return;
+            let list = globalData.screener_data || [];
+            if (currentTab === 'watchlist') {
+                list = userWatchlist.map(sym => list.find(x => x && x.symbol === sym) || { symbol: sym, price: 0, rrr: 0, trade_status: '觀察中', status_color: 'text-gray-400', entry_bot: 0, entry_top: 0 });
+            }
+            
+            tbody.innerHTML = list.map(item => {
+                const p = currentLivePrices[item.symbol] ? currentLivePrices[item.symbol].price : item.price;
+                const pdVal = item.pd_percent !== undefined ? item.pd_percent : 50;
+                const pdColor = pdVal > 50 ? '#ef4444' : '#22c55e';
+                return `
+                    <tr class="border-b border-[#30363d] clickable-row" onclick="updateChartSymbol('${item.symbol}')">
+                        <td class="px-4 py-3 font-bold text-white">${item.symbol}</td>
+                        <td class="px-4 py-3 text-right font-mono font-bold text-gray-200">$${(p || 0).toFixed(2)}</td>
+                        <td class="px-4 py-3 ${item.status_color || 'text-gray-400'} font-semibold">${item.trade_status || '觀察中'}</td>
+                        <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 rounded text-xs border ${item.smc_class || 'border-gray-600 text-gray-400'}">${item.smc_text || '-'}</span></td>
+                        <td class="px-4 py-3 text-center font-mono font-bold ${item.rrr >= 2 ? 'text-green-400' : 'text-gray-300'}">1 : ${item.rrr || 0}</td>
+                        <td class="px-4 py-3 text-right font-mono text-sm text-blue-300">$${item.entry_bot || 0} - $${item.entry_top || 0}</td>
+                        <td class="px-4 py-3 align-middle">
+                            <div class="w-32 mx-auto flex flex-col gap-1">
+                                <div class="relative w-full h-1.5 rounded-full pd-track">
+                                    <div class="absolute top-[-3px] w-3 h-3 rounded-full border border-white" style="left: calc(${pdVal}% - 6px); background-color: ${pdColor};"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function initCharts() {
+            const container = document.getElementById('tv_chart_container');
+            const subContainer = document.getElementById('sub_chart_container');
+            if(!container) return;
+
+            chart = LightweightCharts.createChart(container, {
+                layout: { textColor: '#8b949e', background: { type: 'solid', color: '#0d1117' } },
+                grid: { vertLines: { visible: false }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } },
+                timeScale: { borderColor: '#30363d', timeVisible: currentTimeFrame !== '1D' },
+                crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+                rightPriceScale: { borderColor: '#30363d' }
+            });
+            candleSeries = chart.addCandlestickSeries({ upColor: '#22c55e', downColor: '#ef4444', borderVisible: false, wickUpColor: '#22c55e', wickDownColor: '#ef4444' });
+
+            subChart = LightweightCharts.createChart(subContainer, {
+                layout: { textColor: '#8b949e', background: { type: 'solid', color: '#0d1117' } },
+                grid: { vertLines: { visible: false }, horzLines: { color: 'rgba(48, 54, 61, 0.3)' } },
+                timeScale: { visible: false }, rightPriceScale: { borderColor: '#30363d' }
+            });
+
+            chart.timeScale().subscribeVisibleTimeRangeChange(r => { if(uiState.sub !== 'none') subChart.timeScale().setVisibleRange(r); });
+            subChart.timeScale().subscribeVisibleTimeRangeChange(r => { if(uiState.sub !== 'none') chart.timeScale().setVisibleRange(r); });
+
+            chart.subscribeCrosshairMove(p => {
+                if(!p.time || !p.seriesData.get(candleSeries)) return;
+                const d = p.seriesData.get(candleSeries);
+                const isUp = d.close >= d.open;
+                const col = isUp ? '#4ade80' : '#f87171';
+                const pct = (((d.close - d.open) / d.open) * 100).toFixed(2);
+                document.getElementById('valO').innerHTML = `<span style="color:${col}">${d.open.toFixed(2)}</span>`;
+                document.getElementById('valH').innerHTML = `<span style="color:${col}">${d.high.toFixed(2)}</span>`;
+                document.getElementById('valL').innerHTML = `<span style="color:${col}">${d.low.toFixed(2)}</span>`;
+                document.getElementById('valC').innerHTML = `<span style="color:${col}">${d.close.toFixed(2)}</span>`;
+                document.getElementById('valPct').innerHTML = `<span style="color:${col}">${pct > 0 ? '+' : ''}${pct}%</span>`;
+            });
+
+            new ResizeObserver(() => {
+                if(container.clientWidth > 0) chart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+                if(subContainer.clientWidth > 0 && uiState.sub !== 'none') subChart.applyOptions({ width: subContainer.clientWidth, height: subContainer.clientHeight });
+            }).observe(container);
+        }
+
+        // 戰術 HUD 幾何標記系統 (升級亮點 3：精確釘死 Bar)
+        function getTacticalHudMarkers(data, symData) {
+            let markers = [];
+            if (!data || data.length < 15) return markers;
+            const macroEq = symData ? symData.macro_eq : null;
+
+            for (let i = 10; i < data.length; i++) {
+                const curr = data[i];
+                const prev = data[i-1];
+                const isDiscount = macroEq ? curr.close < macroEq : true;
+                const isPremium = macroEq ? curr.close > macroEq : true;
+
+                // 1. ▲ [L-SWEEP] 流動性刺穿反轉
+                if (curr.low < prev.low && curr.close > prev.close && isDiscount) {
+                    markers.push({ time: curr.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: '▲ [L-SWEEP]' });
+                }
+                // 2. ▲▲ [QUANT-SYNC] SS 級共振起爆
+                else if (symData && symData.confluence && curr.close > curr.open && isDiscount) {
+                    markers.push({ time: curr.time, position: 'belowBar', color: '#eab308', shape: 'arrowUp', text: '▲▲ [QUANT-SYNC]' });
+                }
+                // 3. ▼ [S-EXPUL] 溢價區派發
+                else if (curr.high > prev.high && curr.close < prev.close && isPremium) {
+                    markers.push({ time: curr.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: '▼ [S-EXPUL]' });
+                }
+                // 4. ▼▼ [PREM-LOCK] 溢價防守鎖
+                else if (curr.high > (symData ? symData.macro_bsl : curr.high * 1.02) && curr.close < curr.open) {
+                    markers.push({ time: curr.time, position: 'aboveBar', color: '#a855f7', shape: 'arrowDown', text: '▼▼ [PREM-LOCK]' });
+                }
+            }
+            return markers;
+        }
+
+        async function updateChartSymbol(symbol) {
+            const renderId = Date.now();
+            currentRenderId = renderId;
+            document.getElementById('currentChartSymbol').innerText = symbol;
+            currentSymbolData = (globalData.screener_data || []).find(x => x && x.symbol === symbol);
+
+            const loader = document.getElementById('chartLoader');
+            if(loader) loader.classList.remove('hidden');
+
+            let candles = [];
+            try {
+                const res = await fetch(`${VERCEL_API_URL}?symbols=${symbol}&interval=${currentTimeFrame.toLowerCase()}&t=${Date.now()}`);
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json[symbol] && json[symbol].chart) candles = json[symbol].chart;
+                }
+            } catch(e) {}
+            if(loader) loader.classList.add('hidden');
+            if(currentRenderId !== renderId) return;
+
+            // 清理舊畫線
+            activePriceLines.forEach(l => { try{ candleSeries.removePriceLine(l); } catch(e){} }); activePriceLines = [];
+            activeAreaSeries.forEach(s => { try{ chart.removeSeries(s); } catch(e){} }); activeAreaSeries = [];
+
+            if (candles.length > 0) {
+                currentCandleData = candles;
+                candleSeries.setData(currentCandleData);
+                const last = currentCandleData[currentCandleData.length - 1];
+                document.getElementById('valO').innerText = last.open.toFixed(2);
+                document.getElementById('valH').innerText = last.high.toFixed(2);
+                document.getElementById('valL').innerText = last.low.toFixed(2);
+                document.getElementById('valC').innerText = last.close.toFixed(2);
+                document.getElementById('valPct').innerText = (((last.close - last.open)/last.open)*100).toFixed(2) + '%';
+            }
+
+            // 渲染戰術幾何標記
+            if (uiState.signal && currentCandleData.length > 0) {
+                candleSeries.setMarkers(getTacticalHudMarkers(currentCandleData, currentSymbolData));
+            }
+
+            // 繪製 SMC 區間
+            if (currentSymbolData && uiState.smc) {
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_top, color: 'rgba(59, 130, 246, 0.8)', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '⚡ FVG' }));
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.entry_bot, color: 'rgba(34, 197, 94, 0.9)', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '📦 OB' }));
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.sl, color: '#ef4444', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: '🚨 SL' }));
+                activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.tp, color: '#10b981', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: '🎯 TP' }));
+                if(currentSymbolData.macro_eq) {
+                    activePriceLines.push(candleSeries.createPriceLine({ price: currentSymbolData.macro_eq, color: '#6b7280', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: '➖ 0.5 均衡' }));
+                }
+            }
+
+            updateIntelligencePanel(symbol, currentSymbolData);
+            renderHeatmap();
+            renderWatchlist();
+            chart.timeScale().fitContent();
+        }
+
+        function updateIntelligencePanel(symbol, data) {
+            document.getElementById('panelSymbolBadge').innerText = symbol;
+            const phaseEl = document.getElementById('panelPhase');
+            const trendEl = document.getElementById('panelTrend');
+            const smcEl = document.getElementById('panelSMC');
+            const insightEl = document.getElementById('panelInsight');
+
+            if (!data) {
+                phaseEl.innerText = '等待數據';
+                trendEl.innerText = '--';
+                smcEl.innerText = '--';
+                insightEl.innerText = '點選股票以查看 AI SMC 戰術評估。';
+                return;
+            }
+
+            phaseEl.innerHTML = data.price > data.macro_eq ? '<span class="text-red-400 font-bold">昂貴溢價區 (Premium)</span>' : '<span class="text-green-400 font-bold">便宜折價區 (Discount)</span>';
+            trendEl.innerHTML = data.dist_20ma > 0 ? '<span class="text-green-400 font-bold">20MA 多頭波段</span>' : '<span class="text-red-400 font-bold">20MA 空頭承壓</span>';
+            smcEl.innerHTML = `<span class="${data.status_color || 'text-yellow-400'}">${data.smc_text || '-'} | 區間: $${data.entry_bot} - $${data.entry_top}</span>`;
+            insightEl.innerHTML = `<div class="p-2.5 rounded bg-[#1f242c] border border-[#30363d] text-gray-200">${data.inv_text || '無失效提示'}</div>`;
+        }
+
+        function changeTimeFrame(tf) {
+            currentTimeFrame = tf;
+            ['15m', '1H', '4H', '1D'].forEach(t => {
+                const btn = document.getElementById('tf_' + t);
+                if(btn) btn.className = (t === tf) ? "px-2.5 py-0.5 text-xs font-bold rounded bg-[#30363d] text-white shadow-sm transition-colors" : "px-2.5 py-0.5 text-xs font-bold rounded text-gray-400 hover:text-white transition-colors";
+            });
+            const curSym = document.getElementById('currentChartSymbol').innerText;
+            if(curSym !== '--') updateChartSymbol(curSym);
+        }
+
+        function toggleOverlay(type) {
+            uiState[type] = !uiState[type];
+            const btn = document.getElementById(`btn_${type}`);
+            if(btn) btn.classList.toggle('active', uiState[type]);
+            const curSym = document.getElementById('currentChartSymbol').innerText;
+            if(curSym !== '--') updateChartSymbol(curSym);
+        }
+
+        function toggleSubChart(type) {
+            const container = document.getElementById('sub_chart_container');
+            const btnHide = document.getElementById('btn_hide_sub');
+            uiState.sub = type;
+            if(type === 'none') {
+                container.style.display = 'none';
+                btnHide.classList.add('hidden');
+            } else {
+                container.style.display = 'block';
+                btnHide.classList.remove('hidden');
+                subChart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+            }
+        }
+
+        function switchTab(t) {
+            currentTab = t;
+            document.getElementById('tabSmc').classList.toggle('text-blue-400', t === 'smc');
+            document.getElementById('tabSmc').classList.toggle('border-blue-500', t === 'smc');
+            document.getElementById('tabWatchlist').classList.toggle('text-blue-400', t === 'watchlist');
+            document.getElementById('tabWatchlist').classList.toggle('border-blue-500', t === 'watchlist');
+            renderScreenerData();
+        }
+
+        function toggleSection(cId, iId) {
+            const c = document.getElementById(cId);
+            const i = document.getElementById(iId);
+            if(c) c.classList.toggle('collapsed');
+            if(i) i.classList.toggle('rotate-180');
+        }
+
+        function addCustomStock(e) {
+            e.preventDefault();
+            const val = document.getElementById('searchInput').value.trim().toUpperCase();
+            if(!val) return;
+            if(!userWatchlist.includes(val)) {
+                userWatchlist.unshift(val);
+                localStorage.setItem('smc_watchlist', JSON.stringify(userWatchlist));
+                renderWatchlist();
+            }
+            document.getElementById('searchInput').value = '';
+            updateChartSymbol(val);
+        }
+
+        function removeFromWatchlist(e, sym) {
+            e.stopPropagation();
+            userWatchlist = userWatchlist.filter(s => s !== sym);
+            localStorage.setItem('smc_watchlist', JSON.stringify(userWatchlist));
+            renderWatchlist();
+        }
+
+        function startPolling() {
+            setInterval(async () => {
+                try {
+                    const syms = Array.from(new Set([...userWatchlist, 'SPY', 'QQQ', 'NVDA', 'AAPL', 'TSLA']));
+                    const res = await fetch(`${VERCEL_API_URL}?symbols=${syms.join(',')}&t=${Date.now()}`);
+                    if(res.ok) {
+                        const json = await res.json();
+                        currentLivePrices = json;
+                        const now = new Date();
+                        document.getElementById('liveTimeText').innerText = `即時報價更新於: ${now.toLocaleTimeString()} (HKT)`;
+                        renderHeatmap();
+                        renderWatchlist();
+                    }
+                } catch(e) {}
+            }, 10000);
+        }
+    </script>
+</body>
+</html>
