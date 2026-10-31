@@ -7,7 +7,7 @@ import yfinance as yf
 from datetime import datetime
 
 # ==========================================
-# 監控股票清單 (包含指數 ETF 與熱門個股)
+# 監控股票清單 (包含指數 ETF 與核心自選/科技巨頭)
 # ==========================================
 SYMBOLS = [
     # 指數 / 板塊 ETF
@@ -107,11 +107,12 @@ def calculate_smc(symbol: str, df_daily: pd.DataFrame, df_1h: pd.DataFrame):
         rr_ratio = round(reward / risk, 1)
         rr_display = f"1:{max(rr_ratio, 1.2)}"
 
-        # 6. 生成圖表 K 線格式
+        # 6. 生成圖表 K 線格式 (支援字串日期與時間戳)
         kline_data = []
         for idx, row in df_daily.tail(60).iterrows():
             kline_data.append({
                 "time": idx.strftime("%Y-%m-%d"),
+                "timestamp": int(idx.timestamp()),
                 "open": round(float(row['Open']), 2),
                 "high": round(float(row['High']), 2),
                 "low": round(float(row['Low']), 2),
@@ -120,15 +121,14 @@ def calculate_smc(symbol: str, df_daily: pd.DataFrame, df_1h: pd.DataFrame):
             })
 
         # ========================================================
-        # 核心修復：精確構建舊版前端 HTML 所需的全部文字欄位
+        # 核心相容文字欄位（覆蓋舊版所有 Key 的變形名稱）
         # ========================================================
-        macro_text = f"處於 {pd_status} 區間 | 0.5 均衡位: ${eq_level} (波動區間: ${swing_low:.2f} - ${swing_high:.2f})"
-        trend_text = f"波段多頭排列 | 日線趨勢穩定 | 當日漲跌幅: {chg_pct}%"
+        macro_text = f"處於 {pd_status} 區間 | 0.5 均衡位: ${eq_level} (波段低高點: ${swing_low:.2f} - ${swing_high:.2f})"
+        trend_text = f"日線波段趨勢排列 | 動能平衡 | 當日漲跌幅: {chg_pct}%"
         smc_text = f"關鍵入場區間: ${entry_bot} - ${entry_top} | 建議止損: ${stop_loss} | 目標位: ${take_profit}"
         insight_text = f"識別形態: {pattern} | 預期盈虧比: {rr_display} | 操作建議: {trade_status}"
 
-        return {
-            # 基礎過濾池欄位
+        base_dict = {
             "symbol": symbol,
             "current_price": current_price,
             "chg_pct": chg_pct,
@@ -142,8 +142,10 @@ def calculate_smc(symbol: str, df_daily: pd.DataFrame, df_1h: pd.DataFrame):
             "eq_level": eq_level,
             "stop_loss": stop_loss,
             "take_profit": take_profit,
+            "swing_low": swing_low,
+            "swing_high": swing_high,
             
-            # 舊版前端 AI 面板欄位 (完全覆蓋舊版可能使用的所有 Key 變形)
+            # 各種命名的文字欄位相容
             "macro_structure": macro_text,
             "macro": macro_text,
             "trend_momentum": trend_text,
@@ -153,20 +155,21 @@ def calculate_smc(symbol: str, df_daily: pd.DataFrame, df_1h: pd.DataFrame):
             "actionable_insight": insight_text,
             "actionable_insights": insight_text,
             "insight": insight_text,
-            "insights": insight_text,
-            
-            # K 線圖陣列
-            "kline": kline_data
+            "insights": insight_text
         }
+
+        return base_dict, kline_data
+
     except Exception as e:
         print(f"[{symbol}] SMC 計算出錯: {e}")
-        return None
+        return None, None
 
 def main():
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 開始執行 SMC 量化掃描 (共 {len(SYMBOLS)} 檔標的)...")
     
     screener_results = []
     stock_details = {}
+    flat_stocks = {}
 
     for sym in SYMBOLS:
         print(f"-> 正在分析 {sym}...", end="", flush=True)
@@ -175,14 +178,22 @@ def main():
             print(" [跳過: 無數據]")
             continue
             
-        data = calculate_smc(sym, df_d, df_1h)
+        data, kline = calculate_smc(sym, df_d, df_1h)
         if data:
-            kline = data.pop("kline")
             screener_results.append(data)
-            stock_details[sym] = {
+            
+            # 建立多層級相容結構：
+            # 1. 支援 stocks[sym].summary
+            # 2. 支援 stocks[sym].macro_structure
+            # 3. 支援 data[sym].macro_structure
+            merged_info = {
+                **data,
                 "summary": data,
                 "kline": kline
             }
+            stock_details[sym] = merged_info
+            flat_stocks[sym] = merged_info
+            
             print(f" [完成: 現價 ${data['current_price']} | {data['trade_status']}]")
         else:
             print(" [計算失敗]")
@@ -192,14 +203,15 @@ def main():
         "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S HKT"),
         "total_scanned": len(screener_results),
         "screener": screener_results,
-        "stocks": stock_details
+        "stocks": stock_details,
+        **flat_stocks  # 將股票代號平鋪於 JSON 最頂層，支援根目錄直接讀取
     }
 
     output_path = "data.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
 
-    print(f"\n✅ 掃描完成！已成功將數據輸出至 {output_path} (包含 {len(screener_results)} 隻有效股票)")
+    print(f"\n✅ 掃描完成！已成功將數據輸出至 {output_path} (共納入 {len(screener_results)} 隻有效股票)")
 
 if __name__ == "__main__":
     main()
