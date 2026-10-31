@@ -1,21 +1,35 @@
 import json
+import os
 import numpy as np
 import pandas as pd
 import yfinance as yf
 from datetime import datetime
 
 # ==========================================
-# 監控股票清單 (包含指數 ETF 與核心個股)
+# 動態讀取監控名單 (支援註解與空行過濾)
 # ==========================================
-SYMBOLS = [
-    "SPY", "QQQ", "DIA", "SMH", "IWM", "SOXL", "VOO",
-    "AAPL", "NVDA", "MSFT", "TSLA", "AMZN", "GOOGL", "META"
-]
+def load_symbols(filename="tickers.txt"):
+    symbols = []
+    if not os.path.exists(filename):
+        print(f"⚠️ 找不到 {filename}，使用預設名單。")
+        return ["SPY", "QQQ", "AAPL", "NVDA"]
+        
+    with open(filename, "r", encoding="utf-8") as f:
+        for line in f:
+            # 提取 '#' 之前的文字，去除首尾空白並轉大寫
+            clean_line = line.split('#')[0].strip().upper()
+            if clean_line:
+                symbols.append(clean_line)
+                
+    # 移除重複代號，保留原始排列順序
+    unique_symbols = list(dict.fromkeys(symbols))
+    return unique_symbols
+
+SYMBOLS = load_symbols()
 
 def get_market_data(symbol: str):
     try:
         ticker = yf.Ticker(symbol)
-        # 抓取日線與 1H 線，確保有保底數據
         df_1d = ticker.history(period="3mo", interval="1d")
         df_1h = ticker.history(period="1mo", interval="1h")
         if df_1d.empty or len(df_1d) < 20:
@@ -67,7 +81,7 @@ def calculate_smc(symbol: str, df_1d: pd.DataFrame, df_1h: pd.DataFrame):
 
         risk = max(abs(current_price - sl), 0.5)
         reward = max(abs(tp - current_price), 0.5)
-        rrr = round(reward / risk, 1)
+        rrr = round(reward / risk, 1) if risk > 0 else 0
 
         in_zone = (entry_bot <= current_price <= entry_top * 1.015)
         near_zone = (current_price > entry_top and (current_price - entry_top) / current_price < 0.02)
@@ -86,7 +100,6 @@ def calculate_smc(symbol: str, df_1d: pd.DataFrame, df_1h: pd.DataFrame):
         status_color = "text-green-400 font-bold" if in_zone else ("text-yellow-400" if near_zone else "text-gray-400")
         inv_text = f"區間 ${entry_bot} - ${entry_top}，嚴格防守 ${sl}。" if in_zone else "等待價格進入戰略區間。"
 
-        # 打包 K 線陣列 (1D 使用字串，1H 強制使用 UNIX 時間戳避免前端崩潰)
         kline_1d = []
         for idx, row in df_1d.tail(60).iterrows():
             kline_1d.append({"time": idx.strftime("%Y-%m-%d"), "open": round(row['Open'],2), "high": round(row['High'],2), "low": round(row['Low'],2), "close": round(row['Close'],2)})
