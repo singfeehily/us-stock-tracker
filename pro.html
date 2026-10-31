@@ -29,8 +29,8 @@
         .heatmap-cell:hover { transform: translateY(-2px); filter: brightness(1.2); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
         .heatmap-cell.active { border: 2px solid #3b82f6 !important; box-shadow: 0 0 12px rgba(59, 130, 246, 0.6); }
 
-        .watchlist-card { border: 1px solid #30363d; transition: all 0.2s ease-in-out; touch-action: pan-x; }
-        .watchlist-card.active-selected { border: 2px solid #3b82f6 !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
+        .watchlist-card { border: 1px solid #30363d; transition: all 0.2s ease-in-out; touch-action: pan-x; position: relative; overflow: hidden; }
+        .watchlist-card.active-selected { border: 2px solid #3b82f6 !important; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
         
         #tv_chart_container, #sub_chart_container { touch-action: none !important; -webkit-user-select: none; user-select: none; overflow: hidden; position: relative; }
         .chart-overlay-toggles { position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; gap: 8px; flex-wrap: wrap; pointer-events: none; }
@@ -363,6 +363,7 @@
             }).join('');
         }
 
+        // 修改 1：自選監察隊列卡片加入熱力圖綠漲紅跌顏色特效
         function renderWatchlist() {
             const container = document.getElementById('watchlistContainer');
             if(!container) return;
@@ -372,12 +373,14 @@
                 const sData = (globalData.screener_data || []).find(x => x && x.symbol === sym) || { price: 0, change_pct: 0 };
                 const p = (currentLivePrices[sym] && currentLivePrices[sym].price) ? currentLivePrices[sym].price : sData.price;
                 const pct = (currentLivePrices[sym] && currentLivePrices[sym].change_pct !== undefined) ? parseFloat(currentLivePrices[sym].change_pct) : (sData.change_pct || 0);
-                const color = pct >= 0 ? 'text-green-400' : 'text-red-400';
-                const sign = pct >= 0 ? '+' : '';
-                return `<div class="flex-shrink-0 w-36 glass-panel rounded-lg p-3 cursor-pointer watchlist-card ${sym === curSym ? 'active-selected' : ''}" onclick="updateChartSymbol('${sym}')">
+                const isUp = pct >= 0;
+                const bgColor = isUp ? (pct > 2 ? 'rgba(34, 197, 94, 0.45)' : 'rgba(34, 197, 94, 0.22)') : (pct < -2 ? 'rgba(239, 68, 68, 0.45)' : 'rgba(239, 68, 68, 0.22)');
+                const textColor = isUp ? 'text-green-400' : 'text-red-400';
+                const sign = isUp ? '+' : '';
+                return `<div class="flex-shrink-0 w-36 rounded-lg p-3 cursor-pointer watchlist-card ${sym === curSym ? 'active-selected' : ''}" style="background: ${bgColor}" onclick="updateChartSymbol('${sym}')">
                             <div class="flex justify-between text-xs text-gray-400 mb-1"><span class="font-bold text-white text-sm">${sym}</span><button onclick="removeFromWatchlist(event, '${sym}')" class="hover:text-red-400 text-sm">×</button></div>
                             <div class="text-base font-bold font-mono text-white">$${(p || 0).toFixed(2)}</div>
-                            <div class="text-xs font-mono ${color}">${sign}${(pct || 0).toFixed(2)}%</div>
+                            <div class="text-xs font-mono ${textColor}">${sign}${(pct || 0).toFixed(2)}%</div>
                         </div>`;
             }).join('');
         }
@@ -807,12 +810,19 @@
             updateChartIndicators();
         }
 
+        // 修改 2：修正切換分頁時，核心監察總表 (watchlist) 文字正確切換為藍色
         function switchTab(t) {
             currentTab = t;
-            document.getElementById('tabSmc').classList.toggle('text-blue-400', t === 'smc');
-            document.getElementById('tabSmc').classList.toggle('border-blue-500', t === 'smc');
-            document.getElementById('tabWatchlist').classList.toggle('text-blue-400', t === 'watchlist');
-            document.getElementById('tabWatchlist').classList.toggle('border-blue-500', t === 'watchlist');
+            const tabSmc = document.getElementById('tabSmc');
+            const tabWatchlist = document.getElementById('tabWatchlist');
+            
+            if (t === 'smc') {
+                tabSmc.className = "px-4 py-2.5 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap";
+                tabWatchlist.className = "px-4 py-2.5 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
+            } else {
+                tabWatchlist.className = "px-4 py-2.5 text-sm font-medium text-blue-400 border-b-2 border-blue-500 whitespace-nowrap";
+                tabSmc.className = "px-4 py-2.5 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white whitespace-nowrap";
+            }
             renderScreenerData();
         }
 
