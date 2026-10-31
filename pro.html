@@ -408,7 +408,7 @@
                 return { ...item, _livePrice: livePrice, _status: dynStatus, _dynRRR: dynRRR, _dynPdVal: dynPdVal };
             });
 
-            const filterSt = document.getElementById('filterStatus') ? document.getElementById('filterStatus'].value : 'ALL';
+            const filterSt = document.getElementById('filterStatus') ? document.getElementById('filterStatus').value : 'ALL';
             if (filterSt === 'GREEN') list = list.filter(x => x._status.label === '🟢 可執行');
             else if (filterSt === 'YELLOW') list = list.filter(x => x._status.label === '🟡 接近中');
             else if (filterSt === 'RED') list = list.filter(x => x._status.label === '🔴 觀察中');
