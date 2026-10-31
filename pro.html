@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>美股狙擊器 [PRO_TERMINAL v4.2]</title>
+    <title>美股狙擊器 [PRO_TERMINAL v4.3]</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
@@ -321,7 +321,7 @@
             if (!item || !item.entry_top || item.entry_top === 0) {
                 return { label: "無 SMC 數據", colorClass: "text-slate-500", dotClass: "bg-slate-600", distText: "純量價模式" };
             }
-            let dist = 0, label = "觀察中", colorClass: "text-slate-400", dotClass: "bg-slate-500", distText: "-";
+            let dist = 0, label = "觀察中", colorClass = "text-slate-400", dotClass = "bg-slate-500", distText = "-";
             const isShort = item.direction === 'short';
             
             if (isShort) {
