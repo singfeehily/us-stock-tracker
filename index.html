@@ -356,13 +356,13 @@
 
         // [修復] 自動標準化港美股代號 (例如輸入 700 / 0700.HK 自動轉為 00700)
         function normalizeSymbolInput(raw) {
-            let s = (raw || '').trim().toUpperCase();
-            if (s.endsWith('.HK')) s = s.slice(0, -3);
-            if (s.startsWith('HK.') || s.startsWith('US.')) s = s.slice(3);
-            s = s.trim();
-            if (/^\d+$/.test(s)) return s.padStart(5, '0');
-            return s;
-        }
+    let s = (raw || '').trim().toUpperCase();
+    if (s.endsWith('.HK')) s = s.slice(0, -3);
+    if (s.startsWith('HK.') || s.startsWith('US.')) s = s.slice(3);
+    s = s.trim();
+    if (/^\d+$/.test(s)) return s.padStart(5, '0');
+    return s;
+}
 
         let customWatchlist = [];
         try {
