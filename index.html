@@ -349,6 +349,7 @@
     <script>
         const API_BASE = (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost')
     ? 'http://127.0.0.1:5000'
+    : 'https://stock-live-api.vercel.app';
     : window.location.origin;
         const DEFAULT_CORE_SYMBOLS = ['NVDA', 'AAPL', 'TSLA', 'MSFT', 'AMZN', 'META', 'GOOGL', 'MU', 'MUU', 'SNDU', 'SNDK', 'SPY', 'QQQ', 'SMH', 'DIA'];
         const DEFAULT_CUSTOM_WATCHLIST = ['MUU', 'SNDU', 'NVDA', 'TSLA', 'MU', 'AAPL'];
