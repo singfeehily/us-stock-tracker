@@ -354,7 +354,7 @@
         const DEFAULT_CORE_SYMBOLS = ['NVDA', 'AAPL', 'TSLA', 'MSFT', 'AMZN', 'META', 'GOOGL', 'MU', 'MUU', 'SNDU', 'SNDK', 'SPY', 'QQQ', 'SMH', 'DIA'];
         const DEFAULT_CUSTOM_WATCHLIST = ['MUU', 'SNDU', 'NVDA', 'TSLA', 'MU', 'AAPL'];
 
-        // [修復] 自動標準化港美股代號 (例如輸入 700 / 0700.HK 自動轉為 00700)
+        // 自動標準化港美股代號
         function normalizeSymbolInput(raw) {
             let s = (raw || '').trim().toUpperCase();
             if (s.endsWith('.HK')) s = s.slice(0, -3);
@@ -375,7 +375,6 @@
         } catch (e) {
             customWatchlist = [...DEFAULT_CUSTOM_WATCHLIST];
         }
-    </script>
 
         let currentSymbol = 'NVDA';
         let currentInterval = '4h';
@@ -457,9 +456,6 @@
             tooltip.style.left = `${left}px`;
         }
 
-        // ======================================================================
-        // [關鍵修復] 補回遺失的 calculateEMA 與 calculateBOLL 技術指標函數
-        // ======================================================================
         function calculateEMA(chartData, period) {
             const result = [];
             if (!chartData || chartData.length === 0) return result;
@@ -591,7 +587,6 @@
                 isSyncingCrosshair = false;
             });
 
-            // 點擊標記展開或切換對應的 TP/SL 作戰區 (容差前後 2 根 K 線方便點擊)
             mainChart.subscribeClick(param => {
                 if (wasDraggingChart || !param || !param.time) return;
                 let matchedPlan = tacticalMarkerMap.get(param.time);
@@ -730,7 +725,6 @@
                 const plotWidth = Math.max(0, cssW - priceScaleWidth);
                 const plotHeight = Math.max(0, cssH - 26);
 
-                // 圖層 A：4H OB 機構需求區 (半透明霓虹綠)
                 if (overlayState.smc && latestStockSnapshot.entry_top && latestStockSnapshot.entry_bot) {
                     const yTop = candleSeries.priceToCoordinate(Number(latestStockSnapshot.entry_top));
                     const yBot = candleSeries.priceToCoordinate(Number(latestStockSnapshot.entry_bot));
@@ -763,7 +757,6 @@
                     }
                 }
 
-                // 圖層 B：4-Algo 動態多空作戰區塊 (科技藍 TP 區 + 警示紅 SL 區)
                 if (overlayState.zone && activeTacticalPlan) {
                     const yEntry = candleSeries.priceToCoordinate(Number(activeTacticalPlan.entryPrice));
                     const yTp = candleSeries.priceToCoordinate(Number(activeTacticalPlan.tpPrice));
@@ -1116,7 +1109,6 @@
                     candleSeries.setMarkers([]);
                 }
 
-                // 自動激活最新鮮的戰術作戰區；若當前週期暫無歷史標記，自動使用實時結構生成保底作戰區
                 const allPlans = Array.from(tacticalMarkerMap.values());
                 if (allPlans.length > 0) {
                     activateTacticalPlan(allPlans[allPlans.length - 1]);
