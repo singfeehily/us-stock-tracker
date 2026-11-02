@@ -114,6 +114,9 @@
                     [+ 加入自選]
                 </button>
             </div>
+            <button onclick="setTunnelUrl()" class="px-3 py-1.5 text-xs font-bold mono bg-slate-900 hover:bg-slate-800 text-purple-400 border border-purple-500/50 rounded transition">
+    [🔗 通道]
+            </button>
             <button onclick="refreshAllData()" 
                 class="px-3 py-1.5 text-xs mono bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 rounded transition">
                 [同步數據]
@@ -351,33 +354,61 @@
         // ============================================================================
         // 雙保底自動路由探測引擎 (優先探測本地 127.0.0.1:5000 OpenD，失敗則無縫切換 Vercel 雲端)
         // ============================================================================
-        const LOCAL_API_URL = 'http://127.0.0.1:5000';
+const LOCAL_API_URL = 'http://127.0.0.1:5000';
         const CLOUD_API_URL = 'https://stock-live-api.vercel.app';
         let API_BASE = CLOUD_API_URL;
         let currentSourceMode = 'CLOUD PRO (YAHOO 實時補償)';
 
-        async function detectOptimalBackend() {
-            try {
-                const controller = new AbortController();
-                const timer = setTimeout(() => controller.abort(), 1200);
-                const res = await fetch(`${LOCAL_API_URL}/api/radar?t=${Date.now()}`, { signal: controller.signal });
-                clearTimeout(timer);
-                if (res.ok) {
-                    const data = await res.json();
-                    API_BASE = LOCAL_API_URL;
-                    currentSourceMode = data?.status?.source_mode || 'LOCAL OPEND (富途實時直連)';
-                    const badge = document.getElementById('sys-mode-badge');
-                    if (badge) {
-                        badge.textContent = '[SYS // LOCAL OPEND v5.9]';
-                        badge.className = 'px-2.5 py-1 text-xs font-bold mono bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 rounded tracking-wider';
-                    }
-                    return;
-                }
-            } catch (e) {
-                // 本地未啟動後端，無縫使用雲端 Vercel 保底
+        function setTunnelUrl() {
+            const current = localStorage.getItem('sniper_tunnel_url') || '';
+            const input = prompt('【遠端 OpenD 穿透設定】\n請輸入 Ngrok 或 Cloudflare 的 HTTPS 網址 (如 https://abc.ngrok.app)\n若留空則僅使用本機與雲端保底：', current);
+            if (input !== null) {
+                localStorage.setItem('sniper_tunnel_url', input.trim());
+                alert('通道已儲存！系統將重新探測最佳連線...');
+                refreshAllData();
             }
+        }
+
+        async function detectOptimalBackend() {
+            const tunnelUrl = localStorage.getItem('sniper_tunnel_url');
+            
+            // 探測優先級：1. 本機直連 -> 2. 外網通道 -> 3. 雲端 Vercel 保底
+            const probeList = [{ name: 'LOCAL', url: LOCAL_API_URL }];
+            if (tunnelUrl && tunnelUrl.startsWith('https://')) {
+                probeList.push({ name: 'TUNNEL', url: tunnelUrl });
+            }
+
+            for (const probe of probeList) {
+                try {
+                    const controller = new AbortController();
+                    const timer = setTimeout(() => controller.abort(), 1200); // 1.2秒極速探測
+                    const res = await fetch(`${probe.url}/api/radar?t=${Date.now()}`, { signal: controller.signal });
+                    clearTimeout(timer);
+                    
+                    if (res.ok) {
+                        const data = await res.json();
+                        API_BASE = probe.url;
+                        currentSourceMode = data?.status?.source_mode || `${probe.name} OPEND (實時直連)`;
+                        const badge = document.getElementById('sys-mode-badge');
+                        if (badge) {
+                            badge.textContent = `[SYS // ${probe.name} OPEND v5.9]`;
+                            badge.className = 'px-2.5 py-1 text-xs font-bold mono bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 rounded tracking-wider';
+                        }
+                        return; // 探測成功，立刻終止並使用此通道
+                    }
+                } catch (e) {
+                    // 該通道未開機或無回應，靜默跳過，繼續探測下一個
+                }
+            }
+
+            // 若本機與通道都沒開，無縫切換 Vercel
             API_BASE = CLOUD_API_URL;
             currentSourceMode = 'CLOUD PRO (雲端雙保底)';
+            const badge = document.getElementById('sys-mode-badge');
+            if (badge) {
+                badge.textContent = `[SYS // DUAL-PRO v5.9]`;
+                badge.className = 'px-2.5 py-1 text-xs font-bold mono bg-cyan-950/90 text-cyan-300 border border-cyan-500/40 rounded tracking-wider';
+            }
         }
 
         const DEFAULT_CORE_SYMBOLS = ['NVDA', 'AAPL', 'TSLA', 'MSFT', 'AMZN', 'META', 'GOOGL', 'MU', 'MUU', 'SNDU', 'SNDK', 'SPY', 'QQQ', 'SMH', 'DIA'];
