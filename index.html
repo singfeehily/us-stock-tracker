@@ -568,6 +568,21 @@
             scheduleZoneRedraw();
         }
 
+        // === P1 FIX: 強制解鎖 Y 軸自動縮放 (解決切換股票或拖拉後價格不歸位的核心函數) ===
+        function unlockPriceScaleAutoFit() {
+            if (!mainChart || !deltaChart) return;
+            try {
+                mainChart.priceScale('right').applyOptions({
+                    autoScale: true,
+                    scaleMargins: { top: 0.12, bottom: 0.12 }
+                });
+                deltaChart.priceScale('right').applyOptions({
+                    autoScale: true,
+                    scaleMargins: { top: 0.15, bottom: 0.15 }
+                });
+            } catch (e) {}
+        }
+
         function initCharts() {
             const mainContainer = document.getElementById('main-chart');
             const deltaContainer = document.getElementById('delta-chart');
@@ -581,7 +596,7 @@
                 layout: { background: { type: 'solid', color: '#070b14' }, textColor: '#94a3b8', fontFamily: 'JetBrains Mono, monospace' },
                 grid: { vertLines: { color: 'rgba(30, 41, 59, 0.45)' }, horzLines: { color: 'rgba(30, 41, 59, 0.45)' } },
                 crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-                rightPriceScale: { borderColor: '#1e293b', scaleMargins: { top: 0.12, bottom: 0.12 }, minimumWidth: 78 },
+                rightPriceScale: { borderColor: '#1e293b', autoScale: true, scaleMargins: { top: 0.12, bottom: 0.12 }, minimumWidth: 78 },
                 timeScale: commonTimeScaleOptions,
                 handleScroll: { mouseWheel: true, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: true },
                 handleScale: { axisPressedMouseMove: true, mouseWheel: true, pinch: true }
@@ -598,7 +613,7 @@
                 width: deltaContainer.clientWidth || initW, height: 145,
                 layout: { background: { type: 'solid', color: '#070b14' }, textColor: '#94a3b8', fontFamily: 'JetBrains Mono, monospace' },
                 grid: { vertLines: { color: 'rgba(30, 41, 59, 0.45)' }, horzLines: { color: 'rgba(30, 41, 59, 0.45)' } },
-                rightPriceScale: { borderColor: '#1e293b', scaleMargins: { top: 0.15, bottom: 0.15 }, minimumWidth: 78 },
+                rightPriceScale: { borderColor: '#1e293b', autoScale: true, scaleMargins: { top: 0.15, bottom: 0.15 }, minimumWidth: 78 },
                 timeScale: commonTimeScaleOptions
             });
 
@@ -714,7 +729,10 @@
                     triggerMomentumZoneSync(600);
                 }, { passive: true });
                 mainWrapper.addEventListener('wheel', () => triggerMomentumZoneSync(400), { passive: true });
-                mainWrapper.addEventListener('dblclick', () => triggerMomentumZoneSync(400), { passive: true });
+                mainWrapper.addEventListener('dblclick', () => {
+                    unlockPriceScaleAutoFit();
+                    triggerMomentumZoneSync(400);
+                }, { passive: true });
 
                 // === P1 FIX: 手機端觸控 (Touch / Pinch-to-Zoom / Y軸拉動 / 慣性滑動) 完整綁定 ===
                 mainWrapper.addEventListener('touchstart', e => {
@@ -738,7 +756,7 @@
 
                 mainWrapper.addEventListener('touchend', () => {
                     pointerDownPos = null;
-                    triggerMomentumZoneSync(700); // 覆蓋手機放手後的慣性滑動時間
+                    triggerMomentumZoneSync(700);
                 }, { passive: true });
 
                 mainWrapper.addEventListener('touchcancel', () => {
@@ -948,10 +966,14 @@
             }
         }
 
+        // === P1 FIX: [最佳視角] 強制同時重置 X 軸範圍與 Y 軸 AutoScale，讓價格與作戰區完美置中 ===
         function resetOptimalZoom() {
             if (!latestStockSnapshot || !latestStockSnapshot.chart) return;
             const totalBars = latestStockSnapshot.chart.length;
             if (totalBars === 0) return;
+
+            unlockPriceScaleAutoFit();
+
             let visibleCount = 70;
             if (currentInterval === '15m') visibleCount = 75;
             else if (currentInterval === '1h') visibleCount = 70;
@@ -960,12 +982,15 @@
             const fromIdx = Math.max(0, totalBars - visibleCount), toIdx = totalBars + 4;
             mainChart.timeScale().setVisibleLogicalRange({ from: fromIdx, to: toIdx });
             deltaChart.timeScale().setVisibleLogicalRange({ from: fromIdx, to: toIdx });
-            triggerMomentumZoneSync(300);
+            triggerMomentumZoneSync(350);
         }
 
+        // === P1 FIX: [全覽] 強制同時重置 X 軸全歷史與 Y 軸 AutoScale ===
         function fitAllHistory() {
-            mainChart.timeScale().fitContent(); deltaChart.timeScale().fitContent();
-            triggerMomentumZoneSync(300);
+            unlockPriceScaleAutoFit();
+            mainChart.timeScale().fitContent();
+            deltaChart.timeScale().fitContent();
+            triggerMomentumZoneSync(350);
         }
 
         function buildDefaultFallbackPlan(stock) {
@@ -1146,7 +1171,9 @@
         }
 
         function renderSmcPriceLines(stockInfo) {
-            activePriceLines.forEach(line => candleSeries.removePriceLine(line));
+            activePriceLines.forEach(line => {
+                try { candleSeries.removePriceLine(line); } catch (e) {}
+            });
             activePriceLines = [];
 
             if (!stockInfo || !stockInfo.macro_eq) return;
@@ -1213,6 +1240,11 @@
                     stock.macro_eq = Number((recentLow + recentSpan * 0.5).toFixed(2));
                 }
 
+                // === P1 FIX: 載入新股票數據前，必須先清除上一隻股票的 PriceLines 與舊作戰區，防止新舊股票價格差距拉壞 Y 軸 ===
+                renderSmcPriceLines(null);
+                candleSeries.setMarkers([]);
+                activeTacticalPlan = null;
+
                 latestStockSnapshot = stock;
                 latestBarSnapshot = lastBar;
 
@@ -1241,12 +1273,11 @@
                 });
                 deltaSeries.setData(deltaHistData);
 
+                // 重新繪製當前股票專屬的 PriceLines 與戰術標記
                 renderSmcPriceLines(overlayState.smc ? stock : null);
                 const markers = buildTacticalMarkers(stock.chart, stock);
                 if (overlayState.hud) {
                     candleSeries.setMarkers(markers);
-                } else {
-                    candleSeries.setMarkers([]);
                 }
 
                 const allPlans = Array.from(tacticalMarkerMap.values());
@@ -1256,8 +1287,8 @@
                     activateTacticalPlan(buildDefaultFallbackPlan(stock));
                 }
 
+                // 強制執行 [最佳視角] (內含 unlockPriceScaleAutoFit 自動歸位 Y 軸價格)
                 resetOptimalZoom();
-                triggerMomentumZoneSync(400);
 
                 latestMarketCache[currentSymbol] = { ...latestMarketCache[currentSymbol], ...stock };
                 renderLegendBar(lastBar);
