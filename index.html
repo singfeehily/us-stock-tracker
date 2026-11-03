@@ -690,6 +690,16 @@
             
             const commonTimeScaleOptions = { borderColor: '#1e293b', timeVisible: true, secondsVisible: false, rightOffset: 5, barSpacing: 9 };
 
+            // 1. 定義全局時間格式化器 (強制使用本地設備時區 - 香港時間)
+            const customLocalization = {
+                timeFormatter: (timestamp) => {
+                    const d = new Date(timestamp * 1000);
+                    return d.toLocaleDateString('zh-HK', { month: '2-digit', day: '2-digit' }) + ' ' + 
+                           d.toLocaleTimeString('zh-HK', { hour: '2-digit', minute: '2-digit', hour12: false });
+                }
+            };
+
+            // 2. 將 customLocalization 加入 mainChart
             mainChart = LightweightCharts.createChart(mainContainer, {
                 width: initW, height: initH_main, 
                 layout: { background: { type: 'solid', color: '#070b14' }, textColor: '#94a3b8', fontFamily: 'JetBrains Mono, monospace' },
@@ -698,7 +708,8 @@
                 rightPriceScale: { borderColor: '#1e293b', autoScale: true, scaleMargins: { top: 0.12, bottom: 0.12 }, minimumWidth: 60 },
                 timeScale: commonTimeScaleOptions,
                 handleScroll: { mouseWheel: false, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: true },
-                handleScale: { mouseWheel: false, pinch: true, axisPressedMouseMove: true }
+                handleScale: { mouseWheel: false, pinch: true, axisPressedMouseMove: true },
+                localization: customLocalization // <--- 這裡加入
             });
 
             candleSeries = mainChart.addCandlestickSeries({ upColor: '#10b981', downColor: '#f43f5e', borderUpColor: '#10b981', borderDownColor: '#f43f5e', wickUpColor: '#10b981', wickDownColor: '#f43f5e' });
@@ -708,12 +719,14 @@
             bollMidSeries = mainChart.addLineSeries({ color: 'rgba(192, 132, 252, 0.4)', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dotted, crosshairMarkerVisible: false, lastValueVisible: false, priceLineVisible: false, visible: overlayState.boll });
             bollLowerSeries = mainChart.addLineSeries({ color: 'rgba(192, 132, 252, 0.65)', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, crosshairMarkerVisible: false, lastValueVisible: false, priceLineVisible: false, visible: overlayState.boll });
 
+            // 3. 將 customLocalization 加入 deltaChart
             deltaChart = LightweightCharts.createChart(deltaContainer, {
                 width: initW, height: initH_delta,
                 layout: { background: { type: 'solid', color: '#070b14' }, textColor: '#94a3b8', fontFamily: 'JetBrains Mono, monospace' },
                 grid: { vertLines: { color: 'rgba(30, 41, 59, 0.45)' }, horzLines: { color: 'rgba(30, 41, 59, 0.45)' } },
                 rightPriceScale: { borderColor: '#1e293b', autoScale: true, scaleMargins: { top: 0.15, bottom: 0.15 }, minimumWidth: 60 },
-                timeScale: commonTimeScaleOptions
+                timeScale: commonTimeScaleOptions,
+                localization: customLocalization // <--- 這裡加入
             });
 
             deltaSeries = deltaChart.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: 'right' });
@@ -1317,7 +1330,7 @@
 
                 const allPlans = Array.from(tacticalMarkerMap.values());
                 if (allPlans.length > 0) activateTacticalPlan(allPlans[allPlans.length - 1]);
-                else activateTacticalPlan(buildDefaultFallbackPlan(stock));
+                else activateTacticalPlan(buildDefaultFallbackPlan(latestStockSnapshot));
 
                 resetOptimalZoom();
 
