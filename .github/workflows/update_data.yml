@@ -37,6 +37,9 @@ jobs:
         run: |
           python screener.py
 
+      - name: 拒絕空或無效的 data.json
+        run: python -c "import screener; screener.assert_data_file('data.json')"
+
       - name: 自動提交並推送 data.json
         run: |
           git config --global user.name 'GitHub Actions Bot'
