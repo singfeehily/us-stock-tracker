@@ -147,7 +147,7 @@
                 </button>
             </div>
             <div class="flex gap-1.5 w-full sm:w-auto">
-                <button onclick="setTunnelUrl()" class="flex-1 sm:flex-none px-3 py-1.5 text-xs font-bold mono bg-slate-900 hover:bg-slate-800 text-purple-400 border border-purple-500/50 rounded transition">
+                <button onclick="setTunnelUrl()" title="貼上 Tailscale Funnel HTTPS origin（HTTP API），不要貼 OpenD 埠 11111" class="flex-1 sm:flex-none px-3 py-1.5 text-xs font-bold mono bg-slate-900 hover:bg-slate-800 text-purple-400 border border-purple-500/50 rounded transition">
                     [🔗 通道]
                 </button>
                 <button onclick="refreshAllData()" class="flex-1 sm:flex-none px-3 py-1.5 text-xs mono bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 rounded transition">
@@ -533,9 +533,14 @@
 
         function setTunnelUrl() {
             const current = localStorage.getItem('sniper_tunnel_url') || '';
-            const input = prompt('【遠端 OpenD 穿透設定】\n請輸入 Tailscale / Ngrok 的 HTTPS 網址\n若留空則僅使用本機與雲端保底：', current);
+            const input = prompt('【遠端通道】貼上 Tailscale Funnel 的 HTTPS origin（HTTP API）\n例如 https://<你的節點>.ts.net\n不要貼 OpenD 原始埠 11111。\n留空則改用本機探測與雲端 Yahoo：', current);
             if (input !== null) {
-                localStorage.setItem('sniper_tunnel_url', input.trim().replace(/\/+$/, ''));
+                const cleaned = input.trim().replace(/\/+$/, '');
+                if (cleaned && (!cleaned.startsWith('https://') || /:11111\b/.test(cleaned))) {
+                    alert('請貼 Tailscale Funnel 的 HTTPS origin（HTTP API），不要貼 OpenD 原始埠 11111。');
+                    return;
+                }
+                localStorage.setItem('sniper_tunnel_url', cleaned);
                 alert('通道已儲存！系統將重新探測最佳連線...');
                 refreshAllData();
             }
@@ -544,12 +549,12 @@
         async function detectOptimalBackend() {
             const tunnelUrl = (localStorage.getItem('sniper_tunnel_url') || '').trim().replace(/\/+$/, '');
             const probeList = [{ name: 'LOCAL', url: LOCAL_API_URL }];
-            if (tunnelUrl && tunnelUrl.startsWith('https://')) probeList.push({ name: 'TUNNEL', url: tunnelUrl });
+            if (tunnelUrl && tunnelUrl.startsWith('https://') && !/:11111\b/.test(tunnelUrl)) probeList.push({ name: 'TUNNEL', url: tunnelUrl });
 
             for (const probe of probeList) {
                 try {
                     const controller = new AbortController();
-                    const timer = setTimeout(() => controller.abort(), 1200); 
+                    const timer = setTimeout(() => controller.abort(), 2500); 
                     const res = await fetch(`${probe.url}/api/radar?t=${Date.now()}`, { signal: controller.signal });
                     clearTimeout(timer);
                     if (res.ok) {

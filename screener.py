@@ -1,5 +1,7 @@
 import json
+import math
 import os
+import sys
 import numpy as np
 import pandas as pd
 import yfinance as yf
@@ -132,6 +134,50 @@ def calculate_smc(symbol: str, df_1d: pd.DataFrame, df_1h: pd.DataFrame, df_15m:
         print(f"[{symbol}] SMC 計算出錯: {e}")
         return None, [], [], [], []
 
+def validate_payload(output):
+    """Refuse empty or non-finite screener output before it can become data.json."""
+    if not isinstance(output, dict):
+        raise ValueError("根節點必須是物件")
+    for key in ("updated_at", "screener_data", "watchlist_data", "stocks"):
+        if key not in output:
+            raise ValueError(f"缺少必要欄位 {key}")
+    if not isinstance(output["updated_at"], str) or not output["updated_at"].strip():
+        raise ValueError("updated_at 無效")
+    rows = output["screener_data"]
+    if not isinstance(rows, list) or len(rows) == 0:
+        raise ValueError("screener_data 必須是非空列表")
+    if not isinstance(output["watchlist_data"], list):
+        raise ValueError("watchlist_data 必須是列表")
+    if not isinstance(output["stocks"], dict):
+        raise ValueError("stocks 必須是物件")
+    for i, row in enumerate(rows):
+        if not isinstance(row, dict):
+            raise ValueError(f"screener_data[{i}] 必須是物件")
+        symbol = row.get("symbol")
+        price = row.get("price")
+        if not isinstance(symbol, str) or not symbol.strip():
+            raise ValueError(f"screener_data[{i}].symbol 無效")
+        if isinstance(price, bool) or not isinstance(price, (int, float)) or not math.isfinite(price):
+            raise ValueError(f"screener_data[{i}].price 無效")
+    json.dumps(output, allow_nan=False)
+
+
+def assert_data_file(path="data.json"):
+    with open(path, encoding="utf-8") as f:
+        raw = f.read()
+    if not raw.strip():
+        raise SystemExit("拒絕提交：data.json 是空檔")
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as e:
+        raise SystemExit(f"拒絕提交：data.json 不是合法 JSON ({e})")
+    try:
+        validate_payload(data)
+    except ValueError as e:
+        raise SystemExit(f"拒絕提交：{e}")
+    print(f"data.json OK ({len(data['screener_data'])} symbols)")
+
+
 def main():
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 開始執行 70 檔標的精算掃描...")
     
@@ -168,10 +214,18 @@ def main():
         "stocks": stocks_dict
     }
 
-    with open("data.json", "w", encoding="utf-8") as f:
-        json.dump(output, f, ensure_ascii=False, indent=2)
+    try:
+        validate_payload(output)
+        encoded = json.dumps(output, ensure_ascii=False, indent=2, allow_nan=False)
+    except ValueError as e:
+        print(f"\n❌ 拒絕寫入 data.json：{e}")
+        sys.exit(1)
 
-    print(f"\n✅ 掃描完成！70 檔數據已成功寫入 data.json")
+    with open("data.json", "w", encoding="utf-8") as f:
+        f.write(encoded)
+        f.write("\n")
+
+    print(f"\n✅ 掃描完成！{len(screener_list)} 檔數據已成功寫入 data.json")
 
 if __name__ == "__main__":
     main()
