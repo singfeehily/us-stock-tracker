@@ -124,7 +124,7 @@
                     <span class="cyber-help" data-title="[系統核心架構說明]" data-tip="結合 4H 宏觀結構 (Where)、15m/1H 轉折訊號 (When)、微觀訂單流 (Order Flow Delta) 與 4-Algo 科技藍/警示紅動態作戰區，點擊圖表上任一 HUD 戰術標記即可展開多空盈虧比作戰陣地。">?</span>
                 </h1>
                 <p id="sys-status-bar" class="text-[10px] md:text-xs mono text-slate-400 truncate w-full max-w-[280px] md:max-w-md">
-                    [連線狀態: 正在探測本地 OpenD 與雲端雙保底通道...]
+                    [連線狀態: 正在探測本機 OpenD（禁止 Cloud Yahoo 保底）...]
                 </p>
             </div>
         </div>
@@ -527,13 +527,14 @@
         }
 
         const LOCAL_API_URL = 'http://127.0.0.1:5000';
-        const CLOUD_API_URL = 'https://stock-live-api.vercel.app';
-        let API_BASE = CLOUD_API_URL;
-        let currentSourceMode = 'CLOUD PRO (YAHOO 實時補償)';
+        const CLOUD_API_URL = 'https://stock-live-api.vercel.app'; // retained for reference only; Local Pro never falls back
+        let API_BASE = LOCAL_API_URL;
+        let currentSourceMode = 'LOCAL OPEND (連線探測中)';
+        let backendConnectionError = null;
 
         function setTunnelUrl() {
             const current = localStorage.getItem('sniper_tunnel_url') || '';
-            const input = prompt('【遠端通道】貼上 Tailscale Funnel 的 HTTPS origin（HTTP API）\n例如 https://<你的節點>.ts.net\n不要貼 OpenD 原始埠 11111。\n留空則改用本機探測與雲端 Yahoo：', current);
+            const input = prompt('【遠端通道】貼上 Tailscale Funnel 的 HTTPS origin（HTTP API）\n例如 https://<你的節點>.ts.net\n不要貼 OpenD 原始埠 11111。\n留空則僅探測本機 OpenD（禁止 Cloud Yahoo 保底）：', current);
             if (input !== null) {
                 const cleaned = input.trim().replace(/\/+$/, '');
                 if (cleaned && (!cleaned.startsWith('https://') || /:11111\b/.test(cleaned))) {
@@ -550,6 +551,7 @@
             const tunnelUrl = (localStorage.getItem('sniper_tunnel_url') || '').trim().replace(/\/+$/, '');
             const probeList = [{ name: 'LOCAL', url: LOCAL_API_URL }];
             if (tunnelUrl && tunnelUrl.startsWith('https://') && !/:11111\b/.test(tunnelUrl)) probeList.push({ name: 'TUNNEL', url: tunnelUrl });
+            backendConnectionError = null;
 
             for (const probe of probeList) {
                 try {
@@ -560,22 +562,35 @@
                     if (res.ok) {
                         const data = await res.json();
                         API_BASE = probe.url;
-                        currentSourceMode = data?.status?.source_mode || `${probe.name} OPEND (實時直連)`;
+                        const mode = (data?.status?.source_mode || '').toLowerCase();
+                        const isOpend = mode === 'opend' || mode.includes('opend');
+                        currentSourceMode = isOpend ? 'LOCAL OPEND' : (data?.status?.source_mode || `${probe.name} (連線中)`);
                         const badge = document.getElementById('sys-mode-badge');
                         if (badge) {
-                            badge.textContent = `[SYS // ${probe.name} OPEND v5.9]`;
-                            badge.className = 'px-2.5 py-1 text-xs font-bold mono bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 rounded tracking-wider whitespace-nowrap';
+                            if (isOpend) {
+                                badge.textContent = `[SYS // LOCAL OPEND v5.9]`;
+                                badge.className = 'px-2.5 py-1 text-xs font-bold mono bg-emerald-950/90 text-emerald-300 border border-emerald-500/50 rounded tracking-wider whitespace-nowrap';
+                            } else {
+                                badge.textContent = `[SYS // LOCAL DOWN v5.9]`;
+                                badge.className = 'px-2.5 py-1 text-xs font-bold mono bg-amber-950/90 text-amber-300 border border-amber-500/50 rounded tracking-wider whitespace-nowrap';
+                            }
                         }
                         return;
                     }
                 } catch (e) {}
             }
-            API_BASE = CLOUD_API_URL;
-            currentSourceMode = 'CLOUD PRO (雲端雙保底)';
+            // Local Pro hard-lock: NEVER fall back to Cloud Yahoo / vercel
+            API_BASE = LOCAL_API_URL;
+            backendConnectionError = 'connection failed / OpenD or server down';
+            currentSourceMode = 'LOCAL OFFLINE';
             const badge = document.getElementById('sys-mode-badge');
             if (badge) {
-                badge.textContent = `[SYS // DUAL-PRO v5.9]`;
-                badge.className = 'px-2.5 py-1 text-xs font-bold mono bg-cyan-950/90 text-cyan-300 border border-cyan-500/40 rounded tracking-wider whitespace-nowrap';
+                badge.textContent = `[SYS // CONNECTION FAILED]`;
+                badge.className = 'px-2.5 py-1 text-xs font-bold mono bg-rose-950/90 text-rose-300 border border-rose-500/50 rounded tracking-wider whitespace-nowrap';
+            }
+            const statusBar = document.getElementById('sys-status-bar');
+            if (statusBar) {
+                statusBar.textContent = '[連線失敗: 本機 OpenD / server.py 無法連線 — 已禁止 Cloud Yahoo 保底]';
             }
         }
 
@@ -1285,7 +1300,18 @@
 
                 const stock = data[currentSymbol] || data[symbol.toUpperCase()];
                 if (!stock || !stock.chart || stock.chart.length === 0) {
-                    document.getElementById('sys-status-bar').textContent = `[警告: ${currentSymbol} 暫無 ${currentInterval.toUpperCase()} 圖表數據]`; return;
+                    const statusBar = document.getElementById('sys-status-bar');
+                    if (stock?.error) {
+                        statusBar.textContent = `[警告: ${currentSymbol} ${stock.error}]`;
+                    } else if (backendConnectionError) {
+                        statusBar.textContent = '[連線失敗: 本機 OpenD / server.py 無法連線 — 已禁止 Cloud Yahoo 保底]';
+                    } else {
+                        statusBar.textContent = `[警告: ${currentSymbol} 暫無圖表數據]`;
+                    }
+                    return;
+                }
+                if (stock.data_source && String(stock.data_source).toLowerCase() === 'none') {
+                    document.getElementById('sys-status-bar').textContent = `[連線/數據失敗: ${stock.error || 'OpenD 無報價'} — data_source=none]`;
                 }
 
                 const uniqueMap = new Map();
@@ -1303,14 +1329,22 @@
                 let recentHigh = -Infinity, recentLow = Infinity;
                 recentBars.forEach(b => { if (b.high > recentHigh) recentHigh = b.high; if (b.low < recentLow) recentLow = b.low; });
                 const recentSpan = Math.max(0.01, recentHigh - recentLow);
-                if (!stock.entry_bot || !stock.entry_top || stock.entry_top < recentLow - recentSpan || stock.entry_bot > recentHigh + recentSpan) {
-                    stock.entry_bot = Number((recentLow + recentSpan * 0.06).toFixed(2));
-                    stock.entry_top = Number((recentLow + recentSpan * 0.22).toFixed(2));
-                    stock.macro_eq = Number((recentLow + recentSpan * 0.5).toFixed(2));
+                const hasObFields = Number.isFinite(Number(stock.entry_bot)) && Number.isFinite(Number(stock.entry_top)) && Number.isFinite(Number(stock.macro_eq));
+                const obLooksValid = hasObFields && !(stock.entry_top < recentLow - recentSpan || stock.entry_bot > recentHigh + recentSpan);
+                if (!obLooksValid) {
+                    // Do not invent fake institutional zones from recent high/low ratios
+                    delete stock.entry_bot;
+                    delete stock.entry_top;
+                    delete stock.macro_eq;
+                    stock.structure_incomplete = true;
                 }
 
                 renderSmcPriceLines(null); candleSeries.setMarkers([]); activeTacticalPlan = null;
                 latestStockSnapshot = stock; latestBarSnapshot = lastBar;
+                if (stock.structure_incomplete || !stock.entry_bot || !stock.entry_top || !stock.macro_eq) {
+                    const sb = document.getElementById('sys-status-bar');
+                    if (sb) sb.textContent = `[數據不完整: ${currentSymbol} 缺少 OB/EQ 結構欄位 — 不繪製假機構區]`;
+                }
                 barDataMap.clear(); stock.chart.forEach(bar => barDataMap.set(bar.time, bar));
 
                 candleSeries.setData(stock.chart);
@@ -1357,10 +1391,22 @@
 
                 const activeDelta = stock.net_delta !== undefined && stock.net_delta !== 0 ? stock.net_delta : lastBar.delta;
                 const srcLabel = stock.data_source || currentSourceMode;
-                document.getElementById('sys-status-bar').textContent = `[連線狀態: ${srcLabel} 同步完成] [標的: ${currentSymbol} ${stock.company_name || ''}] [最新訂單流 Δ: ${formatDelta(activeDelta)}]`;
+                const statusBar = document.getElementById('sys-status-bar');
+                if (stock.structure_incomplete || !stock.entry_bot || !stock.entry_top || !stock.macro_eq) {
+                    statusBar.textContent = `[數據不完整: ${currentSymbol} 缺少 OB/EQ 結構欄位 — 不繪製假機構區]`;
+                } else if (stock.data_source && String(stock.data_source).toLowerCase() === 'none') {
+                    statusBar.textContent = `[連線/數據失敗: ${stock.error || 'OpenD 無報價'} — data_source=none]`;
+                } else {
+                    statusBar.textContent = `[連線狀態: ${srcLabel} 同步完成] [標的: ${currentSymbol} ${stock.company_name || ''}] [最新訂單流 Δ: ${formatDelta(activeDelta)}]`;
+                }
             } catch (err) {
                 console.error('Chart load error:', err);
-                document.getElementById('sys-status-bar').textContent = `[錯誤: 圖表渲染或連線異常 (${err.message})]`;
+                const statusBar = document.getElementById('sys-status-bar');
+                if (backendConnectionError) {
+                    statusBar.textContent = '[連線失敗: 本機 OpenD / server.py 無法連線 — 已禁止 Cloud Yahoo 保底]';
+                } else {
+                    statusBar.textContent = `[錯誤: 圖表渲染或連線異常 (${err.message})]`;
+                }
             }
         }
 
