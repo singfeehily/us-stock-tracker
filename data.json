@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-11-10 19:54:28 HKT",
+  "updated_at": "2026-11-10 20:10:59 HKT",
   "screener_data": [
     {
       "symbol": "SPY",
-      "price": 749.36,
-      "change": -3.33,
-      "change_pct": -0.44,
-      "dist_20ma": -11.3,
+      "price": 748.57,
+      "change": -4.12,
+      "change_pct": -0.55,
+      "dist_20ma": -12.05,
       "macro_bsl": 776.35,
       "macro_ssl": 732.71,
       "macro_eq": 754.53,
-      "pd_percent": 38,
+      "pd_percent": 36,
       "direction": "long",
       "entry_bot": 732.71,
       "entry_top": 765.97,
       "sl": 721.72,
       "tp": 768.59,
       "rrr": 0.7,
-      "smc_id": "SMC_SPY_749",
+      "smc_id": "SMC_SPY_748",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -27,10 +27,10 @@
     },
     {
       "symbol": "QQQ",
-      "price": 673.14,
-      "change": -6.21,
-      "change_pct": -0.91,
-      "dist_20ma": -27.64,
+      "price": 672.61,
+      "change": -6.74,
+      "change_pct": -0.99,
+      "dist_20ma": -28.15,
       "macro_bsl": 740.53,
       "macro_ssl": 647.05,
       "macro_eq": 693.79,
@@ -41,7 +41,7 @@
       "sl": 644.18,
       "tp": 733.12,
       "rrr": 2.1,
-      "smc_id": "SMC_QQQ_673",
+      "smc_id": "SMC_QQQ_672",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -51,45 +51,45 @@
     },
     {
       "symbol": "DIA",
-      "price": 521.95,
-      "change": -1.38,
-      "change_pct": -0.26,
-      "dist_20ma": 0.55,
+      "price": 521.36,
+      "change": -1.97,
+      "change_pct": -0.38,
+      "dist_20ma": -0.01,
       "macro_bsl": 536.6,
       "macro_ssl": 508.66,
       "macro_eq": 522.63,
-      "pd_percent": 47,
+      "pd_percent": 45,
       "direction": "long",
-      "entry_bot": 514.13,
-      "entry_top": 536.6,
-      "sl": 506.42,
+      "entry_bot": 519.19,
+      "entry_top": 522.43,
+      "sl": 511.4,
       "tp": 531.23,
-      "rrr": 0.6,
+      "rrr": 1.0,
       "smc_id": "SMC_DIA_521",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $514.13 - $536.6，嚴格防守 $506.42。"
+      "inv_text": "區間 $519.19 - $522.43，嚴格防守 $511.4。"
     },
     {
       "symbol": "IWM",
-      "price": 280.27,
-      "change": -2.24,
-      "change_pct": -0.79,
-      "dist_20ma": 3.02,
+      "price": 279.87,
+      "change": -2.64,
+      "change_pct": -0.93,
+      "dist_20ma": 2.64,
       "macro_bsl": 286.17,
       "macro_ssl": 269.88,
       "macro_eq": 278.02,
-      "pd_percent": 63,
+      "pd_percent": 61,
       "direction": "short",
       "entry_bot": 270.52,
       "entry_top": 284.7,
       "sl": 288.97,
       "tp": 272.58,
-      "rrr": 0.9,
-      "smc_id": "SMC_IWM_280",
+      "rrr": 0.8,
+      "smc_id": "SMC_IWM_279",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
       "smc_class": "border-green-500 text-green-400 bg-green-900/20",
@@ -99,14 +99,14 @@
     },
     {
       "symbol": "VOO",
-      "price": 688.81,
-      "change": -3.06,
-      "change_pct": -0.44,
-      "dist_20ma": -10.43,
+      "price": 688.1,
+      "change": -3.77,
+      "change_pct": -0.54,
+      "dist_20ma": -11.1,
       "macro_bsl": 713.62,
       "macro_ssl": 673.55,
       "macro_eq": 693.59,
-      "pd_percent": 38,
+      "pd_percent": 36,
       "direction": "long",
       "entry_bot": 673.55,
       "entry_top": 704.1,
@@ -123,10 +123,10 @@
     },
     {
       "symbol": "QQQM",
-      "price": 277.18,
-      "change": -2.34,
-      "change_pct": -0.84,
-      "dist_20ma": -11.4,
+      "price": 276.95,
+      "change": -2.57,
+      "change_pct": -0.92,
+      "dist_20ma": -11.62,
       "macro_bsl": 304.9,
       "macro_ssl": 266.52,
       "macro_eq": 285.71,
@@ -137,7 +137,7 @@
       "sl": 265.26,
       "tp": 301.85,
       "rrr": 2.1,
-      "smc_id": "SMC_QQQM_277",
+      "smc_id": "SMC_QQQM_276",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -147,14 +147,14 @@
     },
     {
       "symbol": "SPYM",
-      "price": 88.19,
-      "change": -0.4,
-      "change_pct": -0.45,
-      "dist_20ma": -1.34,
+      "price": 88.11,
+      "change": -0.48,
+      "change_pct": -0.54,
+      "dist_20ma": -1.42,
       "macro_bsl": 91.37,
       "macro_ssl": 86.25,
       "macro_eq": 88.81,
-      "pd_percent": 37,
+      "pd_percent": 36,
       "direction": "long",
       "entry_bot": 86.25,
       "entry_top": 90.16,
@@ -171,10 +171,10 @@
     },
     {
       "symbol": "SMH",
-      "price": 481.86,
-      "change": -5.55,
-      "change_pct": -1.14,
-      "dist_20ma": -44.59,
+      "price": 481.75,
+      "change": -5.66,
+      "change_pct": -1.16,
+      "dist_20ma": -44.69,
       "macro_bsl": 580.08,
       "macro_ssl": 445.59,
       "macro_eq": 512.84,
@@ -195,10 +195,10 @@
     },
     {
       "symbol": "SOXL",
-      "price": 55.26,
-      "change": -0.94,
-      "change_pct": -1.67,
-      "dist_20ma": -27.81,
+      "price": 55.13,
+      "change": -1.07,
+      "change_pct": -1.9,
+      "dist_20ma": -27.93,
       "macro_bsl": 120.9,
       "macro_ssl": 40.59,
       "macro_eq": 80.75,
@@ -219,20 +219,20 @@
     },
     {
       "symbol": "XLK",
-      "price": 168.37,
-      "change": -2.51,
-      "change_pct": -1.47,
-      "dist_20ma": -12.49,
+      "price": 168.26,
+      "change": -2.62,
+      "change_pct": -1.53,
+      "dist_20ma": -12.6,
       "macro_bsl": 194.66,
       "macro_ssl": 162.14,
       "macro_eq": 178.4,
-      "pd_percent": 19,
+      "pd_percent": 18,
       "direction": "long",
       "entry_bot": 166.33,
       "entry_top": 171.36,
       "sl": 163.84,
       "tp": 192.71,
-      "rrr": 5.4,
+      "rrr": 5.5,
       "smc_id": "SMC_XLK_168",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -243,20 +243,20 @@
     },
     {
       "symbol": "XLF",
-      "price": 58.42,
-      "change": 0.43,
-      "change_pct": 0.74,
-      "dist_20ma": 1.86,
+      "price": 58.31,
+      "change": 0.32,
+      "change_pct": 0.55,
+      "dist_20ma": 1.76,
       "macro_bsl": 60.04,
       "macro_ssl": 54.02,
       "macro_eq": 57.03,
-      "pd_percent": 73,
+      "pd_percent": 71,
       "direction": "short",
       "entry_bot": 57.42,
       "entry_top": 60.04,
       "sl": 60.94,
       "tp": 54.56,
-      "rrr": 1.5,
+      "rrr": 1.4,
       "smc_id": "SMC_XLF_58",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
@@ -267,10 +267,10 @@
     },
     {
       "symbol": "XLE",
-      "price": 62.32,
-      "change": 0.38,
-      "change_pct": 0.61,
-      "dist_20ma": -4.34,
+      "price": 62.35,
+      "change": 0.41,
+      "change_pct": 0.66,
+      "dist_20ma": -4.31,
       "macro_bsl": 70.15,
       "macro_ssl": 60.43,
       "macro_eq": 65.29,
@@ -280,7 +280,7 @@
       "entry_top": 64.54,
       "sl": 60.71,
       "tp": 69.45,
-      "rrr": 4.4,
+      "rrr": 4.3,
       "smc_id": "SMC_XLE_62",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -291,10 +291,10 @@
     },
     {
       "symbol": "SPCX",
-      "price": 141.39,
-      "change": -0.68,
-      "change_pct": -0.48,
-      "dist_20ma": -2.03,
+      "price": 141.15,
+      "change": -0.92,
+      "change_pct": -0.65,
+      "dist_20ma": -2.26,
       "macro_bsl": 166.18,
       "macro_ssl": 120.39,
       "macro_eq": 143.28,
@@ -315,10 +315,10 @@
     },
     {
       "symbol": "DRAM",
-      "price": 40.31,
-      "change": -1.47,
-      "change_pct": -3.52,
-      "dist_20ma": -6.39,
+      "price": 40.28,
+      "change": -1.5,
+      "change_pct": -3.59,
+      "dist_20ma": -6.42,
       "macro_bsl": 54.12,
       "macro_ssl": 37.01,
       "macro_eq": 45.56,
@@ -328,7 +328,7 @@
       "entry_top": 41.95,
       "sl": 39.09,
       "tp": 53.58,
-      "rrr": 10.9,
+      "rrr": 11.2,
       "smc_id": "SMC_DRAM_40",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -339,20 +339,20 @@
     },
     {
       "symbol": "AAPL",
-      "price": 348.73,
-      "change": -1.96,
-      "change_pct": -0.56,
-      "dist_20ma": 4.49,
+      "price": 348.27,
+      "change": -2.42,
+      "change_pct": -0.69,
+      "dist_20ma": 4.05,
       "macro_bsl": 355.38,
       "macro_ssl": 325.33,
       "macro_eq": 340.36,
-      "pd_percent": 77,
+      "pd_percent": 76,
       "direction": "short",
       "entry_bot": 346.46,
       "entry_top": 353.87,
       "sl": 359.18,
       "tp": 328.58,
-      "rrr": 1.9,
+      "rrr": 1.8,
       "smc_id": "SMC_AAPL_348",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
@@ -363,21 +363,21 @@
     },
     {
       "symbol": "MSFT",
-      "price": 534.89,
-      "change": -10.29,
-      "change_pct": -1.89,
-      "dist_20ma": 3.71,
+      "price": 532.69,
+      "change": -12.49,
+      "change_pct": -2.29,
+      "dist_20ma": 1.62,
       "macro_bsl": 559.15,
       "macro_ssl": 504.96,
       "macro_eq": 532.05,
-      "pd_percent": 55,
+      "pd_percent": 51,
       "direction": "short",
       "entry_bot": 526.36,
       "entry_top": 544.15,
       "sl": 552.31,
       "tp": 510.01,
-      "rrr": 1.4,
-      "smc_id": "SMC_MSFT_534",
+      "rrr": 1.2,
+      "smc_id": "SMC_MSFT_532",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
       "smc_class": "border-green-500 text-green-400 bg-green-900/20",
@@ -387,45 +387,45 @@
     },
     {
       "symbol": "NVDA",
-      "price": 167.21,
-      "change": -11.46,
-      "change_pct": -6.41,
-      "dist_20ma": -38.89,
+      "price": 167.66,
+      "change": -11.01,
+      "change_pct": -6.16,
+      "dist_20ma": -38.46,
       "macro_bsl": 226.0,
-      "macro_ssl": 166.24,
-      "macro_eq": 196.12,
-      "pd_percent": 1,
+      "macro_ssl": 165.89,
+      "macro_eq": 195.94,
+      "pd_percent": 2,
       "direction": "long",
-      "entry_bot": 166.24,
+      "entry_bot": 165.89,
       "entry_top": 174.65,
-      "sl": 163.75,
+      "sl": 163.4,
       "tp": 223.74,
-      "rrr": 16.3,
+      "rrr": 13.2,
       "smc_id": "SMC_NVDA_167",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $166.24 - $174.65，嚴格防守 $163.75。"
+      "inv_text": "區間 $165.89 - $174.65，嚴格防守 $163.4。"
     },
     {
       "symbol": "TSLA",
-      "price": 378.77,
-      "change": 0.72,
-      "change_pct": 0.19,
-      "dist_20ma": -1.83,
+      "price": 377.54,
+      "change": -0.51,
+      "change_pct": -0.13,
+      "dist_20ma": -3.0,
       "macro_bsl": 414.23,
       "macro_ssl": 338.15,
       "macro_eq": 376.19,
-      "pd_percent": 53,
+      "pd_percent": 51,
       "direction": "short",
       "entry_bot": 338.15,
       "entry_top": 374.3,
       "sl": 379.91,
       "tp": 341.53,
-      "rrr": 32.7,
-      "smc_id": "SMC_TSLA_378",
+      "rrr": 15.2,
+      "smc_id": "SMC_TSLA_377",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
       "smc_class": "border-green-500 text-green-400 bg-green-900/20",
@@ -435,10 +435,10 @@
     },
     {
       "symbol": "AMZN",
-      "price": 271.84,
-      "change": 4.91,
-      "change_pct": 1.84,
-      "dist_20ma": 16.53,
+      "price": 271.71,
+      "change": 4.78,
+      "change_pct": 1.79,
+      "dist_20ma": 16.4,
       "macro_bsl": 275.34,
       "macro_ssl": 229.36,
       "macro_eq": 252.35,
@@ -448,7 +448,7 @@
       "entry_top": 275.34,
       "sl": 279.47,
       "tp": 231.65,
-      "rrr": 5.3,
+      "rrr": 5.2,
       "smc_id": "SMC_AMZN_271",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
@@ -459,10 +459,10 @@
     },
     {
       "symbol": "META",
-      "price": 642.64,
-      "change": 1.27,
-      "change_pct": 0.2,
-      "dist_20ma": -8.96,
+      "price": 642.52,
+      "change": 1.15,
+      "change_pct": 0.18,
+      "dist_20ma": -9.08,
       "macro_bsl": 761.5,
       "macro_ssl": 583.8,
       "macro_eq": 672.65,
@@ -472,7 +472,7 @@
       "entry_top": 634.99,
       "sl": 575.04,
       "tp": 753.88,
-      "rrr": 1.6,
+      "rrr": 1.7,
       "smc_id": "SMC_META_642",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -483,10 +483,10 @@
     },
     {
       "symbol": "GOOG",
-      "price": 284.92,
-      "change": -1.09,
-      "change_pct": -0.38,
-      "dist_20ma": -23.31,
+      "price": 284.6,
+      "change": -1.41,
+      "change_pct": -0.49,
+      "dist_20ma": -23.62,
       "macro_bsl": 355.25,
       "macro_ssl": 272.0,
       "macro_eq": 313.62,
@@ -496,7 +496,7 @@
       "entry_top": 289.5,
       "sl": 279.12,
       "tp": 351.7,
-      "rrr": 11.5,
+      "rrr": 12.2,
       "smc_id": "SMC_GOOG_284",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -507,10 +507,10 @@
     },
     {
       "symbol": "GOOGL",
-      "price": 287.33,
-      "change": -0.82,
-      "change_pct": -0.28,
-      "dist_20ma": -23.56,
+      "price": 286.94,
+      "change": -1.21,
+      "change_pct": -0.42,
+      "dist_20ma": -23.93,
       "macro_bsl": 359.4,
       "macro_ssl": 276.92,
       "macro_eq": 318.16,
@@ -520,8 +520,8 @@
       "entry_top": 292.02,
       "sl": 281.39,
       "tp": 355.81,
-      "rrr": 11.5,
-      "smc_id": "SMC_GOOGL_287",
+      "rrr": 12.4,
+      "smc_id": "SMC_GOOGL_286",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -531,21 +531,21 @@
     },
     {
       "symbol": "AMD",
-      "price": 515.96,
-      "change": 7.38,
-      "change_pct": 1.45,
-      "dist_20ma": -2.58,
+      "price": 516.03,
+      "change": 7.45,
+      "change_pct": 1.46,
+      "dist_20ma": -2.51,
       "macro_bsl": 591.88,
       "macro_ssl": 402.1,
       "macro_eq": 496.99,
-      "pd_percent": 59,
+      "pd_percent": 60,
       "direction": "short",
       "entry_bot": 402.1,
       "entry_top": 456.2,
       "sl": 463.04,
       "tp": 406.12,
       "rrr": 2.1,
-      "smc_id": "SMC_AMD_515",
+      "smc_id": "SMC_AMD_516",
       "confluence": false,
       "smc_text": "日線 FVG",
       "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
@@ -555,10 +555,10 @@
     },
     {
       "symbol": "TSM",
-      "price": 394.43,
-      "change": 5.81,
-      "change_pct": 1.5,
-      "dist_20ma": -16.69,
+      "price": 394.79,
+      "change": 6.17,
+      "change_pct": 1.59,
+      "dist_20ma": -16.35,
       "macro_bsl": 440.88,
       "macro_ssl": 351.19,
       "macro_eq": 396.03,
@@ -579,21 +579,21 @@
     },
     {
       "symbol": "AVGO",
-      "price": 332.19,
-      "change": 12.71,
-      "change_pct": 3.98,
-      "dist_20ma": 3.08,
+      "price": 331.1,
+      "change": 11.62,
+      "change_pct": 3.64,
+      "dist_20ma": 2.05,
       "macro_bsl": 354.25,
       "macro_ssl": 289.77,
       "macro_eq": 322.01,
-      "pd_percent": 65,
+      "pd_percent": 64,
       "direction": "short",
       "entry_bot": 289.77,
       "entry_top": 311.52,
       "sl": 316.19,
       "tp": 292.67,
-      "rrr": 2.5,
-      "smc_id": "SMC_AVGO_332",
+      "rrr": 2.6,
+      "smc_id": "SMC_AVGO_331",
       "confluence": false,
       "smc_text": "日線 FVG",
       "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
@@ -603,10 +603,10 @@
     },
     {
       "symbol": "ASML",
-      "price": 1508.44,
-      "change": -4.81,
-      "change_pct": -0.32,
-      "dist_20ma": -67.82,
+      "price": 1507.07,
+      "change": -6.18,
+      "change_pct": -0.41,
+      "dist_20ma": -69.12,
       "macro_bsl": 1732.21,
       "macro_ssl": 1355.05,
       "macro_eq": 1543.63,
@@ -617,7 +617,7 @@
       "sl": 1388.07,
       "tp": 1714.89,
       "rrr": 1.7,
-      "smc_id": "SMC_ASML_1508",
+      "smc_id": "SMC_ASML_1507",
       "confluence": false,
       "smc_text": "日線 FVG",
       "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
@@ -627,10 +627,10 @@
     },
     {
       "symbol": "QCOM",
-      "price": 172.75,
-      "change": 1.28,
-      "change_pct": 0.75,
-      "dist_20ma": -0.35,
+      "price": 172.59,
+      "change": 1.12,
+      "change_pct": 0.65,
+      "dist_20ma": -0.51,
       "macro_bsl": 185.59,
       "macro_ssl": 148.25,
       "macro_eq": 166.92,
@@ -640,7 +640,7 @@
       "entry_top": 169.52,
       "sl": 172.06,
       "tp": 149.73,
-      "rrr": 33.4,
+      "rrr": 43.1,
       "smc_id": "SMC_QCOM_172",
       "confluence": false,
       "smc_text": "日線 FVG",
@@ -651,10 +651,10 @@
     },
     {
       "symbol": "TXN",
-      "price": 299.83,
-      "change": 4.1,
-      "change_pct": 1.39,
-      "dist_20ma": 8.34,
+      "price": 299.54,
+      "change": 3.81,
+      "change_pct": 1.29,
+      "dist_20ma": 8.06,
       "macro_bsl": 317.2,
       "macro_ssl": 270.69,
       "macro_eq": 293.94,
@@ -664,7 +664,7 @@
       "entry_top": 285.1,
       "sl": 289.38,
       "tp": 273.4,
-      "rrr": 2.5,
+      "rrr": 2.6,
       "smc_id": "SMC_TXN_299",
       "confluence": false,
       "smc_text": "日線 FVG",
@@ -675,10 +675,10 @@
     },
     {
       "symbol": "INTC",
-      "price": 57.76,
-      "change": -1.61,
-      "change_pct": -2.71,
-      "dist_20ma": -20.96,
+      "price": 57.72,
+      "change": -1.65,
+      "change_pct": -2.78,
+      "dist_20ma": -21.0,
       "macro_bsl": 101.34,
       "macro_ssl": 51.51,
       "macro_eq": 76.42,
@@ -688,7 +688,7 @@
       "entry_top": 60.65,
       "sl": 56.0,
       "tp": 100.33,
-      "rrr": 24.2,
+      "rrr": 24.8,
       "smc_id": "SMC_INTC_57",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -699,10 +699,10 @@
     },
     {
       "symbol": "MU",
-      "price": 713.61,
-      "change": -19.54,
-      "change_pct": -2.67,
-      "dist_20ma": -140.62,
+      "price": 714.42,
+      "change": -18.73,
+      "change_pct": -2.55,
+      "dist_20ma": -139.85,
       "macro_bsl": 990.0,
       "macro_ssl": 650.0,
       "macro_eq": 820.0,
@@ -712,8 +712,8 @@
       "entry_top": 745.64,
       "sl": 689.14,
       "tp": 980.1,
-      "rrr": 10.9,
-      "smc_id": "SMC_MU_713",
+      "rrr": 10.5,
+      "smc_id": "SMC_MU_714",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -723,21 +723,21 @@
     },
     {
       "symbol": "SNDK",
-      "price": 851.17,
-      "change": -35.34,
-      "change_pct": -3.99,
-      "dist_20ma": -337.6,
+      "price": 849.81,
+      "change": -36.7,
+      "change_pct": -4.14,
+      "dist_20ma": -338.89,
       "macro_bsl": 1461.8,
       "macro_ssl": 803.97,
       "macro_eq": 1132.88,
-      "pd_percent": 7,
+      "pd_percent": 6,
       "direction": "long",
       "entry_bot": 826.67,
       "entry_top": 914.82,
       "sl": 814.27,
       "tp": 1447.18,
-      "rrr": 16.2,
-      "smc_id": "SMC_SNDK_851",
+      "rrr": 16.8,
+      "smc_id": "SMC_SNDK_849",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -747,10 +747,10 @@
     },
     {
       "symbol": "ARM",
-      "price": 178.91,
-      "change": -7.39,
-      "change_pct": -3.97,
-      "dist_20ma": -32.34,
+      "price": 179.34,
+      "change": -6.96,
+      "change_pct": -3.74,
+      "dist_20ma": -31.93,
       "macro_bsl": 250.2,
       "macro_ssl": 163.13,
       "macro_eq": 206.66,
@@ -760,8 +760,8 @@
       "entry_top": 186.51,
       "sl": 173.13,
       "tp": 247.7,
-      "rrr": 11.9,
-      "smc_id": "SMC_ARM_178",
+      "rrr": 11.0,
+      "smc_id": "SMC_ARM_179",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -771,10 +771,10 @@
     },
     {
       "symbol": "SMCI",
-      "price": 27.6,
-      "change": -1.0,
-      "change_pct": -3.5,
-      "dist_20ma": -4.59,
+      "price": 27.55,
+      "change": -1.05,
+      "change_pct": -3.67,
+      "dist_20ma": -4.63,
       "macro_bsl": 38.02,
       "macro_ssl": 25.81,
       "macro_eq": 31.91,
@@ -784,7 +784,7 @@
       "entry_top": 28.88,
       "sl": 26.72,
       "tp": 37.64,
-      "rrr": 11.4,
+      "rrr": 12.2,
       "smc_id": "SMC_SMCI_27",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -795,10 +795,10 @@
     },
     {
       "symbol": "WDC",
-      "price": 282.51,
-      "change": -7.27,
-      "change_pct": -2.51,
-      "dist_20ma": -60.18,
+      "price": 282.84,
+      "change": -6.94,
+      "change_pct": -2.39,
+      "dist_20ma": -59.87,
       "macro_bsl": 402.23,
       "macro_ssl": 258.61,
       "macro_eq": 330.42,
@@ -808,7 +808,7 @@
       "entry_top": 294.95,
       "sl": 272.02,
       "tp": 398.21,
-      "rrr": 11.0,
+      "rrr": 10.7,
       "smc_id": "SMC_WDC_282",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -819,10 +819,10 @@
     },
     {
       "symbol": "LITE",
-      "price": 584.71,
-      "change": -11.45,
+      "price": 584.74,
+      "change": -11.42,
       "change_pct": -1.92,
-      "dist_20ma": -174.56,
+      "dist_20ma": -174.53,
       "macro_bsl": 978.4,
       "macro_ssl": 506.69,
       "macro_eq": 742.54,
@@ -843,20 +843,20 @@
     },
     {
       "symbol": "AAOI",
-      "price": 48.21,
-      "change": -3.89,
-      "change_pct": -7.47,
-      "dist_20ma": -20.58,
+      "price": 48.03,
+      "change": -4.07,
+      "change_pct": -7.81,
+      "dist_20ma": -20.75,
       "macro_bsl": 96.14,
       "macro_ssl": 45.15,
       "macro_eq": 70.64,
-      "pd_percent": 6,
+      "pd_percent": 5,
       "direction": "long",
       "entry_bot": 46.39,
       "entry_top": 51.99,
       "sl": 45.69,
       "tp": 95.18,
-      "rrr": 18.6,
+      "rrr": 20.1,
       "smc_id": "SMC_AAOI_48",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -867,21 +867,21 @@
     },
     {
       "symbol": "POET",
-      "price": 4.98,
-      "change": -0.28,
-      "change_pct": -5.32,
-      "dist_20ma": -0.37,
+      "price": 5.02,
+      "change": -0.24,
+      "change_pct": -4.56,
+      "dist_20ma": -0.33,
       "macro_bsl": 6.16,
       "macro_ssl": 4.0,
       "macro_eq": 5.08,
-      "pd_percent": 45,
+      "pd_percent": 47,
       "direction": "long",
       "entry_bot": 4.92,
       "entry_top": 5.32,
       "sl": 4.85,
       "tp": 6.1,
       "rrr": 2.2,
-      "smc_id": "SMC_POET_4",
+      "smc_id": "SMC_POET_5",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -891,10 +891,10 @@
     },
     {
       "symbol": "PLTR",
-      "price": 166.37,
-      "change": -2.83,
-      "change_pct": -1.67,
-      "dist_20ma": -19.64,
+      "price": 166.51,
+      "change": -2.69,
+      "change_pct": -1.59,
+      "dist_20ma": -19.51,
       "macro_bsl": 209.29,
       "macro_ssl": 152.6,
       "macro_eq": 180.94,
@@ -904,7 +904,7 @@
       "entry_top": 169.34,
       "sl": 161.54,
       "tp": 207.2,
-      "rrr": 8.5,
+      "rrr": 8.2,
       "smc_id": "SMC_PLTR_166",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -915,10 +915,10 @@
     },
     {
       "symbol": "SNOW",
-      "price": 292.29,
-      "change": 1.15,
-      "change_pct": 0.39,
-      "dist_20ma": -19.1,
+      "price": 292.42,
+      "change": 1.28,
+      "change_pct": 0.44,
+      "dist_20ma": -18.98,
       "macro_bsl": 356.84,
       "macro_ssl": 266.36,
       "macro_eq": 311.6,
@@ -939,21 +939,21 @@
     },
     {
       "symbol": "APP",
-      "price": 391.16,
-      "change": -18.84,
-      "change_pct": -4.6,
-      "dist_20ma": 106.0,
+      "price": 392.71,
+      "change": -17.29,
+      "change_pct": -4.22,
+      "dist_20ma": 107.48,
       "macro_bsl": 412.9,
       "macro_ssl": 225.19,
       "macro_eq": 319.04,
-      "pd_percent": 88,
+      "pd_percent": 89,
       "direction": "short",
       "entry_bot": 383.34,
       "entry_top": 408.65,
       "sl": 414.78,
       "tp": 227.44,
-      "rrr": 6.9,
-      "smc_id": "SMC_APP_391",
+      "rrr": 7.5,
+      "smc_id": "SMC_APP_392",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
       "smc_class": "border-green-500 text-green-400 bg-green-900/20",
@@ -963,20 +963,20 @@
     },
     {
       "symbol": "CRM",
-      "price": 211.13,
-      "change": -3.81,
-      "change_pct": -1.77,
-      "dist_20ma": -22.73,
+      "price": 211.64,
+      "change": -3.3,
+      "change_pct": -1.54,
+      "dist_20ma": -22.25,
       "macro_bsl": 252.42,
       "macro_ssl": 208.88,
       "macro_eq": 230.65,
-      "pd_percent": 5,
+      "pd_percent": 6,
       "direction": "long",
       "entry_bot": 208.88,
       "entry_top": 214.88,
       "sl": 205.75,
       "tp": 249.9,
-      "rrr": 7.2,
+      "rrr": 6.5,
       "smc_id": "SMC_CRM_211",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -987,10 +987,10 @@
     },
     {
       "symbol": "ADBE",
-      "price": 234.42,
-      "change": -2.9,
-      "change_pct": -1.22,
-      "dist_20ma": -15.05,
+      "price": 234.63,
+      "change": -2.69,
+      "change_pct": -1.13,
+      "dist_20ma": -14.85,
       "macro_bsl": 272.1,
       "macro_ssl": 231.82,
       "macro_eq": 251.96,
@@ -1000,7 +1000,7 @@
       "entry_top": 237.24,
       "sl": 228.34,
       "tp": 269.38,
-      "rrr": 5.8,
+      "rrr": 5.5,
       "smc_id": "SMC_ADBE_234",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -1011,20 +1011,20 @@
     },
     {
       "symbol": "NOW",
-      "price": 98.02,
-      "change": -4.74,
-      "change_pct": -4.61,
-      "dist_20ma": -32.05,
+      "price": 98.15,
+      "change": -4.61,
+      "change_pct": -4.49,
+      "dist_20ma": -31.93,
       "macro_bsl": 159.5,
       "macro_ssl": 97.46,
       "macro_eq": 128.48,
-      "pd_percent": 0,
+      "pd_percent": 1,
       "direction": "long",
       "entry_bot": 97.46,
       "entry_top": 102.21,
       "sl": 96.0,
       "tp": 157.91,
-      "rrr": 29.6,
+      "rrr": 27.8,
       "smc_id": "SMC_NOW_98",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -1035,68 +1035,68 @@
     },
     {
       "symbol": "CRWD",
-      "price": 224.64,
-      "change": -3.94,
-      "change_pct": -1.72,
-      "dist_20ma": -17.08,
+      "price": 225.24,
+      "change": -3.34,
+      "change_pct": -1.46,
+      "dist_20ma": -16.51,
       "macro_bsl": 272.29,
       "macro_ssl": 213.22,
       "macro_eq": 242.75,
-      "pd_percent": 19,
+      "pd_percent": 20,
       "direction": "long",
-      "entry_bot": 218.41,
-      "entry_top": 230.42,
-      "sl": 215.13,
+      "entry_bot": 216.14,
+      "entry_top": 230.69,
+      "sl": 212.9,
       "tp": 269.57,
-      "rrr": 4.7,
-      "smc_id": "SMC_CRWD_224",
+      "rrr": 3.6,
+      "smc_id": "SMC_CRWD_225",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $218.41 - $230.42，嚴格防守 $215.13。"
+      "inv_text": "區間 $216.14 - $230.69，嚴格防守 $212.9。"
     },
     {
       "symbol": "PANW",
-      "price": 324.28,
-      "change": -6.61,
-      "change_pct": -2.0,
-      "dist_20ma": -31.92,
+      "price": 324.97,
+      "change": -5.92,
+      "change_pct": -1.79,
+      "dist_20ma": -31.26,
       "macro_bsl": 406.88,
       "macro_ssl": 312.12,
       "macro_eq": 359.5,
-      "pd_percent": 12,
+      "pd_percent": 13,
       "direction": "long",
-      "entry_bot": 315.44,
-      "entry_top": 331.0,
-      "sl": 310.71,
+      "entry_bot": 312.7,
+      "entry_top": 331.9,
+      "sl": 308.01,
       "tp": 402.81,
-      "rrr": 5.8,
+      "rrr": 4.6,
       "smc_id": "SMC_PANW_324",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $315.44 - $331.0，嚴格防守 $310.71。"
+      "inv_text": "區間 $312.7 - $331.9，嚴格防守 $308.01。"
     },
     {
       "symbol": "NFLX",
-      "price": 62.97,
-      "change": -0.98,
-      "change_pct": -1.53,
-      "dist_20ma": -2.57,
+      "price": 62.79,
+      "change": -1.16,
+      "change_pct": -1.81,
+      "dist_20ma": -2.74,
       "macro_bsl": 73.07,
       "macro_ssl": 61.39,
       "macro_eq": 67.23,
-      "pd_percent": 13,
+      "pd_percent": 11,
       "direction": "long",
       "entry_bot": 62.6,
       "entry_top": 63.75,
       "sl": 61.66,
       "tp": 72.34,
-      "rrr": 7.2,
+      "rrr": 8.5,
       "smc_id": "SMC_NFLX_62",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -1107,14 +1107,14 @@
     },
     {
       "symbol": "UBER",
-      "price": 69.62,
-      "change": -1.55,
-      "change_pct": -2.18,
-      "dist_20ma": 1.48,
+      "price": 69.67,
+      "change": -1.5,
+      "change_pct": -2.11,
+      "dist_20ma": 1.53,
       "macro_bsl": 72.5,
       "macro_ssl": 64.04,
       "macro_eq": 68.27,
-      "pd_percent": 65,
+      "pd_percent": 66,
       "direction": "short",
       "entry_bot": 69.19,
       "entry_top": 71.04,
@@ -1131,10 +1131,10 @@
     },
     {
       "symbol": "COIN",
-      "price": 131.6,
-      "change": -4.5,
-      "change_pct": -3.31,
-      "dist_20ma": -25.45,
+      "price": 131.18,
+      "change": -4.92,
+      "change_pct": -3.61,
+      "dist_20ma": -25.85,
       "macro_bsl": 185.49,
       "macro_ssl": 129.41,
       "macro_eq": 157.45,
@@ -1144,7 +1144,7 @@
       "entry_top": 136.25,
       "sl": 127.47,
       "tp": 183.64,
-      "rrr": 12.6,
+      "rrr": 14.1,
       "smc_id": "SMC_COIN_131",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -1155,21 +1155,21 @@
     },
     {
       "symbol": "MSTR",
-      "price": 120.19,
-      "change": -5.4,
-      "change_pct": -4.3,
-      "dist_20ma": -18.15,
+      "price": 119.7,
+      "change": -5.89,
+      "change_pct": -4.69,
+      "dist_20ma": -18.62,
       "macro_bsl": 155.69,
       "macro_ssl": 118.43,
       "macro_eq": 137.06,
-      "pd_percent": 4,
+      "pd_percent": 3,
       "direction": "long",
       "entry_bot": 118.43,
       "entry_top": 126.4,
       "sl": 116.65,
       "tp": 154.13,
-      "rrr": 9.6,
-      "smc_id": "SMC_MSTR_120",
+      "rrr": 11.3,
+      "smc_id": "SMC_MSTR_119",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -1179,14 +1179,14 @@
     },
     {
       "symbol": "MARA",
-      "price": 7.16,
-      "change": 0.52,
-      "change_pct": 7.83,
-      "dist_20ma": 0.02,
+      "price": 7.11,
+      "change": 0.47,
+      "change_pct": 7.08,
+      "dist_20ma": -0.02,
       "macro_bsl": 8.9,
       "macro_ssl": 5.69,
       "macro_eq": 7.29,
-      "pd_percent": 45,
+      "pd_percent": 44,
       "direction": "long",
       "entry_bot": 5.69,
       "entry_top": 6.82,
@@ -1203,20 +1203,20 @@
     },
     {
       "symbol": "RIOT",
-      "price": 17.82,
-      "change": 0.16,
-      "change_pct": 0.91,
-      "dist_20ma": 3.48,
+      "price": 17.75,
+      "change": 0.09,
+      "change_pct": 0.51,
+      "dist_20ma": 3.41,
       "macro_bsl": 18.71,
       "macro_ssl": 11.63,
       "macro_eq": 15.17,
-      "pd_percent": 87,
+      "pd_percent": 86,
       "direction": "short",
       "entry_bot": 17.23,
       "entry_top": 18.71,
       "sl": 18.99,
       "tp": 11.75,
-      "rrr": 5.2,
+      "rrr": 4.8,
       "smc_id": "SMC_RIOT_17",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
@@ -1227,10 +1227,10 @@
     },
     {
       "symbol": "HOOD",
-      "price": 80.87,
-      "change": -2.45,
-      "change_pct": -2.94,
-      "dist_20ma": -10.53,
+      "price": 80.68,
+      "change": -2.64,
+      "change_pct": -3.17,
+      "dist_20ma": -10.71,
       "macro_bsl": 109.22,
       "macro_ssl": 75.51,
       "macro_eq": 92.37,
@@ -1240,7 +1240,7 @@
       "entry_top": 83.32,
       "sl": 78.76,
       "tp": 108.13,
-      "rrr": 12.9,
+      "rrr": 14.3,
       "smc_id": "SMC_HOOD_80",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -1251,14 +1251,14 @@
     },
     {
       "symbol": "PYPL",
-      "price": 58.64,
-      "change": -1.41,
-      "change_pct": -2.35,
-      "dist_20ma": 1.09,
+      "price": 58.65,
+      "change": -1.4,
+      "change_pct": -2.33,
+      "dist_20ma": 1.1,
       "macro_bsl": 60.87,
       "macro_ssl": 54.34,
       "macro_eq": 57.61,
-      "pd_percent": 65,
+      "pd_percent": 66,
       "direction": "short",
       "entry_bot": 58.57,
       "entry_top": 59.81,
@@ -1275,20 +1275,20 @@
     },
     {
       "symbol": "SOFI",
-      "price": 16.16,
-      "change": -0.59,
-      "change_pct": -3.52,
-      "dist_20ma": 0.39,
+      "price": 16.13,
+      "change": -0.62,
+      "change_pct": -3.7,
+      "dist_20ma": 0.36,
       "macro_bsl": 17.74,
       "macro_ssl": 13.86,
       "macro_eq": 15.8,
-      "pd_percent": 59,
+      "pd_percent": 58,
       "direction": "short",
       "entry_bot": 15.91,
       "entry_top": 16.53,
       "sl": 16.78,
       "tp": 14.0,
-      "rrr": 3.5,
+      "rrr": 3.3,
       "smc_id": "SMC_SOFI_16",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
@@ -1299,21 +1299,21 @@
     },
     {
       "symbol": "FUTU",
-      "price": 95.15,
-      "change": -5.82,
-      "change_pct": -5.76,
-      "dist_20ma": -6.66,
+      "price": 94.83,
+      "change": -6.14,
+      "change_pct": -6.08,
+      "dist_20ma": -6.97,
       "macro_bsl": 114.28,
       "macro_ssl": 87.41,
       "macro_eq": 100.84,
-      "pd_percent": 28,
+      "pd_percent": 27,
       "direction": "long",
       "entry_bot": 94.36,
       "entry_top": 100.1,
       "sl": 92.94,
       "tp": 113.14,
-      "rrr": 8.1,
-      "smc_id": "SMC_FUTU_95",
+      "rrr": 9.7,
+      "smc_id": "SMC_FUTU_94",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -1323,21 +1323,21 @@
     },
     {
       "symbol": "V",
-      "price": 424.35,
-      "change": 2.19,
-      "change_pct": 0.52,
-      "dist_20ma": 12.43,
+      "price": 423.51,
+      "change": 1.35,
+      "change_pct": 0.32,
+      "dist_20ma": 11.63,
       "macro_bsl": 442.23,
       "macro_ssl": 389.56,
       "macro_eq": 415.89,
-      "pd_percent": 66,
+      "pd_percent": 64,
       "direction": "short",
       "entry_bot": 417.69,
       "entry_top": 426.46,
       "sl": 432.86,
       "tp": 393.46,
-      "rrr": 3.6,
-      "smc_id": "SMC_V_424",
+      "rrr": 3.2,
+      "smc_id": "SMC_V_423",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
       "smc_class": "border-green-500 text-green-400 bg-green-900/20",
@@ -1347,68 +1347,68 @@
     },
     {
       "symbol": "JPM",
-      "price": 343.87,
-      "change": 1.79,
-      "change_pct": 0.52,
-      "dist_20ma": 5.83,
+      "price": 342.92,
+      "change": 0.84,
+      "change_pct": 0.25,
+      "dist_20ma": 4.93,
       "macro_bsl": 359.8,
       "macro_ssl": 326.4,
       "macro_eq": 343.1,
-      "pd_percent": 52,
-      "direction": "short",
+      "pd_percent": 49,
+      "direction": "long",
       "entry_bot": 341.26,
       "entry_top": 344.85,
-      "sl": 350.02,
-      "tp": 329.66,
-      "rrr": 2.3,
-      "smc_id": "SMC_JPM_343",
+      "sl": 336.14,
+      "tp": 356.2,
+      "rrr": 2.0,
+      "smc_id": "SMC_JPM_342",
+      "confluence": true,
+      "smc_text": "SS級 共振",
+      "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
+      "trade_status": "🟢 可執行",
+      "status_color": "text-green-400 font-bold",
+      "inv_text": "區間 $341.26 - $344.85，嚴格防守 $336.14。"
+    },
+    {
+      "symbol": "GS",
+      "price": 908.58,
+      "change": 2.36,
+      "change_pct": 0.26,
+      "dist_20ma": 13.16,
+      "macro_bsl": 939.38,
+      "macro_ssl": 854.45,
+      "macro_eq": 896.91,
+      "pd_percent": 63,
+      "direction": "short",
+      "entry_bot": 897.35,
+      "entry_top": 917.55,
+      "sl": 931.31,
+      "tp": 862.99,
+      "rrr": 2.0,
+      "smc_id": "SMC_GS_908",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
       "smc_class": "border-green-500 text-green-400 bg-green-900/20",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $341.26 - $344.85，嚴格防守 $350.02。"
-    },
-    {
-      "symbol": "GS",
-      "price": 912.01,
-      "change": 5.79,
-      "change_pct": 0.64,
-      "dist_20ma": 16.42,
-      "macro_bsl": 939.38,
-      "macro_ssl": 854.45,
-      "macro_eq": 896.91,
-      "pd_percent": 67,
-      "direction": "short",
-      "entry_bot": 864.75,
-      "entry_top": 886.33,
-      "sl": 899.62,
-      "tp": 862.99,
-      "rrr": 4.0,
-      "smc_id": "SMC_GS_912",
-      "confluence": false,
-      "smc_text": "日線 FVG",
-      "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
-      "trade_status": "🔴 觀察中",
-      "status_color": "text-gray-400",
-      "inv_text": "等待價格進入戰略區間。"
+      "inv_text": "區間 $897.35 - $917.55，嚴格防守 $931.31。"
     },
     {
       "symbol": "BAC",
-      "price": 50.76,
-      "change": 0.21,
-      "change_pct": 0.42,
-      "dist_20ma": 0.14,
+      "price": 50.7,
+      "change": 0.15,
+      "change_pct": 0.3,
+      "dist_20ma": 0.09,
       "macro_bsl": 53.03,
       "macro_ssl": 49.17,
       "macro_eq": 51.1,
-      "pd_percent": 41,
+      "pd_percent": 39,
       "direction": "long",
       "entry_bot": 50.44,
       "entry_top": 51.07,
       "sl": 49.68,
       "tp": 52.5,
-      "rrr": 1.6,
+      "rrr": 1.8,
       "smc_id": "SMC_BAC_50",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -1419,21 +1419,21 @@
     },
     {
       "symbol": "RKLB",
-      "price": 59.88,
-      "change": 1.02,
-      "change_pct": 1.73,
-      "dist_20ma": 5.57,
+      "price": 60.31,
+      "change": 1.45,
+      "change_pct": 2.46,
+      "dist_20ma": 5.98,
       "macro_bsl": 63.56,
       "macro_ssl": 43.89,
       "macro_eq": 53.73,
-      "pd_percent": 81,
+      "pd_percent": 83,
       "direction": "short",
       "entry_bot": 43.89,
       "entry_top": 50.83,
       "sl": 51.59,
       "tp": 44.33,
-      "rrr": 1.9,
-      "smc_id": "SMC_RKLB_59",
+      "rrr": 1.8,
+      "smc_id": "SMC_RKLB_60",
       "confluence": false,
       "smc_text": "日線 FVG",
       "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
@@ -1443,20 +1443,20 @@
     },
     {
       "symbol": "XOM",
-      "price": 164.65,
-      "change": -0.08,
-      "change_pct": -0.05,
-      "dist_20ma": -11.86,
+      "price": 164.74,
+      "change": 0.01,
+      "change_pct": 0.01,
+      "dist_20ma": -11.78,
       "macro_bsl": 188.5,
       "macro_ssl": 160.11,
       "macro_eq": 174.31,
-      "pd_percent": 15,
+      "pd_percent": 16,
       "direction": "long",
       "entry_bot": 165.14,
       "entry_top": 173.67,
       "sl": 162.66,
       "tp": 186.62,
-      "rrr": 11.0,
+      "rrr": 10.5,
       "smc_id": "SMC_XOM_164",
       "confluence": false,
       "smc_text": "日線 FVG",
@@ -1467,20 +1467,20 @@
     },
     {
       "symbol": "BE",
-      "price": 184.92,
-      "change": -8.96,
-      "change_pct": -4.62,
-      "dist_20ma": -25.16,
+      "price": 184.34,
+      "change": -9.54,
+      "change_pct": -4.92,
+      "dist_20ma": -25.71,
       "macro_bsl": 258.52,
       "macro_ssl": 156.0,
       "macro_eq": 207.26,
-      "pd_percent": 28,
+      "pd_percent": 27,
       "direction": "long",
       "entry_bot": 181.01,
       "entry_top": 194.68,
       "sl": 178.29,
       "tp": 255.93,
-      "rrr": 10.7,
+      "rrr": 11.8,
       "smc_id": "SMC_BE_184",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -1491,20 +1491,20 @@
     },
     {
       "symbol": "VST",
-      "price": 130.58,
-      "change": -3.34,
-      "change_pct": -2.49,
-      "dist_20ma": -9.53,
+      "price": 130.44,
+      "change": -3.48,
+      "change_pct": -2.6,
+      "dist_20ma": -9.66,
       "macro_bsl": 161.09,
       "macro_ssl": 110.89,
       "macro_eq": 135.99,
-      "pd_percent": 39,
+      "pd_percent": 38,
       "direction": "long",
       "entry_bot": 129.31,
       "entry_top": 134.13,
       "sl": 127.37,
       "tp": 159.48,
-      "rrr": 9.0,
+      "rrr": 9.5,
       "smc_id": "SMC_VST_130",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -1539,20 +1539,20 @@
     },
     {
       "symbol": "ONDS",
-      "price": 5.55,
-      "change": -0.42,
-      "change_pct": -7.04,
-      "dist_20ma": -0.46,
+      "price": 5.53,
+      "change": -0.44,
+      "change_pct": -7.37,
+      "dist_20ma": -0.48,
       "macro_bsl": 7.08,
       "macro_ssl": 4.38,
       "macro_eq": 5.73,
-      "pd_percent": 43,
+      "pd_percent": 42,
       "direction": "long",
       "entry_bot": 5.45,
       "entry_top": 5.91,
       "sl": 5.37,
       "tp": 7.01,
-      "rrr": 2.9,
+      "rrr": 3.0,
       "smc_id": "SMC_ONDS_5",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -1563,10 +1563,10 @@
     },
     {
       "symbol": "NBIS",
-      "price": 132.12,
-      "change": -9.33,
-      "change_pct": -6.6,
-      "dist_20ma": -25.94,
+      "price": 132.5,
+      "change": -8.95,
+      "change_pct": -6.33,
+      "dist_20ma": -25.58,
       "macro_bsl": 198.6,
       "macro_ssl": 113.3,
       "macro_eq": 155.95,
@@ -1576,7 +1576,7 @@
       "entry_top": 146.23,
       "sl": 128.94,
       "tp": 196.61,
-      "rrr": 20.3,
+      "rrr": 18.0,
       "smc_id": "SMC_NBIS_132",
       "confluence": true,
       "smc_text": "SS級 共振",
@@ -1587,10 +1587,10 @@
     },
     {
       "symbol": "WMT",
-      "price": 125.95,
-      "change": 0.29,
-      "change_pct": 0.23,
-      "dist_20ma": 4.05,
+      "price": 125.93,
+      "change": 0.27,
+      "change_pct": 0.21,
+      "dist_20ma": 4.04,
       "macro_bsl": 131.82,
       "macro_ssl": 113.38,
       "macro_eq": 122.6,
@@ -1611,10 +1611,10 @@
     },
     {
       "symbol": "COST",
-      "price": 1067.5,
-      "change": 1.32,
-      "change_pct": 0.12,
-      "dist_20ma": 53.05,
+      "price": 1067.59,
+      "change": 1.41,
+      "change_pct": 0.13,
+      "dist_20ma": 53.14,
       "macro_bsl": 1081.55,
       "macro_ssl": 958.58,
       "macro_eq": 1020.07,
@@ -1635,44 +1635,44 @@
     },
     {
       "symbol": "PG",
-      "price": 169.18,
-      "change": 0.86,
-      "change_pct": 0.51,
-      "dist_20ma": 7.75,
+      "price": 168.91,
+      "change": 0.59,
+      "change_pct": 0.35,
+      "dist_20ma": 7.49,
       "macro_bsl": 170.52,
       "macro_ssl": 153.28,
       "macro_eq": 161.9,
-      "pd_percent": 92,
+      "pd_percent": 90,
       "direction": "short",
-      "entry_bot": 166.32,
-      "entry_top": 170.52,
-      "sl": 173.08,
+      "entry_bot": 167.19,
+      "entry_top": 169.79,
+      "sl": 172.34,
       "tp": 154.81,
-      "rrr": 3.7,
-      "smc_id": "SMC_PG_169",
+      "rrr": 4.1,
+      "smc_id": "SMC_PG_168",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
       "smc_class": "border-green-500 text-green-400 bg-green-900/20",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $166.32 - $170.52，嚴格防守 $173.08。"
+      "inv_text": "區間 $167.19 - $169.79，嚴格防守 $172.34。"
     },
     {
       "symbol": "KO",
-      "price": 96.86,
-      "change": 0.83,
-      "change_pct": 0.86,
-      "dist_20ma": 2.93,
+      "price": 96.82,
+      "change": 0.79,
+      "change_pct": 0.82,
+      "dist_20ma": 2.89,
       "macro_bsl": 97.39,
       "macro_ssl": 90.55,
       "macro_eq": 93.97,
-      "pd_percent": 92,
+      "pd_percent": 91,
       "direction": "short",
       "entry_bot": 95.47,
       "entry_top": 97.39,
       "sl": 98.85,
       "tp": 91.46,
-      "rrr": 2.7,
+      "rrr": 2.6,
       "smc_id": "SMC_KO_96",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
@@ -1683,10 +1683,10 @@
     },
     {
       "symbol": "PEP",
-      "price": 143.24,
-      "change": 1.36,
-      "change_pct": 0.96,
-      "dist_20ma": 6.84,
+      "price": 143.32,
+      "change": 1.44,
+      "change_pct": 1.01,
+      "dist_20ma": 6.91,
       "macro_bsl": 145.55,
       "macro_ssl": 127.2,
       "macro_eq": 136.38,
@@ -1696,7 +1696,7 @@
       "entry_top": 145.55,
       "sl": 147.73,
       "tp": 128.47,
-      "rrr": 3.3,
+      "rrr": 3.4,
       "smc_id": "SMC_PEP_143",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
@@ -1707,10 +1707,10 @@
     },
     {
       "symbol": "DIS",
-      "price": 119.06,
-      "change": -0.06,
-      "change_pct": -0.05,
-      "dist_20ma": 6.11,
+      "price": 119.0,
+      "change": -0.12,
+      "change_pct": -0.1,
+      "dist_20ma": 6.06,
       "macro_bsl": 120.8,
       "macro_ssl": 107.65,
       "macro_eq": 114.22,
@@ -1720,7 +1720,7 @@
       "entry_top": 120.8,
       "sl": 122.61,
       "tp": 108.73,
-      "rrr": 2.9,
+      "rrr": 2.8,
       "smc_id": "SMC_DIS_119",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
@@ -1733,381 +1733,381 @@
   "watchlist_data": [
     {
       "symbol": "SPY",
-      "price": 749.36,
-      "change": -3.33,
-      "change_pct": -0.44
+      "price": 748.57,
+      "change": -4.12,
+      "change_pct": -0.55
     },
     {
       "symbol": "QQQ",
-      "price": 673.14,
-      "change": -6.21,
-      "change_pct": -0.91
+      "price": 672.61,
+      "change": -6.74,
+      "change_pct": -0.99
     },
     {
       "symbol": "DIA",
-      "price": 521.95,
-      "change": -1.38,
-      "change_pct": -0.26
-    },
-    {
-      "symbol": "IWM",
-      "price": 280.27,
-      "change": -2.24,
-      "change_pct": -0.79
-    },
-    {
-      "symbol": "VOO",
-      "price": 688.81,
-      "change": -3.06,
-      "change_pct": -0.44
-    },
-    {
-      "symbol": "QQQM",
-      "price": 277.18,
-      "change": -2.34,
-      "change_pct": -0.84
-    },
-    {
-      "symbol": "SPYM",
-      "price": 88.19,
-      "change": -0.4,
-      "change_pct": -0.45
-    },
-    {
-      "symbol": "SMH",
-      "price": 481.86,
-      "change": -5.55,
-      "change_pct": -1.14
-    },
-    {
-      "symbol": "SOXL",
-      "price": 55.26,
-      "change": -0.94,
-      "change_pct": -1.67
-    },
-    {
-      "symbol": "XLK",
-      "price": 168.37,
-      "change": -2.51,
-      "change_pct": -1.47
-    },
-    {
-      "symbol": "XLF",
-      "price": 58.42,
-      "change": 0.43,
-      "change_pct": 0.74
-    },
-    {
-      "symbol": "XLE",
-      "price": 62.32,
-      "change": 0.38,
-      "change_pct": 0.61
-    },
-    {
-      "symbol": "SPCX",
-      "price": 141.39,
-      "change": -0.68,
-      "change_pct": -0.48
-    },
-    {
-      "symbol": "DRAM",
-      "price": 40.31,
-      "change": -1.47,
-      "change_pct": -3.52
-    },
-    {
-      "symbol": "AAPL",
-      "price": 348.73,
-      "change": -1.96,
-      "change_pct": -0.56
-    },
-    {
-      "symbol": "MSFT",
-      "price": 534.89,
-      "change": -10.29,
-      "change_pct": -1.89
-    },
-    {
-      "symbol": "NVDA",
-      "price": 167.21,
-      "change": -11.46,
-      "change_pct": -6.41
-    },
-    {
-      "symbol": "TSLA",
-      "price": 378.77,
-      "change": 0.72,
-      "change_pct": 0.19
-    },
-    {
-      "symbol": "AMZN",
-      "price": 271.84,
-      "change": 4.91,
-      "change_pct": 1.84
-    },
-    {
-      "symbol": "META",
-      "price": 642.64,
-      "change": 1.27,
-      "change_pct": 0.2
-    },
-    {
-      "symbol": "GOOG",
-      "price": 284.92,
-      "change": -1.09,
+      "price": 521.36,
+      "change": -1.97,
       "change_pct": -0.38
     },
     {
+      "symbol": "IWM",
+      "price": 279.87,
+      "change": -2.64,
+      "change_pct": -0.93
+    },
+    {
+      "symbol": "VOO",
+      "price": 688.1,
+      "change": -3.77,
+      "change_pct": -0.54
+    },
+    {
+      "symbol": "QQQM",
+      "price": 276.95,
+      "change": -2.57,
+      "change_pct": -0.92
+    },
+    {
+      "symbol": "SPYM",
+      "price": 88.11,
+      "change": -0.48,
+      "change_pct": -0.54
+    },
+    {
+      "symbol": "SMH",
+      "price": 481.75,
+      "change": -5.66,
+      "change_pct": -1.16
+    },
+    {
+      "symbol": "SOXL",
+      "price": 55.13,
+      "change": -1.07,
+      "change_pct": -1.9
+    },
+    {
+      "symbol": "XLK",
+      "price": 168.26,
+      "change": -2.62,
+      "change_pct": -1.53
+    },
+    {
+      "symbol": "XLF",
+      "price": 58.31,
+      "change": 0.32,
+      "change_pct": 0.55
+    },
+    {
+      "symbol": "XLE",
+      "price": 62.35,
+      "change": 0.41,
+      "change_pct": 0.66
+    },
+    {
+      "symbol": "SPCX",
+      "price": 141.15,
+      "change": -0.92,
+      "change_pct": -0.65
+    },
+    {
+      "symbol": "DRAM",
+      "price": 40.28,
+      "change": -1.5,
+      "change_pct": -3.59
+    },
+    {
+      "symbol": "AAPL",
+      "price": 348.27,
+      "change": -2.42,
+      "change_pct": -0.69
+    },
+    {
+      "symbol": "MSFT",
+      "price": 532.69,
+      "change": -12.49,
+      "change_pct": -2.29
+    },
+    {
+      "symbol": "NVDA",
+      "price": 167.66,
+      "change": -11.01,
+      "change_pct": -6.16
+    },
+    {
+      "symbol": "TSLA",
+      "price": 377.54,
+      "change": -0.51,
+      "change_pct": -0.13
+    },
+    {
+      "symbol": "AMZN",
+      "price": 271.71,
+      "change": 4.78,
+      "change_pct": 1.79
+    },
+    {
+      "symbol": "META",
+      "price": 642.52,
+      "change": 1.15,
+      "change_pct": 0.18
+    },
+    {
+      "symbol": "GOOG",
+      "price": 284.6,
+      "change": -1.41,
+      "change_pct": -0.49
+    },
+    {
       "symbol": "GOOGL",
-      "price": 287.33,
-      "change": -0.82,
-      "change_pct": -0.28
+      "price": 286.94,
+      "change": -1.21,
+      "change_pct": -0.42
     },
     {
       "symbol": "AMD",
-      "price": 515.96,
-      "change": 7.38,
-      "change_pct": 1.45
+      "price": 516.03,
+      "change": 7.45,
+      "change_pct": 1.46
     },
     {
       "symbol": "TSM",
-      "price": 394.43,
-      "change": 5.81,
-      "change_pct": 1.5
+      "price": 394.79,
+      "change": 6.17,
+      "change_pct": 1.59
     },
     {
       "symbol": "AVGO",
-      "price": 332.19,
-      "change": 12.71,
-      "change_pct": 3.98
+      "price": 331.1,
+      "change": 11.62,
+      "change_pct": 3.64
     },
     {
       "symbol": "ASML",
-      "price": 1508.44,
-      "change": -4.81,
-      "change_pct": -0.32
+      "price": 1507.07,
+      "change": -6.18,
+      "change_pct": -0.41
     },
     {
       "symbol": "QCOM",
-      "price": 172.75,
-      "change": 1.28,
-      "change_pct": 0.75
+      "price": 172.59,
+      "change": 1.12,
+      "change_pct": 0.65
     },
     {
       "symbol": "TXN",
-      "price": 299.83,
-      "change": 4.1,
-      "change_pct": 1.39
+      "price": 299.54,
+      "change": 3.81,
+      "change_pct": 1.29
     },
     {
       "symbol": "INTC",
-      "price": 57.76,
-      "change": -1.61,
-      "change_pct": -2.71
+      "price": 57.72,
+      "change": -1.65,
+      "change_pct": -2.78
     },
     {
       "symbol": "MU",
-      "price": 713.61,
-      "change": -19.54,
-      "change_pct": -2.67
+      "price": 714.42,
+      "change": -18.73,
+      "change_pct": -2.55
     },
     {
       "symbol": "SNDK",
-      "price": 851.17,
-      "change": -35.34,
-      "change_pct": -3.99
+      "price": 849.81,
+      "change": -36.7,
+      "change_pct": -4.14
     },
     {
       "symbol": "ARM",
-      "price": 178.91,
-      "change": -7.39,
-      "change_pct": -3.97
+      "price": 179.34,
+      "change": -6.96,
+      "change_pct": -3.74
     },
     {
       "symbol": "SMCI",
-      "price": 27.6,
-      "change": -1.0,
-      "change_pct": -3.5
+      "price": 27.55,
+      "change": -1.05,
+      "change_pct": -3.67
     },
     {
       "symbol": "WDC",
-      "price": 282.51,
-      "change": -7.27,
-      "change_pct": -2.51
+      "price": 282.84,
+      "change": -6.94,
+      "change_pct": -2.39
     },
     {
       "symbol": "LITE",
-      "price": 584.71,
-      "change": -11.45,
+      "price": 584.74,
+      "change": -11.42,
       "change_pct": -1.92
     },
     {
       "symbol": "AAOI",
-      "price": 48.21,
-      "change": -3.89,
-      "change_pct": -7.47
+      "price": 48.03,
+      "change": -4.07,
+      "change_pct": -7.81
     },
     {
       "symbol": "POET",
-      "price": 4.98,
-      "change": -0.28,
-      "change_pct": -5.32
+      "price": 5.02,
+      "change": -0.24,
+      "change_pct": -4.56
     },
     {
       "symbol": "PLTR",
-      "price": 166.37,
-      "change": -2.83,
-      "change_pct": -1.67
+      "price": 166.51,
+      "change": -2.69,
+      "change_pct": -1.59
     },
     {
       "symbol": "SNOW",
-      "price": 292.29,
-      "change": 1.15,
-      "change_pct": 0.39
+      "price": 292.42,
+      "change": 1.28,
+      "change_pct": 0.44
     },
     {
       "symbol": "APP",
-      "price": 391.16,
-      "change": -18.84,
-      "change_pct": -4.6
+      "price": 392.71,
+      "change": -17.29,
+      "change_pct": -4.22
     },
     {
       "symbol": "CRM",
-      "price": 211.13,
-      "change": -3.81,
-      "change_pct": -1.77
+      "price": 211.64,
+      "change": -3.3,
+      "change_pct": -1.54
     },
     {
       "symbol": "ADBE",
-      "price": 234.42,
-      "change": -2.9,
-      "change_pct": -1.22
+      "price": 234.63,
+      "change": -2.69,
+      "change_pct": -1.13
     },
     {
       "symbol": "NOW",
-      "price": 98.02,
-      "change": -4.74,
-      "change_pct": -4.61
+      "price": 98.15,
+      "change": -4.61,
+      "change_pct": -4.49
     },
     {
       "symbol": "CRWD",
-      "price": 224.64,
-      "change": -3.94,
-      "change_pct": -1.72
+      "price": 225.24,
+      "change": -3.34,
+      "change_pct": -1.46
     },
     {
       "symbol": "PANW",
-      "price": 324.28,
-      "change": -6.61,
-      "change_pct": -2.0
+      "price": 324.97,
+      "change": -5.92,
+      "change_pct": -1.79
     },
     {
       "symbol": "NFLX",
-      "price": 62.97,
-      "change": -0.98,
-      "change_pct": -1.53
+      "price": 62.79,
+      "change": -1.16,
+      "change_pct": -1.81
     },
     {
       "symbol": "UBER",
-      "price": 69.62,
-      "change": -1.55,
-      "change_pct": -2.18
+      "price": 69.67,
+      "change": -1.5,
+      "change_pct": -2.11
     },
     {
       "symbol": "COIN",
-      "price": 131.6,
-      "change": -4.5,
-      "change_pct": -3.31
+      "price": 131.18,
+      "change": -4.92,
+      "change_pct": -3.61
     },
     {
       "symbol": "MSTR",
-      "price": 120.19,
-      "change": -5.4,
-      "change_pct": -4.3
+      "price": 119.7,
+      "change": -5.89,
+      "change_pct": -4.69
     },
     {
       "symbol": "MARA",
-      "price": 7.16,
-      "change": 0.52,
-      "change_pct": 7.83
+      "price": 7.11,
+      "change": 0.47,
+      "change_pct": 7.08
     },
     {
       "symbol": "RIOT",
-      "price": 17.82,
-      "change": 0.16,
-      "change_pct": 0.91
+      "price": 17.75,
+      "change": 0.09,
+      "change_pct": 0.51
     },
     {
       "symbol": "HOOD",
-      "price": 80.87,
-      "change": -2.45,
-      "change_pct": -2.94
+      "price": 80.68,
+      "change": -2.64,
+      "change_pct": -3.17
     },
     {
       "symbol": "PYPL",
-      "price": 58.64,
-      "change": -1.41,
-      "change_pct": -2.35
+      "price": 58.65,
+      "change": -1.4,
+      "change_pct": -2.33
     },
     {
       "symbol": "SOFI",
-      "price": 16.16,
-      "change": -0.59,
-      "change_pct": -3.52
+      "price": 16.13,
+      "change": -0.62,
+      "change_pct": -3.7
     },
     {
       "symbol": "FUTU",
-      "price": 95.15,
-      "change": -5.82,
-      "change_pct": -5.76
+      "price": 94.83,
+      "change": -6.14,
+      "change_pct": -6.08
     },
     {
       "symbol": "V",
-      "price": 424.35,
-      "change": 2.19,
-      "change_pct": 0.52
+      "price": 423.51,
+      "change": 1.35,
+      "change_pct": 0.32
     },
     {
       "symbol": "JPM",
-      "price": 343.87,
-      "change": 1.79,
-      "change_pct": 0.52
+      "price": 342.92,
+      "change": 0.84,
+      "change_pct": 0.25
     },
     {
       "symbol": "GS",
-      "price": 912.01,
-      "change": 5.79,
-      "change_pct": 0.64
+      "price": 908.58,
+      "change": 2.36,
+      "change_pct": 0.26
     },
     {
       "symbol": "BAC",
-      "price": 50.76,
-      "change": 0.21,
-      "change_pct": 0.42
+      "price": 50.7,
+      "change": 0.15,
+      "change_pct": 0.3
     },
     {
       "symbol": "RKLB",
-      "price": 59.88,
-      "change": 1.02,
-      "change_pct": 1.73
+      "price": 60.31,
+      "change": 1.45,
+      "change_pct": 2.46
     },
     {
       "symbol": "XOM",
-      "price": 164.65,
-      "change": -0.08,
-      "change_pct": -0.05
+      "price": 164.74,
+      "change": 0.01,
+      "change_pct": 0.01
     },
     {
       "symbol": "BE",
-      "price": 184.92,
-      "change": -8.96,
-      "change_pct": -4.62
+      "price": 184.34,
+      "change": -9.54,
+      "change_pct": -4.92
     },
     {
       "symbol": "VST",
-      "price": 130.58,
-      "change": -3.34,
-      "change_pct": -2.49
+      "price": 130.44,
+      "change": -3.48,
+      "change_pct": -2.6
     },
     {
       "symbol": "NOK",
@@ -2117,72 +2117,72 @@
     },
     {
       "symbol": "ONDS",
-      "price": 5.55,
-      "change": -0.42,
-      "change_pct": -7.04
+      "price": 5.53,
+      "change": -0.44,
+      "change_pct": -7.37
     },
     {
       "symbol": "NBIS",
-      "price": 132.12,
-      "change": -9.33,
-      "change_pct": -6.6
+      "price": 132.5,
+      "change": -8.95,
+      "change_pct": -6.33
     },
     {
       "symbol": "WMT",
-      "price": 125.95,
-      "change": 0.29,
-      "change_pct": 0.23
+      "price": 125.93,
+      "change": 0.27,
+      "change_pct": 0.21
     },
     {
       "symbol": "COST",
-      "price": 1067.5,
-      "change": 1.32,
-      "change_pct": 0.12
+      "price": 1067.59,
+      "change": 1.41,
+      "change_pct": 0.13
     },
     {
       "symbol": "PG",
-      "price": 169.18,
-      "change": 0.86,
-      "change_pct": 0.51
+      "price": 168.91,
+      "change": 0.59,
+      "change_pct": 0.35
     },
     {
       "symbol": "KO",
-      "price": 96.86,
-      "change": 0.83,
-      "change_pct": 0.86
+      "price": 96.82,
+      "change": 0.79,
+      "change_pct": 0.82
     },
     {
       "symbol": "PEP",
-      "price": 143.24,
-      "change": 1.36,
-      "change_pct": 0.96
+      "price": 143.32,
+      "change": 1.44,
+      "change_pct": 1.01
     },
     {
       "symbol": "DIS",
-      "price": 119.06,
-      "change": -0.06,
-      "change_pct": -0.05
+      "price": 119.0,
+      "change": -0.12,
+      "change_pct": -0.1
     }
   ],
   "stocks": {
     "SPY": {
       "summary": {
         "symbol": "SPY",
-        "price": 749.36,
-        "change": -3.33,
-        "change_pct": -0.44,
-        "dist_20ma": -11.3,
+        "price": 748.57,
+        "change": -4.12,
+        "change_pct": -0.55,
+        "dist_20ma": -12.05,
         "macro_bsl": 776.35,
         "macro_ssl": 732.71,
         "macro_eq": 754.53,
-        "pd_percent": 38,
+        "pd_percent": 36,
         "direction": "long",
         "entry_bot": 732.71,
         "entry_top": 765.97,
         "sl": 721.72,
         "tp": 768.59,
         "rrr": 0.7,
-        "smc_id": "SMC_SPY_749",
+        "smc_id": "SMC_SPY_748",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -2609,7 +2609,7 @@
           "open": 747.94,
           "high": 752.14,
           "low": 744.87,
-          "close": 749.36
+          "close": 748.57
         }
       ],
       "kline_1h": [
@@ -3450,8 +3450,8 @@
           "time": 1794339000,
           "open": 748.57,
           "high": 749.79,
-          "low": 748.17,
-          "close": 749.36
+          "low": 747.98,
+          "close": 748.57
         }
       ],
       "kline_15m": [
@@ -4328,14 +4328,21 @@
           "open": 748.57,
           "high": 749.01,
           "low": 748.17,
-          "close": 748.61
+          "close": 748.6
         },
         {
           "time": 1794339900,
-          "open": 748.61,
+          "open": 748.6,
           "high": 749.79,
           "low": 748.52,
-          "close": 749.36
+          "close": 748.91
+        },
+        {
+          "time": 1794340800,
+          "open": 748.92,
+          "high": 748.94,
+          "low": 747.98,
+          "close": 748.57
         }
       ],
       "kline_4h": [
@@ -5036,18 +5043,18 @@
           "time": 1794339000,
           "open": 748.57,
           "high": 749.79,
-          "low": 748.17,
-          "close": 749.36
+          "low": 747.98,
+          "close": 748.57
         }
       ]
     },
     "QQQ": {
       "summary": {
         "symbol": "QQQ",
-        "price": 673.14,
-        "change": -6.21,
-        "change_pct": -0.91,
-        "dist_20ma": -27.64,
+        "price": 672.61,
+        "change": -6.74,
+        "change_pct": -0.99,
+        "dist_20ma": -28.15,
         "macro_bsl": 740.53,
         "macro_ssl": 647.05,
         "macro_eq": 693.79,
@@ -5058,7 +5065,7 @@
         "sl": 644.18,
         "tp": 733.12,
         "rrr": 2.1,
-        "smc_id": "SMC_QQQ_673",
+        "smc_id": "SMC_QQQ_672",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -5485,7 +5492,7 @@
           "open": 672.55,
           "high": 680.95,
           "low": 667.05,
-          "close": 673.14
+          "close": 672.61
         }
       ],
       "kline_1h": [
@@ -6327,7 +6334,7 @@
           "open": 672.01,
           "high": 673.65,
           "low": 671.4,
-          "close": 673.14
+          "close": 672.64
         }
       ],
       "kline_15m": [
@@ -7211,7 +7218,14 @@
           "open": 671.93,
           "high": 673.65,
           "low": 671.86,
-          "close": 673.14
+          "close": 672.65
+        },
+        {
+          "time": 1794340800,
+          "open": 672.66,
+          "high": 672.69,
+          "low": 671.44,
+          "close": 672.64
         }
       ],
       "kline_4h": [
@@ -7913,34 +7927,34 @@
           "open": 672.01,
           "high": 673.65,
           "low": 671.4,
-          "close": 673.14
+          "close": 672.64
         }
       ]
     },
     "DIA": {
       "summary": {
         "symbol": "DIA",
-        "price": 521.95,
-        "change": -1.38,
-        "change_pct": -0.26,
-        "dist_20ma": 0.55,
+        "price": 521.36,
+        "change": -1.97,
+        "change_pct": -0.38,
+        "dist_20ma": -0.01,
         "macro_bsl": 536.6,
         "macro_ssl": 508.66,
         "macro_eq": 522.63,
-        "pd_percent": 47,
+        "pd_percent": 45,
         "direction": "long",
-        "entry_bot": 514.13,
-        "entry_top": 536.6,
-        "sl": 506.42,
+        "entry_bot": 519.19,
+        "entry_top": 522.43,
+        "sl": 511.4,
         "tp": 531.23,
-        "rrr": 0.6,
+        "rrr": 1.0,
         "smc_id": "SMC_DIA_521",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $514.13 - $536.6，嚴格防守 $506.42。"
+        "inv_text": "區間 $519.19 - $522.43，嚴格防守 $511.4。"
       },
       "kline": [
         {
@@ -8361,7 +8375,7 @@
           "open": 521.51,
           "high": 522.43,
           "low": 519.19,
-          "close": 521.95
+          "close": 521.36
         }
       ],
       "kline_1h": [
@@ -9202,8 +9216,8 @@
           "time": 1794339000,
           "open": 521.56,
           "high": 522.16,
-          "low": 521.44,
-          "close": 521.95
+          "low": 521.33,
+          "close": 521.36
         }
       ],
       "kline_15m": [
@@ -10079,15 +10093,22 @@
           "time": 1794339000,
           "open": 521.56,
           "high": 521.78,
-          "low": 521.44,
-          "close": 521.6
+          "low": 521.43,
+          "close": 521.59
         },
         {
           "time": 1794339900,
-          "open": 521.65,
+          "open": 521.55,
           "high": 522.16,
-          "low": 521.59,
-          "close": 521.95
+          "low": 521.55,
+          "close": 521.72
+        },
+        {
+          "time": 1794340800,
+          "open": 521.73,
+          "high": 521.75,
+          "low": 521.33,
+          "close": 521.36
         }
       ],
       "kline_4h": [
@@ -10788,29 +10809,29 @@
           "time": 1794339000,
           "open": 521.56,
           "high": 522.16,
-          "low": 521.44,
-          "close": 521.95
+          "low": 521.33,
+          "close": 521.36
         }
       ]
     },
     "IWM": {
       "summary": {
         "symbol": "IWM",
-        "price": 280.27,
-        "change": -2.24,
-        "change_pct": -0.79,
-        "dist_20ma": 3.02,
+        "price": 279.87,
+        "change": -2.64,
+        "change_pct": -0.93,
+        "dist_20ma": 2.64,
         "macro_bsl": 286.17,
         "macro_ssl": 269.88,
         "macro_eq": 278.02,
-        "pd_percent": 63,
+        "pd_percent": 61,
         "direction": "short",
         "entry_bot": 270.52,
         "entry_top": 284.7,
         "sl": 288.97,
         "tp": 272.58,
-        "rrr": 0.9,
-        "smc_id": "SMC_IWM_280",
+        "rrr": 0.8,
+        "smc_id": "SMC_IWM_279",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
         "smc_class": "border-green-500 text-green-400 bg-green-900/20",
@@ -11237,7 +11258,7 @@
           "open": 279.79,
           "high": 281.33,
           "low": 277.91,
-          "close": 280.27
+          "close": 279.87
         }
       ],
       "kline_1h": [
@@ -12078,8 +12099,8 @@
           "time": 1794339000,
           "open": 280.03,
           "high": 280.4,
-          "low": 279.91,
-          "close": 280.27
+          "low": 279.7,
+          "close": 279.87
         }
       ],
       "kline_15m": [
@@ -12955,7 +12976,7 @@
           "time": 1794339000,
           "open": 280.03,
           "high": 280.17,
-          "low": 279.91,
+          "low": 279.9,
           "close": 279.94
         },
         {
@@ -12963,7 +12984,14 @@
           "open": 279.93,
           "high": 280.4,
           "low": 279.91,
-          "close": 280.27
+          "close": 280.11
+        },
+        {
+          "time": 1794340800,
+          "open": 280.11,
+          "high": 280.11,
+          "low": 279.7,
+          "close": 279.87
         }
       ],
       "kline_4h": [
@@ -13664,22 +13692,22 @@
           "time": 1794339000,
           "open": 280.03,
           "high": 280.4,
-          "low": 279.91,
-          "close": 280.27
+          "low": 279.7,
+          "close": 279.87
         }
       ]
     },
     "VOO": {
       "summary": {
         "symbol": "VOO",
-        "price": 688.81,
-        "change": -3.06,
-        "change_pct": -0.44,
-        "dist_20ma": -10.43,
+        "price": 688.1,
+        "change": -3.77,
+        "change_pct": -0.54,
+        "dist_20ma": -11.1,
         "macro_bsl": 713.62,
         "macro_ssl": 673.55,
         "macro_eq": 693.59,
-        "pd_percent": 38,
+        "pd_percent": 36,
         "direction": "long",
         "entry_bot": 673.55,
         "entry_top": 704.1,
@@ -14113,7 +14141,7 @@
           "open": 687.58,
           "high": 691.36,
           "low": 684.74,
-          "close": 688.81
+          "close": 688.1
         }
       ],
       "kline_1h": [
@@ -14954,8 +14982,8 @@
           "time": 1794339000,
           "open": 688.15,
           "high": 689.2,
-          "low": 687.72,
-          "close": 688.81
+          "low": 687.55,
+          "close": 688.1
         }
       ],
       "kline_15m": [
@@ -15838,8 +15866,15 @@
           "time": 1794339900,
           "open": 688.09,
           "high": 689.2,
-          "low": 688.08,
-          "close": 688.81
+          "low": 688.04,
+          "close": 688.38
+        },
+        {
+          "time": 1794340800,
+          "open": 688.42,
+          "high": 688.42,
+          "low": 687.55,
+          "close": 688.1
         }
       ],
       "kline_4h": [
@@ -16540,18 +16575,18 @@
           "time": 1794339000,
           "open": 688.15,
           "high": 689.2,
-          "low": 687.72,
-          "close": 688.81
+          "low": 687.55,
+          "close": 688.1
         }
       ]
     },
     "QQQM": {
       "summary": {
         "symbol": "QQQM",
-        "price": 277.18,
-        "change": -2.34,
-        "change_pct": -0.84,
-        "dist_20ma": -11.4,
+        "price": 276.95,
+        "change": -2.57,
+        "change_pct": -0.92,
+        "dist_20ma": -11.62,
         "macro_bsl": 304.9,
         "macro_ssl": 266.52,
         "macro_eq": 285.71,
@@ -16562,7 +16597,7 @@
         "sl": 265.26,
         "tp": 301.85,
         "rrr": 2.1,
-        "smc_id": "SMC_QQQM_277",
+        "smc_id": "SMC_QQQM_276",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -16989,7 +17024,7 @@
           "open": 276.94,
           "high": 280.37,
           "low": 274.68,
-          "close": 277.18
+          "close": 276.95
         }
       ],
       "kline_1h": [
@@ -17831,7 +17866,7 @@
           "open": 276.72,
           "high": 277.38,
           "low": 276.46,
-          "close": 277.18
+          "close": 276.95
         }
       ],
       "kline_15m": [
@@ -18715,7 +18750,14 @@
           "open": 276.68,
           "high": 277.38,
           "low": 276.65,
-          "close": 277.18
+          "close": 276.96
+        },
+        {
+          "time": 1794340800,
+          "open": 276.95,
+          "high": 276.95,
+          "low": 276.48,
+          "close": 276.95
         }
       ],
       "kline_4h": [
@@ -19417,21 +19459,21 @@
           "open": 276.72,
           "high": 277.38,
           "low": 276.46,
-          "close": 277.18
+          "close": 276.95
         }
       ]
     },
     "SPYM": {
       "summary": {
         "symbol": "SPYM",
-        "price": 88.19,
-        "change": -0.4,
-        "change_pct": -0.45,
-        "dist_20ma": -1.34,
+        "price": 88.11,
+        "change": -0.48,
+        "change_pct": -0.54,
+        "dist_20ma": -1.42,
         "macro_bsl": 91.37,
         "macro_ssl": 86.25,
         "macro_eq": 88.81,
-        "pd_percent": 37,
+        "pd_percent": 36,
         "direction": "long",
         "entry_bot": 86.25,
         "entry_top": 90.16,
@@ -19865,7 +19907,7 @@
           "open": 88.03,
           "high": 88.52,
           "low": 87.67,
-          "close": 88.19
+          "close": 88.11
         }
       ],
       "kline_1h": [
@@ -20706,8 +20748,8 @@
           "time": 1794339000,
           "open": 88.11,
           "high": 88.25,
-          "low": 88.07,
-          "close": 88.19
+          "low": 88.04,
+          "close": 88.11
         }
       ],
       "kline_15m": [
@@ -21583,7 +21625,7 @@
           "time": 1794339000,
           "open": 88.11,
           "high": 88.15,
-          "low": 88.07,
+          "low": 88.06,
           "close": 88.11
         },
         {
@@ -21591,7 +21633,14 @@
           "open": 88.11,
           "high": 88.25,
           "low": 88.11,
-          "close": 88.19
+          "close": 88.14
+        },
+        {
+          "time": 1794340800,
+          "open": 88.14,
+          "high": 88.14,
+          "low": 88.04,
+          "close": 88.11
         }
       ],
       "kline_4h": [
@@ -22292,18 +22341,18 @@
           "time": 1794339000,
           "open": 88.11,
           "high": 88.25,
-          "low": 88.07,
-          "close": 88.19
+          "low": 88.04,
+          "close": 88.11
         }
       ]
     },
     "SMH": {
       "summary": {
         "symbol": "SMH",
-        "price": 481.86,
-        "change": -5.55,
-        "change_pct": -1.14,
-        "dist_20ma": -44.59,
+        "price": 481.75,
+        "change": -5.66,
+        "change_pct": -1.16,
+        "dist_20ma": -44.69,
         "macro_bsl": 580.08,
         "macro_ssl": 445.59,
         "macro_eq": 512.84,
@@ -22741,7 +22790,7 @@
           "open": 478.57,
           "high": 492.74,
           "low": 474.03,
-          "close": 481.86
+          "close": 481.75
         }
       ],
       "kline_1h": [
@@ -23583,7 +23632,7 @@
           "open": 480.63,
           "high": 482.27,
           "low": 479.28,
-          "close": 481.86
+          "close": 481.75
         }
       ],
       "kline_15m": [
@@ -24467,7 +24516,14 @@
           "open": 480.11,
           "high": 482.27,
           "low": 480.01,
-          "close": 481.86
+          "close": 481.28
+        },
+        {
+          "time": 1794340800,
+          "open": 481.3,
+          "high": 481.75,
+          "low": 479.9,
+          "close": 481.75
         }
       ],
       "kline_4h": [
@@ -25169,17 +25225,17 @@
           "open": 480.63,
           "high": 482.27,
           "low": 479.28,
-          "close": 481.86
+          "close": 481.75
         }
       ]
     },
     "SOXL": {
       "summary": {
         "symbol": "SOXL",
-        "price": 55.26,
-        "change": -0.94,
-        "change_pct": -1.67,
-        "dist_20ma": -27.81,
+        "price": 55.13,
+        "change": -1.07,
+        "change_pct": -1.9,
+        "dist_20ma": -27.93,
         "macro_bsl": 120.9,
         "macro_ssl": 40.59,
         "macro_eq": 80.75,
@@ -25617,7 +25673,7 @@
           "open": 53.12,
           "high": 59.65,
           "low": 52.04,
-          "close": 55.26
+          "close": 55.13
         }
       ],
       "kline_1h": [
@@ -26459,7 +26515,7 @@
           "open": 54.7,
           "high": 55.5,
           "low": 54.18,
-          "close": 55.26
+          "close": 55.13
         }
       ],
       "kline_15m": [
@@ -27340,10 +27396,17 @@
         },
         {
           "time": 1794339900,
-          "open": 54.59,
+          "open": 54.58,
           "high": 55.5,
           "low": 54.52,
-          "close": 55.26
+          "close": 55.12
+        },
+        {
+          "time": 1794340800,
+          "open": 55.15,
+          "high": 55.15,
+          "low": 54.5,
+          "close": 55.13
         }
       ],
       "kline_4h": [
@@ -28045,27 +28108,27 @@
           "open": 54.7,
           "high": 55.5,
           "low": 54.18,
-          "close": 55.26
+          "close": 55.13
         }
       ]
     },
     "XLK": {
       "summary": {
         "symbol": "XLK",
-        "price": 168.37,
-        "change": -2.51,
-        "change_pct": -1.47,
-        "dist_20ma": -12.49,
+        "price": 168.26,
+        "change": -2.62,
+        "change_pct": -1.53,
+        "dist_20ma": -12.6,
         "macro_bsl": 194.66,
         "macro_ssl": 162.14,
         "macro_eq": 178.4,
-        "pd_percent": 19,
+        "pd_percent": 18,
         "direction": "long",
         "entry_bot": 166.33,
         "entry_top": 171.36,
         "sl": 163.84,
         "tp": 192.71,
-        "rrr": 5.4,
+        "rrr": 5.5,
         "smc_id": "SMC_XLK_168",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -28493,7 +28556,7 @@
           "open": 168.68,
           "high": 171.36,
           "low": 166.33,
-          "close": 168.37
+          "close": 168.26
         }
       ],
       "kline_1h": [
@@ -29334,8 +29397,8 @@
           "time": 1794339000,
           "open": 168.19,
           "high": 168.59,
-          "low": 167.85,
-          "close": 168.37
+          "low": 167.8,
+          "close": 168.26
         }
       ],
       "kline_15m": [
@@ -30212,14 +30275,21 @@
           "open": 168.19,
           "high": 168.31,
           "low": 167.85,
-          "close": 168.08
+          "close": 168.03
         },
         {
           "time": 1794339900,
           "open": 168.04,
           "high": 168.59,
           "low": 168.04,
-          "close": 168.37
+          "close": 168.21
+        },
+        {
+          "time": 1794340800,
+          "open": 168.24,
+          "high": 168.26,
+          "low": 167.8,
+          "close": 168.26
         }
       ],
       "kline_4h": [
@@ -30920,28 +30990,28 @@
           "time": 1794339000,
           "open": 168.19,
           "high": 168.59,
-          "low": 167.85,
-          "close": 168.37
+          "low": 167.8,
+          "close": 168.26
         }
       ]
     },
     "XLF": {
       "summary": {
         "symbol": "XLF",
-        "price": 58.42,
-        "change": 0.43,
-        "change_pct": 0.74,
-        "dist_20ma": 1.86,
+        "price": 58.31,
+        "change": 0.32,
+        "change_pct": 0.55,
+        "dist_20ma": 1.76,
         "macro_bsl": 60.04,
         "macro_ssl": 54.02,
         "macro_eq": 57.03,
-        "pd_percent": 73,
+        "pd_percent": 71,
         "direction": "short",
         "entry_bot": 57.42,
         "entry_top": 60.04,
         "sl": 60.94,
         "tp": 54.56,
-        "rrr": 1.5,
+        "rrr": 1.4,
         "smc_id": "SMC_XLF_58",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
@@ -31369,7 +31439,7 @@
           "open": 58.2,
           "high": 58.44,
           "low": 57.85,
-          "close": 58.42
+          "close": 58.31
         }
       ],
       "kline_1h": [
@@ -32210,8 +32280,8 @@
           "time": 1794339000,
           "open": 58.4,
           "high": 58.44,
-          "low": 58.36,
-          "close": 58.42
+          "low": 58.31,
+          "close": 58.31
         }
       ],
       "kline_15m": [
@@ -33092,10 +33162,17 @@
         },
         {
           "time": 1794339900,
-          "open": 58.39,
+          "open": 58.4,
           "high": 58.44,
           "low": 58.38,
-          "close": 58.42
+          "close": 58.4
+        },
+        {
+          "time": 1794340800,
+          "open": 58.4,
+          "high": 58.4,
+          "low": 58.31,
+          "close": 58.31
         }
       ],
       "kline_4h": [
@@ -33796,18 +33873,18 @@
           "time": 1794339000,
           "open": 58.4,
           "high": 58.44,
-          "low": 58.36,
-          "close": 58.42
+          "low": 58.31,
+          "close": 58.31
         }
       ]
     },
     "XLE": {
       "summary": {
         "symbol": "XLE",
-        "price": 62.32,
-        "change": 0.38,
-        "change_pct": 0.61,
-        "dist_20ma": -4.34,
+        "price": 62.35,
+        "change": 0.41,
+        "change_pct": 0.66,
+        "dist_20ma": -4.31,
         "macro_bsl": 70.15,
         "macro_ssl": 60.43,
         "macro_eq": 65.29,
@@ -33817,7 +33894,7 @@
         "entry_top": 64.54,
         "sl": 60.71,
         "tp": 69.45,
-        "rrr": 4.4,
+        "rrr": 4.3,
         "smc_id": "SMC_XLE_62",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -34243,9 +34320,9 @@
         {
           "time": "2026-11-10",
           "open": 60.87,
-          "high": 62.37,
+          "high": 62.38,
           "low": 60.43,
-          "close": 62.32
+          "close": 62.35
         }
       ],
       "kline_1h": [
@@ -35085,9 +35162,9 @@
         {
           "time": 1794339000,
           "open": 62.23,
-          "high": 62.35,
+          "high": 62.38,
           "low": 62.19,
-          "close": 62.32
+          "close": 62.35
         }
       ],
       "kline_15m": [
@@ -35971,7 +36048,14 @@
           "open": 62.26,
           "high": 62.35,
           "low": 62.26,
-          "close": 62.32
+          "close": 62.31
+        },
+        {
+          "time": 1794340800,
+          "open": 62.31,
+          "high": 62.38,
+          "low": 62.29,
+          "close": 62.35
         }
       ],
       "kline_4h": [
@@ -36671,19 +36755,19 @@
         {
           "time": 1794339000,
           "open": 62.23,
-          "high": 62.35,
+          "high": 62.38,
           "low": 62.19,
-          "close": 62.32
+          "close": 62.35
         }
       ]
     },
     "SPCX": {
       "summary": {
         "symbol": "SPCX",
-        "price": 141.39,
-        "change": -0.68,
-        "change_pct": -0.48,
-        "dist_20ma": -2.03,
+        "price": 141.15,
+        "change": -0.92,
+        "change_pct": -0.65,
+        "dist_20ma": -2.26,
         "macro_bsl": 166.18,
         "macro_ssl": 120.39,
         "macro_eq": 143.28,
@@ -37121,7 +37205,7 @@
           "open": 139.05,
           "high": 144.89,
           "low": 137.65,
-          "close": 141.39
+          "close": 141.15
         }
       ],
       "kline_1h": [
@@ -37962,8 +38046,8 @@
           "time": 1794339000,
           "open": 141.38,
           "high": 141.7,
-          "low": 141.0,
-          "close": 141.39
+          "low": 140.95,
+          "close": 141.15
         }
       ],
       "kline_15m": [
@@ -38847,7 +38931,14 @@
           "open": 141.05,
           "high": 141.7,
           "low": 141.04,
-          "close": 141.39
+          "close": 141.22
+        },
+        {
+          "time": 1794340800,
+          "open": 141.24,
+          "high": 141.38,
+          "low": 140.95,
+          "close": 141.15
         }
       ],
       "kline_4h": [
@@ -39548,18 +39639,18 @@
           "time": 1794339000,
           "open": 141.38,
           "high": 141.7,
-          "low": 141.0,
-          "close": 141.39
+          "low": 140.95,
+          "close": 141.14
         }
       ]
     },
     "DRAM": {
       "summary": {
         "symbol": "DRAM",
-        "price": 40.31,
-        "change": -1.47,
-        "change_pct": -3.52,
-        "dist_20ma": -6.39,
+        "price": 40.28,
+        "change": -1.5,
+        "change_pct": -3.59,
+        "dist_20ma": -6.42,
         "macro_bsl": 54.12,
         "macro_ssl": 37.01,
         "macro_eq": 45.56,
@@ -39569,7 +39660,7 @@
         "entry_top": 41.95,
         "sl": 39.09,
         "tp": 53.58,
-        "rrr": 10.9,
+        "rrr": 11.2,
         "smc_id": "SMC_DRAM_40",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -39997,7 +40088,7 @@
           "open": 40.63,
           "high": 41.95,
           "low": 39.69,
-          "close": 40.31
+          "close": 40.28
         }
       ],
       "kline_1h": [
@@ -40839,7 +40930,7 @@
           "open": 40.19,
           "high": 40.39,
           "low": 40.1,
-          "close": 40.31
+          "close": 40.28
         }
       ],
       "kline_15m": [
@@ -41716,14 +41807,21 @@
           "open": 40.19,
           "high": 40.26,
           "low": 40.1,
-          "close": 40.2
+          "close": 40.19
         },
         {
           "time": 1794339900,
           "open": 40.19,
           "high": 40.39,
           "low": 40.18,
-          "close": 40.31
+          "close": 40.29
+        },
+        {
+          "time": 1794340800,
+          "open": 40.26,
+          "high": 40.31,
+          "low": 40.14,
+          "close": 40.28
         }
       ],
       "kline_4h": [
@@ -42425,27 +42523,27 @@
           "open": 40.19,
           "high": 40.39,
           "low": 40.1,
-          "close": 40.31
+          "close": 40.24
         }
       ]
     },
     "AAPL": {
       "summary": {
         "symbol": "AAPL",
-        "price": 348.73,
-        "change": -1.96,
-        "change_pct": -0.56,
-        "dist_20ma": 4.49,
+        "price": 348.27,
+        "change": -2.42,
+        "change_pct": -0.69,
+        "dist_20ma": 4.05,
         "macro_bsl": 355.38,
         "macro_ssl": 325.33,
         "macro_eq": 340.36,
-        "pd_percent": 77,
+        "pd_percent": 76,
         "direction": "short",
         "entry_bot": 346.46,
         "entry_top": 353.87,
         "sl": 359.18,
         "tp": 328.58,
-        "rrr": 1.9,
+        "rrr": 1.8,
         "smc_id": "SMC_AAPL_348",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
@@ -42873,7 +42971,7 @@
           "open": 351.55,
           "high": 353.87,
           "low": 346.46,
-          "close": 348.73
+          "close": 348.27
         }
       ],
       "kline_1h": [
@@ -43714,8 +43812,8 @@
           "time": 1794339000,
           "open": 348.46,
           "high": 348.82,
-          "low": 348.38,
-          "close": 348.73
+          "low": 348.07,
+          "close": 348.27
         }
       ],
       "kline_15m": [
@@ -44598,8 +44696,15 @@
           "time": 1794339900,
           "open": 348.57,
           "high": 348.82,
-          "low": 348.39,
-          "close": 348.73
+          "low": 348.29,
+          "close": 348.38
+        },
+        {
+          "time": 1794340800,
+          "open": 348.38,
+          "high": 348.66,
+          "low": 348.07,
+          "close": 348.27
         }
       ],
       "kline_4h": [
@@ -45300,29 +45405,29 @@
           "time": 1794339000,
           "open": 348.46,
           "high": 348.82,
-          "low": 348.38,
-          "close": 348.73
+          "low": 348.07,
+          "close": 348.27
         }
       ]
     },
     "MSFT": {
       "summary": {
         "symbol": "MSFT",
-        "price": 534.89,
-        "change": -10.29,
-        "change_pct": -1.89,
-        "dist_20ma": 3.71,
+        "price": 532.69,
+        "change": -12.49,
+        "change_pct": -2.29,
+        "dist_20ma": 1.62,
         "macro_bsl": 559.15,
         "macro_ssl": 504.96,
         "macro_eq": 532.05,
-        "pd_percent": 55,
+        "pd_percent": 51,
         "direction": "short",
         "entry_bot": 526.36,
         "entry_top": 544.15,
         "sl": 552.31,
         "tp": 510.01,
-        "rrr": 1.4,
-        "smc_id": "SMC_MSFT_534",
+        "rrr": 1.2,
+        "smc_id": "SMC_MSFT_532",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
         "smc_class": "border-green-500 text-green-400 bg-green-900/20",
@@ -45749,7 +45854,7 @@
           "open": 543.41,
           "high": 544.15,
           "low": 526.36,
-          "close": 534.89
+          "close": 532.69
         }
       ],
       "kline_1h": [
@@ -46590,8 +46695,8 @@
           "time": 1794339000,
           "open": 535.38,
           "high": 536.14,
-          "low": 534.69,
-          "close": 534.89
+          "low": 532.15,
+          "close": 532.7
         }
       ],
       "kline_15m": [
@@ -47474,8 +47579,15 @@
           "time": 1794339900,
           "open": 535.38,
           "high": 536.14,
-          "low": 534.89,
-          "close": 534.89
+          "low": 534.05,
+          "close": 534.06
+        },
+        {
+          "time": 1794340800,
+          "open": 534.1,
+          "high": 534.1,
+          "low": 532.15,
+          "close": 532.7
         }
       ],
       "kline_4h": [
@@ -48176,35 +48288,35 @@
           "time": 1794339000,
           "open": 535.38,
           "high": 536.14,
-          "low": 534.69,
-          "close": 534.89
+          "low": 532.15,
+          "close": 532.7
         }
       ]
     },
     "NVDA": {
       "summary": {
         "symbol": "NVDA",
-        "price": 167.21,
-        "change": -11.46,
-        "change_pct": -6.41,
-        "dist_20ma": -38.89,
+        "price": 167.66,
+        "change": -11.01,
+        "change_pct": -6.16,
+        "dist_20ma": -38.46,
         "macro_bsl": 226.0,
-        "macro_ssl": 166.24,
-        "macro_eq": 196.12,
-        "pd_percent": 1,
+        "macro_ssl": 165.89,
+        "macro_eq": 195.94,
+        "pd_percent": 2,
         "direction": "long",
-        "entry_bot": 166.24,
+        "entry_bot": 165.89,
         "entry_top": 174.65,
-        "sl": 163.75,
+        "sl": 163.4,
         "tp": 223.74,
-        "rrr": 16.3,
+        "rrr": 13.2,
         "smc_id": "SMC_NVDA_167",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $166.24 - $174.65，嚴格防守 $163.75。"
+        "inv_text": "區間 $165.89 - $174.65，嚴格防守 $163.4。"
       },
       "kline": [
         {
@@ -48624,8 +48736,8 @@
           "time": "2026-11-10",
           "open": 173.98,
           "high": 174.65,
-          "low": 166.24,
-          "close": 167.21
+          "low": 165.89,
+          "close": 167.66
         }
       ],
       "kline_1h": [
@@ -49466,8 +49578,8 @@
           "time": 1794339000,
           "open": 167.62,
           "high": 167.86,
-          "low": 166.77,
-          "close": 167.21
+          "low": 165.89,
+          "close": 167.62
         }
       ],
       "kline_15m": [
@@ -50350,8 +50462,15 @@
           "time": 1794339900,
           "open": 167.05,
           "high": 167.54,
-          "low": 166.87,
-          "close": 167.21
+          "low": 166.7,
+          "close": 166.91
+        },
+        {
+          "time": 1794340800,
+          "open": 166.9,
+          "high": 167.62,
+          "low": 165.89,
+          "close": 167.62
         }
       ],
       "kline_4h": [
@@ -51052,29 +51171,29 @@
           "time": 1794339000,
           "open": 167.62,
           "high": 167.86,
-          "low": 166.77,
-          "close": 167.21
+          "low": 165.89,
+          "close": 167.62
         }
       ]
     },
     "TSLA": {
       "summary": {
         "symbol": "TSLA",
-        "price": 378.77,
-        "change": 0.72,
-        "change_pct": 0.19,
-        "dist_20ma": -1.83,
+        "price": 377.54,
+        "change": -0.51,
+        "change_pct": -0.13,
+        "dist_20ma": -3.0,
         "macro_bsl": 414.23,
         "macro_ssl": 338.15,
         "macro_eq": 376.19,
-        "pd_percent": 53,
+        "pd_percent": 51,
         "direction": "short",
         "entry_bot": 338.15,
         "entry_top": 374.3,
         "sl": 379.91,
         "tp": 341.53,
-        "rrr": 32.7,
-        "smc_id": "SMC_TSLA_378",
+        "rrr": 15.2,
+        "smc_id": "SMC_TSLA_377",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
         "smc_class": "border-green-500 text-green-400 bg-green-900/20",
@@ -51501,7 +51620,7 @@
           "open": 370.54,
           "high": 379.42,
           "low": 370.43,
-          "close": 378.77
+          "close": 377.54
         }
       ],
       "kline_1h": [
@@ -52342,8 +52461,8 @@
           "time": 1794339000,
           "open": 377.89,
           "high": 379.42,
-          "low": 377.65,
-          "close": 378.77
+          "low": 377.0,
+          "close": 377.54
         }
       ],
       "kline_15m": [
@@ -53227,7 +53346,14 @@
           "open": 378.19,
           "high": 379.42,
           "low": 378.15,
-          "close": 378.77
+          "close": 378.23
+        },
+        {
+          "time": 1794340800,
+          "open": 378.21,
+          "high": 378.21,
+          "low": 377.0,
+          "close": 377.54
         }
       ],
       "kline_4h": [
@@ -53928,18 +54054,18 @@
           "time": 1794339000,
           "open": 377.89,
           "high": 379.42,
-          "low": 377.65,
-          "close": 378.77
+          "low": 377.0,
+          "close": 377.54
         }
       ]
     },
     "AMZN": {
       "summary": {
         "symbol": "AMZN",
-        "price": 271.84,
-        "change": 4.91,
-        "change_pct": 1.84,
-        "dist_20ma": 16.53,
+        "price": 271.71,
+        "change": 4.78,
+        "change_pct": 1.79,
+        "dist_20ma": 16.4,
         "macro_bsl": 275.34,
         "macro_ssl": 229.36,
         "macro_eq": 252.35,
@@ -53949,7 +54075,7 @@
         "entry_top": 275.34,
         "sl": 279.47,
         "tp": 231.65,
-        "rrr": 5.3,
+        "rrr": 5.2,
         "smc_id": "SMC_AMZN_271",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
@@ -54377,7 +54503,7 @@
           "open": 266.33,
           "high": 272.88,
           "low": 266.14,
-          "close": 271.84
+          "close": 271.71
         }
       ],
       "kline_1h": [
@@ -55217,9 +55343,9 @@
         {
           "time": 1794339000,
           "open": 270.55,
-          "high": 271.93,
+          "high": 272.34,
           "low": 270.37,
-          "close": 271.84
+          "close": 271.71
         }
       ],
       "kline_15m": [
@@ -56101,9 +56227,16 @@
         {
           "time": 1794339900,
           "open": 271.05,
-          "high": 271.93,
+          "high": 272.34,
           "low": 271.01,
-          "close": 271.84
+          "close": 271.91
+        },
+        {
+          "time": 1794340800,
+          "open": 271.91,
+          "high": 271.93,
+          "low": 271.42,
+          "close": 271.71
         }
       ],
       "kline_4h": [
@@ -56803,19 +56936,19 @@
         {
           "time": 1794339000,
           "open": 270.55,
-          "high": 271.93,
+          "high": 272.34,
           "low": 270.37,
-          "close": 271.84
+          "close": 271.71
         }
       ]
     },
     "META": {
       "summary": {
         "symbol": "META",
-        "price": 642.64,
-        "change": 1.27,
-        "change_pct": 0.2,
-        "dist_20ma": -8.96,
+        "price": 642.52,
+        "change": 1.15,
+        "change_pct": 0.18,
+        "dist_20ma": -9.08,
         "macro_bsl": 761.5,
         "macro_ssl": 583.8,
         "macro_eq": 672.65,
@@ -56825,7 +56958,7 @@
         "entry_top": 634.99,
         "sl": 575.04,
         "tp": 753.88,
-        "rrr": 1.6,
+        "rrr": 1.7,
         "smc_id": "SMC_META_642",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -57253,7 +57386,7 @@
           "open": 637.25,
           "high": 647.28,
           "low": 635.5,
-          "close": 642.64
+          "close": 642.52
         }
       ],
       "kline_1h": [
@@ -58093,9 +58226,9 @@
         {
           "time": 1794339000,
           "open": 641.94,
-          "high": 642.64,
+          "high": 643.97,
           "low": 641.0,
-          "close": 642.64
+          "close": 642.52
         }
       ],
       "kline_15m": [
@@ -58977,9 +59110,16 @@
         {
           "time": 1794339900,
           "open": 641.53,
-          "high": 642.64,
+          "high": 643.97,
           "low": 641.1,
-          "close": 642.64
+          "close": 642.69
+        },
+        {
+          "time": 1794340800,
+          "open": 642.74,
+          "high": 642.97,
+          "low": 641.77,
+          "close": 642.52
         }
       ],
       "kline_4h": [
@@ -59679,19 +59819,19 @@
         {
           "time": 1794339000,
           "open": 641.94,
-          "high": 642.64,
+          "high": 643.97,
           "low": 641.0,
-          "close": 642.64
+          "close": 642.52
         }
       ]
     },
     "GOOG": {
       "summary": {
         "symbol": "GOOG",
-        "price": 284.92,
-        "change": -1.09,
-        "change_pct": -0.38,
-        "dist_20ma": -23.31,
+        "price": 284.6,
+        "change": -1.41,
+        "change_pct": -0.49,
+        "dist_20ma": -23.62,
         "macro_bsl": 355.25,
         "macro_ssl": 272.0,
         "macro_eq": 313.62,
@@ -59701,7 +59841,7 @@
         "entry_top": 289.5,
         "sl": 279.12,
         "tp": 351.7,
-        "rrr": 11.5,
+        "rrr": 12.2,
         "smc_id": "SMC_GOOG_284",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -60129,7 +60269,7 @@
           "open": 287.27,
           "high": 289.5,
           "low": 283.37,
-          "close": 284.92
+          "close": 284.6
         }
       ],
       "kline_1h": [
@@ -60970,8 +61110,8 @@
           "time": 1794339000,
           "open": 284.82,
           "high": 285.31,
-          "low": 284.67,
-          "close": 284.92
+          "low": 284.51,
+          "close": 284.6
         }
       ],
       "kline_15m": [
@@ -61854,8 +61994,15 @@
           "time": 1794339900,
           "open": 284.86,
           "high": 285.31,
-          "low": 284.82,
-          "close": 284.92
+          "low": 284.65,
+          "close": 284.86
+        },
+        {
+          "time": 1794340800,
+          "open": 284.86,
+          "high": 284.86,
+          "low": 284.51,
+          "close": 284.6
         }
       ],
       "kline_4h": [
@@ -62556,18 +62703,18 @@
           "time": 1794339000,
           "open": 284.82,
           "high": 285.31,
-          "low": 284.67,
-          "close": 284.9
+          "low": 284.51,
+          "close": 284.6
         }
       ]
     },
     "GOOGL": {
       "summary": {
         "symbol": "GOOGL",
-        "price": 287.33,
-        "change": -0.82,
-        "change_pct": -0.28,
-        "dist_20ma": -23.56,
+        "price": 286.94,
+        "change": -1.21,
+        "change_pct": -0.42,
+        "dist_20ma": -23.93,
         "macro_bsl": 359.4,
         "macro_ssl": 276.92,
         "macro_eq": 318.16,
@@ -62577,8 +62724,8 @@
         "entry_top": 292.02,
         "sl": 281.39,
         "tp": 355.81,
-        "rrr": 11.5,
-        "smc_id": "SMC_GOOGL_287",
+        "rrr": 12.4,
+        "smc_id": "SMC_GOOGL_286",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -63005,7 +63152,7 @@
           "open": 289.11,
           "high": 292.02,
           "low": 285.68,
-          "close": 287.33
+          "close": 286.94
         }
       ],
       "kline_1h": [
@@ -63846,8 +63993,8 @@
           "time": 1794339000,
           "open": 287.27,
           "high": 287.72,
-          "low": 287.13,
-          "close": 287.26
+          "low": 286.84,
+          "close": 286.94
         }
       ],
       "kline_15m": [
@@ -64730,8 +64877,15 @@
           "time": 1794339900,
           "open": 287.28,
           "high": 287.72,
-          "low": 287.24,
-          "close": 287.26
+          "low": 287.03,
+          "close": 287.21
+        },
+        {
+          "time": 1794340800,
+          "open": 287.18,
+          "high": 287.18,
+          "low": 286.84,
+          "close": 286.94
         }
       ],
       "kline_4h": [
@@ -65432,29 +65586,29 @@
           "time": 1794339000,
           "open": 287.27,
           "high": 287.72,
-          "low": 287.13,
-          "close": 287.26
+          "low": 286.84,
+          "close": 286.91
         }
       ]
     },
     "AMD": {
       "summary": {
         "symbol": "AMD",
-        "price": 515.96,
-        "change": 7.38,
-        "change_pct": 1.45,
-        "dist_20ma": -2.58,
+        "price": 516.03,
+        "change": 7.45,
+        "change_pct": 1.46,
+        "dist_20ma": -2.51,
         "macro_bsl": 591.88,
         "macro_ssl": 402.1,
         "macro_eq": 496.99,
-        "pd_percent": 59,
+        "pd_percent": 60,
         "direction": "short",
         "entry_bot": 402.1,
         "entry_top": 456.2,
         "sl": 463.04,
         "tp": 406.12,
         "rrr": 2.1,
-        "smc_id": "SMC_AMD_515",
+        "smc_id": "SMC_AMD_516",
         "confluence": false,
         "smc_text": "日線 FVG",
         "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
@@ -65881,7 +66035,7 @@
           "open": 503.0,
           "high": 539.25,
           "low": 500.25,
-          "close": 515.96
+          "close": 516.03
         }
       ],
       "kline_1h": [
@@ -66723,7 +66877,7 @@
           "open": 512.82,
           "high": 517.34,
           "low": 510.92,
-          "close": 515.96
+          "close": 516.03
         }
       ],
       "kline_15m": [
@@ -67607,7 +67761,14 @@
           "open": 512.65,
           "high": 517.34,
           "low": 512.5,
-          "close": 515.96
+          "close": 516.47
+        },
+        {
+          "time": 1794340800,
+          "open": 516.46,
+          "high": 516.61,
+          "low": 513.68,
+          "close": 516.09
         }
       ],
       "kline_4h": [
@@ -68309,17 +68470,17 @@
           "open": 512.82,
           "high": 517.34,
           "low": 510.92,
-          "close": 515.96
+          "close": 515.79
         }
       ]
     },
     "TSM": {
       "summary": {
         "symbol": "TSM",
-        "price": 394.43,
-        "change": 5.81,
-        "change_pct": 1.5,
-        "dist_20ma": -16.69,
+        "price": 394.79,
+        "change": 6.17,
+        "change_pct": 1.59,
+        "dist_20ma": -16.35,
         "macro_bsl": 440.88,
         "macro_ssl": 351.19,
         "macro_eq": 396.03,
@@ -68757,7 +68918,7 @@
           "open": 388.42,
           "high": 400.21,
           "low": 387.2,
-          "close": 394.43
+          "close": 394.79
         }
       ],
       "kline_1h": [
@@ -69597,9 +69758,9 @@
         {
           "time": 1794339000,
           "open": 393.75,
-          "high": 395.01,
+          "high": 395.02,
           "low": 393.05,
-          "close": 394.43
+          "close": 394.79
         }
       ],
       "kline_15m": [
@@ -70481,9 +70642,16 @@
         {
           "time": 1794339900,
           "open": 393.92,
-          "high": 395.01,
-          "low": 393.86,
-          "close": 394.43
+          "high": 395.02,
+          "low": 393.84,
+          "close": 394.54
+        },
+        {
+          "time": 1794340800,
+          "open": 394.54,
+          "high": 394.79,
+          "low": 393.84,
+          "close": 394.79
         }
       ],
       "kline_4h": [
@@ -71183,30 +71351,30 @@
         {
           "time": 1794339000,
           "open": 393.75,
-          "high": 395.01,
+          "high": 395.02,
           "low": 393.05,
-          "close": 394.39
+          "close": 394.79
         }
       ]
     },
     "AVGO": {
       "summary": {
         "symbol": "AVGO",
-        "price": 332.19,
-        "change": 12.71,
-        "change_pct": 3.98,
-        "dist_20ma": 3.08,
+        "price": 331.1,
+        "change": 11.62,
+        "change_pct": 3.64,
+        "dist_20ma": 2.05,
         "macro_bsl": 354.25,
         "macro_ssl": 289.77,
         "macro_eq": 322.01,
-        "pd_percent": 65,
+        "pd_percent": 64,
         "direction": "short",
         "entry_bot": 289.77,
         "entry_top": 311.52,
         "sl": 316.19,
         "tp": 292.67,
-        "rrr": 2.5,
-        "smc_id": "SMC_AVGO_332",
+        "rrr": 2.6,
+        "smc_id": "SMC_AVGO_331",
         "confluence": false,
         "smc_text": "日線 FVG",
         "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
@@ -71633,7 +71801,7 @@
           "open": 316.76,
           "high": 334.67,
           "low": 316.69,
-          "close": 332.19
+          "close": 331.1
         }
       ],
       "kline_1h": [
@@ -72475,7 +72643,7 @@
           "open": 330.7,
           "high": 332.53,
           "low": 330.1,
-          "close": 332.08
+          "close": 331.1
         }
       ],
       "kline_15m": [
@@ -73359,7 +73527,14 @@
           "open": 330.86,
           "high": 332.53,
           "low": 330.75,
-          "close": 332.08
+          "close": 331.56
+        },
+        {
+          "time": 1794340800,
+          "open": 331.56,
+          "high": 331.62,
+          "low": 330.43,
+          "close": 331.1
         }
       ],
       "kline_4h": [
@@ -74061,17 +74236,17 @@
           "open": 330.7,
           "high": 332.53,
           "low": 330.1,
-          "close": 332.08
+          "close": 331.1
         }
       ]
     },
     "ASML": {
       "summary": {
         "symbol": "ASML",
-        "price": 1508.44,
-        "change": -4.81,
-        "change_pct": -0.32,
-        "dist_20ma": -67.82,
+        "price": 1507.07,
+        "change": -6.18,
+        "change_pct": -0.41,
+        "dist_20ma": -69.12,
         "macro_bsl": 1732.21,
         "macro_ssl": 1355.05,
         "macro_eq": 1543.63,
@@ -74082,7 +74257,7 @@
         "sl": 1388.07,
         "tp": 1714.89,
         "rrr": 1.7,
-        "smc_id": "SMC_ASML_1508",
+        "smc_id": "SMC_ASML_1507",
         "confluence": false,
         "smc_text": "日線 FVG",
         "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
@@ -74509,7 +74684,7 @@
           "open": 1503.67,
           "high": 1545.71,
           "low": 1492.0,
-          "close": 1508.44
+          "close": 1507.07
         }
       ],
       "kline_1h": [
@@ -75349,9 +75524,9 @@
         {
           "time": 1794339000,
           "open": 1505.0,
-          "high": 1509.96,
+          "high": 1510.15,
           "low": 1500.4,
-          "close": 1508.44
+          "close": 1507.07
         }
       ],
       "kline_15m": [
@@ -76233,9 +76408,16 @@
         {
           "time": 1794339900,
           "open": 1504.13,
-          "high": 1509.96,
+          "high": 1510.15,
           "low": 1504.13,
-          "close": 1508.44
+          "close": 1508.57
+        },
+        {
+          "time": 1794340800,
+          "open": 1508.79,
+          "high": 1508.97,
+          "low": 1504.15,
+          "close": 1507.07
         }
       ],
       "kline_4h": [
@@ -76935,19 +77117,19 @@
         {
           "time": 1794339000,
           "open": 1505.0,
-          "high": 1509.96,
+          "high": 1510.15,
           "low": 1500.4,
-          "close": 1508.44
+          "close": 1507.07
         }
       ]
     },
     "QCOM": {
       "summary": {
         "symbol": "QCOM",
-        "price": 172.75,
-        "change": 1.28,
-        "change_pct": 0.75,
-        "dist_20ma": -0.35,
+        "price": 172.59,
+        "change": 1.12,
+        "change_pct": 0.65,
+        "dist_20ma": -0.51,
         "macro_bsl": 185.59,
         "macro_ssl": 148.25,
         "macro_eq": 166.92,
@@ -76957,7 +77139,7 @@
         "entry_top": 169.52,
         "sl": 172.06,
         "tp": 149.73,
-        "rrr": 33.4,
+        "rrr": 43.1,
         "smc_id": "SMC_QCOM_172",
         "confluence": false,
         "smc_text": "日線 FVG",
@@ -77385,7 +77567,7 @@
           "open": 168.73,
           "high": 172.9,
           "low": 167.2,
-          "close": 172.75
+          "close": 172.59
         }
       ],
       "kline_1h": [
@@ -78225,9 +78407,9 @@
         {
           "time": 1794339000,
           "open": 171.15,
-          "high": 172.74,
+          "high": 172.86,
           "low": 171.09,
-          "close": 172.73
+          "close": 172.59
         }
       ],
       "kline_15m": [
@@ -79109,9 +79291,16 @@
         {
           "time": 1794339900,
           "open": 172.01,
-          "high": 172.74,
+          "high": 172.79,
           "low": 171.95,
-          "close": 172.73
+          "close": 172.5
+        },
+        {
+          "time": 1794340800,
+          "open": 172.49,
+          "high": 172.86,
+          "low": 172.11,
+          "close": 172.59
         }
       ],
       "kline_4h": [
@@ -79811,19 +80000,19 @@
         {
           "time": 1794339000,
           "open": 171.15,
-          "high": 172.74,
+          "high": 172.86,
           "low": 171.09,
-          "close": 172.73
+          "close": 172.59
         }
       ]
     },
     "TXN": {
       "summary": {
         "symbol": "TXN",
-        "price": 299.83,
-        "change": 4.1,
-        "change_pct": 1.39,
-        "dist_20ma": 8.34,
+        "price": 299.54,
+        "change": 3.81,
+        "change_pct": 1.29,
+        "dist_20ma": 8.06,
         "macro_bsl": 317.2,
         "macro_ssl": 270.69,
         "macro_eq": 293.94,
@@ -79833,7 +80022,7 @@
         "entry_top": 285.1,
         "sl": 289.38,
         "tp": 273.4,
-        "rrr": 2.5,
+        "rrr": 2.6,
         "smc_id": "SMC_TXN_299",
         "confluence": false,
         "smc_text": "日線 FVG",
@@ -80259,9 +80448,9 @@
         {
           "time": "2026-11-10",
           "open": 288.9,
-          "high": 300.1,
+          "high": 300.29,
           "low": 287.24,
-          "close": 299.83
+          "close": 299.54
         }
       ],
       "kline_1h": [
@@ -81101,9 +81290,9 @@
         {
           "time": 1794339000,
           "open": 299.55,
-          "high": 300.1,
+          "high": 300.29,
           "low": 297.87,
-          "close": 299.83
+          "close": 299.54
         }
       ],
       "kline_15m": [
@@ -81985,9 +82174,16 @@
         {
           "time": 1794339900,
           "open": 298.82,
-          "high": 300.1,
+          "high": 300.29,
           "low": 298.7,
-          "close": 299.83
+          "close": 300.11
+        },
+        {
+          "time": 1794340800,
+          "open": 300.14,
+          "high": 300.19,
+          "low": 299.02,
+          "close": 299.54
         }
       ],
       "kline_4h": [
@@ -82687,19 +82883,19 @@
         {
           "time": 1794339000,
           "open": 299.55,
-          "high": 300.1,
+          "high": 300.29,
           "low": 297.87,
-          "close": 299.83
+          "close": 299.54
         }
       ]
     },
     "INTC": {
       "summary": {
         "symbol": "INTC",
-        "price": 57.76,
-        "change": -1.61,
-        "change_pct": -2.71,
-        "dist_20ma": -20.96,
+        "price": 57.72,
+        "change": -1.65,
+        "change_pct": -2.78,
+        "dist_20ma": -21.0,
         "macro_bsl": 101.34,
         "macro_ssl": 51.51,
         "macro_eq": 76.42,
@@ -82709,7 +82905,7 @@
         "entry_top": 60.65,
         "sl": 56.0,
         "tp": 100.33,
-        "rrr": 24.2,
+        "rrr": 24.8,
         "smc_id": "SMC_INTC_57",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -83137,7 +83333,7 @@
           "open": 57.97,
           "high": 60.65,
           "low": 56.85,
-          "close": 57.76
+          "close": 57.72
         }
       ],
       "kline_1h": [
@@ -83979,7 +84175,7 @@
           "open": 57.57,
           "high": 57.87,
           "low": 57.3,
-          "close": 57.77
+          "close": 57.72
         }
       ],
       "kline_15m": [
@@ -84863,7 +85059,14 @@
           "open": 57.41,
           "high": 57.87,
           "low": 57.4,
-          "close": 57.77
+          "close": 57.76
+        },
+        {
+          "time": 1794340800,
+          "open": 57.76,
+          "high": 57.77,
+          "low": 57.51,
+          "close": 57.72
         }
       ],
       "kline_4h": [
@@ -85565,17 +85768,17 @@
           "open": 57.57,
           "high": 57.87,
           "low": 57.3,
-          "close": 57.77
+          "close": 57.72
         }
       ]
     },
     "MU": {
       "summary": {
         "symbol": "MU",
-        "price": 713.61,
-        "change": -19.54,
-        "change_pct": -2.67,
-        "dist_20ma": -140.62,
+        "price": 714.42,
+        "change": -18.73,
+        "change_pct": -2.55,
+        "dist_20ma": -139.85,
         "macro_bsl": 990.0,
         "macro_ssl": 650.0,
         "macro_eq": 820.0,
@@ -85585,8 +85788,8 @@
         "entry_top": 745.64,
         "sl": 689.14,
         "tp": 980.1,
-        "rrr": 10.9,
-        "smc_id": "SMC_MU_713",
+        "rrr": 10.5,
+        "smc_id": "SMC_MU_714",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -86013,7 +86216,7 @@
           "open": 717.37,
           "high": 745.64,
           "low": 699.63,
-          "close": 713.61
+          "close": 714.42
         }
       ],
       "kline_1h": [
@@ -86855,7 +87058,7 @@
           "open": 710.61,
           "high": 715.42,
           "low": 708.35,
-          "close": 713.54
+          "close": 714.42
         }
       ],
       "kline_15m": [
@@ -87739,7 +87942,14 @@
           "open": 711.15,
           "high": 715.42,
           "low": 710.75,
-          "close": 713.54
+          "close": 713.65
+        },
+        {
+          "time": 1794340800,
+          "open": 713.68,
+          "high": 714.42,
+          "low": 711.25,
+          "close": 714.42
         }
       ],
       "kline_4h": [
@@ -88441,28 +88651,28 @@
           "open": 710.61,
           "high": 715.42,
           "low": 708.35,
-          "close": 713.54
+          "close": 714.49
         }
       ]
     },
     "SNDK": {
       "summary": {
         "symbol": "SNDK",
-        "price": 851.17,
-        "change": -35.34,
-        "change_pct": -3.99,
-        "dist_20ma": -337.6,
+        "price": 849.81,
+        "change": -36.7,
+        "change_pct": -4.14,
+        "dist_20ma": -338.89,
         "macro_bsl": 1461.8,
         "macro_ssl": 803.97,
         "macro_eq": 1132.88,
-        "pd_percent": 7,
+        "pd_percent": 6,
         "direction": "long",
         "entry_bot": 826.67,
         "entry_top": 914.82,
         "sl": 814.27,
         "tp": 1447.18,
-        "rrr": 16.2,
-        "smc_id": "SMC_SNDK_851",
+        "rrr": 16.8,
+        "smc_id": "SMC_SNDK_849",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -88889,7 +89099,7 @@
           "open": 861.34,
           "high": 914.82,
           "low": 826.67,
-          "close": 851.17
+          "close": 849.81
         }
       ],
       "kline_1h": [
@@ -89731,7 +89941,7 @@
           "open": 847.27,
           "high": 854.24,
           "low": 843.0,
-          "close": 851.17
+          "close": 850.16
         }
       ],
       "kline_15m": [
@@ -90615,7 +90825,14 @@
           "open": 847.66,
           "high": 854.24,
           "low": 847.13,
-          "close": 851.17
+          "close": 850.97
+        },
+        {
+          "time": 1794340800,
+          "open": 851.26,
+          "high": 851.7,
+          "low": 845.71,
+          "close": 849.81
         }
       ],
       "kline_4h": [
@@ -91317,17 +91534,17 @@
           "open": 847.27,
           "high": 854.24,
           "low": 843.0,
-          "close": 851.17
+          "close": 849.81
         }
       ]
     },
     "ARM": {
       "summary": {
         "symbol": "ARM",
-        "price": 178.91,
-        "change": -7.39,
-        "change_pct": -3.97,
-        "dist_20ma": -32.34,
+        "price": 179.34,
+        "change": -6.96,
+        "change_pct": -3.74,
+        "dist_20ma": -31.93,
         "macro_bsl": 250.2,
         "macro_ssl": 163.13,
         "macro_eq": 206.66,
@@ -91337,8 +91554,8 @@
         "entry_top": 186.51,
         "sl": 173.13,
         "tp": 247.7,
-        "rrr": 11.9,
-        "smc_id": "SMC_ARM_178",
+        "rrr": 11.0,
+        "smc_id": "SMC_ARM_179",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -91765,7 +91982,7 @@
           "open": 181.53,
           "high": 186.51,
           "low": 175.77,
-          "close": 178.91
+          "close": 179.34
         }
       ],
       "kline_1h": [
@@ -92607,7 +92824,7 @@
           "open": 178.58,
           "high": 179.4,
           "low": 178.07,
-          "close": 178.91
+          "close": 179.34
         }
       ],
       "kline_15m": [
@@ -93491,7 +93708,14 @@
           "open": 178.31,
           "high": 179.4,
           "low": 178.31,
-          "close": 178.91
+          "close": 179.08
+        },
+        {
+          "time": 1794340800,
+          "open": 179.09,
+          "high": 179.34,
+          "low": 178.35,
+          "close": 179.34
         }
       ],
       "kline_4h": [
@@ -94193,17 +94417,17 @@
           "open": 178.58,
           "high": 179.4,
           "low": 178.07,
-          "close": 178.89
+          "close": 179.34
         }
       ]
     },
     "SMCI": {
       "summary": {
         "symbol": "SMCI",
-        "price": 27.6,
-        "change": -1.0,
-        "change_pct": -3.5,
-        "dist_20ma": -4.59,
+        "price": 27.55,
+        "change": -1.05,
+        "change_pct": -3.67,
+        "dist_20ma": -4.63,
         "macro_bsl": 38.02,
         "macro_ssl": 25.81,
         "macro_eq": 31.91,
@@ -94213,7 +94437,7 @@
         "entry_top": 28.88,
         "sl": 26.72,
         "tp": 37.64,
-        "rrr": 11.4,
+        "rrr": 12.2,
         "smc_id": "SMC_SMCI_27",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -94641,7 +94865,7 @@
           "open": 27.97,
           "high": 28.88,
           "low": 27.13,
-          "close": 27.6
+          "close": 27.55
         }
       ],
       "kline_1h": [
@@ -95482,8 +95706,8 @@
           "time": 1794339000,
           "open": 27.58,
           "high": 27.64,
-          "low": 27.46,
-          "close": 27.6
+          "low": 27.45,
+          "close": 27.55
         }
       ],
       "kline_15m": [
@@ -96367,7 +96591,14 @@
           "open": 27.48,
           "high": 27.64,
           "low": 27.47,
-          "close": 27.61
+          "close": 27.58
+        },
+        {
+          "time": 1794340800,
+          "open": 27.58,
+          "high": 27.6,
+          "low": 27.45,
+          "close": 27.55
         }
       ],
       "kline_4h": [
@@ -97068,18 +97299,18 @@
           "time": 1794339000,
           "open": 27.58,
           "high": 27.64,
-          "low": 27.46,
-          "close": 27.61
+          "low": 27.45,
+          "close": 27.55
         }
       ]
     },
     "WDC": {
       "summary": {
         "symbol": "WDC",
-        "price": 282.51,
-        "change": -7.27,
-        "change_pct": -2.51,
-        "dist_20ma": -60.18,
+        "price": 282.84,
+        "change": -6.94,
+        "change_pct": -2.39,
+        "dist_20ma": -59.87,
         "macro_bsl": 402.23,
         "macro_ssl": 258.61,
         "macro_eq": 330.42,
@@ -97089,7 +97320,7 @@
         "entry_top": 294.95,
         "sl": 272.02,
         "tp": 398.21,
-        "rrr": 11.0,
+        "rrr": 10.7,
         "smc_id": "SMC_WDC_282",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -97517,7 +97748,7 @@
           "open": 283.04,
           "high": 294.95,
           "low": 276.16,
-          "close": 282.51
+          "close": 282.84
         }
       ],
       "kline_1h": [
@@ -98359,7 +98590,7 @@
           "open": 281.89,
           "high": 282.99,
           "low": 281.04,
-          "close": 282.51
+          "close": 282.84
         }
       ],
       "kline_15m": [
@@ -99243,7 +99474,14 @@
           "open": 281.31,
           "high": 282.99,
           "low": 281.3,
-          "close": 282.51
+          "close": 282.7
+        },
+        {
+          "time": 1794340800,
+          "open": 282.83,
+          "high": 282.93,
+          "low": 281.66,
+          "close": 282.84
         }
       ],
       "kline_4h": [
@@ -99945,17 +100183,17 @@
           "open": 281.89,
           "high": 282.99,
           "low": 281.04,
-          "close": 282.51
+          "close": 282.84
         }
       ]
     },
     "LITE": {
       "summary": {
         "symbol": "LITE",
-        "price": 584.71,
-        "change": -11.45,
+        "price": 584.74,
+        "change": -11.42,
         "change_pct": -1.92,
-        "dist_20ma": -174.56,
+        "dist_20ma": -174.53,
         "macro_bsl": 978.4,
         "macro_ssl": 506.69,
         "macro_eq": 742.54,
@@ -100393,7 +100631,7 @@
           "open": 575.03,
           "high": 612.62,
           "low": 570.41,
-          "close": 584.71
+          "close": 584.74
         }
       ],
       "kline_1h": [
@@ -101235,7 +101473,7 @@
           "open": 583.8,
           "high": 586.69,
           "low": 580.71,
-          "close": 584.9
+          "close": 584.74
         }
       ],
       "kline_15m": [
@@ -102119,7 +102357,14 @@
           "open": 581.25,
           "high": 586.69,
           "low": 580.99,
-          "close": 584.9
+          "close": 583.6
+        },
+        {
+          "time": 1794340800,
+          "open": 583.9,
+          "high": 584.74,
+          "low": 581.61,
+          "close": 584.74
         }
       ],
       "kline_4h": [
@@ -102821,27 +103066,27 @@
           "open": 583.8,
           "high": 586.69,
           "low": 580.71,
-          "close": 584.9
+          "close": 584.74
         }
       ]
     },
     "AAOI": {
       "summary": {
         "symbol": "AAOI",
-        "price": 48.21,
-        "change": -3.89,
-        "change_pct": -7.47,
-        "dist_20ma": -20.58,
+        "price": 48.03,
+        "change": -4.07,
+        "change_pct": -7.81,
+        "dist_20ma": -20.75,
         "macro_bsl": 96.14,
         "macro_ssl": 45.15,
         "macro_eq": 70.64,
-        "pd_percent": 6,
+        "pd_percent": 5,
         "direction": "long",
         "entry_bot": 46.39,
         "entry_top": 51.99,
         "sl": 45.69,
         "tp": 95.18,
-        "rrr": 18.6,
+        "rrr": 20.1,
         "smc_id": "SMC_AAOI_48",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -103269,7 +103514,7 @@
           "open": 49.37,
           "high": 51.99,
           "low": 46.39,
-          "close": 48.21
+          "close": 48.03
         }
       ],
       "kline_1h": [
@@ -104111,7 +104356,7 @@
           "open": 48.02,
           "high": 48.4,
           "low": 47.71,
-          "close": 48.21
+          "close": 48.03
         }
       ],
       "kline_15m": [
@@ -104995,7 +105240,14 @@
           "open": 47.86,
           "high": 48.4,
           "low": 47.85,
-          "close": 48.21
+          "close": 48.04
+        },
+        {
+          "time": 1794340800,
+          "open": 48.05,
+          "high": 48.1,
+          "low": 47.85,
+          "close": 48.03
         }
       ],
       "kline_4h": [
@@ -105697,28 +105949,28 @@
           "open": 48.02,
           "high": 48.4,
           "low": 47.71,
-          "close": 48.21
+          "close": 48.03
         }
       ]
     },
     "POET": {
       "summary": {
         "symbol": "POET",
-        "price": 4.98,
-        "change": -0.28,
-        "change_pct": -5.32,
-        "dist_20ma": -0.37,
+        "price": 5.02,
+        "change": -0.24,
+        "change_pct": -4.56,
+        "dist_20ma": -0.33,
         "macro_bsl": 6.16,
         "macro_ssl": 4.0,
         "macro_eq": 5.08,
-        "pd_percent": 45,
+        "pd_percent": 47,
         "direction": "long",
         "entry_bot": 4.92,
         "entry_top": 5.32,
         "sl": 4.85,
         "tp": 6.1,
         "rrr": 2.2,
-        "smc_id": "SMC_POET_4",
+        "smc_id": "SMC_POET_5",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -106145,7 +106397,7 @@
           "open": 5.07,
           "high": 5.32,
           "low": 4.92,
-          "close": 4.98
+          "close": 5.02
         }
       ],
       "kline_1h": [
@@ -106985,9 +107237,9 @@
         {
           "time": 1794339000,
           "open": 4.97,
-          "high": 5.0,
+          "high": 5.02,
           "low": 4.95,
-          "close": 4.98
+          "close": 5.02
         }
       ],
       "kline_15m": [
@@ -107872,6 +108124,13 @@
           "high": 5.0,
           "low": 4.95,
           "close": 4.98
+        },
+        {
+          "time": 1794340800,
+          "open": 4.97,
+          "high": 5.02,
+          "low": 4.97,
+          "close": 5.02
         }
       ],
       "kline_4h": [
@@ -108571,19 +108830,19 @@
         {
           "time": 1794339000,
           "open": 4.97,
-          "high": 5.0,
+          "high": 5.02,
           "low": 4.95,
-          "close": 4.98
+          "close": 5.02
         }
       ]
     },
     "PLTR": {
       "summary": {
         "symbol": "PLTR",
-        "price": 166.37,
-        "change": -2.83,
-        "change_pct": -1.67,
-        "dist_20ma": -19.64,
+        "price": 166.51,
+        "change": -2.69,
+        "change_pct": -1.59,
+        "dist_20ma": -19.51,
         "macro_bsl": 209.29,
         "macro_ssl": 152.6,
         "macro_eq": 180.94,
@@ -108593,7 +108852,7 @@
         "entry_top": 169.34,
         "sl": 161.54,
         "tp": 207.2,
-        "rrr": 8.5,
+        "rrr": 8.2,
         "smc_id": "SMC_PLTR_166",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -109021,7 +109280,7 @@
           "open": 168.2,
           "high": 169.34,
           "low": 164.0,
-          "close": 166.37
+          "close": 166.51
         }
       ],
       "kline_1h": [
@@ -109862,8 +110121,8 @@
           "time": 1794339000,
           "open": 166.11,
           "high": 166.65,
-          "low": 165.91,
-          "close": 166.37
+          "low": 165.84,
+          "close": 166.51
         }
       ],
       "kline_15m": [
@@ -110747,7 +111006,14 @@
           "open": 166.21,
           "high": 166.65,
           "low": 166.15,
-          "close": 166.37
+          "close": 166.17
+        },
+        {
+          "time": 1794340800,
+          "open": 166.21,
+          "high": 166.51,
+          "low": 165.84,
+          "close": 166.51
         }
       ],
       "kline_4h": [
@@ -111448,18 +111714,18 @@
           "time": 1794339000,
           "open": 166.11,
           "high": 166.65,
-          "low": 165.91,
-          "close": 166.37
+          "low": 165.84,
+          "close": 166.51
         }
       ]
     },
     "SNOW": {
       "summary": {
         "symbol": "SNOW",
-        "price": 292.29,
-        "change": 1.15,
-        "change_pct": 0.39,
-        "dist_20ma": -19.1,
+        "price": 292.42,
+        "change": 1.28,
+        "change_pct": 0.44,
+        "dist_20ma": -18.98,
         "macro_bsl": 356.84,
         "macro_ssl": 266.36,
         "macro_eq": 311.6,
@@ -111897,7 +112163,7 @@
           "open": 290.38,
           "high": 299.24,
           "low": 286.19,
-          "close": 292.29
+          "close": 292.42
         }
       ],
       "kline_1h": [
@@ -112737,9 +113003,9 @@
         {
           "time": 1794339000,
           "open": 291.98,
-          "high": 292.61,
+          "high": 292.77,
           "low": 291.29,
-          "close": 292.29
+          "close": 292.42
         }
       ],
       "kline_15m": [
@@ -113620,10 +113886,17 @@
         },
         {
           "time": 1794339900,
-          "open": 291.47,
-          "high": 292.61,
-          "low": 291.47,
-          "close": 292.29
+          "open": 291.55,
+          "high": 292.77,
+          "low": 291.46,
+          "close": 291.88
+        },
+        {
+          "time": 1794340800,
+          "open": 291.92,
+          "high": 292.42,
+          "low": 291.66,
+          "close": 292.42
         }
       ],
       "kline_4h": [
@@ -114323,30 +114596,30 @@
         {
           "time": 1794339000,
           "open": 291.98,
-          "high": 292.61,
+          "high": 292.77,
           "low": 291.29,
-          "close": 292.29
+          "close": 292.42
         }
       ]
     },
     "APP": {
       "summary": {
         "symbol": "APP",
-        "price": 391.16,
-        "change": -18.84,
-        "change_pct": -4.6,
-        "dist_20ma": 106.0,
+        "price": 392.71,
+        "change": -17.29,
+        "change_pct": -4.22,
+        "dist_20ma": 107.48,
         "macro_bsl": 412.9,
         "macro_ssl": 225.19,
         "macro_eq": 319.04,
-        "pd_percent": 88,
+        "pd_percent": 89,
         "direction": "short",
         "entry_bot": 383.34,
         "entry_top": 408.65,
         "sl": 414.78,
         "tp": 227.44,
-        "rrr": 6.9,
-        "smc_id": "SMC_APP_391",
+        "rrr": 7.5,
+        "smc_id": "SMC_APP_392",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
         "smc_class": "border-green-500 text-green-400 bg-green-900/20",
@@ -114773,7 +115046,7 @@
           "open": 405.59,
           "high": 408.65,
           "low": 383.34,
-          "close": 391.16
+          "close": 392.71
         }
       ],
       "kline_1h": [
@@ -115613,9 +115886,9 @@
         {
           "time": 1794339000,
           "open": 385.06,
-          "high": 391.26,
+          "high": 392.87,
           "low": 384.93,
-          "close": 391.16
+          "close": 392.71
         }
       ],
       "kline_15m": [
@@ -116497,9 +116770,16 @@
         {
           "time": 1794339900,
           "open": 386.33,
-          "high": 391.26,
+          "high": 391.29,
           "low": 386.33,
-          "close": 391.22
+          "close": 391.09
+        },
+        {
+          "time": 1794340800,
+          "open": 390.93,
+          "high": 392.87,
+          "low": 390.74,
+          "close": 392.71
         }
       ],
       "kline_4h": [
@@ -117199,29 +117479,29 @@
         {
           "time": 1794339000,
           "open": 385.06,
-          "high": 391.26,
+          "high": 392.87,
           "low": 384.93,
-          "close": 391.16
+          "close": 392.71
         }
       ]
     },
     "CRM": {
       "summary": {
         "symbol": "CRM",
-        "price": 211.13,
-        "change": -3.81,
-        "change_pct": -1.77,
-        "dist_20ma": -22.73,
+        "price": 211.64,
+        "change": -3.3,
+        "change_pct": -1.54,
+        "dist_20ma": -22.25,
         "macro_bsl": 252.42,
         "macro_ssl": 208.88,
         "macro_eq": 230.65,
-        "pd_percent": 5,
+        "pd_percent": 6,
         "direction": "long",
         "entry_bot": 208.88,
         "entry_top": 214.88,
         "sl": 205.75,
         "tp": 249.9,
-        "rrr": 7.2,
+        "rrr": 6.5,
         "smc_id": "SMC_CRM_211",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -117649,7 +117929,7 @@
           "open": 214.57,
           "high": 214.88,
           "low": 208.88,
-          "close": 211.13
+          "close": 211.64
         }
       ],
       "kline_1h": [
@@ -118489,9 +118769,9 @@
         {
           "time": 1794339000,
           "open": 210.91,
-          "high": 211.4,
-          "low": 210.77,
-          "close": 211.13
+          "high": 211.64,
+          "low": 210.5,
+          "close": 211.64
         }
       ],
       "kline_15m": [
@@ -119372,10 +119652,17 @@
         },
         {
           "time": 1794339900,
-          "open": 211.19,
+          "open": 211.14,
           "high": 211.4,
-          "low": 211.06,
-          "close": 211.13
+          "low": 210.77,
+          "close": 210.84
+        },
+        {
+          "time": 1794340800,
+          "open": 210.8,
+          "high": 211.64,
+          "low": 210.5,
+          "close": 211.64
         }
       ],
       "kline_4h": [
@@ -120075,19 +120362,19 @@
         {
           "time": 1794339000,
           "open": 210.91,
-          "high": 211.4,
-          "low": 210.77,
-          "close": 211.13
+          "high": 211.64,
+          "low": 210.5,
+          "close": 211.64
         }
       ]
     },
     "ADBE": {
       "summary": {
         "symbol": "ADBE",
-        "price": 234.42,
-        "change": -2.9,
-        "change_pct": -1.22,
-        "dist_20ma": -15.05,
+        "price": 234.63,
+        "change": -2.69,
+        "change_pct": -1.13,
+        "dist_20ma": -14.85,
         "macro_bsl": 272.1,
         "macro_ssl": 231.82,
         "macro_eq": 251.96,
@@ -120097,7 +120384,7 @@
         "entry_top": 237.24,
         "sl": 228.34,
         "tp": 269.38,
-        "rrr": 5.8,
+        "rrr": 5.5,
         "smc_id": "SMC_ADBE_234",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -120525,7 +120812,7 @@
           "open": 237.0,
           "high": 237.24,
           "low": 231.82,
-          "close": 234.42
+          "close": 234.63
         }
       ],
       "kline_1h": [
@@ -121366,8 +121653,8 @@
           "time": 1794339000,
           "open": 234.29,
           "high": 234.91,
-          "low": 234.29,
-          "close": 234.42
+          "low": 234.0,
+          "close": 234.63
         }
       ],
       "kline_15m": [
@@ -122250,8 +122537,15 @@
           "time": 1794339900,
           "open": 234.6,
           "high": 234.79,
-          "low": 234.33,
-          "close": 234.42
+          "low": 234.0,
+          "close": 234.17
+        },
+        {
+          "time": 1794340800,
+          "open": 234.18,
+          "high": 234.63,
+          "low": 234.17,
+          "close": 234.63
         }
       ],
       "kline_4h": [
@@ -122952,28 +123246,28 @@
           "time": 1794339000,
           "open": 234.29,
           "high": 234.91,
-          "low": 234.29,
-          "close": 234.42
+          "low": 234.0,
+          "close": 234.63
         }
       ]
     },
     "NOW": {
       "summary": {
         "symbol": "NOW",
-        "price": 98.02,
-        "change": -4.74,
-        "change_pct": -4.61,
-        "dist_20ma": -32.05,
+        "price": 98.15,
+        "change": -4.61,
+        "change_pct": -4.49,
+        "dist_20ma": -31.93,
         "macro_bsl": 159.5,
         "macro_ssl": 97.46,
         "macro_eq": 128.48,
-        "pd_percent": 0,
+        "pd_percent": 1,
         "direction": "long",
         "entry_bot": 97.46,
         "entry_top": 102.21,
         "sl": 96.0,
         "tp": 157.91,
-        "rrr": 29.6,
+        "rrr": 27.8,
         "smc_id": "SMC_NOW_98",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -123401,7 +123695,7 @@
           "open": 100.55,
           "high": 102.21,
           "low": 97.46,
-          "close": 98.02
+          "close": 98.15
         }
       ],
       "kline_1h": [
@@ -124241,9 +124535,9 @@
         {
           "time": 1794339000,
           "open": 97.93,
-          "high": 98.12,
-          "low": 97.76,
-          "close": 98.02
+          "high": 98.15,
+          "low": 97.72,
+          "close": 98.15
         }
       ],
       "kline_15m": [
@@ -125118,7 +125412,7 @@
         {
           "time": 1794339000,
           "open": 97.93,
-          "high": 98.08,
+          "high": 98.09,
           "low": 97.76,
           "close": 97.86
         },
@@ -125127,7 +125421,14 @@
           "open": 97.86,
           "high": 98.12,
           "low": 97.82,
-          "close": 98.02
+          "close": 97.86
+        },
+        {
+          "time": 1794340800,
+          "open": 97.88,
+          "high": 98.15,
+          "low": 97.72,
+          "close": 98.15
         }
       ],
       "kline_4h": [
@@ -125828,35 +126129,35 @@
           "time": 1794339000,
           "open": 97.93,
           "high": 98.12,
-          "low": 97.76,
-          "close": 98.02
+          "low": 97.72,
+          "close": 97.97
         }
       ]
     },
     "CRWD": {
       "summary": {
         "symbol": "CRWD",
-        "price": 224.64,
-        "change": -3.94,
-        "change_pct": -1.72,
-        "dist_20ma": -17.08,
+        "price": 225.24,
+        "change": -3.34,
+        "change_pct": -1.46,
+        "dist_20ma": -16.51,
         "macro_bsl": 272.29,
         "macro_ssl": 213.22,
         "macro_eq": 242.75,
-        "pd_percent": 19,
+        "pd_percent": 20,
         "direction": "long",
-        "entry_bot": 218.41,
-        "entry_top": 230.42,
-        "sl": 215.13,
+        "entry_bot": 216.14,
+        "entry_top": 230.69,
+        "sl": 212.9,
         "tp": 269.57,
-        "rrr": 4.7,
-        "smc_id": "SMC_CRWD_224",
+        "rrr": 3.6,
+        "smc_id": "SMC_CRWD_225",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $218.41 - $230.42，嚴格防守 $215.13。"
+        "inv_text": "區間 $216.14 - $230.69，嚴格防守 $212.9。"
       },
       "kline": [
         {
@@ -126277,7 +126578,7 @@
           "open": 225.0,
           "high": 230.42,
           "low": 218.41,
-          "close": 224.64
+          "close": 225.24
         }
       ],
       "kline_1h": [
@@ -127117,9 +127418,9 @@
         {
           "time": 1794339000,
           "open": 224.57,
-          "high": 225.05,
-          "low": 224.22,
-          "close": 224.64
+          "high": 225.24,
+          "low": 224.1,
+          "close": 225.24
         }
       ],
       "kline_15m": [
@@ -128002,8 +128303,15 @@
           "time": 1794339900,
           "open": 224.28,
           "high": 225.05,
-          "low": 224.28,
-          "close": 224.64
+          "low": 224.26,
+          "close": 224.52
+        },
+        {
+          "time": 1794340800,
+          "open": 224.51,
+          "high": 225.24,
+          "low": 224.1,
+          "close": 225.24
         }
       ],
       "kline_4h": [
@@ -128703,36 +129011,36 @@
         {
           "time": 1794339000,
           "open": 224.57,
-          "high": 225.05,
-          "low": 224.22,
-          "close": 224.64
+          "high": 225.24,
+          "low": 224.1,
+          "close": 225.24
         }
       ]
     },
     "PANW": {
       "summary": {
         "symbol": "PANW",
-        "price": 324.28,
-        "change": -6.61,
-        "change_pct": -2.0,
-        "dist_20ma": -31.92,
+        "price": 324.97,
+        "change": -5.92,
+        "change_pct": -1.79,
+        "dist_20ma": -31.26,
         "macro_bsl": 406.88,
         "macro_ssl": 312.12,
         "macro_eq": 359.5,
-        "pd_percent": 12,
+        "pd_percent": 13,
         "direction": "long",
-        "entry_bot": 315.44,
-        "entry_top": 331.0,
-        "sl": 310.71,
+        "entry_bot": 312.7,
+        "entry_top": 331.9,
+        "sl": 308.01,
         "tp": 402.81,
-        "rrr": 5.8,
+        "rrr": 4.6,
         "smc_id": "SMC_PANW_324",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $315.44 - $331.0，嚴格防守 $310.71。"
+        "inv_text": "區間 $312.7 - $331.9，嚴格防守 $308.01。"
       },
       "kline": [
         {
@@ -129153,7 +129461,7 @@
           "open": 324.69,
           "high": 331.0,
           "low": 315.44,
-          "close": 324.28
+          "close": 324.97
         }
       ],
       "kline_1h": [
@@ -129995,7 +130303,7 @@
           "open": 323.6,
           "high": 325.0,
           "low": 323.29,
-          "close": 324.28
+          "close": 324.97
         }
       ],
       "kline_15m": [
@@ -130879,7 +131187,14 @@
           "open": 323.78,
           "high": 325.0,
           "low": 323.77,
-          "close": 324.28
+          "close": 324.23
+        },
+        {
+          "time": 1794340800,
+          "open": 324.3,
+          "high": 324.97,
+          "low": 323.69,
+          "close": 324.97
         }
       ],
       "kline_4h": [
@@ -131581,27 +131896,27 @@
           "open": 323.6,
           "high": 325.0,
           "low": 323.29,
-          "close": 324.28
+          "close": 324.97
         }
       ]
     },
     "NFLX": {
       "summary": {
         "symbol": "NFLX",
-        "price": 62.97,
-        "change": -0.98,
-        "change_pct": -1.53,
-        "dist_20ma": -2.57,
+        "price": 62.79,
+        "change": -1.16,
+        "change_pct": -1.81,
+        "dist_20ma": -2.74,
         "macro_bsl": 73.07,
         "macro_ssl": 61.39,
         "macro_eq": 67.23,
-        "pd_percent": 13,
+        "pd_percent": 11,
         "direction": "long",
         "entry_bot": 62.6,
         "entry_top": 63.75,
         "sl": 61.66,
         "tp": 72.34,
-        "rrr": 7.2,
+        "rrr": 8.5,
         "smc_id": "SMC_NFLX_62",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -132029,7 +132344,7 @@
           "open": 63.45,
           "high": 63.75,
           "low": 62.6,
-          "close": 62.97
+          "close": 62.79
         }
       ],
       "kline_1h": [
@@ -132870,8 +133185,8 @@
           "time": 1794339000,
           "open": 62.89,
           "high": 63.05,
-          "low": 62.88,
-          "close": 62.97
+          "low": 62.79,
+          "close": 62.79
         }
       ],
       "kline_15m": [
@@ -133754,8 +134069,15 @@
           "time": 1794339900,
           "open": 63.0,
           "high": 63.01,
-          "low": 62.91,
-          "close": 62.97
+          "low": 62.9,
+          "close": 62.92
+        },
+        {
+          "time": 1794340800,
+          "open": 62.91,
+          "high": 62.91,
+          "low": 62.79,
+          "close": 62.79
         }
       ],
       "kline_4h": [
@@ -134456,22 +134778,22 @@
           "time": 1794339000,
           "open": 62.89,
           "high": 63.05,
-          "low": 62.88,
-          "close": 62.97
+          "low": 62.79,
+          "close": 62.79
         }
       ]
     },
     "UBER": {
       "summary": {
         "symbol": "UBER",
-        "price": 69.62,
-        "change": -1.55,
-        "change_pct": -2.18,
-        "dist_20ma": 1.48,
+        "price": 69.67,
+        "change": -1.5,
+        "change_pct": -2.11,
+        "dist_20ma": 1.53,
         "macro_bsl": 72.5,
         "macro_ssl": 64.04,
         "macro_eq": 68.27,
-        "pd_percent": 65,
+        "pd_percent": 66,
         "direction": "short",
         "entry_bot": 69.19,
         "entry_top": 71.04,
@@ -134905,7 +135227,7 @@
           "open": 70.85,
           "high": 71.04,
           "low": 69.19,
-          "close": 69.62
+          "close": 69.67
         }
       ],
       "kline_1h": [
@@ -135747,7 +136069,7 @@
           "open": 69.48,
           "high": 69.68,
           "low": 69.45,
-          "close": 69.62
+          "close": 69.67
         }
       ],
       "kline_15m": [
@@ -136631,7 +136953,14 @@
           "open": 69.54,
           "high": 69.68,
           "low": 69.53,
-          "close": 69.62
+          "close": 69.57
+        },
+        {
+          "time": 1794340800,
+          "open": 69.57,
+          "high": 69.68,
+          "low": 69.51,
+          "close": 69.67
         }
       ],
       "kline_4h": [
@@ -137333,17 +137662,17 @@
           "open": 69.48,
           "high": 69.68,
           "low": 69.45,
-          "close": 69.62
+          "close": 69.67
         }
       ]
     },
     "COIN": {
       "summary": {
         "symbol": "COIN",
-        "price": 131.6,
-        "change": -4.5,
-        "change_pct": -3.31,
-        "dist_20ma": -25.45,
+        "price": 131.18,
+        "change": -4.92,
+        "change_pct": -3.61,
+        "dist_20ma": -25.85,
         "macro_bsl": 185.49,
         "macro_ssl": 129.41,
         "macro_eq": 157.45,
@@ -137353,7 +137682,7 @@
         "entry_top": 136.25,
         "sl": 127.47,
         "tp": 183.64,
-        "rrr": 12.6,
+        "rrr": 14.1,
         "smc_id": "SMC_COIN_131",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -137781,7 +138110,7 @@
           "open": 132.31,
           "high": 136.25,
           "low": 129.41,
-          "close": 131.6
+          "close": 131.18
         }
       ],
       "kline_1h": [
@@ -138623,7 +138952,7 @@
           "open": 130.91,
           "high": 131.94,
           "low": 130.83,
-          "close": 131.6
+          "close": 131.18
         }
       ],
       "kline_15m": [
@@ -139507,7 +139836,14 @@
           "open": 130.98,
           "high": 131.94,
           "low": 130.95,
-          "close": 131.6
+          "close": 131.34
+        },
+        {
+          "time": 1794340800,
+          "open": 131.3,
+          "high": 131.33,
+          "low": 130.83,
+          "close": 131.18
         }
       ],
       "kline_4h": [
@@ -140209,28 +140545,28 @@
           "open": 130.91,
           "high": 131.94,
           "low": 130.83,
-          "close": 131.6
+          "close": 131.18
         }
       ]
     },
     "MSTR": {
       "summary": {
         "symbol": "MSTR",
-        "price": 120.19,
-        "change": -5.4,
-        "change_pct": -4.3,
-        "dist_20ma": -18.15,
+        "price": 119.7,
+        "change": -5.89,
+        "change_pct": -4.69,
+        "dist_20ma": -18.62,
         "macro_bsl": 155.69,
         "macro_ssl": 118.43,
         "macro_eq": 137.06,
-        "pd_percent": 4,
+        "pd_percent": 3,
         "direction": "long",
         "entry_bot": 118.43,
         "entry_top": 126.4,
         "sl": 116.65,
         "tp": 154.13,
-        "rrr": 9.6,
-        "smc_id": "SMC_MSTR_120",
+        "rrr": 11.3,
+        "smc_id": "SMC_MSTR_119",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -140657,7 +140993,7 @@
           "open": 121.95,
           "high": 126.4,
           "low": 118.43,
-          "close": 120.19
+          "close": 119.7
         }
       ],
       "kline_1h": [
@@ -141498,8 +141834,8 @@
           "time": 1794339000,
           "open": 120.39,
           "high": 120.7,
-          "low": 119.7,
-          "close": 120.19
+          "low": 119.2,
+          "close": 119.68
         }
       ],
       "kline_15m": [
@@ -142382,8 +142718,15 @@
           "time": 1794339900,
           "open": 119.86,
           "high": 120.57,
-          "low": 119.86,
-          "close": 120.19
+          "low": 119.73,
+          "close": 119.97
+        },
+        {
+          "time": 1794340800,
+          "open": 119.97,
+          "high": 119.97,
+          "low": 119.2,
+          "close": 119.7
         }
       ],
       "kline_4h": [
@@ -143084,22 +143427,22 @@
           "time": 1794339000,
           "open": 120.39,
           "high": 120.7,
-          "low": 119.7,
-          "close": 120.19
+          "low": 119.2,
+          "close": 119.68
         }
       ]
     },
     "MARA": {
       "summary": {
         "symbol": "MARA",
-        "price": 7.16,
-        "change": 0.52,
-        "change_pct": 7.83,
-        "dist_20ma": 0.02,
+        "price": 7.11,
+        "change": 0.47,
+        "change_pct": 7.08,
+        "dist_20ma": -0.02,
         "macro_bsl": 8.9,
         "macro_ssl": 5.69,
         "macro_eq": 7.29,
-        "pd_percent": 45,
+        "pd_percent": 44,
         "direction": "long",
         "entry_bot": 5.69,
         "entry_top": 6.82,
@@ -143533,7 +143876,7 @@
           "open": 6.56,
           "high": 7.58,
           "low": 6.48,
-          "close": 7.16
+          "close": 7.11
         }
       ],
       "kline_1h": [
@@ -144374,8 +144717,8 @@
           "time": 1794339000,
           "open": 7.13,
           "high": 7.18,
-          "low": 7.09,
-          "close": 7.16
+          "low": 7.07,
+          "close": 7.11
         }
       ],
       "kline_15m": [
@@ -145259,7 +145602,14 @@
           "open": 7.11,
           "high": 7.18,
           "low": 7.1,
-          "close": 7.16
+          "close": 7.14
+        },
+        {
+          "time": 1794340800,
+          "open": 7.14,
+          "high": 7.14,
+          "low": 7.07,
+          "close": 7.11
         }
       ],
       "kline_4h": [
@@ -145960,28 +146310,28 @@
           "time": 1794339000,
           "open": 7.13,
           "high": 7.18,
-          "low": 7.09,
-          "close": 7.16
+          "low": 7.07,
+          "close": 7.11
         }
       ]
     },
     "RIOT": {
       "summary": {
         "symbol": "RIOT",
-        "price": 17.82,
-        "change": 0.16,
-        "change_pct": 0.91,
-        "dist_20ma": 3.48,
+        "price": 17.75,
+        "change": 0.09,
+        "change_pct": 0.51,
+        "dist_20ma": 3.41,
         "macro_bsl": 18.71,
         "macro_ssl": 11.63,
         "macro_eq": 15.17,
-        "pd_percent": 87,
+        "pd_percent": 86,
         "direction": "short",
         "entry_bot": 17.23,
         "entry_top": 18.71,
         "sl": 18.99,
         "tp": 11.75,
-        "rrr": 5.2,
+        "rrr": 4.8,
         "smc_id": "SMC_RIOT_17",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
@@ -146409,7 +146759,7 @@
           "open": 17.93,
           "high": 18.71,
           "low": 17.23,
-          "close": 17.82
+          "close": 17.75
         }
       ],
       "kline_1h": [
@@ -147249,9 +147599,9 @@
         {
           "time": 1794339000,
           "open": 17.74,
-          "high": 17.84,
+          "high": 17.85,
           "low": 17.67,
-          "close": 17.82
+          "close": 17.75
         }
       ],
       "kline_15m": [
@@ -148133,9 +148483,16 @@
         {
           "time": 1794339900,
           "open": 17.72,
-          "high": 17.84,
+          "high": 17.85,
           "low": 17.71,
           "close": 17.82
+        },
+        {
+          "time": 1794340800,
+          "open": 17.82,
+          "high": 17.82,
+          "low": 17.73,
+          "close": 17.75
         }
       ],
       "kline_4h": [
@@ -148835,19 +149192,19 @@
         {
           "time": 1794339000,
           "open": 17.74,
-          "high": 17.84,
+          "high": 17.85,
           "low": 17.67,
-          "close": 17.82
+          "close": 17.75
         }
       ]
     },
     "HOOD": {
       "summary": {
         "symbol": "HOOD",
-        "price": 80.87,
-        "change": -2.45,
-        "change_pct": -2.94,
-        "dist_20ma": -10.53,
+        "price": 80.68,
+        "change": -2.64,
+        "change_pct": -3.17,
+        "dist_20ma": -10.71,
         "macro_bsl": 109.22,
         "macro_ssl": 75.51,
         "macro_eq": 92.37,
@@ -148857,7 +149214,7 @@
         "entry_top": 83.32,
         "sl": 78.76,
         "tp": 108.13,
-        "rrr": 12.9,
+        "rrr": 14.3,
         "smc_id": "SMC_HOOD_80",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -149285,7 +149642,7 @@
           "open": 81.26,
           "high": 83.32,
           "low": 79.96,
-          "close": 80.87
+          "close": 80.68
         }
       ],
       "kline_1h": [
@@ -150127,7 +150484,7 @@
           "open": 80.83,
           "high": 81.0,
           "low": 80.41,
-          "close": 80.87
+          "close": 80.68
         }
       ],
       "kline_15m": [
@@ -151011,7 +151368,14 @@
           "open": 80.56,
           "high": 81.0,
           "low": 80.51,
-          "close": 80.87
+          "close": 80.69
+        },
+        {
+          "time": 1794340800,
+          "open": 80.71,
+          "high": 80.71,
+          "low": 80.42,
+          "close": 80.68
         }
       ],
       "kline_4h": [
@@ -151713,21 +152077,21 @@
           "open": 80.83,
           "high": 81.0,
           "low": 80.41,
-          "close": 80.87
+          "close": 80.68
         }
       ]
     },
     "PYPL": {
       "summary": {
         "symbol": "PYPL",
-        "price": 58.64,
-        "change": -1.41,
-        "change_pct": -2.35,
-        "dist_20ma": 1.09,
+        "price": 58.65,
+        "change": -1.4,
+        "change_pct": -2.33,
+        "dist_20ma": 1.1,
         "macro_bsl": 60.87,
         "macro_ssl": 54.34,
         "macro_eq": 57.61,
-        "pd_percent": 65,
+        "pd_percent": 66,
         "direction": "short",
         "entry_bot": 58.57,
         "entry_top": 59.81,
@@ -152161,7 +152525,7 @@
           "open": 59.58,
           "high": 59.81,
           "low": 58.57,
-          "close": 58.64
+          "close": 58.65
         }
       ],
       "kline_1h": [
@@ -153001,9 +153365,9 @@
         {
           "time": 1794339000,
           "open": 58.71,
-          "high": 58.72,
-          "low": 58.63,
-          "close": 58.64
+          "high": 58.79,
+          "low": 58.62,
+          "close": 58.65
         }
       ],
       "kline_15m": [
@@ -153885,9 +154249,16 @@
         {
           "time": 1794339900,
           "open": 58.65,
-          "high": 58.69,
-          "low": 58.64,
-          "close": 58.64
+          "high": 58.79,
+          "low": 58.62,
+          "close": 58.78
+        },
+        {
+          "time": 1794340800,
+          "open": 58.78,
+          "high": 58.78,
+          "low": 58.65,
+          "close": 58.65
         }
       ],
       "kline_4h": [
@@ -154587,29 +154958,29 @@
         {
           "time": 1794339000,
           "open": 58.71,
-          "high": 58.72,
-          "low": 58.63,
-          "close": 58.64
+          "high": 58.79,
+          "low": 58.62,
+          "close": 58.65
         }
       ]
     },
     "SOFI": {
       "summary": {
         "symbol": "SOFI",
-        "price": 16.16,
-        "change": -0.59,
-        "change_pct": -3.52,
-        "dist_20ma": 0.39,
+        "price": 16.13,
+        "change": -0.62,
+        "change_pct": -3.7,
+        "dist_20ma": 0.36,
         "macro_bsl": 17.74,
         "macro_ssl": 13.86,
         "macro_eq": 15.8,
-        "pd_percent": 59,
+        "pd_percent": 58,
         "direction": "short",
         "entry_bot": 15.91,
         "entry_top": 16.53,
         "sl": 16.78,
         "tp": 14.0,
-        "rrr": 3.5,
+        "rrr": 3.3,
         "smc_id": "SMC_SOFI_16",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
@@ -155037,7 +155408,7 @@
           "open": 16.48,
           "high": 16.53,
           "low": 15.91,
-          "close": 16.16
+          "close": 16.13
         }
       ],
       "kline_1h": [
@@ -155879,7 +156250,7 @@
           "open": 15.95,
           "high": 16.2,
           "low": 15.94,
-          "close": 16.16
+          "close": 16.13
         }
       ],
       "kline_15m": [
@@ -156764,6 +157135,13 @@
           "high": 16.2,
           "low": 16.05,
           "close": 16.16
+        },
+        {
+          "time": 1794340800,
+          "open": 16.16,
+          "high": 16.16,
+          "low": 16.1,
+          "close": 16.14
         }
       ],
       "kline_4h": [
@@ -157465,28 +157843,28 @@
           "open": 15.95,
           "high": 16.2,
           "low": 15.94,
-          "close": 16.16
+          "close": 16.14
         }
       ]
     },
     "FUTU": {
       "summary": {
         "symbol": "FUTU",
-        "price": 95.15,
-        "change": -5.82,
-        "change_pct": -5.76,
-        "dist_20ma": -6.66,
+        "price": 94.83,
+        "change": -6.14,
+        "change_pct": -6.08,
+        "dist_20ma": -6.97,
         "macro_bsl": 114.28,
         "macro_ssl": 87.41,
         "macro_eq": 100.84,
-        "pd_percent": 28,
+        "pd_percent": 27,
         "direction": "long",
         "entry_bot": 94.36,
         "entry_top": 100.1,
         "sl": 92.94,
         "tp": 113.14,
-        "rrr": 8.1,
-        "smc_id": "SMC_FUTU_95",
+        "rrr": 9.7,
+        "smc_id": "SMC_FUTU_94",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
@@ -157913,7 +158291,7 @@
           "open": 99.75,
           "high": 100.1,
           "low": 94.36,
-          "close": 95.15
+          "close": 94.83
         }
       ],
       "kline_1h": [
@@ -158754,8 +159132,8 @@
           "time": 1794339000,
           "open": 94.96,
           "high": 95.22,
-          "low": 94.96,
-          "close": 95.15
+          "low": 94.56,
+          "close": 94.83
         }
       ],
       "kline_15m": [
@@ -159639,7 +160017,14 @@
           "open": 95.0,
           "high": 95.22,
           "low": 95.0,
-          "close": 95.15
+          "close": 95.09
+        },
+        {
+          "time": 1794340800,
+          "open": 95.05,
+          "high": 95.05,
+          "low": 94.56,
+          "close": 94.83
         }
       ],
       "kline_4h": [
@@ -160340,29 +160725,29 @@
           "time": 1794339000,
           "open": 94.96,
           "high": 95.22,
-          "low": 94.96,
-          "close": 95.15
+          "low": 94.56,
+          "close": 94.83
         }
       ]
     },
     "V": {
       "summary": {
         "symbol": "V",
-        "price": 424.35,
-        "change": 2.19,
-        "change_pct": 0.52,
-        "dist_20ma": 12.43,
+        "price": 423.51,
+        "change": 1.35,
+        "change_pct": 0.32,
+        "dist_20ma": 11.63,
         "macro_bsl": 442.23,
         "macro_ssl": 389.56,
         "macro_eq": 415.89,
-        "pd_percent": 66,
+        "pd_percent": 64,
         "direction": "short",
         "entry_bot": 417.69,
         "entry_top": 426.46,
         "sl": 432.86,
         "tp": 393.46,
-        "rrr": 3.6,
-        "smc_id": "SMC_V_424",
+        "rrr": 3.2,
+        "smc_id": "SMC_V_423",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
         "smc_class": "border-green-500 text-green-400 bg-green-900/20",
@@ -160789,7 +161174,7 @@
           "open": 421.4,
           "high": 424.94,
           "low": 419.15,
-          "close": 424.35
+          "close": 423.51
         }
       ],
       "kline_1h": [
@@ -161630,8 +162015,8 @@
           "time": 1794339000,
           "open": 424.62,
           "high": 424.67,
-          "low": 424.2,
-          "close": 424.35
+          "low": 423.51,
+          "close": 423.51
         }
       ],
       "kline_15m": [
@@ -162513,9 +162898,16 @@
         {
           "time": 1794339900,
           "open": 424.27,
-          "high": 424.63,
-          "low": 424.26,
-          "close": 424.35
+          "high": 424.64,
+          "low": 423.8,
+          "close": 423.87
+        },
+        {
+          "time": 1794340800,
+          "open": 423.88,
+          "high": 424.0,
+          "low": 423.47,
+          "close": 423.47
         }
       ],
       "kline_4h": [
@@ -163216,35 +163608,35 @@
           "time": 1794339000,
           "open": 424.62,
           "high": 424.67,
-          "low": 424.2,
-          "close": 424.35
+          "low": 423.51,
+          "close": 423.51
         }
       ]
     },
     "JPM": {
       "summary": {
         "symbol": "JPM",
-        "price": 343.87,
-        "change": 1.79,
-        "change_pct": 0.52,
-        "dist_20ma": 5.83,
+        "price": 342.92,
+        "change": 0.84,
+        "change_pct": 0.25,
+        "dist_20ma": 4.93,
         "macro_bsl": 359.8,
         "macro_ssl": 326.4,
         "macro_eq": 343.1,
-        "pd_percent": 52,
-        "direction": "short",
+        "pd_percent": 49,
+        "direction": "long",
         "entry_bot": 341.26,
         "entry_top": 344.85,
-        "sl": 350.02,
-        "tp": 329.66,
-        "rrr": 2.3,
-        "smc_id": "SMC_JPM_343",
-        "confluence": false,
-        "smc_text": "4H 需求區 (OB)",
-        "smc_class": "border-green-500 text-green-400 bg-green-900/20",
+        "sl": 336.14,
+        "tp": 356.2,
+        "rrr": 2.0,
+        "smc_id": "SMC_JPM_342",
+        "confluence": true,
+        "smc_text": "SS級 共振",
+        "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $341.26 - $344.85，嚴格防守 $350.02。"
+        "inv_text": "區間 $341.26 - $344.85，嚴格防守 $336.14。"
       },
       "kline": [
         {
@@ -163665,7 +164057,7 @@
           "open": 343.96,
           "high": 344.85,
           "low": 341.26,
-          "close": 343.87
+          "close": 342.92
         }
       ],
       "kline_1h": [
@@ -164505,9 +164897,9 @@
         {
           "time": 1794339000,
           "open": 343.5,
-          "high": 343.88,
-          "low": 343.26,
-          "close": 343.87
+          "high": 343.94,
+          "low": 342.92,
+          "close": 342.92
         }
       ],
       "kline_15m": [
@@ -165384,14 +165776,21 @@
           "open": 343.5,
           "high": 343.53,
           "low": 343.26,
-          "close": 343.4
+          "close": 343.39
         },
         {
           "time": 1794339900,
-          "open": 343.35,
-          "high": 343.88,
-          "low": 343.35,
-          "close": 343.87
+          "open": 343.34,
+          "high": 343.94,
+          "low": 343.34,
+          "close": 343.8
+        },
+        {
+          "time": 1794340800,
+          "open": 343.84,
+          "high": 343.9,
+          "low": 342.92,
+          "close": 342.92
         }
       ],
       "kline_4h": [
@@ -166091,36 +166490,36 @@
         {
           "time": 1794339000,
           "open": 343.5,
-          "high": 343.88,
-          "low": 343.26,
-          "close": 343.87
+          "high": 343.94,
+          "low": 342.92,
+          "close": 342.92
         }
       ]
     },
     "GS": {
       "summary": {
         "symbol": "GS",
-        "price": 912.01,
-        "change": 5.79,
-        "change_pct": 0.64,
-        "dist_20ma": 16.42,
+        "price": 908.58,
+        "change": 2.36,
+        "change_pct": 0.26,
+        "dist_20ma": 13.16,
         "macro_bsl": 939.38,
         "macro_ssl": 854.45,
         "macro_eq": 896.91,
-        "pd_percent": 67,
+        "pd_percent": 63,
         "direction": "short",
-        "entry_bot": 864.75,
-        "entry_top": 886.33,
-        "sl": 899.62,
+        "entry_bot": 897.35,
+        "entry_top": 917.55,
+        "sl": 931.31,
         "tp": 862.99,
-        "rrr": 4.0,
-        "smc_id": "SMC_GS_912",
+        "rrr": 2.0,
+        "smc_id": "SMC_GS_908",
         "confluence": false,
-        "smc_text": "日線 FVG",
-        "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
-        "trade_status": "🔴 觀察中",
-        "status_color": "text-gray-400",
-        "inv_text": "等待價格進入戰略區間。"
+        "smc_text": "4H 需求區 (OB)",
+        "smc_class": "border-green-500 text-green-400 bg-green-900/20",
+        "trade_status": "🟢 可執行",
+        "status_color": "text-green-400 font-bold",
+        "inv_text": "區間 $897.35 - $917.55，嚴格防守 $931.31。"
       },
       "kline": [
         {
@@ -166541,7 +166940,7 @@
           "open": 910.24,
           "high": 917.55,
           "low": 897.35,
-          "close": 912.01
+          "close": 908.58
         }
       ],
       "kline_1h": [
@@ -167382,8 +167781,8 @@
           "time": 1794339000,
           "open": 910.68,
           "high": 912.58,
-          "low": 909.46,
-          "close": 912.01
+          "low": 908.58,
+          "close": 908.58
         }
       ],
       "kline_15m": [
@@ -168259,15 +168658,22 @@
           "time": 1794339000,
           "open": 910.68,
           "high": 910.84,
-          "low": 909.46,
-          "close": 909.93
+          "low": 909.42,
+          "close": 909.9
         },
         {
           "time": 1794339900,
           "open": 909.72,
           "high": 912.58,
           "low": 909.46,
-          "close": 912.01
+          "close": 911.41
+        },
+        {
+          "time": 1794340800,
+          "open": 911.98,
+          "high": 912.04,
+          "low": 908.58,
+          "close": 908.58
         }
       ],
       "kline_4h": [
@@ -168968,28 +169374,28 @@
           "time": 1794339000,
           "open": 910.68,
           "high": 912.58,
-          "low": 909.46,
-          "close": 912.01
+          "low": 908.58,
+          "close": 908.58
         }
       ]
     },
     "BAC": {
       "summary": {
         "symbol": "BAC",
-        "price": 50.76,
-        "change": 0.21,
-        "change_pct": 0.42,
-        "dist_20ma": 0.14,
+        "price": 50.7,
+        "change": 0.15,
+        "change_pct": 0.3,
+        "dist_20ma": 0.09,
         "macro_bsl": 53.03,
         "macro_ssl": 49.17,
         "macro_eq": 51.1,
-        "pd_percent": 41,
+        "pd_percent": 39,
         "direction": "long",
         "entry_bot": 50.44,
         "entry_top": 51.07,
         "sl": 49.68,
         "tp": 52.5,
-        "rrr": 1.6,
+        "rrr": 1.8,
         "smc_id": "SMC_BAC_50",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -169417,7 +169823,7 @@
           "open": 50.88,
           "high": 51.07,
           "low": 50.44,
-          "close": 50.76
+          "close": 50.7
         }
       ],
       "kline_1h": [
@@ -170257,9 +170663,9 @@
         {
           "time": 1794339000,
           "open": 50.76,
-          "high": 50.77,
+          "high": 50.8,
           "low": 50.7,
-          "close": 50.76
+          "close": 50.7
         }
       ],
       "kline_15m": [
@@ -171140,10 +171546,17 @@
         },
         {
           "time": 1794339900,
-          "open": 50.73,
+          "open": 50.74,
           "high": 50.77,
           "low": 50.72,
-          "close": 50.76
+          "close": 50.74
+        },
+        {
+          "time": 1794340800,
+          "open": 50.74,
+          "high": 50.8,
+          "low": 50.7,
+          "close": 50.7
         }
       ],
       "kline_4h": [
@@ -171843,30 +172256,30 @@
         {
           "time": 1794339000,
           "open": 50.76,
-          "high": 50.77,
+          "high": 50.8,
           "low": 50.7,
-          "close": 50.76
+          "close": 50.7
         }
       ]
     },
     "RKLB": {
       "summary": {
         "symbol": "RKLB",
-        "price": 59.88,
-        "change": 1.02,
-        "change_pct": 1.73,
-        "dist_20ma": 5.57,
+        "price": 60.31,
+        "change": 1.45,
+        "change_pct": 2.46,
+        "dist_20ma": 5.98,
         "macro_bsl": 63.56,
         "macro_ssl": 43.89,
         "macro_eq": 53.73,
-        "pd_percent": 81,
+        "pd_percent": 83,
         "direction": "short",
         "entry_bot": 43.89,
         "entry_top": 50.83,
         "sl": 51.59,
         "tp": 44.33,
-        "rrr": 1.9,
-        "smc_id": "SMC_RKLB_59",
+        "rrr": 1.8,
+        "smc_id": "SMC_RKLB_60",
         "confluence": false,
         "smc_text": "日線 FVG",
         "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
@@ -172293,7 +172706,7 @@
           "open": 54.99,
           "high": 60.7,
           "low": 54.96,
-          "close": 59.88
+          "close": 60.31
         }
       ],
       "kline_1h": [
@@ -173133,9 +173546,9 @@
         {
           "time": 1794339000,
           "open": 60.03,
-          "high": 60.15,
-          "low": 59.61,
-          "close": 59.88
+          "high": 60.31,
+          "low": 59.56,
+          "close": 60.31
         }
       ],
       "kline_15m": [
@@ -174019,7 +174432,14 @@
           "open": 59.67,
           "high": 60.07,
           "low": 59.66,
-          "close": 59.88
+          "close": 59.78
+        },
+        {
+          "time": 1794340800,
+          "open": 59.74,
+          "high": 60.31,
+          "low": 59.56,
+          "close": 60.31
         }
       ],
       "kline_4h": [
@@ -174719,29 +175139,29 @@
         {
           "time": 1794339000,
           "open": 60.03,
-          "high": 60.15,
-          "low": 59.61,
-          "close": 59.88
+          "high": 60.31,
+          "low": 59.56,
+          "close": 60.31
         }
       ]
     },
     "XOM": {
       "summary": {
         "symbol": "XOM",
-        "price": 164.65,
-        "change": -0.08,
-        "change_pct": -0.05,
-        "dist_20ma": -11.86,
+        "price": 164.74,
+        "change": 0.01,
+        "change_pct": 0.01,
+        "dist_20ma": -11.78,
         "macro_bsl": 188.5,
         "macro_ssl": 160.11,
         "macro_eq": 174.31,
-        "pd_percent": 15,
+        "pd_percent": 16,
         "direction": "long",
         "entry_bot": 165.14,
         "entry_top": 173.67,
         "sl": 162.66,
         "tp": 186.62,
-        "rrr": 11.0,
+        "rrr": 10.5,
         "smc_id": "SMC_XOM_164",
         "confluence": false,
         "smc_text": "日線 FVG",
@@ -175167,9 +175587,9 @@
         {
           "time": "2026-11-10",
           "open": 161.86,
-          "high": 164.74,
+          "high": 164.87,
           "low": 160.11,
-          "close": 164.65
+          "close": 164.74
         }
       ],
       "kline_1h": [
@@ -176009,9 +176429,9 @@
         {
           "time": 1794339000,
           "open": 164.53,
-          "high": 164.74,
+          "high": 164.87,
           "low": 164.48,
-          "close": 164.65
+          "close": 164.74
         }
       ],
       "kline_15m": [
@@ -176895,7 +177315,14 @@
           "open": 164.6,
           "high": 164.74,
           "low": 164.57,
-          "close": 164.65
+          "close": 164.67
+        },
+        {
+          "time": 1794340800,
+          "open": 164.69,
+          "high": 164.87,
+          "low": 164.66,
+          "close": 164.74
         }
       ],
       "kline_4h": [
@@ -177595,29 +178022,29 @@
         {
           "time": 1794339000,
           "open": 164.53,
-          "high": 164.74,
+          "high": 164.87,
           "low": 164.48,
-          "close": 164.65
+          "close": 164.74
         }
       ]
     },
     "BE": {
       "summary": {
         "symbol": "BE",
-        "price": 184.92,
-        "change": -8.96,
-        "change_pct": -4.62,
-        "dist_20ma": -25.16,
+        "price": 184.34,
+        "change": -9.54,
+        "change_pct": -4.92,
+        "dist_20ma": -25.71,
         "macro_bsl": 258.52,
         "macro_ssl": 156.0,
         "macro_eq": 207.26,
-        "pd_percent": 28,
+        "pd_percent": 27,
         "direction": "long",
         "entry_bot": 181.01,
         "entry_top": 194.68,
         "sl": 178.29,
         "tp": 255.93,
-        "rrr": 10.7,
+        "rrr": 11.8,
         "smc_id": "SMC_BE_184",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -178045,7 +178472,7 @@
           "open": 185.0,
           "high": 194.68,
           "low": 181.01,
-          "close": 184.92
+          "close": 184.34
         }
       ],
       "kline_1h": [
@@ -178887,7 +179314,7 @@
           "open": 183.93,
           "high": 185.45,
           "low": 183.3,
-          "close": 184.92
+          "close": 184.34
         }
       ],
       "kline_15m": [
@@ -179764,14 +180191,21 @@
           "open": 183.93,
           "high": 184.12,
           "low": 183.3,
-          "close": 183.99
+          "close": 183.93
         },
         {
           "time": 1794339900,
           "open": 183.86,
           "high": 185.45,
           "low": 183.82,
-          "close": 184.86
+          "close": 184.66
+        },
+        {
+          "time": 1794340800,
+          "open": 184.66,
+          "high": 184.72,
+          "low": 183.82,
+          "close": 184.34
         }
       ],
       "kline_4h": [
@@ -180473,27 +180907,27 @@
           "open": 183.93,
           "high": 185.45,
           "low": 183.3,
-          "close": 184.86
+          "close": 184.34
         }
       ]
     },
     "VST": {
       "summary": {
         "symbol": "VST",
-        "price": 130.58,
-        "change": -3.34,
-        "change_pct": -2.49,
-        "dist_20ma": -9.53,
+        "price": 130.44,
+        "change": -3.48,
+        "change_pct": -2.6,
+        "dist_20ma": -9.66,
         "macro_bsl": 161.09,
         "macro_ssl": 110.89,
         "macro_eq": 135.99,
-        "pd_percent": 39,
+        "pd_percent": 38,
         "direction": "long",
         "entry_bot": 129.31,
         "entry_top": 134.13,
         "sl": 127.37,
         "tp": 159.48,
-        "rrr": 9.0,
+        "rrr": 9.5,
         "smc_id": "SMC_VST_130",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -180921,7 +181355,7 @@
           "open": 130.9,
           "high": 134.13,
           "low": 129.31,
-          "close": 130.58
+          "close": 130.44
         }
       ],
       "kline_1h": [
@@ -181763,7 +182197,7 @@
           "open": 130.14,
           "high": 130.62,
           "low": 129.94,
-          "close": 130.58
+          "close": 130.44
         }
       ],
       "kline_15m": [
@@ -182644,10 +183078,17 @@
         },
         {
           "time": 1794339900,
-          "open": 130.01,
+          "open": 130.1,
           "high": 130.62,
           "low": 130.01,
-          "close": 130.58
+          "close": 130.53
+        },
+        {
+          "time": 1794340800,
+          "open": 130.59,
+          "high": 130.59,
+          "low": 130.21,
+          "close": 130.44
         }
       ],
       "kline_4h": [
@@ -183349,7 +183790,7 @@
           "open": 130.14,
           "high": 130.62,
           "low": 129.94,
-          "close": 130.58
+          "close": 130.44
         }
       ]
     },
@@ -185524,6 +185965,13 @@
           "high": 8.26,
           "low": 8.21,
           "close": 8.23
+        },
+        {
+          "time": 1794340800,
+          "open": 8.23,
+          "high": 8.24,
+          "low": 8.21,
+          "close": 8.23
         }
       ],
       "kline_4h": [
@@ -186232,20 +186680,20 @@
     "ONDS": {
       "summary": {
         "symbol": "ONDS",
-        "price": 5.55,
-        "change": -0.42,
-        "change_pct": -7.04,
-        "dist_20ma": -0.46,
+        "price": 5.53,
+        "change": -0.44,
+        "change_pct": -7.37,
+        "dist_20ma": -0.48,
         "macro_bsl": 7.08,
         "macro_ssl": 4.38,
         "macro_eq": 5.73,
-        "pd_percent": 43,
+        "pd_percent": 42,
         "direction": "long",
         "entry_bot": 5.45,
         "entry_top": 5.91,
         "sl": 5.37,
         "tp": 7.01,
-        "rrr": 2.9,
+        "rrr": 3.0,
         "smc_id": "SMC_ONDS_5",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -186673,7 +187121,7 @@
           "open": 5.83,
           "high": 5.91,
           "low": 5.45,
-          "close": 5.55
+          "close": 5.53
         }
       ],
       "kline_1h": [
@@ -187515,7 +187963,7 @@
           "open": 5.52,
           "high": 5.57,
           "low": 5.49,
-          "close": 5.55
+          "close": 5.53
         }
       ],
       "kline_15m": [
@@ -188399,7 +188847,14 @@
           "open": 5.51,
           "high": 5.57,
           "low": 5.5,
-          "close": 5.55
+          "close": 5.53
+        },
+        {
+          "time": 1794340800,
+          "open": 5.53,
+          "high": 5.55,
+          "low": 5.51,
+          "close": 5.53
         }
       ],
       "kline_4h": [
@@ -189101,17 +189556,17 @@
           "open": 5.52,
           "high": 5.57,
           "low": 5.49,
-          "close": 5.55
+          "close": 5.53
         }
       ]
     },
     "NBIS": {
       "summary": {
         "symbol": "NBIS",
-        "price": 132.12,
-        "change": -9.33,
-        "change_pct": -6.6,
-        "dist_20ma": -25.94,
+        "price": 132.5,
+        "change": -8.95,
+        "change_pct": -6.33,
+        "dist_20ma": -25.58,
         "macro_bsl": 198.6,
         "macro_ssl": 113.3,
         "macro_eq": 155.95,
@@ -189121,7 +189576,7 @@
         "entry_top": 146.23,
         "sl": 128.94,
         "tp": 196.61,
-        "rrr": 20.3,
+        "rrr": 18.0,
         "smc_id": "SMC_NBIS_132",
         "confluence": true,
         "smc_text": "SS級 共振",
@@ -189549,7 +190004,7 @@
           "open": 137.42,
           "high": 146.23,
           "low": 130.9,
-          "close": 132.12
+          "close": 132.5
         }
       ],
       "kline_1h": [
@@ -190391,7 +190846,7 @@
           "open": 131.3,
           "high": 132.5,
           "low": 130.9,
-          "close": 132.12
+          "close": 132.5
         }
       ],
       "kline_15m": [
@@ -191275,7 +191730,14 @@
           "open": 131.23,
           "high": 132.5,
           "low": 131.23,
-          "close": 132.07
+          "close": 131.95
+        },
+        {
+          "time": 1794340800,
+          "open": 131.93,
+          "high": 132.5,
+          "low": 131.37,
+          "close": 132.5
         }
       ],
       "kline_4h": [
@@ -191977,17 +192439,17 @@
           "open": 131.3,
           "high": 132.5,
           "low": 130.9,
-          "close": 132.12
+          "close": 132.48
         }
       ]
     },
     "WMT": {
       "summary": {
         "symbol": "WMT",
-        "price": 125.95,
-        "change": 0.29,
-        "change_pct": 0.23,
-        "dist_20ma": 4.05,
+        "price": 125.93,
+        "change": 0.27,
+        "change_pct": 0.21,
+        "dist_20ma": 4.04,
         "macro_bsl": 131.82,
         "macro_ssl": 113.38,
         "macro_eq": 122.6,
@@ -192425,7 +192887,7 @@
           "open": 125.85,
           "high": 126.3,
           "low": 124.59,
-          "close": 125.95
+          "close": 125.93
         }
       ],
       "kline_1h": [
@@ -193266,8 +193728,8 @@
           "time": 1794339000,
           "open": 126.01,
           "high": 126.1,
-          "low": 125.92,
-          "close": 125.96
+          "low": 125.9,
+          "close": 125.93
         }
       ],
       "kline_15m": [
@@ -194150,8 +194612,15 @@
           "time": 1794339900,
           "open": 126.06,
           "high": 126.08,
-          "low": 125.92,
-          "close": 125.96
+          "low": 125.9,
+          "close": 125.97
+        },
+        {
+          "time": 1794340800,
+          "open": 125.97,
+          "high": 126.01,
+          "low": 125.93,
+          "close": 125.94
         }
       ],
       "kline_4h": [
@@ -194852,18 +195321,18 @@
           "time": 1794339000,
           "open": 126.01,
           "high": 126.1,
-          "low": 125.92,
-          "close": 125.96
+          "low": 125.9,
+          "close": 125.94
         }
       ]
     },
     "COST": {
       "summary": {
         "symbol": "COST",
-        "price": 1067.5,
-        "change": 1.32,
-        "change_pct": 0.12,
-        "dist_20ma": 53.05,
+        "price": 1067.59,
+        "change": 1.41,
+        "change_pct": 0.13,
+        "dist_20ma": 53.14,
         "macro_bsl": 1081.55,
         "macro_ssl": 958.58,
         "macro_eq": 1020.07,
@@ -195301,7 +195770,7 @@
           "open": 1064.11,
           "high": 1068.67,
           "low": 1057.38,
-          "close": 1067.5
+          "close": 1067.59
         }
       ],
       "kline_1h": [
@@ -196142,8 +196611,8 @@
           "time": 1794339000,
           "open": 1067.8,
           "high": 1068.67,
-          "low": 1067.3,
-          "close": 1067.5
+          "low": 1067.11,
+          "close": 1067.59
         }
       ],
       "kline_15m": [
@@ -197026,8 +197495,15 @@
           "time": 1794339900,
           "open": 1068.49,
           "high": 1068.67,
-          "low": 1067.3,
-          "close": 1067.5
+          "low": 1067.11,
+          "close": 1067.11
+        },
+        {
+          "time": 1794340800,
+          "open": 1067.47,
+          "high": 1068.24,
+          "low": 1067.36,
+          "close": 1067.59
         }
       ],
       "kline_4h": [
@@ -197728,35 +198204,35 @@
           "time": 1794339000,
           "open": 1067.8,
           "high": 1068.67,
-          "low": 1067.3,
-          "close": 1067.5
+          "low": 1067.11,
+          "close": 1067.59
         }
       ]
     },
     "PG": {
       "summary": {
         "symbol": "PG",
-        "price": 169.18,
-        "change": 0.86,
-        "change_pct": 0.51,
-        "dist_20ma": 7.75,
+        "price": 168.91,
+        "change": 0.59,
+        "change_pct": 0.35,
+        "dist_20ma": 7.49,
         "macro_bsl": 170.52,
         "macro_ssl": 153.28,
         "macro_eq": 161.9,
-        "pd_percent": 92,
+        "pd_percent": 90,
         "direction": "short",
-        "entry_bot": 166.32,
-        "entry_top": 170.52,
-        "sl": 173.08,
+        "entry_bot": 167.19,
+        "entry_top": 169.79,
+        "sl": 172.34,
         "tp": 154.81,
-        "rrr": 3.7,
-        "smc_id": "SMC_PG_169",
+        "rrr": 4.1,
+        "smc_id": "SMC_PG_168",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
         "smc_class": "border-green-500 text-green-400 bg-green-900/20",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $166.32 - $170.52，嚴格防守 $173.08。"
+        "inv_text": "區間 $167.19 - $169.79，嚴格防守 $172.34。"
       },
       "kline": [
         {
@@ -198177,7 +198653,7 @@
           "open": 169.18,
           "high": 169.79,
           "low": 167.19,
-          "close": 169.18
+          "close": 168.91
         }
       ],
       "kline_1h": [
@@ -199018,8 +199494,8 @@
           "time": 1794339000,
           "open": 169.24,
           "high": 169.32,
-          "low": 169.08,
-          "close": 169.18
+          "low": 168.88,
+          "close": 168.91
         }
       ],
       "kline_15m": [
@@ -199902,8 +200378,15 @@
           "time": 1794339900,
           "open": 169.27,
           "high": 169.31,
-          "low": 169.16,
-          "close": 169.18
+          "low": 168.95,
+          "close": 169.0
+        },
+        {
+          "time": 1794340800,
+          "open": 169.02,
+          "high": 169.1,
+          "low": 168.88,
+          "close": 168.91
         }
       ],
       "kline_4h": [
@@ -200604,28 +201087,28 @@
           "time": 1794339000,
           "open": 169.24,
           "high": 169.32,
-          "low": 169.08,
-          "close": 169.18
+          "low": 168.88,
+          "close": 168.91
         }
       ]
     },
     "KO": {
       "summary": {
         "symbol": "KO",
-        "price": 96.86,
-        "change": 0.83,
-        "change_pct": 0.86,
-        "dist_20ma": 2.93,
+        "price": 96.82,
+        "change": 0.79,
+        "change_pct": 0.82,
+        "dist_20ma": 2.89,
         "macro_bsl": 97.39,
         "macro_ssl": 90.55,
         "macro_eq": 93.97,
-        "pd_percent": 92,
+        "pd_percent": 91,
         "direction": "short",
         "entry_bot": 95.47,
         "entry_top": 97.39,
         "sl": 98.85,
         "tp": 91.46,
-        "rrr": 2.7,
+        "rrr": 2.6,
         "smc_id": "SMC_KO_96",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
@@ -201053,7 +201536,7 @@
           "open": 96.65,
           "high": 96.95,
           "low": 95.86,
-          "close": 96.86
+          "close": 96.82
         }
       ],
       "kline_1h": [
@@ -201895,7 +202378,7 @@
           "open": 96.84,
           "high": 96.95,
           "low": 96.82,
-          "close": 96.86
+          "close": 96.82
         }
       ],
       "kline_15m": [
@@ -202778,8 +203261,15 @@
           "time": 1794339900,
           "open": 96.95,
           "high": 96.95,
-          "low": 96.86,
+          "low": 96.83,
           "close": 96.86
+        },
+        {
+          "time": 1794340800,
+          "open": 96.86,
+          "high": 96.9,
+          "low": 96.82,
+          "close": 96.82
         }
       ],
       "kline_4h": [
@@ -203481,17 +203971,17 @@
           "open": 96.84,
           "high": 96.95,
           "low": 96.82,
-          "close": 96.86
+          "close": 96.82
         }
       ]
     },
     "PEP": {
       "summary": {
         "symbol": "PEP",
-        "price": 143.24,
-        "change": 1.36,
-        "change_pct": 0.96,
-        "dist_20ma": 6.84,
+        "price": 143.32,
+        "change": 1.44,
+        "change_pct": 1.01,
+        "dist_20ma": 6.91,
         "macro_bsl": 145.55,
         "macro_ssl": 127.2,
         "macro_eq": 136.38,
@@ -203501,7 +203991,7 @@
         "entry_top": 145.55,
         "sl": 147.73,
         "tp": 128.47,
-        "rrr": 3.3,
+        "rrr": 3.4,
         "smc_id": "SMC_PEP_143",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
@@ -203929,7 +204419,7 @@
           "open": 141.55,
           "high": 143.71,
           "low": 140.82,
-          "close": 143.24
+          "close": 143.32
         }
       ],
       "kline_1h": [
@@ -204769,9 +205259,9 @@
         {
           "time": 1794339000,
           "open": 143.17,
-          "high": 143.42,
+          "high": 143.48,
           "low": 143.16,
-          "close": 143.24
+          "close": 143.32
         }
       ],
       "kline_15m": [
@@ -205654,8 +206144,15 @@
           "time": 1794339900,
           "open": 143.38,
           "high": 143.42,
-          "low": 143.24,
-          "close": 143.24
+          "low": 143.21,
+          "close": 143.36
+        },
+        {
+          "time": 1794340800,
+          "open": 143.34,
+          "high": 143.48,
+          "low": 143.31,
+          "close": 143.32
         }
       ],
       "kline_4h": [
@@ -206355,19 +206852,19 @@
         {
           "time": 1794339000,
           "open": 143.17,
-          "high": 143.42,
+          "high": 143.48,
           "low": 143.16,
-          "close": 143.24
+          "close": 143.32
         }
       ]
     },
     "DIS": {
       "summary": {
         "symbol": "DIS",
-        "price": 119.06,
-        "change": -0.06,
-        "change_pct": -0.05,
-        "dist_20ma": 6.11,
+        "price": 119.0,
+        "change": -0.12,
+        "change_pct": -0.1,
+        "dist_20ma": 6.06,
         "macro_bsl": 120.8,
         "macro_ssl": 107.65,
         "macro_eq": 114.22,
@@ -206377,7 +206874,7 @@
         "entry_top": 120.8,
         "sl": 122.61,
         "tp": 108.73,
-        "rrr": 2.9,
+        "rrr": 2.8,
         "smc_id": "SMC_DIS_119",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
@@ -206805,7 +207302,7 @@
           "open": 118.69,
           "high": 119.25,
           "low": 117.44,
-          "close": 119.06
+          "close": 119.0
         }
       ],
       "kline_1h": [
@@ -207647,7 +208144,7 @@
           "open": 119.03,
           "high": 119.17,
           "low": 118.93,
-          "close": 119.06
+          "close": 119.0
         }
       ],
       "kline_15m": [
@@ -208530,8 +209027,15 @@
           "time": 1794339900,
           "open": 119.07,
           "high": 119.17,
-          "low": 119.06,
-          "close": 119.06
+          "low": 119.0,
+          "close": 119.03
+        },
+        {
+          "time": 1794340800,
+          "open": 119.03,
+          "high": 119.11,
+          "low": 118.93,
+          "close": 119.0
         }
       ],
       "kline_4h": [
@@ -209233,7 +209737,7 @@
           "open": 119.03,
           "high": 119.17,
           "low": 118.93,
-          "close": 119.06
+          "close": 119.0
         }
       ]
     }
