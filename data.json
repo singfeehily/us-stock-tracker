@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-16 22:43:17 HKT",
+  "updated_at": "2026-11-17 04:16:26 HKT",
   "screener_data": [
     {
       "symbol": "SPY",
@@ -37,7 +37,7 @@
       "pd_percent": 18,
       "direction": "long",
       "entry_bot": 660.48,
-      "entry_top": 672.14,
+      "entry_top": 672.15,
       "sl": 650.57,
       "tp": 720.67,
       "rrr": 5.3,
@@ -47,7 +47,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $660.48 - $672.14，嚴格防守 $650.57。"
+      "inv_text": "區間 $660.48 - $672.15，嚴格防守 $650.57。"
     },
     {
       "symbol": "DIA",
@@ -108,9 +108,9 @@
       "macro_eq": 692.69,
       "pd_percent": 17,
       "direction": "long",
-      "entry_bot": 678.49,
+      "entry_bot": 678.47,
       "entry_top": 689.22,
-      "sl": 668.31,
+      "sl": 668.29,
       "tp": 704.71,
       "rrr": 2.0,
       "smc_id": "SMC_VOO_680",
@@ -119,7 +119,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $678.49 - $689.22，嚴格防守 $668.31。"
+      "inv_text": "區間 $678.47 - $689.22，嚴格防守 $668.29。"
     },
     {
       "symbol": "QQQM",
@@ -132,9 +132,9 @@
       "macro_eq": 283.13,
       "pd_percent": 17,
       "direction": "long",
-      "entry_bot": 271.99,
+      "entry_bot": 271.98,
       "entry_top": 276.7,
-      "sl": 267.91,
+      "sl": 267.9,
       "tp": 296.74,
       "rrr": 5.3,
       "smc_id": "SMC_QQQM_272",
@@ -143,7 +143,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $271.99 - $276.7，嚴格防守 $267.91。"
+      "inv_text": "區間 $271.98 - $276.7，嚴格防守 $267.9。"
     },
     {
       "symbol": "SPYM",
@@ -180,9 +180,9 @@
       "macro_eq": 508.29,
       "pd_percent": 13,
       "direction": "long",
-      "entry_bot": 460.66,
-      "entry_top": 473.32,
-      "sl": 453.75,
+      "entry_bot": 460.64,
+      "entry_top": 473.33,
+      "sl": 453.73,
       "tp": 565.29,
       "rrr": 12.7,
       "smc_id": "SMC_SMH_461",
@@ -191,7 +191,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $460.66 - $473.32，嚴格防守 $453.75。"
+      "inv_text": "區間 $460.64 - $473.33，嚴格防守 $453.73。"
     },
     {
       "symbol": "SOXL",
@@ -276,18 +276,18 @@
       "macro_eq": 65.29,
       "pd_percent": 33,
       "direction": "long",
-      "entry_bot": 63.49,
+      "entry_bot": 63.5,
       "entry_top": 64.69,
-      "sl": 62.54,
+      "sl": 62.55,
       "tp": 69.45,
-      "rrr": 5.0,
+      "rrr": 5.1,
       "smc_id": "SMC_XLE_63",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $63.49 - $64.69，嚴格防守 $62.54。"
+      "inv_text": "區間 $63.5 - $64.69，嚴格防守 $62.55。"
     },
     {
       "symbol": "SPCX",
@@ -300,18 +300,18 @@
       "macro_eq": 143.28,
       "pd_percent": 37,
       "direction": "long",
-      "entry_bot": 135.73,
+      "entry_bot": 135.0,
       "entry_top": 139.98,
-      "sl": 133.69,
+      "sl": 132.97,
       "tp": 164.52,
-      "rrr": 7.4,
+      "rrr": 6.2,
       "smc_id": "SMC_SPCX_137",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $135.73 - $139.98，嚴格防守 $133.69。"
+      "inv_text": "區間 $135.0 - $139.98，嚴格防守 $132.97。"
     },
     {
       "symbol": "DRAM",
@@ -324,18 +324,18 @@
       "macro_eq": 45.56,
       "pd_percent": 13,
       "direction": "long",
-      "entry_bot": 39.22,
+      "entry_bot": 38.5,
       "entry_top": 40.38,
-      "sl": 38.63,
+      "sl": 37.92,
       "tp": 53.58,
-      "rrr": 22.4,
+      "rrr": 10.6,
       "smc_id": "SMC_DRAM_39",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $39.22 - $40.38，嚴格防守 $38.63。"
+      "inv_text": "區間 $38.5 - $40.38，嚴格防守 $37.92。"
     },
     {
       "symbol": "AAPL",
@@ -349,8 +349,8 @@
       "pd_percent": 77,
       "direction": "short",
       "entry_bot": 351.31,
-      "entry_top": 357.1,
-      "sl": 362.46,
+      "entry_top": 357.13,
+      "sl": 362.49,
       "tp": 328.33,
       "rrr": 2.5,
       "smc_id": "SMC_AAPL_352",
@@ -359,7 +359,7 @@
       "smc_class": "border-green-500 text-green-400 bg-green-900/20",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $351.31 - $357.1，嚴格防守 $362.46。"
+      "inv_text": "區間 $351.31 - $357.13，嚴格防守 $362.49。"
     },
     {
       "symbol": "MSFT",
@@ -372,9 +372,9 @@
       "macro_eq": 532.05,
       "pd_percent": 24,
       "direction": "long",
-      "entry_bot": 516.83,
+      "entry_bot": 516.82,
       "entry_top": 527.95,
-      "sl": 509.08,
+      "sl": 509.07,
       "tp": 553.56,
       "rrr": 4.0,
       "smc_id": "SMC_MSFT_517",
@@ -383,7 +383,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $516.83 - $527.95，嚴格防守 $509.08。"
+      "inv_text": "區間 $516.82 - $527.95，嚴格防守 $509.07。"
     },
     {
       "symbol": "NVDA",
@@ -397,7 +397,7 @@
       "pd_percent": 10,
       "direction": "long",
       "entry_bot": 155.01,
-      "entry_top": 163.0,
+      "entry_top": 163.2,
       "sl": 152.68,
       "tp": 219.97,
       "rrr": 18.4,
@@ -407,7 +407,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $155.01 - $163.0，嚴格防守 $152.68。"
+      "inv_text": "區間 $155.01 - $163.2，嚴格防守 $152.68。"
     },
     {
       "symbol": "TSLA",
@@ -517,7 +517,7 @@
       "pd_percent": 10,
       "direction": "long",
       "entry_bot": 282.96,
-      "entry_top": 294.13,
+      "entry_top": 294.14,
       "sl": 278.72,
       "tp": 341.32,
       "rrr": 11.5,
@@ -527,7 +527,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $282.96 - $294.13，嚴格防守 $278.72。"
+      "inv_text": "區間 $282.96 - $294.14，嚴格防守 $278.72。"
     },
     {
       "symbol": "AMD",
@@ -636,7 +636,7 @@
       "macro_eq": 166.92,
       "pd_percent": 54,
       "direction": "short",
-      "entry_bot": 168.14,
+      "entry_bot": 168.1,
       "entry_top": 172.92,
       "sl": 175.51,
       "tp": 149.73,
@@ -647,7 +647,7 @@
       "smc_class": "border-green-500 text-green-400 bg-green-900/20",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $168.14 - $172.92，嚴格防守 $175.51。"
+      "inv_text": "區間 $168.1 - $172.92，嚴格防守 $175.51。"
     },
     {
       "symbol": "TXN",
@@ -684,18 +684,18 @@
       "macro_eq": 73.59,
       "pd_percent": 8,
       "direction": "long",
-      "entry_bot": 54.9,
+      "entry_bot": 54.89,
       "entry_top": 57.2,
-      "sl": 54.08,
+      "sl": 54.07,
       "tp": 94.72,
-      "rrr": 28.2,
+      "rrr": 28.0,
       "smc_id": "SMC_INTC_55",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $54.9 - $57.2，嚴格防守 $54.08。"
+      "inv_text": "區間 $54.89 - $57.2，嚴格防守 $54.07。"
     },
     {
       "symbol": "MU",
@@ -757,7 +757,7 @@
       "pd_percent": 15,
       "direction": "long",
       "entry_bot": 174.64,
-      "entry_top": 181.73,
+      "entry_top": 181.83,
       "sl": 172.02,
       "tp": 235.5,
       "rrr": 20.0,
@@ -767,14 +767,14 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $174.64 - $181.73，嚴格防守 $172.02。"
+      "inv_text": "區間 $174.64 - $181.83，嚴格防守 $172.02。"
     },
     {
       "symbol": "SMCI",
-      "price": 25.02,
-      "change": -1.85,
-      "change_pct": -6.89,
-      "dist_20ma": -5.91,
+      "price": 25.03,
+      "change": -1.84,
+      "change_pct": -6.85,
+      "dist_20ma": -5.9,
       "macro_bsl": 37.45,
       "macro_ssl": 24.93,
       "macro_eq": 31.19,
@@ -804,18 +804,18 @@
       "macro_eq": 330.42,
       "pd_percent": 15,
       "direction": "long",
-      "entry_bot": 286.54,
-      "entry_top": 312.0,
-      "sl": 282.24,
+      "entry_bot": 275.34,
+      "entry_top": 287.45,
+      "sl": 271.21,
       "tp": 398.21,
-      "rrr": 89.5,
+      "rrr": 12.1,
       "smc_id": "SMC_WDC_280",
-      "confluence": false,
-      "smc_text": "日線 FVG",
-      "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
-      "trade_status": "🔴 觀察中",
-      "status_color": "text-gray-400",
-      "inv_text": "等待價格進入戰略區間。"
+      "confluence": true,
+      "smc_text": "SS級 共振",
+      "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
+      "trade_status": "🟢 可執行",
+      "status_color": "text-green-400 font-bold",
+      "inv_text": "區間 $275.34 - $287.45，嚴格防守 $271.21。"
     },
     {
       "symbol": "LITE",
@@ -828,18 +828,18 @@
       "macro_eq": 742.54,
       "pd_percent": 8,
       "direction": "long",
-      "entry_bot": 539.21,
+      "entry_bot": 539.1,
       "entry_top": 562.25,
-      "sl": 531.12,
+      "sl": 531.01,
       "tp": 968.62,
-      "rrr": 28.4,
+      "rrr": 28.2,
       "smc_id": "SMC_LITE_546",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $539.21 - $562.25，嚴格防守 $531.12。"
+      "inv_text": "區間 $539.1 - $562.25，嚴格防守 $531.01。"
     },
     {
       "symbol": "AAOI",
@@ -876,18 +876,18 @@
       "macro_eq": 4.94,
       "pd_percent": 35,
       "direction": "long",
-      "entry_bot": 4.96,
-      "entry_top": 5.23,
-      "sl": 4.89,
+      "entry_bot": 4.55,
+      "entry_top": 4.87,
+      "sl": 4.48,
       "tp": 5.81,
       "rrr": 2.3,
       "smc_id": "SMC_POET_4",
-      "confluence": false,
-      "smc_text": "日線 FVG",
-      "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
-      "trade_status": "🔴 觀察中",
-      "status_color": "text-gray-400",
-      "inv_text": "等待價格進入戰略區間。"
+      "confluence": true,
+      "smc_text": "SS級 共振",
+      "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
+      "trade_status": "🟢 可執行",
+      "status_color": "text-green-400 font-bold",
+      "inv_text": "區間 $4.55 - $4.87，嚴格防守 $4.48。"
     },
     {
       "symbol": "PLTR",
@@ -925,7 +925,7 @@
       "pd_percent": 18,
       "direction": "long",
       "entry_bot": 278.69,
-      "entry_top": 286.64,
+      "entry_top": 286.72,
       "sl": 274.51,
       "tp": 340.11,
       "rrr": 9.9,
@@ -935,7 +935,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $278.69 - $286.64，嚴格防守 $274.51。"
+      "inv_text": "區間 $278.69 - $286.72，嚴格防守 $274.51。"
     },
     {
       "symbol": "APP",
@@ -948,18 +948,18 @@
       "macro_eq": 321.98,
       "pd_percent": 98,
       "direction": "short",
-      "entry_bot": 404.78,
-      "entry_top": 418.77,
-      "sl": 425.05,
+      "entry_bot": 393.05,
+      "entry_top": 408.99,
+      "sl": 415.12,
       "tp": 227.44,
-      "rrr": 19.1,
+      "rrr": 375.6,
       "smc_id": "SMC_APP_415",
       "confluence": false,
-      "smc_text": "4H 需求區 (OB)",
-      "smc_class": "border-green-500 text-green-400 bg-green-900/20",
-      "trade_status": "🟢 可執行",
-      "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $404.78 - $418.77，嚴格防守 $425.05。"
+      "smc_text": "日線 FVG",
+      "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
+      "trade_status": "🟡 接近中",
+      "status_color": "text-yellow-400",
+      "inv_text": "等待價格進入戰略區間。"
     },
     {
       "symbol": "CRM",
@@ -1064,22 +1064,22 @@
       "change_pct": -1.91,
       "dist_20ma": -33.27,
       "macro_bsl": 406.88,
-      "macro_ssl": 311.69,
-      "macro_eq": 359.28,
+      "macro_ssl": 311.36,
+      "macro_eq": 359.12,
       "pd_percent": 4,
       "direction": "long",
-      "entry_bot": 311.69,
-      "entry_top": 319.14,
-      "sl": 307.01,
+      "entry_bot": 311.36,
+      "entry_top": 319.94,
+      "sl": 306.69,
       "tp": 402.81,
-      "rrr": 9.6,
+      "rrr": 9.2,
       "smc_id": "SMC_PANW_316",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $311.69 - $319.14，嚴格防守 $307.01。"
+      "inv_text": "區間 $311.36 - $319.94，嚴格防守 $306.69。"
     },
     {
       "symbol": "NFLX",
@@ -1093,7 +1093,7 @@
       "pd_percent": 2,
       "direction": "long",
       "entry_bot": 60.48,
-      "entry_top": 62.97,
+      "entry_top": 62.98,
       "sl": 59.57,
       "tp": 69.95,
       "rrr": 7.8,
@@ -1103,7 +1103,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $60.48 - $62.97，嚴格防守 $59.57。"
+      "inv_text": "區間 $60.48 - $62.98，嚴格防守 $59.57。"
     },
     {
       "symbol": "UBER",
@@ -1116,7 +1116,7 @@
       "macro_eq": 68.27,
       "pd_percent": 70,
       "direction": "short",
-      "entry_bot": 69.46,
+      "entry_bot": 69.45,
       "entry_top": 70.89,
       "sl": 71.95,
       "tp": 64.68,
@@ -1127,7 +1127,7 @@
       "smc_class": "border-green-500 text-green-400 bg-green-900/20",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $69.46 - $70.89，嚴格防守 $71.95。"
+      "inv_text": "區間 $69.45 - $70.89，嚴格防守 $71.95。"
     },
     {
       "symbol": "COIN",
@@ -1357,7 +1357,7 @@
       "pd_percent": 26,
       "direction": "long",
       "entry_bot": 336.67,
-      "entry_top": 346.51,
+      "entry_top": 346.52,
       "sl": 331.62,
       "tp": 356.2,
       "rrr": 2.7,
@@ -1367,7 +1367,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $336.67 - $346.51，嚴格防守 $331.62。"
+      "inv_text": "區間 $336.67 - $346.52，嚴格防守 $331.62。"
     },
     {
       "symbol": "GS",
@@ -1404,9 +1404,9 @@
       "macro_eq": 51.1,
       "pd_percent": 23,
       "direction": "long",
-      "entry_bot": 49.62,
+      "entry_bot": 49.63,
       "entry_top": 50.9,
-      "sl": 48.88,
+      "sl": 48.89,
       "tp": 52.5,
       "rrr": 2.0,
       "smc_id": "SMC_BAC_50",
@@ -1415,7 +1415,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $49.62 - $50.9，嚴格防守 $48.88。"
+      "inv_text": "區間 $49.63 - $50.9，嚴格防守 $48.89。"
     },
     {
       "symbol": "RKLB",
@@ -1444,26 +1444,26 @@
     {
       "symbol": "XOM",
       "price": 166.87,
-      "change": -3.72,
-      "change_pct": -2.18,
-      "dist_20ma": -7.89,
-      "macro_bsl": 188.5,
-      "macro_ssl": 160.11,
-      "macro_eq": 174.31,
-      "pd_percent": 23,
+      "change": -2.65,
+      "change_pct": -1.56,
+      "dist_20ma": -6.84,
+      "macro_bsl": 187.32,
+      "macro_ssl": 159.11,
+      "macro_eq": 173.22,
+      "pd_percent": 27,
       "direction": "long",
-      "entry_bot": 166.48,
+      "entry_bot": 166.45,
       "entry_top": 170.25,
-      "sl": 163.98,
-      "tp": 186.62,
-      "rrr": 6.8,
+      "sl": 163.95,
+      "tp": 185.45,
+      "rrr": 6.4,
       "smc_id": "SMC_XOM_166",
       "confluence": true,
       "smc_text": "SS級 共振",
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $166.48 - $170.25，嚴格防守 $163.98。"
+      "inv_text": "區間 $166.45 - $170.25，嚴格防守 $163.95。"
     },
     {
       "symbol": "BE",
@@ -1549,7 +1549,7 @@
       "pd_percent": 12,
       "direction": "long",
       "entry_bot": 4.69,
-      "entry_top": 4.88,
+      "entry_top": 4.89,
       "sl": 4.62,
       "tp": 7.01,
       "rrr": 4.6,
@@ -1559,7 +1559,7 @@
       "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $4.69 - $4.88，嚴格防守 $4.62。"
+      "inv_text": "區間 $4.69 - $4.89，嚴格防守 $4.62。"
     },
     {
       "symbol": "NBIS",
@@ -1717,17 +1717,17 @@
       "pd_percent": 82,
       "direction": "short",
       "entry_bot": 117.78,
-      "entry_top": 119.54,
-      "sl": 121.33,
+      "entry_top": 119.6,
+      "sl": 121.39,
       "tp": 109.84,
-      "rrr": 3.4,
+      "rrr": 3.3,
       "smc_id": "SMC_DIS_118",
       "confluence": false,
       "smc_text": "4H 需求區 (OB)",
       "smc_class": "border-green-500 text-green-400 bg-green-900/20",
       "trade_status": "🟢 可執行",
       "status_color": "text-green-400 font-bold",
-      "inv_text": "區間 $117.78 - $119.54，嚴格防守 $121.33。"
+      "inv_text": "區間 $117.78 - $119.6，嚴格防守 $121.39。"
     }
   ],
   "watchlist_data": [
@@ -1925,9 +1925,9 @@
     },
     {
       "symbol": "SMCI",
-      "price": 25.02,
-      "change": -1.85,
-      "change_pct": -6.89
+      "price": 25.03,
+      "change": -1.84,
+      "change_pct": -6.85
     },
     {
       "symbol": "WDC",
@@ -2094,8 +2094,8 @@
     {
       "symbol": "XOM",
       "price": 166.87,
-      "change": -3.72,
-      "change_pct": -2.18
+      "change": -2.65,
+      "change_pct": -1.56
     },
     {
       "symbol": "BE",
@@ -5082,7 +5082,7 @@
         "pd_percent": 18,
         "direction": "long",
         "entry_bot": 660.48,
-        "entry_top": 672.14,
+        "entry_top": 672.15,
         "sl": 650.57,
         "tp": 720.67,
         "rrr": 5.3,
@@ -5092,7 +5092,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $660.48 - $672.14，嚴格防守 $650.57。"
+        "inv_text": "區間 $660.48 - $672.15，嚴格防守 $650.57。"
       },
       "kline": [
         {
@@ -5510,8 +5510,8 @@
         },
         {
           "time": "2026-11-16",
-          "open": 671.05,
-          "high": 672.14,
+          "open": 671.04,
+          "high": 672.15,
           "low": 660.48,
           "close": 661.75
         }
@@ -13793,9 +13793,9 @@
         "macro_eq": 692.69,
         "pd_percent": 17,
         "direction": "long",
-        "entry_bot": 678.49,
+        "entry_bot": 678.47,
         "entry_top": 689.22,
-        "sl": 668.31,
+        "sl": 668.29,
         "tp": 704.71,
         "rrr": 2.0,
         "smc_id": "SMC_VOO_680",
@@ -13804,7 +13804,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $678.49 - $689.22，嚴格防守 $668.31。"
+        "inv_text": "區間 $678.47 - $689.22，嚴格防守 $668.29。"
       },
       "kline": [
         {
@@ -14224,7 +14224,7 @@
           "time": "2026-11-16",
           "open": 689.11,
           "high": 689.22,
-          "low": 678.49,
+          "low": 678.47,
           "close": 680.26
         }
       ],
@@ -16697,9 +16697,9 @@
         "macro_eq": 283.13,
         "pd_percent": 17,
         "direction": "long",
-        "entry_bot": 271.99,
+        "entry_bot": 271.98,
         "entry_top": 276.7,
-        "sl": 267.91,
+        "sl": 267.9,
         "tp": 296.74,
         "rrr": 5.3,
         "smc_id": "SMC_QQQM_272",
@@ -16708,7 +16708,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $271.99 - $276.7，嚴格防守 $267.91。"
+        "inv_text": "區間 $271.98 - $276.7，嚴格防守 $267.9。"
       },
       "kline": [
         {
@@ -17126,9 +17126,9 @@
         },
         {
           "time": "2026-11-16",
-          "open": 276.3,
+          "open": 276.29,
           "high": 276.7,
-          "low": 271.99,
+          "low": 271.98,
           "close": 272.49
         }
       ],
@@ -22505,9 +22505,9 @@
         "macro_eq": 508.29,
         "pd_percent": 13,
         "direction": "long",
-        "entry_bot": 460.66,
-        "entry_top": 473.32,
-        "sl": 453.75,
+        "entry_bot": 460.64,
+        "entry_top": 473.33,
+        "sl": 453.73,
         "tp": 565.29,
         "rrr": 12.7,
         "smc_id": "SMC_SMH_461",
@@ -22516,7 +22516,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $460.66 - $473.32，嚴格防守 $453.75。"
+        "inv_text": "區間 $460.64 - $473.33，嚴格防守 $453.73。"
       },
       "kline": [
         {
@@ -22934,9 +22934,9 @@
         },
         {
           "time": "2026-11-16",
-          "open": 468.72,
-          "high": 473.32,
-          "low": 460.66,
+          "open": 468.71,
+          "high": 473.33,
+          "low": 460.64,
           "close": 461.9
         }
       ],
@@ -34121,18 +34121,18 @@
         "macro_eq": 65.29,
         "pd_percent": 33,
         "direction": "long",
-        "entry_bot": 63.49,
+        "entry_bot": 63.5,
         "entry_top": 64.69,
-        "sl": 62.54,
+        "sl": 62.55,
         "tp": 69.45,
-        "rrr": 5.0,
+        "rrr": 5.1,
         "smc_id": "SMC_XLE_63",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $63.49 - $64.69，嚴格防守 $62.54。"
+        "inv_text": "區間 $63.5 - $64.69，嚴格防守 $62.55。"
       },
       "kline": [
         {
@@ -34552,7 +34552,7 @@
           "time": "2026-11-16",
           "open": 64.52,
           "high": 64.69,
-          "low": 63.49,
+          "low": 63.5,
           "close": 63.69
         }
       ],
@@ -37025,18 +37025,18 @@
         "macro_eq": 143.28,
         "pd_percent": 37,
         "direction": "long",
-        "entry_bot": 135.73,
+        "entry_bot": 135.0,
         "entry_top": 139.98,
-        "sl": 133.69,
+        "sl": 132.97,
         "tp": 164.52,
-        "rrr": 7.4,
+        "rrr": 6.2,
         "smc_id": "SMC_SPCX_137",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $135.73 - $139.98，嚴格防守 $133.69。"
+        "inv_text": "區間 $135.0 - $139.98，嚴格防守 $132.97。"
       },
       "kline": [
         {
@@ -37454,9 +37454,9 @@
         },
         {
           "time": "2026-11-16",
-          "open": 138.45,
+          "open": 138.5,
           "high": 139.98,
-          "low": 135.73,
+          "low": 135.0,
           "close": 137.36
         }
       ],
@@ -39929,18 +39929,18 @@
         "macro_eq": 45.56,
         "pd_percent": 13,
         "direction": "long",
-        "entry_bot": 39.22,
+        "entry_bot": 38.5,
         "entry_top": 40.38,
-        "sl": 38.63,
+        "sl": 37.92,
         "tp": 53.58,
-        "rrr": 22.4,
+        "rrr": 10.6,
         "smc_id": "SMC_DRAM_39",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $39.22 - $40.38，嚴格防守 $38.63。"
+        "inv_text": "區間 $38.5 - $40.38，嚴格防守 $37.92。"
       },
       "kline": [
         {
@@ -40360,7 +40360,7 @@
           "time": "2026-11-16",
           "open": 40.06,
           "high": 40.38,
-          "low": 39.22,
+          "low": 38.5,
           "close": 39.27
         }
       ],
@@ -42834,8 +42834,8 @@
         "pd_percent": 77,
         "direction": "short",
         "entry_bot": 351.31,
-        "entry_top": 357.1,
-        "sl": 362.46,
+        "entry_top": 357.13,
+        "sl": 362.49,
         "tp": 328.33,
         "rrr": 2.5,
         "smc_id": "SMC_AAPL_352",
@@ -42844,7 +42844,7 @@
         "smc_class": "border-green-500 text-green-400 bg-green-900/20",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $351.31 - $357.1，嚴格防守 $362.46。"
+        "inv_text": "區間 $351.31 - $357.13，嚴格防守 $362.49。"
       },
       "kline": [
         {
@@ -43262,8 +43262,8 @@
         },
         {
           "time": "2026-11-16",
-          "open": 357.1,
-          "high": 357.1,
+          "open": 357.13,
+          "high": 357.13,
           "low": 351.31,
           "close": 352.78
         }
@@ -45737,9 +45737,9 @@
         "macro_eq": 532.05,
         "pd_percent": 24,
         "direction": "long",
-        "entry_bot": 516.83,
+        "entry_bot": 516.82,
         "entry_top": 527.95,
-        "sl": 509.08,
+        "sl": 509.07,
         "tp": 553.56,
         "rrr": 4.0,
         "smc_id": "SMC_MSFT_517",
@@ -45748,7 +45748,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $516.83 - $527.95，嚴格防守 $509.08。"
+        "inv_text": "區間 $516.82 - $527.95，嚴格防守 $509.07。"
       },
       "kline": [
         {
@@ -46168,7 +46168,7 @@
           "time": "2026-11-16",
           "open": 525.09,
           "high": 527.95,
-          "low": 516.83,
+          "low": 516.82,
           "close": 517.99
         }
       ],
@@ -48642,7 +48642,7 @@
         "pd_percent": 10,
         "direction": "long",
         "entry_bot": 155.01,
-        "entry_top": 163.0,
+        "entry_top": 163.2,
         "sl": 152.68,
         "tp": 219.97,
         "rrr": 18.4,
@@ -48652,7 +48652,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $155.01 - $163.0，嚴格防守 $152.68。"
+        "inv_text": "區間 $155.01 - $163.2，嚴格防守 $152.68。"
       },
       "kline": [
         {
@@ -49070,8 +49070,8 @@
         },
         {
           "time": "2026-11-16",
-          "open": 159.0,
-          "high": 163.0,
+          "open": 159.02,
+          "high": 163.2,
           "low": 155.01,
           "close": 156.14
         }
@@ -51974,7 +51974,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 387.11,
+          "open": 387.0,
           "high": 389.8,
           "low": 375.63,
           "close": 379.74
@@ -54878,7 +54878,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 262.71,
+          "open": 262.4,
           "high": 262.92,
           "low": 256.68,
           "close": 257.75
@@ -57782,7 +57782,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 640.39,
+          "open": 640.0,
           "high": 640.7,
           "low": 620.14,
           "close": 626.41
@@ -60686,7 +60686,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 290.47,
+          "open": 290.55,
           "high": 290.75,
           "low": 280.48,
           "close": 281.26
@@ -63162,7 +63162,7 @@
         "pd_percent": 10,
         "direction": "long",
         "entry_bot": 282.96,
-        "entry_top": 294.13,
+        "entry_top": 294.14,
         "sl": 278.72,
         "tp": 341.32,
         "rrr": 11.5,
@@ -63172,7 +63172,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $282.96 - $294.13，嚴格防守 $278.72。"
+        "inv_text": "區間 $282.96 - $294.14，嚴格防守 $278.72。"
       },
       "kline": [
         {
@@ -63591,7 +63591,7 @@
         {
           "time": "2026-11-16",
           "open": 293.81,
-          "high": 294.13,
+          "high": 294.14,
           "low": 282.96,
           "close": 283.72
         }
@@ -72302,7 +72302,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 332.7,
+          "open": 332.49,
           "high": 337.74,
           "low": 327.8,
           "close": 333.4
@@ -75206,7 +75206,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 1436.6,
+          "open": 1436.64,
           "high": 1446.36,
           "low": 1404.06,
           "close": 1406.79
@@ -77681,7 +77681,7 @@
         "macro_eq": 166.92,
         "pd_percent": 54,
         "direction": "short",
-        "entry_bot": 168.14,
+        "entry_bot": 168.1,
         "entry_top": 172.92,
         "sl": 175.51,
         "tp": 149.73,
@@ -77692,7 +77692,7 @@
         "smc_class": "border-green-500 text-green-400 bg-green-900/20",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $168.14 - $172.92，嚴格防守 $175.51。"
+        "inv_text": "區間 $168.1 - $172.92，嚴格防守 $175.51。"
       },
       "kline": [
         {
@@ -78110,9 +78110,9 @@
         },
         {
           "time": "2026-11-16",
-          "open": 169.27,
+          "open": 169.24,
           "high": 172.92,
-          "low": 168.14,
+          "low": 168.1,
           "close": 168.52
         }
       ],
@@ -83489,18 +83489,18 @@
         "macro_eq": 73.59,
         "pd_percent": 8,
         "direction": "long",
-        "entry_bot": 54.9,
+        "entry_bot": 54.89,
         "entry_top": 57.2,
-        "sl": 54.08,
+        "sl": 54.07,
         "tp": 94.72,
-        "rrr": 28.2,
+        "rrr": 28.0,
         "smc_id": "SMC_INTC_55",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $54.9 - $57.2，嚴格防守 $54.08。"
+        "inv_text": "區間 $54.89 - $57.2，嚴格防守 $54.07。"
       },
       "kline": [
         {
@@ -83918,9 +83918,9 @@
         },
         {
           "time": "2026-11-16",
-          "open": 56.68,
+          "open": 56.71,
           "high": 57.2,
-          "low": 54.9,
+          "low": 54.89,
           "close": 55.47
         }
       ],
@@ -86822,7 +86822,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 735.06,
+          "open": 734.16,
           "high": 739.12,
           "low": 716.38,
           "close": 719.02
@@ -89726,7 +89726,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 827.49,
+          "open": 828.22,
           "high": 838.48,
           "low": 799.0,
           "close": 809.11
@@ -92202,7 +92202,7 @@
         "pd_percent": 15,
         "direction": "long",
         "entry_bot": 174.64,
-        "entry_top": 181.73,
+        "entry_top": 181.83,
         "sl": 172.02,
         "tp": 235.5,
         "rrr": 20.0,
@@ -92212,7 +92212,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $174.64 - $181.73，嚴格防守 $172.02。"
+        "inv_text": "區間 $174.64 - $181.83，嚴格防守 $172.02。"
       },
       "kline": [
         {
@@ -92631,7 +92631,7 @@
         {
           "time": "2026-11-16",
           "open": 180.45,
-          "high": 181.73,
+          "high": 181.83,
           "low": 174.64,
           "close": 175.05
         }
@@ -95096,10 +95096,10 @@
     "SMCI": {
       "summary": {
         "symbol": "SMCI",
-        "price": 25.02,
-        "change": -1.85,
-        "change_pct": -6.89,
-        "dist_20ma": -5.91,
+        "price": 25.03,
+        "change": -1.84,
+        "change_pct": -6.85,
+        "dist_20ma": -5.9,
         "macro_bsl": 37.45,
         "macro_ssl": 24.93,
         "macro_eq": 31.19,
@@ -95534,10 +95534,10 @@
         },
         {
           "time": "2026-11-16",
-          "open": 25.46,
+          "open": 25.55,
           "high": 25.87,
           "low": 24.93,
-          "close": 25.02
+          "close": 25.03
         }
       ],
       "kline_1h": [
@@ -98009,18 +98009,18 @@
         "macro_eq": 330.42,
         "pd_percent": 15,
         "direction": "long",
-        "entry_bot": 286.54,
-        "entry_top": 312.0,
-        "sl": 282.24,
+        "entry_bot": 275.34,
+        "entry_top": 287.45,
+        "sl": 271.21,
         "tp": 398.21,
-        "rrr": 89.5,
+        "rrr": 12.1,
         "smc_id": "SMC_WDC_280",
-        "confluence": false,
-        "smc_text": "日線 FVG",
-        "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
-        "trade_status": "🔴 觀察中",
-        "status_color": "text-gray-400",
-        "inv_text": "等待價格進入戰略區間。"
+        "confluence": true,
+        "smc_text": "SS級 共振",
+        "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
+        "trade_status": "🟢 可執行",
+        "status_color": "text-green-400 font-bold",
+        "inv_text": "區間 $275.34 - $287.45，嚴格防守 $271.21。"
       },
       "kline": [
         {
@@ -98438,7 +98438,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 280.67,
+          "open": 281.25,
           "high": 287.45,
           "low": 275.34,
           "close": 280.93
@@ -100913,18 +100913,18 @@
         "macro_eq": 742.54,
         "pd_percent": 8,
         "direction": "long",
-        "entry_bot": 539.21,
+        "entry_bot": 539.1,
         "entry_top": 562.25,
-        "sl": 531.12,
+        "sl": 531.01,
         "tp": 968.62,
-        "rrr": 28.4,
+        "rrr": 28.2,
         "smc_id": "SMC_LITE_546",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $539.21 - $562.25，嚴格防守 $531.12。"
+        "inv_text": "區間 $539.1 - $562.25，嚴格防守 $531.01。"
       },
       "kline": [
         {
@@ -101342,9 +101342,9 @@
         },
         {
           "time": "2026-11-16",
-          "open": 553.97,
+          "open": 553.69,
           "high": 562.25,
-          "low": 539.21,
+          "low": 539.1,
           "close": 546.0
         }
       ],
@@ -104246,7 +104246,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 46.75,
+          "open": 46.66,
           "high": 47.88,
           "low": 44.78,
           "close": 45.16
@@ -106721,18 +106721,18 @@
         "macro_eq": 4.94,
         "pd_percent": 35,
         "direction": "long",
-        "entry_bot": 4.96,
-        "entry_top": 5.23,
-        "sl": 4.89,
+        "entry_bot": 4.55,
+        "entry_top": 4.87,
+        "sl": 4.48,
         "tp": 5.81,
         "rrr": 2.3,
         "smc_id": "SMC_POET_4",
-        "confluence": false,
-        "smc_text": "日線 FVG",
-        "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
-        "trade_status": "🔴 觀察中",
-        "status_color": "text-gray-400",
-        "inv_text": "等待價格進入戰略區間。"
+        "confluence": true,
+        "smc_text": "SS級 共振",
+        "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
+        "trade_status": "🟢 可執行",
+        "status_color": "text-green-400 font-bold",
+        "inv_text": "區間 $4.55 - $4.87，嚴格防守 $4.48。"
       },
       "kline": [
         {
@@ -107150,7 +107150,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 4.63,
+          "open": 4.67,
           "high": 4.87,
           "low": 4.55,
           "close": 4.66
@@ -110054,7 +110054,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 165.74,
+          "open": 165.76,
           "high": 166.09,
           "low": 158.68,
           "close": 160.39
@@ -112530,7 +112530,7 @@
         "pd_percent": 18,
         "direction": "long",
         "entry_bot": 278.69,
-        "entry_top": 286.64,
+        "entry_top": 286.72,
         "sl": 274.51,
         "tp": 340.11,
         "rrr": 9.9,
@@ -112540,7 +112540,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $278.69 - $286.64，嚴格防守 $274.51。"
+        "inv_text": "區間 $278.69 - $286.72，嚴格防守 $274.51。"
       },
       "kline": [
         {
@@ -112959,7 +112959,7 @@
         {
           "time": "2026-11-16",
           "open": 285.0,
-          "high": 286.64,
+          "high": 286.72,
           "low": 278.69,
           "close": 280.54
         }
@@ -115433,18 +115433,18 @@
         "macro_eq": 321.98,
         "pd_percent": 98,
         "direction": "short",
-        "entry_bot": 404.78,
-        "entry_top": 418.77,
-        "sl": 425.05,
+        "entry_bot": 393.05,
+        "entry_top": 408.99,
+        "sl": 415.12,
         "tp": 227.44,
-        "rrr": 19.1,
+        "rrr": 375.6,
         "smc_id": "SMC_APP_415",
         "confluence": false,
-        "smc_text": "4H 需求區 (OB)",
-        "smc_class": "border-green-500 text-green-400 bg-green-900/20",
-        "trade_status": "🟢 可執行",
-        "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $404.78 - $418.77，嚴格防守 $425.05。"
+        "smc_text": "日線 FVG",
+        "smc_class": "border-blue-500 text-blue-400 bg-blue-900/20",
+        "trade_status": "🟡 接近中",
+        "status_color": "text-yellow-400",
+        "inv_text": "等待價格進入戰略區間。"
       },
       "kline": [
         {
@@ -115862,7 +115862,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 415.28,
+          "open": 414.6,
           "high": 418.77,
           "low": 404.78,
           "close": 415.22
@@ -121670,7 +121670,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 247.0,
+          "open": 246.1,
           "high": 251.34,
           "low": 242.84,
           "close": 246.0
@@ -124574,7 +124574,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 101.29,
+          "open": 101.3,
           "high": 101.94,
           "low": 98.88,
           "close": 99.37
@@ -129949,22 +129949,22 @@
         "change_pct": -1.91,
         "dist_20ma": -33.27,
         "macro_bsl": 406.88,
-        "macro_ssl": 311.69,
-        "macro_eq": 359.28,
+        "macro_ssl": 311.36,
+        "macro_eq": 359.12,
         "pd_percent": 4,
         "direction": "long",
-        "entry_bot": 311.69,
-        "entry_top": 319.14,
-        "sl": 307.01,
+        "entry_bot": 311.36,
+        "entry_top": 319.94,
+        "sl": 306.69,
         "tp": 402.81,
-        "rrr": 9.6,
+        "rrr": 9.2,
         "smc_id": "SMC_PANW_316",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $311.69 - $319.14，嚴格防守 $307.01。"
+        "inv_text": "區間 $311.36 - $319.94，嚴格防守 $306.69。"
       },
       "kline": [
         {
@@ -130382,9 +130382,9 @@
         },
         {
           "time": "2026-11-16",
-          "open": 319.14,
-          "high": 319.14,
-          "low": 311.69,
+          "open": 319.94,
+          "high": 319.94,
+          "low": 311.36,
           "close": 316.09
         }
       ],
@@ -132858,7 +132858,7 @@
         "pd_percent": 2,
         "direction": "long",
         "entry_bot": 60.48,
-        "entry_top": 62.97,
+        "entry_top": 62.98,
         "sl": 59.57,
         "tp": 69.95,
         "rrr": 7.8,
@@ -132868,7 +132868,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $60.48 - $62.97，嚴格防守 $59.57。"
+        "inv_text": "區間 $60.48 - $62.98，嚴格防守 $59.57。"
       },
       "kline": [
         {
@@ -133286,8 +133286,8 @@
         },
         {
           "time": "2026-11-16",
-          "open": 62.88,
-          "high": 62.97,
+          "open": 62.89,
+          "high": 62.98,
           "low": 60.48,
           "close": 60.75
         }
@@ -135761,7 +135761,7 @@
         "macro_eq": 68.27,
         "pd_percent": 70,
         "direction": "short",
-        "entry_bot": 69.46,
+        "entry_bot": 69.45,
         "entry_top": 70.89,
         "sl": 71.95,
         "tp": 64.68,
@@ -135772,7 +135772,7 @@
         "smc_class": "border-green-500 text-green-400 bg-green-900/20",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $69.46 - $70.89，嚴格防守 $71.95。"
+        "inv_text": "區間 $69.45 - $70.89，嚴格防守 $71.95。"
       },
       "kline": [
         {
@@ -136192,7 +136192,7 @@
           "time": "2026-11-16",
           "open": 70.0,
           "high": 70.89,
-          "low": 69.46,
+          "low": 69.45,
           "close": 69.99
         }
       ],
@@ -139095,7 +139095,7 @@
         {
           "time": "2026-11-16",
           "open": 119.31,
-          "high": 122.98,
+          "high": 122.99,
           "low": 117.32,
           "close": 119.84
         }
@@ -144904,7 +144904,7 @@
           "time": "2026-11-16",
           "open": 6.55,
           "high": 6.83,
-          "low": 6.41,
+          "low": 6.4,
           "close": 6.64
         }
       ],
@@ -147806,7 +147806,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 16.64,
+          "open": 16.62,
           "high": 17.28,
           "low": 16.44,
           "close": 17.06
@@ -150710,7 +150710,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 73.97,
+          "open": 73.94,
           "high": 75.55,
           "low": 70.83,
           "close": 72.06
@@ -156518,7 +156518,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 15.1,
+          "open": 15.11,
           "high": 15.24,
           "low": 14.66,
           "close": 14.85
@@ -162326,7 +162326,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 429.64,
+          "open": 429.65,
           "high": 430.99,
           "low": 425.2,
           "close": 426.46
@@ -164802,7 +164802,7 @@
         "pd_percent": 26,
         "direction": "long",
         "entry_bot": 336.67,
-        "entry_top": 346.51,
+        "entry_top": 346.52,
         "sl": 331.62,
         "tp": 356.2,
         "rrr": 2.7,
@@ -164812,7 +164812,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $336.67 - $346.51，嚴格防守 $331.62。"
+        "inv_text": "區間 $336.67 - $346.52，嚴格防守 $331.62。"
       },
       "kline": [
         {
@@ -165231,7 +165231,7 @@
         {
           "time": "2026-11-16",
           "open": 345.57,
-          "high": 346.51,
+          "high": 346.52,
           "low": 336.67,
           "close": 338.21
         }
@@ -170609,9 +170609,9 @@
         "macro_eq": 51.1,
         "pd_percent": 23,
         "direction": "long",
-        "entry_bot": 49.62,
+        "entry_bot": 49.63,
         "entry_top": 50.9,
-        "sl": 48.88,
+        "sl": 48.89,
         "tp": 52.5,
         "rrr": 2.0,
         "smc_id": "SMC_BAC_50",
@@ -170620,7 +170620,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $49.62 - $50.9，嚴格防守 $48.88。"
+        "inv_text": "區間 $49.63 - $50.9，嚴格防守 $48.89。"
       },
       "kline": [
         {
@@ -171040,7 +171040,7 @@
           "time": "2026-11-16",
           "open": 50.85,
           "high": 50.9,
-          "low": 49.62,
+          "low": 49.63,
           "close": 50.08
         }
       ],
@@ -173942,7 +173942,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 59.7,
+          "open": 59.65,
           "high": 61.9,
           "low": 57.16,
           "close": 57.37
@@ -176409,446 +176409,446 @@
       "summary": {
         "symbol": "XOM",
         "price": 166.87,
-        "change": -3.72,
-        "change_pct": -2.18,
-        "dist_20ma": -7.89,
-        "macro_bsl": 188.5,
-        "macro_ssl": 160.11,
-        "macro_eq": 174.31,
-        "pd_percent": 23,
+        "change": -2.65,
+        "change_pct": -1.56,
+        "dist_20ma": -6.84,
+        "macro_bsl": 187.32,
+        "macro_ssl": 159.11,
+        "macro_eq": 173.22,
+        "pd_percent": 27,
         "direction": "long",
-        "entry_bot": 166.48,
+        "entry_bot": 166.45,
         "entry_top": 170.25,
-        "sl": 163.98,
-        "tp": 186.62,
-        "rrr": 6.8,
+        "sl": 163.95,
+        "tp": 185.45,
+        "rrr": 6.4,
         "smc_id": "SMC_XOM_166",
         "confluence": true,
         "smc_text": "SS級 共振",
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $166.48 - $170.25，嚴格防守 $163.98。"
+        "inv_text": "區間 $166.45 - $170.25，嚴格防守 $163.95。"
       },
       "kline": [
         {
           "time": "2026-08-24",
-          "open": 163.87,
-          "high": 165.22,
-          "low": 162.25,
-          "close": 164.05
+          "open": 162.84,
+          "high": 164.18,
+          "low": 161.23,
+          "close": 163.02
         },
         {
           "time": "2026-08-25",
-          "open": 161.45,
-          "high": 162.81,
-          "low": 160.46,
-          "close": 160.64
+          "open": 160.44,
+          "high": 161.79,
+          "low": 159.45,
+          "close": 159.63
         },
         {
           "time": "2026-08-26",
-          "open": 158.0,
-          "high": 161.13,
-          "low": 157.76,
-          "close": 158.19
+          "open": 157.01,
+          "high": 160.12,
+          "low": 156.77,
+          "close": 157.2
         },
         {
           "time": "2026-08-27",
-          "open": 157.63,
-          "high": 158.19,
-          "low": 156.14,
-          "close": 156.44
+          "open": 156.64,
+          "high": 157.2,
+          "low": 155.16,
+          "close": 155.46
         },
         {
           "time": "2026-08-28",
-          "open": 156.6,
-          "high": 157.42,
-          "low": 155.32,
-          "close": 156.71
+          "open": 155.62,
+          "high": 156.43,
+          "low": 154.35,
+          "close": 155.73
         },
         {
           "time": "2026-08-31",
-          "open": 159.94,
-          "high": 161.59,
-          "low": 158.74,
-          "close": 160.95
+          "open": 158.94,
+          "high": 160.58,
+          "low": 157.74,
+          "close": 159.94
         },
         {
           "time": "2026-09-01",
-          "open": 163.6,
-          "high": 164.7,
-          "low": 162.22,
-          "close": 164.55
+          "open": 162.57,
+          "high": 163.67,
+          "low": 161.2,
+          "close": 163.52
         },
         {
           "time": "2026-09-02",
-          "open": 163.93,
-          "high": 165.02,
-          "low": 162.76,
-          "close": 164.15
+          "open": 162.9,
+          "high": 163.98,
+          "low": 161.74,
+          "close": 163.12
         },
         {
           "time": "2026-09-03",
-          "open": 164.43,
-          "high": 165.65,
-          "low": 162.09,
-          "close": 162.21
+          "open": 163.4,
+          "high": 164.61,
+          "low": 161.07,
+          "close": 161.19
         },
         {
           "time": "2026-09-04",
-          "open": 161.02,
-          "high": 161.48,
-          "low": 159.16,
-          "close": 159.47
+          "open": 160.01,
+          "high": 160.47,
+          "low": 158.16,
+          "close": 158.47
         },
         {
           "time": "2026-09-08",
-          "open": 160.61,
-          "high": 163.11,
-          "low": 158.75,
-          "close": 160.66
+          "open": 159.6,
+          "high": 162.09,
+          "low": 157.75,
+          "close": 159.65
         },
         {
           "time": "2026-09-09",
-          "open": 162.88,
-          "high": 165.18,
-          "low": 162.55,
-          "close": 164.23
+          "open": 161.86,
+          "high": 164.14,
+          "low": 161.53,
+          "close": 163.2
         },
         {
           "time": "2026-09-10",
-          "open": 167.0,
-          "high": 167.37,
-          "low": 163.18,
-          "close": 165.23
+          "open": 165.95,
+          "high": 166.32,
+          "low": 162.16,
+          "close": 164.19
         },
         {
           "time": "2026-09-11",
-          "open": 165.07,
-          "high": 167.09,
-          "low": 164.08,
-          "close": 165.99
+          "open": 164.03,
+          "high": 166.04,
+          "low": 163.05,
+          "close": 164.95
         },
         {
           "time": "2026-09-14",
-          "open": 168.7,
-          "high": 169.45,
-          "low": 164.04,
-          "close": 165.08
+          "open": 167.64,
+          "high": 168.39,
+          "low": 163.01,
+          "close": 164.04
         },
         {
           "time": "2026-09-15",
-          "open": 165.36,
-          "high": 169.64,
-          "low": 165.15,
-          "close": 169.32
+          "open": 164.32,
+          "high": 168.58,
+          "low": 164.11,
+          "close": 168.26
         },
         {
           "time": "2026-09-16",
-          "open": 167.23,
-          "high": 167.5,
-          "low": 162.56,
-          "close": 163.32
+          "open": 166.18,
+          "high": 166.45,
+          "low": 161.54,
+          "close": 162.3
         },
         {
           "time": "2026-09-17",
-          "open": 161.83,
-          "high": 163.39,
-          "low": 161.45,
-          "close": 163.27
+          "open": 160.81,
+          "high": 162.37,
+          "low": 160.44,
+          "close": 162.25
         },
         {
           "time": "2026-09-18",
-          "open": 162.5,
-          "high": 163.54,
-          "low": 161.31,
-          "close": 163.54
+          "open": 161.48,
+          "high": 162.51,
+          "low": 160.3,
+          "close": 162.51
         },
         {
           "time": "2026-09-21",
-          "open": 160.96,
-          "high": 161.95,
-          "low": 157.94,
-          "close": 158.3
+          "open": 159.95,
+          "high": 160.93,
+          "low": 156.95,
+          "close": 157.31
         },
         {
           "time": "2026-09-22",
-          "open": 157.53,
-          "high": 159.97,
-          "low": 155.85,
-          "close": 158.71
+          "open": 156.54,
+          "high": 158.97,
+          "low": 154.87,
+          "close": 157.71
         },
         {
           "time": "2026-09-23",
-          "open": 159.62,
-          "high": 162.12,
-          "low": 159.42,
-          "close": 161.23
+          "open": 158.62,
+          "high": 161.1,
+          "low": 158.42,
+          "close": 160.22
         },
         {
           "time": "2026-09-24",
-          "open": 163.06,
-          "high": 164.91,
-          "low": 161.2,
-          "close": 162.14
+          "open": 162.04,
+          "high": 163.88,
+          "low": 160.19,
+          "close": 161.12
         },
         {
           "time": "2026-09-25",
-          "open": 160.23,
-          "high": 161.79,
-          "low": 159.78,
-          "close": 160.59
+          "open": 159.22,
+          "high": 160.78,
+          "low": 158.78,
+          "close": 159.58
         },
         {
           "time": "2026-09-28",
-          "open": 162.8,
-          "high": 163.54,
-          "low": 161.05,
-          "close": 162.52
+          "open": 161.78,
+          "high": 162.51,
+          "low": 160.04,
+          "close": 161.5
         },
         {
           "time": "2026-09-29",
-          "open": 160.22,
-          "high": 161.97,
-          "low": 159.27,
-          "close": 161.35
+          "open": 159.22,
+          "high": 160.95,
+          "low": 158.27,
+          "close": 160.34
         },
         {
           "time": "2026-09-30",
-          "open": 162.23,
-          "high": 164.37,
-          "low": 161.8,
-          "close": 162.75
+          "open": 161.21,
+          "high": 163.34,
+          "low": 160.79,
+          "close": 161.73
         },
         {
           "time": "2026-10-01",
-          "open": 161.5,
-          "high": 164.08,
-          "low": 160.81,
-          "close": 163.82
+          "open": 160.49,
+          "high": 163.05,
+          "low": 159.8,
+          "close": 162.79
         },
         {
           "time": "2026-10-02",
-          "open": 161.55,
-          "high": 164.61,
-          "low": 161.55,
-          "close": 164.01
+          "open": 160.54,
+          "high": 163.58,
+          "low": 160.54,
+          "close": 162.98
         },
         {
           "time": "2026-10-05",
-          "open": 163.76,
-          "high": 164.74,
-          "low": 161.39,
-          "close": 164.0
+          "open": 162.73,
+          "high": 163.71,
+          "low": 160.38,
+          "close": 162.97
         },
         {
           "time": "2026-10-06",
-          "open": 163.06,
-          "high": 165.95,
-          "low": 162.94,
-          "close": 164.48
+          "open": 162.04,
+          "high": 164.91,
+          "low": 161.92,
+          "close": 163.45
         },
         {
           "time": "2026-10-07",
-          "open": 165.6,
-          "high": 166.86,
-          "low": 163.46,
-          "close": 164.05
+          "open": 164.56,
+          "high": 165.81,
+          "low": 162.43,
+          "close": 163.02
         },
         {
           "time": "2026-10-08",
-          "open": 167.11,
-          "high": 169.19,
-          "low": 166.71,
-          "close": 168.5
+          "open": 166.06,
+          "high": 168.13,
+          "low": 165.66,
+          "close": 167.44
         },
         {
           "time": "2026-10-09",
-          "open": 167.87,
-          "high": 170.29,
-          "low": 167.82,
-          "close": 168.94
+          "open": 166.82,
+          "high": 169.22,
+          "low": 166.77,
+          "close": 167.88
         },
         {
           "time": "2026-10-12",
-          "open": 171.01,
-          "high": 172.55,
-          "low": 171.01,
-          "close": 172.15
+          "open": 169.94,
+          "high": 171.47,
+          "low": 169.94,
+          "close": 171.07
         },
         {
           "time": "2026-10-13",
-          "open": 173.45,
-          "high": 174.89,
-          "low": 172.65,
-          "close": 174.08
+          "open": 172.36,
+          "high": 173.79,
+          "low": 171.57,
+          "close": 172.99
         },
         {
           "time": "2026-10-14",
-          "open": 175.07,
-          "high": 177.43,
-          "low": 174.53,
-          "close": 177.01
+          "open": 173.97,
+          "high": 176.32,
+          "low": 173.44,
+          "close": 175.9
         },
         {
           "time": "2026-10-15",
-          "open": 178.63,
-          "high": 178.69,
-          "low": 173.6,
-          "close": 174.68
+          "open": 177.51,
+          "high": 177.57,
+          "low": 172.51,
+          "close": 173.58
         },
         {
           "time": "2026-10-16",
-          "open": 176.49,
-          "high": 179.16,
-          "low": 175.15,
-          "close": 178.98
-        },
-        {
-          "time": "2026-10-19",
-          "open": 178.45,
-          "high": 179.3,
-          "low": 177.23,
-          "close": 178.28
-        },
-        {
-          "time": "2026-10-20",
-          "open": 179.9,
-          "high": 180.26,
-          "low": 174.92,
+          "open": 175.38,
+          "high": 178.04,
+          "low": 174.05,
           "close": 177.86
         },
         {
+          "time": "2026-10-19",
+          "open": 177.33,
+          "high": 178.18,
+          "low": 176.12,
+          "close": 177.16
+        },
+        {
+          "time": "2026-10-20",
+          "open": 178.77,
+          "high": 179.13,
+          "low": 173.82,
+          "close": 176.74
+        },
+        {
           "time": "2026-10-21",
-          "open": 177.72,
-          "high": 179.21,
-          "low": 176.15,
-          "close": 178.09
+          "open": 176.61,
+          "high": 178.09,
+          "low": 175.05,
+          "close": 176.97
         },
         {
           "time": "2026-10-22",
-          "open": 179.89,
-          "high": 180.31,
-          "low": 174.63,
-          "close": 178.23
+          "open": 178.76,
+          "high": 179.18,
+          "low": 173.53,
+          "close": 177.11
         },
         {
           "time": "2026-10-23",
-          "open": 179.37,
-          "high": 183.75,
-          "low": 179.0,
-          "close": 183.21
+          "open": 178.24,
+          "high": 182.6,
+          "low": 177.88,
+          "close": 182.06
         },
         {
           "time": "2026-10-26",
-          "open": 181.86,
-          "high": 184.59,
-          "low": 181.52,
-          "close": 184.54
+          "open": 180.72,
+          "high": 183.43,
+          "low": 180.38,
+          "close": 183.38
         },
         {
           "time": "2026-10-27",
-          "open": 183.63,
-          "high": 184.88,
-          "low": 179.77,
-          "close": 179.91
+          "open": 182.48,
+          "high": 183.72,
+          "low": 178.64,
+          "close": 178.78
         },
         {
           "time": "2026-10-28",
-          "open": 180.59,
-          "high": 183.65,
-          "low": 180.0,
-          "close": 182.02
+          "open": 179.46,
+          "high": 182.5,
+          "low": 178.87,
+          "close": 180.88
         },
         {
           "time": "2026-10-29",
-          "open": 183.77,
-          "high": 184.39,
-          "low": 180.94,
-          "close": 183.29
+          "open": 182.62,
+          "high": 183.23,
+          "low": 179.81,
+          "close": 182.14
         },
         {
           "time": "2026-10-30",
-          "open": 185.98,
-          "high": 188.5,
-          "low": 184.68,
-          "close": 187.25
+          "open": 184.81,
+          "high": 187.32,
+          "low": 183.52,
+          "close": 186.08
         },
         {
           "time": "2026-11-02",
-          "open": 183.98,
-          "high": 184.59,
-          "low": 179.67,
-          "close": 179.67
+          "open": 182.83,
+          "high": 183.43,
+          "low": 178.54,
+          "close": 178.54
         },
         {
           "time": "2026-11-03",
-          "open": 178.0,
-          "high": 180.3,
-          "low": 177.2,
-          "close": 177.46
+          "open": 176.88,
+          "high": 179.17,
+          "low": 176.09,
+          "close": 176.35
         },
         {
           "time": "2026-11-04",
-          "open": 174.26,
-          "high": 174.61,
-          "low": 167.39,
-          "close": 169.27
+          "open": 173.17,
+          "high": 173.51,
+          "low": 166.34,
+          "close": 168.21
         },
         {
           "time": "2026-11-05",
-          "open": 171.06,
-          "high": 173.67,
-          "low": 165.14,
-          "close": 165.3
+          "open": 169.99,
+          "high": 172.58,
+          "low": 164.1,
+          "close": 164.26
         },
         {
           "time": "2026-11-06",
-          "open": 164.25,
-          "high": 166.79,
-          "low": 163.51,
-          "close": 165.87
+          "open": 163.22,
+          "high": 165.74,
+          "low": 162.48,
+          "close": 164.83
         },
         {
           "time": "2026-11-09",
-          "open": 163.82,
-          "high": 165.55,
-          "low": 162.84,
-          "close": 164.73
+          "open": 162.79,
+          "high": 164.51,
+          "low": 161.82,
+          "close": 163.7
         },
         {
           "time": "2026-11-10",
-          "open": 161.86,
-          "high": 164.96,
-          "low": 160.11,
-          "close": 164.47
+          "open": 160.84,
+          "high": 163.93,
+          "low": 159.11,
+          "close": 163.44
         },
         {
           "time": "2026-11-11",
-          "open": 165.14,
-          "high": 166.75,
-          "low": 164.46,
-          "close": 166.71
+          "open": 164.1,
+          "high": 165.7,
+          "low": 163.43,
+          "close": 165.66
         },
         {
           "time": "2026-11-12",
-          "open": 168.25,
-          "high": 170.92,
-          "low": 167.34,
-          "close": 169.78
+          "open": 167.19,
+          "high": 169.85,
+          "low": 166.29,
+          "close": 168.72
         },
         {
           "time": "2026-11-13",
-          "open": 171.43,
-          "high": 171.71,
-          "low": 169.21,
-          "close": 170.59
+          "open": 170.35,
+          "high": 170.63,
+          "low": 168.15,
+          "close": 169.52
         },
         {
           "time": "2026-11-16",
           "open": 169.53,
           "high": 170.25,
-          "low": 166.48,
+          "low": 166.45,
           "close": 166.87
         }
       ],
@@ -179752,7 +179752,7 @@
           "time": "2026-11-16",
           "open": 176.6,
           "high": 183.2,
-          "low": 173.96,
+          "low": 173.9,
           "close": 177.28
         }
       ],
@@ -188034,7 +188034,7 @@
         "pd_percent": 12,
         "direction": "long",
         "entry_bot": 4.69,
-        "entry_top": 4.88,
+        "entry_top": 4.89,
         "sl": 4.62,
         "tp": 7.01,
         "rrr": 4.6,
@@ -188044,7 +188044,7 @@
         "smc_class": "border-yellow-300 text-yellow-300 bg-yellow-900/30",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $4.69 - $4.88，嚴格防守 $4.62。"
+        "inv_text": "區間 $4.69 - $4.89，嚴格防守 $4.62。"
       },
       "kline": [
         {
@@ -188462,8 +188462,8 @@
         },
         {
           "time": "2026-11-16",
-          "open": 4.88,
-          "high": 4.88,
+          "open": 4.89,
+          "high": 4.89,
           "low": 4.69,
           "close": 4.71
         }
@@ -191366,7 +191366,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 106.74,
+          "open": 106.8,
           "high": 111.55,
           "low": 104.75,
           "close": 107.13
@@ -194270,7 +194270,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 129.72,
+          "open": 129.83,
           "high": 129.85,
           "low": 127.88,
           "close": 128.41
@@ -197174,7 +197174,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 1110.46,
+          "open": 1111.18,
           "high": 1117.0,
           "low": 1104.89,
           "close": 1113.74
@@ -205886,7 +205886,7 @@
         },
         {
           "time": "2026-11-16",
-          "open": 146.9,
+          "open": 146.73,
           "high": 148.25,
           "low": 146.18,
           "close": 146.43
@@ -208362,17 +208362,17 @@
         "pd_percent": 82,
         "direction": "short",
         "entry_bot": 117.78,
-        "entry_top": 119.54,
-        "sl": 121.33,
+        "entry_top": 119.6,
+        "sl": 121.39,
         "tp": 109.84,
-        "rrr": 3.4,
+        "rrr": 3.3,
         "smc_id": "SMC_DIS_118",
         "confluence": false,
         "smc_text": "4H 需求區 (OB)",
         "smc_class": "border-green-500 text-green-400 bg-green-900/20",
         "trade_status": "🟢 可執行",
         "status_color": "text-green-400 font-bold",
-        "inv_text": "區間 $117.78 - $119.54，嚴格防守 $121.33。"
+        "inv_text": "區間 $117.78 - $119.6，嚴格防守 $121.39。"
       },
       "kline": [
         {
@@ -208791,7 +208791,7 @@
         {
           "time": "2026-11-16",
           "open": 119.6,
-          "high": 119.54,
+          "high": 119.6,
           "low": 117.78,
           "close": 118.7
         }
